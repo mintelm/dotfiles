@@ -8,7 +8,7 @@ Theme:        Arc-Dark
 Icons:        Arc  
 Term:         Gnome-Terminal  
 Def-Font:     Noto Sans  
-Mono-Font:    TBD  
+Mono-Font:    Inconsolata  
   
   
 Used Apps: polybar, compton, dunst, rofi  
