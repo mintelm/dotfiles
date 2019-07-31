@@ -1,6 +1,5 @@
-# My dotfiles
+# My linux setup:
 
-My Linux Setup:  
 Distro:       Arch Linux  
 Init:         systemd  
 DE:           xfce  
