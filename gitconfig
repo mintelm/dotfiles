@@ -16,6 +16,7 @@
 	st = stash
 	f = fetch
 	fa = fetch --all
+  rm = remove
 	rb = rebase
         rbi = "!sh -c \"git rebase -i HEAD~$1\" -"
 	rbc = rebase --continue
