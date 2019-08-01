@@ -5,7 +5,7 @@ Init:         systemd
 DE:           xfce  
 Theme:        Arc-Dark  
 Icons:        Arc  
-Term:         Gnome-Terminal  
+Term:         Gnome-Terminal(Tango colortheme)  
 Def-Font:     Noto Sans  
 Mono-Font:    Inconsolata  
   
