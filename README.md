@@ -10,4 +10,5 @@ Def-Font:     Noto Sans
 Mono-Font:    Inconsolata  
   
   
-Used Apps: polybar, compton, dunst, rofi  
+Used Apps: compton, dunst, rofi  
+Xfce Panel: Applcations Menu, Window Buttons, Seperator, Workspace Switcher, Seperator, Clock, Notification Area, Power Manager Plugin, Seperator, PulseAudio Plugin, Seperator, Action Buttons
