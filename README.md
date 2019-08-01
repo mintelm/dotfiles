@@ -11,4 +11,4 @@ Mono-Font:    Inconsolata
   
   
 Used Apps: compton, dunst, rofi  
-Xfce Panel: Applcations Menu, Window Buttons, Seperator, Workspace Switcher, Seperator, Clock, Notification Area, Power Manager Plugin, Seperator, PulseAudio Plugin, Seperator, Action Buttons
+Xfce Panel: [Applcations Menu, Window Buttons, Seperator, Workspace Switcher, Seperator, Clock, Notification Area, Power Manager Plugin, Seperator, PulseAudio Plugin, Seperator, Action Buttons]
