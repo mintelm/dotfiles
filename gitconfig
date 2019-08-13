@@ -10,6 +10,7 @@
 	ca = commit --amend
 	s = status
 	p = push
+  pf = push -f
 	pl = pull
 	d = diff
 	co = checkout
