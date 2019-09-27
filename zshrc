@@ -54,7 +54,6 @@ COMPLETION_WAITING_DOTS="true"
 plugins=(git zsh-autosuggestions)
 
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg-cyan"
-bindkey '^f' vi-forward-blank-word
 
 # User configuration
 
