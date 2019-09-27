@@ -6,6 +6,7 @@
 
 [alias]
 	a = add
+  ap = add --patch
 	c = commit
 	ca = commit --amend
 	s = status
