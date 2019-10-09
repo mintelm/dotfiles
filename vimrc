@@ -44,9 +44,20 @@ autocmd BufNewFile,BufRead *.c set tabstop=8 | set softtabstop=8 | set shiftwidt
 set cursorline                      " highlight current line
 set showmatch                       " highlight matching [{()}]
 set noshowmode			   	            " dont show --insert-- (as lightline does)
+set scrolloff=5                     " scroll before end of lines
+set sidescrolloff=15                " scroll before side end of lines
 
 colorscheme gruvbox 			          " set color scheme
 set bg=dark
+
+" keybinds
+imap jk <Esc>
+imap kj <Esc>
+
+" remaps
+command W w
+command Wq wq
+command Q q
 
 " highlight characters over 80 line length
 highlight ColorColumn ctermbg=magenta
