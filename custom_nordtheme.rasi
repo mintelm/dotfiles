@@ -7,9 +7,8 @@
     foregroundcolor: #839496;
     foregroundcolorinverse: #839496;
     selectioncolor: #3b4252;
-
-
     font-size: 1px;
+    font: "Noto Sans 18";
     border-color: @separatorcolor;
     background-color: @backgroundcolor;
     text-color: @foregroundcolor;
@@ -24,7 +23,6 @@
     scrollbar: true;
     margin: 0;
     dynamic: true;
-
 }
 
 #window {
