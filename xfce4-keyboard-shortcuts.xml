@@ -34,10 +34,10 @@
       <property name="&lt;Super&gt;e" type="string" value="thunar">
         <property name="startup-notify" type="bool" value="true"/>
       </property>
-      <property name="&lt;Super&gt;r" type="string" value="rofi -show run -theme custom_nordtheme.rasi -lines 7">
+      <property name="&lt;Super&gt;w" type="string" value="startfirefox">
         <property name="startup-notify" type="bool" value="true"/>
       </property>
-      <property name="&lt;Super&gt;w" type="string" value="startfirefox">
+      <property name="&lt;Super&gt;r" type="string" value="rofi -show run -theme custom_sierratheme.rasi -lines 7">
         <property name="startup-notify" type="bool" value="true"/>
       </property>
     </property>
