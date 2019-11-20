@@ -68,7 +68,7 @@ DISABLE_AUTO_UPDATE="true"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git)
+plugins=(gitfast)
 
 ZSH_CACHE_DIR=$HOME/.cache/oh-my-zsh
 if [[ ! -d $ZSH_CACHE_DIR ]]; then
@@ -84,7 +84,9 @@ else
  export EDITOR='nvim'
 fi
 
+export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
+export LANGUAGE=en_US.UTF-8
 export GDK_SCALE=1.5
 
 alias sudo="sudo "
