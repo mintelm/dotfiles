@@ -78,6 +78,7 @@ command Q q
 map <C-b> <Nop>
 map <C-f> :FZF<CR>
 map <C-n> :NERDTreeToggle<CR>
+map <C-k> <Plug>NERDCommenterToggle
 
 " turn off search highlight with <space>
 nnoremap <silent><Space> :nohlsearch<Bar>:echo<CR> 
@@ -128,19 +129,16 @@ if has('nvim')
   " highlight comments in json correctly
   autocmd FileType json syntax match Comment +\/\/.\+$+
 
-  " use <tab> and <s-tab> to navigate through completion
-   function! s:check_back_space() abort
-     let col = col('.') - 1
-     return !col || getline('.')[col - 1]  =~# '\s'
-   endfunction
-   inoremap <silent><expr> <TAB>
-       \ pumvisible() ? "\<C-n>" :
-       \ <SID>check_back_space() ? "\<TAB>" :
-       \ coc#refresh()
-   inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-   let g:coc_snippet_next = '<TAB>'
-   let g:coc_snippet_prev = '<S-TAB>'
+  " use <c-space>for trigger completion
+  inoremap <silent><expr> <c-space> coc#refresh()
 
+  " use <tab> and <s-tab> to navigate through completion
+  inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+  inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+  let g:coc_snippet_next = '<TAB>'
+  let g:coc_snippet_prev = '<S-TAB>'
+
+  " use <cr> to confirm completion
   inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 
   " Use K to show documentation in preview window
