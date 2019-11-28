@@ -26,3 +26,5 @@
 	unstage = reset HEAD --
 [includeIf "gitdir:~/diovision/"]
   path = ~/.gitconfig_diovision
+[includeIf "gitdir:~/uni/"]
+  path = ~/.gitconfig_othr
