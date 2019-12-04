@@ -1,0 +1,30 @@
+{
+    "suggest.floatEnable": true,
+    "suggest.autoTrigger": "none",
+    "suggest.snippetIndicator": "►",
+    "coc.source.around.enable": false,
+    "coc.source.buffer.enable": false,
+    "languageserver": {
+        "ccls": {
+            "command": "ccls",
+            "filetypes": [
+                "c",
+                "cpp",
+                "objc",
+                "objcpp"
+            ],
+            "rootPatterns": [
+                ".ccls",
+                "compile_commands.json",
+                ".vim/",
+                ".git/",
+                ".hg/"
+            ],
+            "initializationOptions": {
+                "cache": {
+                    "directory": "/tmp/ccls"
+                }
+            }
+        }
+    }
+}
