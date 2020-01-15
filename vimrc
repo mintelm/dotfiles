@@ -1,4 +1,4 @@
-" auto install plug
+"{{{ Plugins
 if has('nvim')
   if empty(glob('~/.local/share/nvim/site/autoload/plug.vim'))
     silent !curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs
@@ -13,14 +13,8 @@ else
   endif
 endif
 
-
-" ############################################################################
-" # Plugins
-" ############################################################################
-
 if has('nvim')
   call plug#begin('~/.local/share/nvim/plugged')
-    " code completion (has its own plugins (e.g. sources))
     Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
 else
   call plug#begin('~/.vim/plugged')
@@ -30,16 +24,17 @@ endif
   Plug 'leafgarland/typescript-vim'	          " typescript
   Plug 'lervag/vimtex'			                  " LaTeX support
   Plug 'airblade/vim-gitgutter'               " git info on left bar
+  Plug 'tpope/vim-fugitive'                   " git branch info etc.
   Plug 'junegunn/rainbow_parentheses.vim'     " colored brackets
   Plug 'scrooloose/nerdtree'                  " file explorer
   Plug 'scrooloose/nerdcommenter'             " ez comments
   Plug 'junegunn/fzf'                         " fuzzy finder
 call plug#end()
+"}}}
 
 
-" ############################################################################
-" # Vim Settings
-" ############################################################################
+"{{{ General Settings
+colorscheme gruvbox 			          " set color scheme
 
 syntax enable				                " enable syntax processing
 filetype plugin on			            " allow vim to recognize filetypes
@@ -52,9 +47,6 @@ set tabstop=2				                " number of visual spaces per TAB
 set softtabstop=2		                " number of spaces in tab when editing
 set shiftwidth=2                    " auto indent
 set expandtab			                  " tabs are spaces
-autocmd BufNewFile,BufRead *.c set tabstop=8 | set softtabstop=8 | set shiftwidth=8 | set expandtab!
-autocmd BufNewFile,BufRead *.h set tabstop=8 | set softtabstop=8 | set shiftwidth=8 | set expandtab!
-autocmd BufNewFile,BufRead *.sh set tabstop=8 | set softtabstop=8 | set shiftwidth=8 | set expandtab!
 
 set cursorline                      " highlight current line
 set showmatch                       " highlight matching [{()}]
@@ -62,19 +54,21 @@ set noshowmode			   	            " dont show --insert-- (as lightline does)
 set scrolloff=5                     " scroll before end of lines
 set sidescrolloff=15                " scroll before side end of lines
 
-colorscheme gruvbox 			          " set color scheme
-set bg=dark
-
 " highlight characters over 80 line length
 highlight ColorColumn ctermbg=magenta
 call matchadd('ColorColumn', '\%>80v.\+', 100)
 
-" remaps
+autocmd BufNewFile,BufRead *.c set tabstop=8 | set softtabstop=8 | set shiftwidth=8 | set expandtab!
+autocmd BufNewFile,BufRead *.h set tabstop=8 | set softtabstop=8 | set shiftwidth=8 | set expandtab!
+autocmd BufNewFile,BufRead *.sh set tabstop=8 | set softtabstop=8 | set shiftwidth=8 | set expandtab!
+"}}}
+
+
+"{{{ Remaps and Keybinds
 command W w
 command Wq wq
 command Q q
 
-" keybinds
 map <C-b> <Nop>
 map <C-f> :FZF<CR>
 map <C-n> :NERDTreeToggle<CR>
@@ -82,53 +76,43 @@ map <C-k> <Plug>NERDCommenterToggle
 
 " turn off search highlight with <space>
 nnoremap <silent><Space> :nohlsearch<Bar>:echo<CR> 
+"}}}
 
 
-" ############################################################################
-" # Plugin Settings
-" ############################################################################
-
-" make lightline show CoCStatus
+"{{{ Lightline Configuration
 let g:lightline = {
-      \ 'colorscheme': 'wombat',
+      \ 'colorscheme': 'gruvbox',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'cocstatus', 'readonly', 'filename', 'modified' ] ],
+      \             [ 'cocstatus', 'readonly', 'filename', 'modified' ],
+      \             [ 'gitbranch' ] ],
       \
       \   'right': [ [ 'lineinfo' ],
       \              [ 'percent' ],
-      \              [ 'fileformat', 'fileencoding', 'filetype' ] ]
+      \              [ 'fileformat', 'fileencoding', 'filetype' ],
+      \              [ 'githunks' ] ]
       \ },
       \ 'component_function': {
       \   'cocstatus': 'coc#status',
+      \   'githunks': 'GitStatus',
+      \   'gitbranch': 'FugitiveHead',
       \ },
 \ }
 
+function! GitStatus()
+  if !get(g:, 'gitgutter_enabled', 0) || empty(FugitiveHead())
+    return ''
+  endif
+  let [ l:added, l:modified, l:removed ] = GitGutterGetHunkSummary()
+  return printf('~%d +%d -%d', l:modified, l:added, l:removed)
+endfunction
+
 " to make sure lightline shows up
 set laststatus=2
-
-" settings for vimtex
-let g:tex_flavor='latex'
-let g:tex_conceal='abdmg'
-set conceallevel=2
-
-" colored brackets
-au VimEnter * RainbowParentheses
-
-" Add spaces after comment delimiters by default
-let g:NERDSpaceDelims = 1
-" Use compact syntax for prettified multi-line comments
-let g:NERDCompactSexyComs = 1
-" Enable trimming of trailing whitespace when uncommenting
-let g:NERDTrimTrailingWhitespace = 1
-" Enable NERDCommenterToggle to check all selected lines is commented or not 
-let g:NERDToggleCheckAllLines = 1
+"}}}
 
 
-" ############################################################################
-" # CoC Settings
-" ############################################################################
-
+"{{{ Coc Configuration
 if has('nvim')
   " highlight comments in json correctly
   autocmd FileType json syntax match Comment +\/\/.\+$+
@@ -170,3 +154,24 @@ if has('nvim')
   set signcolumn=yes
 
 endif
+"}}}
+
+
+"{{{ Other Plugins
+" settings for vimtex
+let g:tex_flavor='latex'
+let g:tex_conceal='abdmg'
+set conceallevel=2
+
+" colored brackets
+au VimEnter * RainbowParentheses
+
+" Add spaces after comment delimiters by default
+let g:NERDSpaceDelims = 1
+" Use compact syntax for prettified multi-line comments
+let g:NERDCompactSexyComs = 1
+" Enable trimming of trailing whitespace when uncommenting
+let g:NERDTrimTrailingWhitespace = 1
+" Enable NERDCommenterToggle to check all selected lines is commented or not 
+let g:NERDToggleCheckAllLines = 1
+"}}}
