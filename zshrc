@@ -91,11 +91,11 @@ export GDK_SCALE=1.5
 
 alias sudo="sudo "
 alias vim="nvim"
-alias lock="xflock4"
+alias lock="i3lock-fancy-multimonitor -n -p"
 alias open="xdg-open"
-alias ll="lsd -l"
-alias lla="lsd -la"
-alias lt="lsd --tree"
+alias ll="exa --icons -l"
+alias lla="exa --icons -la"
+alias lt="exa --icons --tree --level=5"
 
 bindkey '^R' history-incremental-pattern-search-backward
 
