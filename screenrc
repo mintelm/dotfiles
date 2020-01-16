@@ -1,0 +1,17 @@
+# remap escape from ctrl-a to ctrl-b
+escape ^Bb
+
+startup_message off
+
+vbell off
+
+# statusline
+hardstatus off
+hardstatus alwayslastline
+hardstatus string '%{= Kd} %{= Kd}%-w%{= Kr}[%{= KW}%n %t%{= Kr}]%{= Kd}%+w %-= %{KG} %H%{KW}|%{KY}%101`%{KW}|%D %M %d %Y%{= Kc} %C%A%{-}'
+
+# start at window 1
+bind c screen 1
+bind ^c screen 1
+bind 0 select 10                                                            
+screen 1
