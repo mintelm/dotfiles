@@ -1,43 +1,40 @@
 "{{{ Plugins
 if empty(glob('~/.local/share/nvim/site/autoload/plug.vim'))
-  silent !curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs
-    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-  autocmd VimEnter * PlugInstall --sync | source ~/.config/nvim/init.vim 
+    silent !curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs
+        \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    autocmd VimEnter * PlugInstall --sync | source ~/.config/nvim/init.vim
 endif
 
 call plug#begin('~/.local/share/nvim/plugged')
-  Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
-  Plug 'morhetz/gruvbox' 	                    " color scheme
-  Plug 'itchyny/lightline.vim'		            " bottom info bar
-  Plug 'leafgarland/typescript-vim'	          " typescript
-  Plug 'lervag/vimtex'			                  " LaTeX support
-  Plug 'airblade/vim-gitgutter'               " git info on left bar
-  Plug 'tpope/vim-fugitive'                   " git branch info etc.
-  Plug 'junegunn/rainbow_parentheses.vim'     " colored brackets
-  Plug 'scrooloose/nerdtree'                  " file explorer
-  Plug 'scrooloose/nerdcommenter'             " ez comments
-  Plug 'junegunn/fzf'                         " fuzzy finder
+    Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
+    Plug 'morhetz/gruvbox'			" color scheme
+    Plug 'itchyny/lightline.vim'		          " bottom info bar
+    Plug 'leafgarland/typescript-vim'	          " typescript
+    Plug 'lervag/vimtex'			              " LaTeX support
+    Plug 'airblade/vim-gitgutter'               " git info on left bar
+    Plug 'tpope/vim-fugitive'                   " git branch info etc.
+    Plug 'junegunn/rainbow_parentheses.vim'     " colored brackets
+    Plug 'scrooloose/nerdtree'                  " file explorer
+    Plug 'scrooloose/nerdcommenter'             " ez comments
+    Plug 'junegunn/fzf'                         " fuzzy finder
 call plug#end()
 "}}}
 
 
 "{{{ General Settings
-colorscheme gruvbox 			          " set color scheme
+colorscheme gruvbox 			    " set color scheme
 
-syntax enable				                " enable syntax processing
-filetype plugin on			            " allow vim to recognize filetypes
-set number 				                  " activate line numbers	
+syntax enable				        " enable syntax processing
+filetype plugin on			        " allow vim to recognize filetypes
+set number 				            " activate line numbers
 set relativenumber                  " relative numbers from current line
-set termguicolors 			            " activate 256 color support
+set termguicolors 			        " activate 256 color support
 set mouse=a
 
-set tabstop=4					" number of visual spaces per TAB
-set shiftwidth=4				" auto indent
-set expandtab					" tabs are spaces
 
 set cursorline                      " highlight current line
 set showmatch                       " highlight matching [{()}]
-set noshowmode			   	            " dont show --insert-- (as lightline does)
+set noshowmode			   	        " dont show --insert-- (as lightline does)
 set scrolloff=5                     " scroll before end of lines
 set sidescrolloff=15                " scroll before side end of lines
 
@@ -68,30 +65,30 @@ nnoremap <silent><Space> :nohlsearch<Bar>:echo<CR>
 
 "{{{ Lightline Configuration
 let g:lightline = {
-      \ 'colorscheme': 'gruvbox',
-      \ 'active': {
-      \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'cocstatus', 'readonly', 'filename', 'modified' ],
-      \             [ 'gitbranch' ] ],
-      \
-      \   'right': [ [ 'lineinfo' ],
-      \              [ 'percent' ],
-      \              [ 'fileformat', 'fileencoding', 'filetype' ],
-      \              [ 'githunks' ] ]
-      \ },
-      \ 'component_function': {
-      \   'cocstatus': 'coc#status',
-      \   'githunks': 'GitStatus',
-      \   'gitbranch': 'FugitiveHead',
-      \ },
+    \ 'colorscheme': 'gruvbox',
+    \ 'active': {
+    \   'left': [ [ 'mode', 'paste' ],
+    \             [ 'cocstatus', 'readonly', 'filename', 'modified' ],
+    \             [ 'gitbranch' ] ],
+    \
+    \   'right': [ [ 'lineinfo' ],
+    \              [ 'percent' ],
+    \              [ 'fileformat', 'fileencoding', 'filetype' ],
+    \              [ 'githunks' ] ]
+    \ },
+    \ 'component_function': {
+    \   'cocstatus': 'coc#status',
+    \   'githunks': 'GitStatus',
+    \   'gitbranch': 'FugitiveHead',
+    \ },
 \ }
 
 function! GitStatus()
-  if !get(g:, 'gitgutter_enabled', 0) || empty(FugitiveHead())
-    return ''
-  endif
-  let [ l:added, l:modified, l:removed ] = GitGutterGetHunkSummary()
-  return printf('~%d +%d -%d', l:modified, l:added, l:removed)
+    if !get(g:, 'gitgutter_enabled', 0) || empty(FugitiveHead())
+        return ''
+    endif
+    let [ l:added, l:modified, l:removed ] = GitGutterGetHunkSummary()
+    return printf('~%d +%d -%d', l:modified, l:added, l:removed)
 endfunction
 
 " to make sure lightline shows up
@@ -117,11 +114,11 @@ inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 
 " Use K to show documentation in preview window
 function! s:show_documentation()
-  if (index(['vim','help'], &filetype) >= 0)
-    execute 'h '.expand('<cword>')
-  else
-    call CocAction('doHover')
-  endif
+    if (index(['vim','help'], &filetype) >= 0)
+        execute 'h '.expand('<cword>')
+    else
+        call CocAction('doHover')
+    endif
 endfunction
 nnoremap <silent> K :call <SID>show_documentation()<CR>
 
