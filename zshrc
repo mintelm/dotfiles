@@ -1,104 +1,90 @@
-# If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:/usr/local/bin:$PATH
+# {{{ GENERAL
+HISTFILE=~/.zsh_history
+HISTSIZE=10000
+SAVEHIST=10000
+setopt appendhistory
+set -o emacs
+bindkey "^[[3~" delete-char
+# }}}
 
-# Path to your oh-my-zsh installation.
-ZSH=/usr/share/oh-my-zsh/
 
-# Set name of the theme to load --- if set to "random", it will
-# load a random theme each time oh-my-zsh is loaded, in which case,
-# to know which specific one was loaded, run: echo $RANDOM_THEME
-# See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-ZSH_THEME="robbyrussell"
+# {{{ PROMPT
+autoload -U colors && colors
+setopt PROMPT_SUBST
 
-# Set list of themes to pick from when loading at random
-# Setting this variable when ZSH_THEME=random will cause zsh to load
-# a theme from this variable instead of looking in ~/.oh-my-zsh/themes/
-# If set to an empty array, this variable will have no effect.
-# ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
+git_branch() {
+  git symbolic-ref --short HEAD 2> /dev/null | sed 's/.*/ (&)/'
+}
+git_dirty() {
+  [[ $(git diff --shortstat 2> /dev/null | tail -n1) != "" ]] && echo "*"
+}
 
-# Uncomment the following line to use case-sensitive completion.
-# CASE_SENSITIVE="true"
+TOKEN="{}"
+PROMPT="%(?:%{$fg_bold[green]%}$TOKEN :%{$fg_bold[red]%}$TOKEN )"
+PROMPT+='%{$fg[cyan]%}%c%{$fg[red]%}$(git_branch)%{$fg[yellow]%}$(git_dirty)%{$reset_color%} '
+# }}}
 
-# Uncomment the following line to use hyphen-insensitive completion.
-# Case-sensitive completion must be off. _ and - will be interchangeable.
-# HYPHEN_INSENSITIVE="true"
 
-# Uncomment the following line to disable bi-weekly auto-update checks.
-DISABLE_AUTO_UPDATE="true"
+# {{{ FUZZY FINDER 
+autoload -Uz compinit && compinit
+zstyle ':completion:*' menu select
+zstyle ':completion:*' matcher-list '' \
+  'm:{a-z\-}={A-Z\_}' \
+  'r:[^[:alpha:]]||[[:alpha:]]=** r:|=* m:{a-z\-}={A-Z\_}' \
+  'r:|?=** m:{a-z\-}={A-Z\_}'
+# }}}
 
-# Uncomment the following line to automatically update without prompting.
-# DISABLE_UPDATE_PROMPT="true"
 
-# Uncomment the following line to change how often to auto-update (in days).
-# export UPDATE_ZSH_DAYS=13
+# {{{ EXPORTS
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
+export LANGUAGE=en_US.UTF-8
 
-# Uncomment the following line if pasting URLs and other text is messed up.
-# DISABLE_MAGIC_FUNCTIONS=true
-
-# Uncomment the following line to disable colors in ls.
-# DISABLE_LS_COLORS="true"
-
-# Uncomment the following line to disable auto-setting terminal title.
-# DISABLE_AUTO_TITLE="true"
-
-# Uncomment the following line to enable command auto-correction.
-# ENABLE_CORRECTION="true"
-
-# Uncomment the following line to display red dots whilst waiting for completion.
-# COMPLETION_WAITING_DOTS="true"
-
-# Uncomment the following line if you want to disable marking untracked files
-# under VCS as dirty. This makes repository status check for large repositories
-# much, much faster.
-# DISABLE_UNTRACKED_FILES_DIRTY="true"
-
-# Uncomment the following line if you want to change the command execution time
-# stamp shown in the history command output.
-# You can set one of the optional three formats:
-# "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
-# or set a custom format using the strftime function format specifications,
-# see 'man strftime' for details.
-# HIST_STAMPS="mm/dd/yyyy"
-
-# Would you like to use another custom folder than $ZSH/custom?
-# ZSH_CUSTOM=/path/to/new-custom-folder
-
-# Which plugins would you like to load?
-# Standard plugins can be found in ~/.oh-my-zsh/plugins/*
-# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
-# Add wisely, as too many plugins slow down shell startup.
-plugins=(gitfast)
-
-ZSH_CACHE_DIR=$HOME/.cache/oh-my-zsh
-if [[ ! -d $ZSH_CACHE_DIR ]]; then
-  mkdir $ZSH_CACHE_DIR
-fi
-source $ZSH/oh-my-zsh.sh
-
-# User configuration
 
 if [[ -n $SSH_CONNECTION ]]; then
  export EDITOR='vim'
 else
  export EDITOR='nvim'
 fi
+# }}}
 
-export LC_ALL=en_US.UTF-8
-export LANG=en_US.UTF-8
-export LANGUAGE=en_US.UTF-8
-export GDK_SCALE=1.5
 
+# {{{ KEYBINDS
+bindkey '^R' history-incremental-pattern-search-backward
+# }}}
+
+
+# {{{ ALIASES
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
 alias sudo="sudo "
-alias vim="nvim"
 alias lock="i3lock-fancy-multimonitor -n -p"
 alias open="xdg-open"
-alias ll="exa --icons -l"
-alias lla="exa --icons -la"
-alias lt="exa --icons --tree --level=5"
+alias grep='grep  --color=auto --exclude-dir={.bzr,CVS,.git,.hg,.svn}'
+alias wttr="curl wttr.in/regensburg"
 
-bindkey '^R' history-incremental-pattern-search-backward
+if [ -x "$(command -v nvim)" ]; then
+  alias vim="nvim"
+fi
 
-# both plugins in arch repositories now -> source them
-source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+if [ -x "$(command -v exa)" ]; then
+  alias ls="exa "
+  alias ll="exa --icons -l"
+  alias lla="exa --icons -la"
+  alias llg="exa --git --git-ignore --no-permissions --no-filesize --no-user -l"
+  alias lt="exa --icons --tree --level=5"
+else
+  alias ls="ls --color=tty"
+  alias ll="ls --color=tty -lh"
+  alias lla="ls --color=tty -lah"
+fi
+# }}}
+
+
+# {{{ SOURCING
+[ -d "/usr/share/zsh/plugins/zsh-syntax-highlighting" ] && \
+  source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+[ -d "/usr/share/zsh/plugins/zsh-autosuggestions" ] && \
+  source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+# }}}
