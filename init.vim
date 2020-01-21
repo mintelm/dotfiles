@@ -1,24 +1,12 @@
 "{{{ Plugins
-if has('nvim')
-  if empty(glob('~/.local/share/nvim/site/autoload/plug.vim'))
-    silent !curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs
-      \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-    autocmd VimEnter * PlugInstall --sync | source ~/.config/nvim/init.vim 
-  endif
-else
-  if empty(glob('~/.vim/autoload/plug.vim'))
-    silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
-      \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-    autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
-  endif
+if empty(glob('~/.local/share/nvim/site/autoload/plug.vim'))
+  silent !curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall --sync | source ~/.config/nvim/init.vim 
 endif
 
-if has('nvim')
-  call plug#begin('~/.local/share/nvim/plugged')
-    Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
-else
-  call plug#begin('~/.vim/plugged')
-endif
+call plug#begin('~/.local/share/nvim/plugged')
+  Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
   Plug 'morhetz/gruvbox' 	                    " color scheme
   Plug 'itchyny/lightline.vim'		            " bottom info bar
   Plug 'leafgarland/typescript-vim'	          " typescript
@@ -113,47 +101,44 @@ set laststatus=2
 
 
 "{{{ Coc Configuration
-if has('nvim')
-  " highlight comments in json correctly
-  autocmd FileType json syntax match Comment +\/\/.\+$+
+" highlight comments in json correctly
+autocmd FileType json syntax match Comment +\/\/.\+$+
 
-  " use <c-space>for trigger completion
-  inoremap <silent><expr> <c-space> coc#refresh()
+" use <c-space>for trigger completion
+inoremap <silent><expr> <c-space> coc#refresh()
 
-  " use <tab> and <s-tab> to navigate through completion
-  inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-  inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-  let g:coc_snippet_next = '<TAB>'
-  let g:coc_snippet_prev = '<S-TAB>'
+" use <tab> and <s-tab> to navigate through completion
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+let g:coc_snippet_next = '<TAB>'
+let g:coc_snippet_prev = '<S-TAB>'
 
-  " use <cr> to confirm completion
-  inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+" use <cr> to confirm completion
+inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 
-  " Use K to show documentation in preview window
-  function! s:show_documentation()
-    if (index(['vim','help'], &filetype) >= 0)
-      execute 'h '.expand('<cword>')
-    else
-      call CocAction('doHover')
-    endif
-  endfunction
-  nnoremap <silent> K :call <SID>show_documentation()<CR>
+" Use K to show documentation in preview window
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfunction
+nnoremap <silent> K :call <SID>show_documentation()<CR>
 
-  " if hidden is not set, TextEdit might fail.
-  set hidden
-  " Some server have issues with backup files, see #649
-  set nobackup
-  set nowritebackup
-  " better display for messagers
-  " set cmdheight=2
-  " Smaller updatetime for CursorHold & CursorHoldI
-  set updatetime=300
-  " don't give |ins-completion-menu| messages.
-  set shortmess+=c
-  " always show signcolumns
-  set signcolumn=yes
-
-endif
+" if hidden is not set, TextEdit might fail.
+set hidden
+" Some server have issues with backup files, see #649
+set nobackup
+set nowritebackup
+" better display for messagers
+" set cmdheight=2
+" Smaller updatetime for CursorHold & CursorHoldI
+set updatetime=300
+" don't give |ins-completion-menu| messages.
+set shortmess+=c
+" always show signcolumns
+set signcolumn=yes
 "}}}
 
 
