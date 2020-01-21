@@ -31,10 +31,9 @@ set relativenumber                  " relative numbers from current line
 set termguicolors 			            " activate 256 color support
 set mouse=a
 
-set tabstop=2				                " number of visual spaces per TAB
-set softtabstop=2		                " number of spaces in tab when editing
-set shiftwidth=2                    " auto indent
-set expandtab			                  " tabs are spaces
+set tabstop=4					" number of visual spaces per TAB
+set shiftwidth=4				" auto indent
+set expandtab					" tabs are spaces
 
 set cursorline                      " highlight current line
 set showmatch                       " highlight matching [{()}]
@@ -46,9 +45,9 @@ set sidescrolloff=15                " scroll before side end of lines
 highlight ColorColumn ctermbg=magenta
 call matchadd('ColorColumn', '\%>80v.\+', 100)
 
-autocmd BufNewFile,BufRead *.c set tabstop=8 | set softtabstop=8 | set shiftwidth=8 | set expandtab!
-autocmd BufNewFile,BufRead *.h set tabstop=8 | set softtabstop=8 | set shiftwidth=8 | set expandtab!
-autocmd BufNewFile,BufRead *.sh set tabstop=8 | set softtabstop=8 | set shiftwidth=8 | set expandtab!
+autocmd BufNewFile,BufRead *.c set tabstop=8 | set shiftwidth=8 | set expandtab!
+autocmd BufNewFile,BufRead *.h set tabstop=8 | set shiftwidth=8 | set expandtab!
+autocmd BufNewFile,BufRead *.sh set tabstop=8 | set shiftwidth=8 | set expandtab!
 "}}}
 
 
