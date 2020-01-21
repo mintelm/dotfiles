@@ -5,6 +5,8 @@ SAVEHIST=10000
 setopt appendhistory
 set -o emacs
 bindkey "^[[3~" delete-char
+eval "$(dircolors)"
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 # }}}
 
 
