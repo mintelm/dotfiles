@@ -247,7 +247,9 @@ globalkeys = gears.table.join(
     awful.key({ modkey,           }, "c", function () awful.spawn(calculator) end,
               {description = "open calculator", group = "launcher"}),
     awful.key({ modkey },            "r",     function () awful.spawn("rofi -show run -theme custom_adapta_theme.rasi -lines 7") end,
-              {description = "open prompt", group = "launcher"})
+              {description = "open prompt", group = "launcher"}),
+    awful.key({ modkey,           }, "p", function () awful.spawn("scrot") end,
+              {description = "take screenshot", group = "launcher"})
 )
 
 -- client manipulation
