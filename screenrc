@@ -8,7 +8,7 @@ vbell off
 # statusline
 hardstatus off
 hardstatus alwayslastline
-hardstatus string '%{= Kd} %{= Kd}%-w%{= Kr}[%{= KW}%n %t%{= Kr}]%{= Kd}%+w %-= %{KG} %H%{KW}|%{KY}%101`%{KW}|%D %M %d %Y%{= Kc} %C%A%{-}'
+hardstatus string '%{= Kd}%-w%{= Kr}[%{= KW}%n %t%{= Kr}]%{= Kd}%+w %-= %{= Kc}%?%E*%?  %{KG}%H  %{KW}%D %M %d, %0c '
 
 # start at window 1
 bind c screen 1
