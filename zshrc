@@ -5,6 +5,7 @@ SAVEHIST=10000
 setopt appendhistory
 set -o emacs
 bindkey "^[[3~" delete-char
+bindkey '^[[Z' reverse-menu-complete
 eval "$(dircolors)"
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 # }}}
