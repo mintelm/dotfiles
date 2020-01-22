@@ -50,14 +50,17 @@ autocmd BufNewFile,BufRead *.sh set tabstop=8 | set shiftwidth=8 | set softtabst
 
 
 " {{{ MAPS AND KEYBINDS
+let mapleader = ","
+
 command W w
 command Wq wq
 command Q q
 
 map <C-b> <Nop>
-map <C-f> :FZF<CR>
-map <C-n> :NERDTreeToggle<CR>
-map <C-k> <Plug>NERDCommenterToggle
+map <C-f> <Nop>
+map <leader>f :FZF<CR>
+map <leader>n :NERDTreeToggle<CR>
+map <leader>k <Plug>NERDCommenterToggle
 
 " turn off search highlight with <space>
 nnoremap <silent><Space> :nohlsearch<Bar>:echo<CR> 
