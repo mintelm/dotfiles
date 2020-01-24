@@ -54,6 +54,7 @@ command W w
 command Wq wq
 command Q q
 
+imap jj <Esc>
 map <C-b> <Nop>
 map <C-f> <Nop>
 map <leader>f :FZF<CR>
