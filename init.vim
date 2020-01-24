@@ -9,11 +9,8 @@ call plug#begin('~/.local/share/nvim/plugged')
     Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
     Plug 'morhetz/gruvbox'                      " color scheme
     Plug 'itchyny/lightline.vim'                " bottom info bar
-    Plug 'leafgarland/typescript-vim'           " typescript
-    Plug 'lervag/vimtex'                        " LaTeX support
     Plug 'airblade/vim-gitgutter'               " git info on left bar
     Plug 'tpope/vim-fugitive'                   " git branch info etc.
-    Plug 'junegunn/rainbow_parentheses.vim'     " colored brackets
     Plug 'scrooloose/nerdtree'                  " file explorer
     Plug 'scrooloose/nerdcommenter'             " ez comments
     Plug 'junegunn/fzf'                         " fuzzy finder
@@ -137,12 +134,6 @@ nnoremap <silent> K :call <SID>show_documentation()<CR>
 
 
 " {{{ OTHER PLUGINS
-let g:tex_flavor='latex'            " settings for vimtex
-let g:tex_conceal='abdmg'           " settings for vimtex
-set conceallevel=2                  " settings for vimtex
-
-au VimEnter * RainbowParentheses    " colored brackets
-
 " Add spaces after comment delimiters by default
 let g:NERDSpaceDelims = 1
 " Use compact syntax for prettified multi-line comments
