@@ -55,6 +55,10 @@ command Wq wq
 command Q q
 
 imap jj <Esc>
+vnoremap ; :
+vnoremap : ;
+nnoremap ; :
+nnoremap : ;
 map <C-b> <Nop>
 map <C-f> <Nop>
 map <leader>f :FZF<CR>
