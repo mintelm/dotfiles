@@ -1,5 +1,5 @@
 # {{{ GENERAL
-HISTFILE=~/.zsh_history
+HISTFILE=~/.cache/zsh_history
 HISTSIZE=10000
 SAVEHIST=10000
 setopt appendhistory
