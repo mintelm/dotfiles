@@ -83,12 +83,11 @@ let g:lightline = {
     \ 'active': {
     \   'left': [ [ 'mode', 'paste' ],
     \             [ 'cocstatus', 'readonly', 'filename', 'modified' ],
-    \             [ 'gitbranch' ] ],
+    \             [ 'gitbranch', 'githunks' ] ],
     \
     \   'right': [ [ 'lineinfo' ],
     \              [ 'percent' ],
-    \              [ 'fileformat', 'fileencoding', 'filetype' ],
-    \              [ 'githunks' ] ]
+    \              [ 'fileformat', 'fileencoding', 'filetype' ] ],
     \ },
     \ 'component_function': {
     \   'cocstatus': 'coc#status',
