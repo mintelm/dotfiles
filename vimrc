@@ -21,6 +21,7 @@ call plug#end()
 " {{{ GENERAL
 set tabstop=4 | set shiftwidth=4 | set softtabstop=4 | set expandtab
 
+set background=dark
 colorscheme gruvbox             " set color scheme
 
 syntax enable                   " enable syntax processing
