@@ -61,6 +61,10 @@ map <C-f> <Nop>
 map <leader>f :FZF<CR>
 map <leader>n :NERDTreeToggle<CR>
 map <leader>k <Plug>NERDCommenterToggle
+map <leader>gv :GitGutterPreviewHunk<CR>
+map <leader>gj :GitGutterNextHunk<CR>
+map <leader>gk :GitGutterPrevHunk<CR>
+map <leader>gs :Gstatus<CR>
 
 " turn off search highlight with <space>
 nnoremap <silent><Space> :nohlsearch<Bar>:echo<CR> 
