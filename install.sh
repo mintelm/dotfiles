@@ -14,6 +14,7 @@ done
 # standard
 ln -sv$force $PWD/zshrc ~/.zshrc
 ln -sv$force $PWD/vimrc ~/.vimrc
+ln -sv$force $PWD/coc-settings.json ~/.vim/coc-settings.json
 ln -sv$force $PWD/alacritty.yml ~/.config/alacritty.yml
 ln -sv$force $PWD/tmux.conf ~/.tmux.conf
 ln -sv$force $PWD/screenrc ~/.screenrc
