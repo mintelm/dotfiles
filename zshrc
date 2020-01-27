@@ -66,6 +66,7 @@ alias lock="i3lock-fancy-multimonitor -n -p"
 alias open="xdg-open"
 alias grep='grep  --color=auto --exclude-dir={.bzr,CVS,.git,.hg,.svn}'
 alias wttr="curl wttr.in/regensburg"
+alias vvim="vim"
 
 if [ -x "$(command -v nvim)" ]; then
   alias vim="nvim"
