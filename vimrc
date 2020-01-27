@@ -61,9 +61,15 @@ map <leader>f :FZF<CR>
 map <leader>n :NERDTreeToggle<CR>
 map <leader>k <Plug>NERDCommenterToggle
 map <leader>gv :GitGutterPreviewHunk<CR>
-map <leader>gj :GitGutterNextHunk<CR>
-map <leader>gk :GitGutterPrevHunk<CR>
+map <leader>gn :GitGutterNextHunk<CR>
+map <leader>gN :GitGutterPrevHunk<CR>
 map <leader>gs :Gstatus<CR>
+
+" Remap keys for gotos
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
 
 " turn off search highlight with <space>
 nnoremap <silent><Space> :nohlsearch<Bar>:echo<CR> 
