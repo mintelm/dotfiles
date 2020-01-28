@@ -21,6 +21,7 @@ ln -sv$force $PWD/screenrc ~/.screenrc
 ln -sv$force $PWD/gitconfig ~/.gitconfig
 ln -sv$force $PWD/compton.conf ~/.config/compton.conf
 ln -sv$force $PWD/themes/rofi/* ~/.config/rofi/
+ln -sv$force $PWD/themes/oomox/* ~/.config/oomox/colors/
 
 # nvim
 if [[ -d ~/.config/nvim ]]; then
