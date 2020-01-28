@@ -162,17 +162,26 @@ awful.screen.connect_for_each_screen(function(s)
 
     s.mywibox = awful.wibar({ position = "top", screen = s, bg = beautiful.wibar_bg, height = beautiful.wibar_height})
 
+    local vert_sep = wibox.widget {
+        widget = wibox.widget.separator,
+        orientation = "vertical",
+        forced_width = 10,
+        color = "#A89984",
+    }
+
     s.mywibox:setup {
         layout = wibox.layout.align.horizontal,
         { -- Left widgets
             layout = wibox.layout.fixed.horizontal,
             s.mytaglist,
+            vert_sep,
         },
         -- Middle widgets
         s.mytasklist,
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
             wibox.widget.systray(),
+            vert_sep,
             mytextclock,
             s.mylayoutbox,
         },
