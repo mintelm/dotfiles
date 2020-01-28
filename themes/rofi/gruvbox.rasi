@@ -4,9 +4,9 @@
     backgroundcoloralternate: #282828;
     separatorcolor: #29353b;
     scrollbarcolor: #29353b;
-    foregroundcolor: #cfd8dc;
-    foregroundcolorinverse: #cfd8dc;
-    selectioncolor: #ff7043;
+    foregroundcolor: #ebdbb2;
+    foregroundcolorinverse: #ebdbb2;
+    selectioncolor: #fe8019;
     font-size: 1px;
     font: "Noto Sans 18";
     border-color: @separatorcolor;
