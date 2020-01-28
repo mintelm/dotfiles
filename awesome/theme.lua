@@ -14,7 +14,7 @@ local theme = {}
 theme.font          = "noto sans display medium 8"
 theme.clock_font    = "noto sans display bold 10"
 
-theme.bg_normal     = "#29353b"
+theme.bg_normal     = "#3c3836"
 theme.bg_focus      = "#282828"
 theme.bg_urgent     = "#ff0000"
 theme.bg_minimize   = "#444444"
