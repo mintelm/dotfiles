@@ -166,7 +166,7 @@ awful.screen.connect_for_each_screen(function(s)
         widget = wibox.widget.separator,
         orientation = "vertical",
         forced_width = 10,
-        color = "#A89984",
+        color = beautiful.fg_normal
     }
 
     s.mywibox:setup {
@@ -183,7 +183,6 @@ awful.screen.connect_for_each_screen(function(s)
             wibox.widget.systray(),
             vert_sep,
             mytextclock,
-            s.mylayoutbox,
         },
     }
 end)
