@@ -3,11 +3,20 @@ HISTFILE=~/.cache/zsh_history
 HISTSIZE=10000
 SAVEHIST=10000
 setopt appendhistory
+
 set -o emacs
-bindkey "^[[3~" delete-char
-bindkey '^[[Z' reverse-menu-complete
+
+case $TERM in
+  xterm*)
+    precmd () {print -Pn "\e]0;%~\a"}
+    ;;
+esac
+
 eval "$(dircolors)"
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+
+bindkey "^[[3~" delete-char
+bindkey '^[[Z' reverse-menu-complete
 # }}}
 
 
