@@ -8,6 +8,8 @@ local naughty = require("naughty")
 local menubar = require("menubar")
 local hotkeys_popup = require("awful.hotkeys_popup")
 
+local battery = require("awm-widgets.battery")
+
 require("awful.autofocus")
 require("awful.hotkeys_popup.keys")
 
@@ -180,7 +182,10 @@ awful.screen.connect_for_each_screen(function(s)
         s.mytasklist,
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
+            vert_sep,
             wibox.widget.systray(),
+            vert_sep,
+            battery(),
             vert_sep,
             mytextclock,
         },
