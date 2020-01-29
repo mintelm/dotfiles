@@ -112,7 +112,7 @@ awful.screen.connect_for_each_screen(function(s)
     set_wallpaper(s)
 
     awful.tag.add("", {
-      icon              = awful.util.get_configuration_dir() .. "icons/code-braces.png",
+      icon              = awful.util.get_configuration_dir() .. "icons/code-braces-colored.png",
       layout            = awful.layout.suit.tile,
       selected          = true,
       gap_single_client = false,
@@ -120,21 +120,21 @@ awful.screen.connect_for_each_screen(function(s)
       expand            = "none",
     })
     awful.tag.add("", {
-      icon              = awful.util.get_configuration_dir() .. "icons/firefox.png",
+      icon              = awful.util.get_configuration_dir() .. "icons/firefox-colored.png",
       layout            = awful.layout.suit.tile,
       gap_single_client = false,
       screen            = s,
       expand            = "none",
     })
     awful.tag.add("", {
-      icon              = awful.util.get_configuration_dir() .. "icons/text-file.png",
+      icon              = awful.util.get_configuration_dir() .. "icons/text-file-colored.png",
       layout            = awful.layout.suit.tile,
       gap_single_client = false,
       screen            = s,
       expand            = "none",
     })
     awful.tag.add("", {
-      icon              = awful.util.get_configuration_dir() .. "icons/flask.png",
+      icon              = awful.util.get_configuration_dir() .. "icons/flask-colored.png",
       layout            = awful.layout.suit.tile,
       gap_single_client = false,
       screen            = s,
