@@ -11,7 +11,7 @@ local hotkeys_popup = require("awful.hotkeys_popup")
 require("awful.autofocus")
 require("awful.hotkeys_popup.keys")
 
-awful.spawn.with_shell("~/.config/awesome/autorun.sh")
+awful.spawn.with_shell("~/.config/awesome/scripts/autorun.sh")
 
 -- {{{ Error handling
 if awesome.startup_errors then
