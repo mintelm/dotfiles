@@ -67,9 +67,6 @@ bindkey '^R' history-incremental-pattern-search-backward
 
 
 # {{{ ALIASES
-alias ..='cd ..'
-alias ...='cd ../..'
-alias ....='cd ../../..'
 alias sudo="sudo "
 alias lock="i3lock-fancy-multimonitor -n -p"
 alias open="xdg-open"
