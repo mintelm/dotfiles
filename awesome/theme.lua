@@ -1,7 +1,3 @@
----------------------------
--- Default awesome theme --
----------------------------
-
 local theme_assets = require("beautiful.theme_assets")
 local xresources = require("beautiful.xresources")
 local dpi = xresources.apply_dpi
@@ -18,25 +14,30 @@ theme.bg_normal     = "#3c3836"
 theme.bg_focus      = "#282828"
 theme.bg_urgent     = "#ff0000"
 theme.bg_minimize   = "#444444"
-theme.bg_systray    = theme.bg_normal
+theme.bg_systray    = theme.bg_focus
+
+theme.tasklist_bg_normal    = theme.bg_focus
+theme.tasklist_bg_focus     = theme.bg_normal
 
 theme.fg_normal     = "#ebdbb2"
 theme.fg_focus      = "#fbf1c7"
 theme.fg_urgent     = "#fbf1c7"
 theme.fg_minimize   = "#fbf1c7"
 
-theme.useless_gap   = dpi(4)
-theme.border_width  = 0
-theme.border_normal = "#000000"
-theme.border_focus  = "#a89984"
+theme.useless_gap   = dpi(7)
+theme.border_width  = dpi(2)
+theme.border_normal = theme.bg_focus
+theme.border_focus  = "#fe8019"
 theme.border_marked = "#91231c"
+theme.fullscreen_hide_border = true
+theme.maximized_hide_border  = true
 
 theme.wibar_bg      = theme.bg_focus
 theme.wibar_height  = 32
 
-theme.taglist_bg_focus = "#fe8019"
+theme.bar_width = dpi(3)
 
-theme.bg_systray    = theme.bg_focus
+theme.taglist_bg_focus = "#fe8019"
 
 -- Generate taglist squares:
 local taglist_square_size = dpi(4)
