@@ -234,7 +234,13 @@ globalkeys = gears.table.join(
     awful.key({ modkey },            "r",     function () awful.spawn("rofi -show run -theme gruvbox.rasi -lines 7") end,
               {description = "open prompt", group = "launcher"}),
     awful.key({ modkey,           }, "p", function () awful.spawn("scrot") end,
-              {description = "take screenshot", group = "launcher"})
+              {description = "take screenshot", group = "launcher"}),
+
+    -- Brightness
+    awful.key({ }, "XF86MonBrightnessUp", function () awful.util.spawn("brightnessctl s 10%+") end,
+              {description = "increase brightness", group = "screen"}),
+    awful.key({ }, "XF86MonBrightnessDown", function () awful.util.spawn("brightnessctl s 10%-") end,
+              {description = "decrease brightness", group = "screen"})
 )
 
 -- client manipulation
