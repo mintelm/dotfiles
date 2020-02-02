@@ -117,28 +117,28 @@ awful.screen.connect_for_each_screen(function(s)
       icon              = awful.util.get_configuration_dir() .. "icons/code-braces-colored.png",
       layout            = awful.layout.suit.tile,
       selected          = true,
-      gap_single_client = false,
+      gap_single_client = true,
       screen            = s,
       expand            = "none",
     })
     awful.tag.add("", {
       icon              = awful.util.get_configuration_dir() .. "icons/firefox-colored.png",
       layout            = awful.layout.suit.tile,
-      gap_single_client = false,
+      gap_single_client = true,
       screen            = s,
       expand            = "none",
     })
     awful.tag.add("", {
       icon              = awful.util.get_configuration_dir() .. "icons/text-file-colored.png",
       layout            = awful.layout.suit.tile,
-      gap_single_client = false,
+      gap_single_client = true,
       screen            = s,
       expand            = "none",
     })
     awful.tag.add("", {
       icon              = awful.util.get_configuration_dir() .. "icons/flask-colored.png",
       layout            = awful.layout.suit.tile,
-      gap_single_client = false,
+      gap_single_client = true,
       screen            = s,
       expand            = "none",
     })
