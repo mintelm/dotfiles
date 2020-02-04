@@ -25,6 +25,9 @@ theme.fg_focus      = "#fbf1c7"
 theme.fg_urgent     = "#fbf1c7"
 theme.fg_minimize   = "#fbf1c7"
 
+theme.titlebar_bg       = "#282828"
+theme.titlebar_bg_focus = "#3c3836"
+
 theme.useless_gap   = dpi(7)
 theme.border_width  = dpi(2)
 theme.border_normal = theme.bg_focus
