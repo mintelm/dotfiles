@@ -50,6 +50,8 @@ modkey = "Mod4"
 awful.layout.layouts = {
     awful.layout.suit.floating,
     awful.layout.suit.tile,
+    awful.layout.suit.tile.bottom,
+    awful.layout.suit.fair,
 }
 -- }}}
 
@@ -188,6 +190,8 @@ awful.screen.connect_for_each_screen(function(s)
             battery(),
             vert_sep,
             mytextclock,
+            vert_sep,
+            s.mylayoutbox,
         },
     }
 end)
@@ -236,12 +240,46 @@ globalkeys = gears.table.join(
     awful.key({ modkey,           }, "p", function () awful.spawn("scrot") end,
               {description = "take screenshot", group = "launcher"}),
 
+    -- Sound
+    awful.key({ }, "XF86AudioRaiseVolume", function () awful.util.spawn("amixer set Master 5%+") end,
+              {description = "increase volume", group = "sound"}),
+    awful.key({ }, "XF86AudioLowerVolume", function () awful.util.spawn("amixer set Master 5%-") end,
+              {description = "decrease volume", group = "sound"}),
+    awful.key({ }, "XF86AudioMute", function () awful.util.spawn("amixer set Master toggle") end,
+              {description = "(un)mute volume", group = "sound"}),
+
     -- Brightness
     awful.key({ }, "XF86MonBrightnessUp", function () awful.util.spawn("brightnessctl s 10%+") end,
               {description = "increase brightness", group = "screen"}),
     awful.key({ }, "XF86MonBrightnessDown", function () awful.util.spawn("brightnessctl s 10%-") end,
               {description = "decrease brightness", group = "screen"})
 )
+
+local function client_resize (key, c)
+   if c == nil then
+      c = client.focus
+   end
+
+   if c.floating then
+      if     key == "Up"    then c:relative_move(0, 0, 0, -5)
+      elseif key == "Down"  then c:relative_move(0, 0, 0, 5)
+      elseif key == "Right" then c:relative_move(0, 0, 5, 0)
+      elseif key == "Left"  then c:relative_move(0, 0, -5, 0)
+      else
+         return false
+      end
+   else
+      if     key == "Up"    then awful.client.incwfact(-0.05)
+      elseif key == "Down"  then awful.client.incwfact(0.05)
+      elseif key == "Right" then awful.tag.incmwfact(0.05)
+      elseif key == "Left"  then awful.tag.incmwfact(-0.05)
+      else
+         return false
+      end
+   end
+
+   return true
+end
 
 -- client manipulation
 clientkeys = gears.table.join(
@@ -257,10 +295,14 @@ clientkeys = gears.table.join(
     awful.key({ modkey }, "l", function () awful.client.focus.bydirection("right")
               if client.focus then client.focus:raise() end end,
               {description = "focus client to the right", group = "client"}),
-    awful.key({ modkey, "Shift"   }, "l",     function () awful.tag.incmwfact( 0.05) end,
-              {description = "increase master width factor", group = "layout"}),
-    awful.key({ modkey, "Shift"   }, "h",     function () awful.tag.incmwfact(-0.05) end,
+    awful.key({ modkey, "Shift"   }, "h",     function () client_resize('Left') end,
               {description = "decrease master width factor", group = "layout"}),
+    awful.key({ modkey, "Shift"   }, "j",     function () client_resize('Down') end,
+              {description = "increase client height factor", group = "layout"}),
+    awful.key({ modkey, "Shift"   }, "k",     function () client_resize('Up')   end,
+              {description = "decrease client height factor", group = "layout"}),
+    awful.key({ modkey, "Shift"   }, "l",     function () client_resize('Right') end,
+              {description = "increase master width factor", group = "layout"}),
     awful.key({ modkey, "Shift"   }, "q",      function (c) c:kill() end,
               {description = "close", group = "client"}),
     awful.key({ modkey,           }, "space",
@@ -340,39 +382,28 @@ awful.rules.rules = {
      }
     },
 
-    -- Floating clients.
     { rule_any = {
         class = {
           "Gpick",
-          "Tor Browser", -- Needs a fixed window size to avoid fingerprinting by screen size.
+          "Tor Browser",
         },
         role = {
-          "pop-up",       -- e.g. Google Chrome's (detached) Developer Tools.
+          "pop-up",
         }
       }, properties = { floating = true }},
-
-    -- Add titlebars to normal clients and dialogs
-    { rule_any = {type = { "normal", "dialog" }
-      }, properties = { titlebars_enabled = true}
-    },
 }
 -- }}}
 
 
 -- {{{ Signals
--- Signal function to execute when a new client appears.
 client.connect_signal("manage", function (c)
     c.maximized = false
-    -- Set the windows at the slave
-    if not awesome.startup then awful.client.setslave(c) end
-
-    if awesome.startup
-      and not c.size_hints.user_position
-      and not c.size_hints.program_position then
-        awful.placement.no_offscreen(c)
+    if not awesome.startup then
+        awful.client.setslave(c)
     end
 end)
 
+-- Titlebar
 client.connect_signal("request::titlebars", function(c)
     local buttons = gears.table.join(
         awful.button({ }, 1, function()
@@ -384,10 +415,9 @@ client.connect_signal("request::titlebars", function(c)
             awful.mouse.client.resize(c)
         end)
     )
-
     awful.titlebar(c) : setup {
         { -- Left
-            -- awful.titlebar.widget.iconwidget(c),
+            awful.titlebar.widget.iconwidget(c),
             buttons = buttons,
             layout  = wibox.layout.fixed.horizontal
         },
@@ -407,17 +437,49 @@ client.connect_signal("request::titlebars", function(c)
     }
 end)
 
+-- Titlebars only on floating windows
+client.connect_signal("property::floating", function(c)
+    if c.floating then
+        awful.titlebar.show(c)
+    else
+        awful.titlebar.hide(c)
+    end
+end)
+
+tag.connect_signal("property::layout", function(t)
+    local clients = t:clients()
+    for k,c in pairs(clients) do
+        if c.floating or c.first_tag.layout.name == "floating" then
+            awful.titlebar.show(c)
+        else
+            awful.titlebar.hide(c)
+        end
+    end
+end)
+
+function dynamic_title(c)
+    if c.floating or c.first_tag.layout.name == "floating" then
+        awful.titlebar.show(c)
+    else
+        awful.titlebar.hide(c)
+    end
+end
+client.connect_signal("manage", dynamic_title)
+client.connect_signal("tagged", dynamic_title)
+
 -- Enable sloppy focus, so that focus follows mouse.
 client.connect_signal("mouse::enter", function(c)
     c:emit_signal("request::activate", "mouse_enter", {raise = false})
 end)
 
+-- Draw border on focus
 client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 
+-- No borders on only 1 tiled client
 screen.connect_signal("arrange", function (s)
     for _, c in pairs(s.clients) do
-        if (#s.tiled_clients == 1) then
+        if (#s.tiled_clients == 1) or (c.first_tag.layout.name == "floating" ) then
             c.border_width = 0
         else
             c.border_width = beautiful.border_width
