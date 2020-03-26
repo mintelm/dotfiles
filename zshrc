@@ -47,6 +47,13 @@ zstyle ':completion:*' matcher-list '' \
 # }}}
 
 
+# {{{ DIRSTACK
+zstyle ':chpwd:*' recent-dirs-max 10
+autoload -Uz chpwd_recent_dirs cdr add-zsh-hook
+add-zsh-hook chpwd chpwd_recent_dirs
+# }}}
+
+
 # {{{ EXPORTS
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
