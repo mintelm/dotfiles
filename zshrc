@@ -103,4 +103,5 @@ fi
   source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 [ -d "/usr/share/zsh/plugins/zsh-autosuggestions" ] && \
   source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+[ -f ~/.config/zshrc.local ] && source ~/.config/zshrc.local
 # }}}
