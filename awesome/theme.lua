@@ -4,7 +4,7 @@ local dpi = xresources.apply_dpi
 
 local gfs = require("gears.filesystem")
 local themes_path = gfs.get_themes_dir()
-local icon_path = gfs.get_configuration_dir() .. "/icons/"
+local icon_path = gfs.get_configuration_dir() .. "/icons/tags/"
 
 local theme = {}
 
