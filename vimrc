@@ -20,7 +20,11 @@ call plug#end()
 
 
 " {{{ GENERAL
-set tabstop=4 | set shiftwidth=4 | set softtabstop=4 | set expandtab
+let tabsize=4
+set expandtab
+execute "set tabstop=".tabsize
+execute "set shiftwidth=".tabsize
+execute "set softtabstop=".tabsize
 
 set background=dark
 colorscheme gruvbox             " set color scheme
