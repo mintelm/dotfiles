@@ -66,9 +66,10 @@ map <leader>f :FZF<CR>
 map <leader>n :NERDTreeToggle<CR>
 map <leader>k <Plug>NERDCommenterToggle
 map <leader>gv :GitGutterPreviewHunk<CR>
-map <leader>gn :GitGutterNextHunk<CR>
-map <leader>gN :GitGutterPrevHunk<CR>
+map <leader>gj :GitGutterNextHunk<CR>
+map <leader>gk :GitGutterPrevHunk<CR>
 map <leader>gs :Gstatus<CR>
+map <leader>qf :CocFix<CR>
 
 " Remap keys for gotos
 nmap <silent> gd <Plug>(coc-definition)
