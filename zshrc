@@ -78,6 +78,7 @@ bindkey '^[[Z' reverse-menu-complete
 
 # {{{ ALIASES
 alias sudo="sudo "
+alias ssh='TERM=xterm-256color \ssh'
 alias lock="i3lock-fancy-multimonitor -n -p"
 alias open="xdg-open"
 alias grep='grep  --color=auto --exclude-dir={.bzr,CVS,.git,.hg,.svn}'
