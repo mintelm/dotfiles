@@ -12,6 +12,7 @@ call plug#begin('~/.vim/bundle')
     Plug 'airblade/vim-gitgutter'               " git info on left bar
     Plug 'tpope/vim-fugitive'                   " git branch info etc.
     Plug 'scrooloose/nerdtree'                  " file explorer
+    Plug 'Xuyuanp/nerdtree-git-plugin'          " git extension for NERDTree
     Plug 'scrooloose/nerdcommenter'             " ez comments
     Plug 'junegunn/fzf'                         " fuzzy finder
 call plug#end()
@@ -150,4 +151,6 @@ let g:NERDCompactSexyComs = 1
 let g:NERDTrimTrailingWhitespace = 1
 " Enable NERDCommenterToggle to check all selected lines is commented or not 
 let g:NERDToggleCheckAllLines = 1
+" Close NERDTree if the only window left open is a NERDTree
+autocmd BufEnter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 " }}}
