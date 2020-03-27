@@ -190,7 +190,6 @@ awful.screen.connect_for_each_screen(function(s)
             battery(),
             vert_sep,
             mytextclock,
-            vert_sep,
             s.mylayoutbox,
         },
     }
