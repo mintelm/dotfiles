@@ -1,4 +1,5 @@
 dynamic_title: true
+draw_bold_text_with_bright_colors: true
 
 font:
   size: 16
@@ -12,7 +13,6 @@ font:
     family: Inconsolata
     style: Italic
 
-# Colors (Tango)
 colors:
   primary:
     background: '0x282828'
@@ -24,9 +24,9 @@ colors:
       red:     '0xcc0000'
       green:   '0x73d216'
       yellow:  '0xedd400'
-      blue:    '0x729fcf'
+      blue:    '0x4881c0'
       magenta: '0x75507b'
-      cyan:    '0xfe8019'
+      cyan:    '0xd65d0e'
       white:   '0xd3d7cf'
 
   # Bright colors
@@ -35,9 +35,9 @@ colors:
       red:     '0xef2929'
       green:   '0x8ae234'
       yellow:  '0xfce94f'
-      blue:    '0x8eb3e2'
+      blue:    '0x80a4d4'
       magenta: '0xad7fa8'
-      cyan:    '0xff9a47'
+      cyan:    '0xfe8019'
       white:   '0xeeeeec'
 
 scrolling:
