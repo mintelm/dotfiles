@@ -436,32 +436,41 @@ client.connect_signal("request::titlebars", function(c)
     }
 end)
 
--- Titlebars only on floating windows
-function dynamic_title(c)
-    if ((c.floating or (c.first_tag ~= nil and c.first_tag.layout.name == "floating"))
-    and not c.maximized)
-    or (c.first_tag.layout.name == "floating" and c.maximized) then
-        awful.titlebar.show(c)
-    else
-        awful.titlebar.hide(c)
+function show_titlebar(c)
+    awful.titlebar.show(c)
+    if not c.maximized then
+        c:relative_move(0,
+                        0,
+                        0,
+                        - beautiful.get_font_height(beautiful.font) * 1.5)
     end
 end
 
-client.connect_signal("property::floating", function(c)
-    if c.floating then
-        awful.titlebar.show(c)
-    else
-        awful.titlebar.hide(c)
-    end
-end)
+function hide_titlebar(c)
+    title_height = beautiful.get_font_height(beautiful.font) * 1.5
 
-client.connect_signal("property::maximized", function(c)
-    if c.first_tag ~= nil and c.first_tag.layout.name == "floating" then
-        awful.titlebar.show(c)
+    awful.titlebar.hide(c)
+    if c.maximized then
+        c:relative_move(0,
+                        0,
+                        0,
+                        - title_height)
     else
-        awful.titlebar.hide(c)
+        c:relative_move(0,
+                        0,
+                        0,
+                        title_height)
     end
-end)
+end
+
+-- Titlebars only on floating windows
+function dynamic_title(c)
+    if c.floating or (c.first_tag ~= nil and c.first_tag.layout.name == "floating") then
+        show_titlebar(c)
+    else
+        hide_titlebar(c)
+    end
+end
 
 tag.connect_signal("property::layout", function(t)
     local clients = t:clients()
@@ -469,8 +478,6 @@ tag.connect_signal("property::layout", function(t)
         dynamic_title(c)
     end
 end)
-
-client.connect_signal("tagged", dynamic_title)
 
 -- Enable sloppy focus, so that focus follows mouse.
 client.connect_signal("mouse::enter", function(c)
