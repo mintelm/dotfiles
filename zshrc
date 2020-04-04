@@ -56,12 +56,8 @@ add-zsh-hook chpwd chpwd_recent_dirs
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 export LANGUAGE=en_US.UTF-8
-
-if [[ -n $SSH_CONNECTION ]]; then
- export EDITOR='vim'
-else
- export EDITOR='nvim'
-fi
+export EDITOR='nvim'
+[[ -n $SSH_CONNECTION ]] && export EDITOR='vim'
 # }}}
 
 
@@ -85,9 +81,7 @@ alias grep='grep  --color=auto --exclude-dir={.bzr,CVS,.git,.hg,.svn}'
 alias wttr="curl wttr.in/regensburg"
 alias vvim="vim"
 
-if [ -x "$(command -v nvim)" ]; then
-  alias vim="nvim"
-fi
+[ -x "$(command -v nvim)" ] && alias vim="nvim"
 
 if [ -x "$(command -v exa)" ]; then
   alias ls="exa "
