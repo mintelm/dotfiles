@@ -9,12 +9,9 @@ setopt incappendhistory
 
 set -o emacs
 
-case $TERM in
-  xterm*)
-    precmd () {print -Pn "\e]0;%~\a"}
-    ;;
-esac
-
+title() { export TITLE="$*" }
+precmd () { print -Pn "\e]2;%(!.@@@ .)%~\a" }
+[[ -n $SSH_CONNECTION ]] && precmd () { print -Pn "\e]2;%n@%m: %~\a" }
 eval "$(dircolors)"
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS} menu select
 zmodload zsh/complist
