@@ -12,8 +12,10 @@ set -o emacs
 title() { export TITLE="$*" }
 precmd () { print -Pn "\e]2;%(!.@@@ .)%~\a" }
 [[ -n $SSH_CONNECTION ]] && precmd () { print -Pn "\e]2;%n@%m: %~\a" }
+
 eval "$(dircolors)"
-zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS} menu select
+zstyle ':completion:*:default' list-colors \
+    ${(s.:.)LS_COLORS}
 zmodload zsh/complist
 # }}}
 
@@ -23,10 +25,10 @@ autoload -U colors && colors
 setopt PROMPT_SUBST
 
 git_branch() {
-  git symbolic-ref --short HEAD 2> /dev/null | sed 's/.*/ (&)/'
+    git symbolic-ref --short HEAD 2> /dev/null | sed 's/.*/ (&)/'
 }
 git_dirty() {
-  [[ $(git diff --shortstat 2> /dev/null | tail -n1) != "" ]] && echo "*"
+    [[ $(git diff --shortstat 2> /dev/null | tail -n1) != "" ]] && echo "*"
 }
 
 TOKEN="{}"
@@ -39,9 +41,9 @@ PROMPT+='%{$fg[cyan]%}%c%{$fg[red]%}$(git_branch)%{$fg[yellow]%}$(git_dirty)%{$r
 autoload -Uz compinit && compinit
 zstyle ':completion:*' menu select
 zstyle ':completion:*' matcher-list '' \
-  'm:{a-z\-}={A-Z\_}' \
-  'r:[^[:alpha:]]||[[:alpha:]]=** r:|=* m:{a-z\-}={A-Z\_}' \
-  'r:|?=** m:{a-z\-}={A-Z\_}'
+    'm:{a-z\-}={A-Z\_}' \
+    'r:[^[:alpha:]]||[[:alpha:]]=** r:|=* m:{a-z\-}={A-Z\_}' \
+    'r:|?=** m:{a-z\-}={A-Z\_}'
 # }}}
 
 
@@ -85,15 +87,15 @@ alias vvim="vim"
 [ -x "$(command -v nvim)" ] && alias vim="nvim"
 
 if [ -x "$(command -v exa)" ]; then
-  alias ls="exa "
-  alias ll="exa --icons -l"
-  alias lla="exa --icons -la"
-  alias llg="exa --git --git-ignore --no-permissions --no-filesize --no-user -l"
-  alias lt="exa --icons --tree --level=5"
+    alias ls="exa "
+    alias ll="exa --icons -l"
+    alias lla="exa --icons -la"
+    alias llg="exa --git --git-ignore --no-permissions --no-filesize --no-user -l"
+    alias lt="exa --icons --tree --level=5"
 else
-  alias ls="ls --color=tty"
-  alias ll="ls --color=tty -lh"
-  alias lla="ls --color=tty -lah"
+    alias ls="ls --color=tty"
+    alias ll="ls --color=tty -lh"
+    alias lla="ls --color=tty -lah"
 fi
 
 lsd() {
