@@ -1,8 +1,11 @@
 # {{{ GENERAL
 HISTFILE=~/.cache/zsh_history
-HISTSIZE=10000
+HISTSIZE=50000
 SAVEHIST=10000
 setopt appendhistory
+setopt extendedhistory
+setopt sharehistory
+setopt incappendhistory
 
 set -o emacs
 
