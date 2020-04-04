@@ -30,7 +30,7 @@ theme.titlebar_bg       = "#282828"
 theme.titlebar_bg_focus = "#3c3836"
 
 theme.useless_gap   = dpi(7)
-theme.border_width  = dpi(2)
+theme.border_width  = dpi(1)
 theme.border_normal = theme.bg_focus
 theme.border_focus  = "#fe8019"
 theme.border_marked = "#91231c"
