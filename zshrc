@@ -13,7 +13,6 @@ title() { export TITLE="$*" }
 precmd () { print -Pn "\e]2;%(!.@@@ .)%~\a" }
 [[ -n $SSH_CONNECTION ]] && precmd () { print -Pn "\e]2;%n@%m: %~\a" }
 
-eval "$(dircolors)"
 zstyle ':completion:*:default' list-colors \
     ${(s.:.)LS_COLORS}
 zmodload zsh/complist
