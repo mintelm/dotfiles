@@ -385,11 +385,14 @@ awful.rules.rules = {
         class = {
           "Gpick",
           "Tor Browser",
+          "Galculator",
         },
         role = {
           "pop-up",
         }
-      }, properties = { floating = true }},
+      }, properties = { floating = true, placement = awful.placement.centered }
+      ,
+    },
 }
 -- }}}
 
@@ -477,6 +480,10 @@ tag.connect_signal("property::layout", function(t)
     for k,c in pairs(clients) do
         dynamic_title(c)
     end
+end)
+
+client.connect_signal("property::floating", function(c)
+    awful.titlebar.show(c)
 end)
 
 -- Enable sloppy focus, so that focus follows mouse.
