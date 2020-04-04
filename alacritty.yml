@@ -24,9 +24,9 @@ colors:
       red:     '0xcc0000'
       green:   '0x73d216'
       yellow:  '0xedd400'
-      blue:    '0x3465a4'
+      blue:    '0x729fcf'
       magenta: '0x75507b'
-      cyan:    '0x06989a'
+      cyan:    '0xfe8019'
       white:   '0xd3d7cf'
 
   # Bright colors
@@ -35,9 +35,9 @@ colors:
       red:     '0xef2929'
       green:   '0x8ae234'
       yellow:  '0xfce94f'
-      blue:    '0x729fcf'
+      blue:    '0x8eb3e2'
       magenta: '0xad7fa8'
-      cyan:    '0x34e2e2'
+      cyan:    '0xff9a47'
       white:   '0xeeeeec'
 
 scrolling:
