@@ -95,6 +95,16 @@ else
   alias ll="ls --color=tty -lh"
   alias lla="ls --color=tty -lah"
 fi
+
+lsd() {
+    if [ -z "$1" ]; then
+        cdr -l
+    else
+        if [ "$1" ]; then
+            cdr $1
+        fi
+    fi
+}
 # }}}
 
 
