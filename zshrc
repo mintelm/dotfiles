@@ -56,6 +56,7 @@ add-zsh-hook chpwd chpwd_recent_dirs
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 export LANGUAGE=en_US.UTF-8
+export ZSH_AUTOSUGGEST_USE_ASYNC=1
 export EDITOR='nvim'
 [[ -n $SSH_CONNECTION ]] && export EDITOR='vim'
 # }}}
