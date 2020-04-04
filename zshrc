@@ -15,7 +15,6 @@ precmd () { print -Pn "\e]2;%(!.@@@ .)%~\a" }
 
 zstyle ':completion:*:default' list-colors \
     ${(s.:.)LS_COLORS}
-zmodload zsh/complist
 # }}}
 
 
@@ -64,6 +63,7 @@ export EDITOR='nvim'
 
 
 # {{{ KEYBINDS
+zmodload zsh/complist
 bindkey -M menuselect 'h' vi-backward-char
 bindkey -M menuselect 'k' vi-up-line-or-history
 bindkey -M menuselect 'l' vi-forward-char
