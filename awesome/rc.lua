@@ -438,15 +438,13 @@ end)
 
 -- Titlebars only on floating windows
 function dynamic_title(c)
-    if (c.floating or (c.first_tag ~= nil and c.first_tag.layout.name == "floating"))
-    and not c.maximized then
-        awful.titlebar.show(c)
-    else if c.first_tag.layout.name == "floating" and c.maximized then
+    if ((c.floating or (c.first_tag ~= nil and c.first_tag.layout.name == "floating"))
+    and not c.maximized)
+    or (c.first_tag.layout.name == "floating" and c.maximized) then
         awful.titlebar.show(c)
     else
         awful.titlebar.hide(c)
     end
-end
 end
 
 client.connect_signal("property::floating", function(c)
