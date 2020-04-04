@@ -483,14 +483,4 @@ end)
 client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 
--- No borders on only 1 tiled client
-screen.connect_signal("arrange", function (s)
-    for _, c in pairs(s.clients) do
-        if (#s.tiled_clients == 1) or (c.first_tag.layout.name == "floating" ) then
-            c.border_width = 0
-        else
-            c.border_width = beautiful.border_width
-        end
-    end
-end)
 -- }}}
