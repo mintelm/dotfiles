@@ -379,29 +379,30 @@ root.keys(globalkeys)
 -- {{{ Rules
 awful.rules.rules = {
     -- All clients will match this rule.
-    { rule = { },
-      properties = { border_width = theme.border_width,
-                     border_color = theme.border_normal,
-                     focus = awful.client.focus.filter,
-                     raise = true,
-                     keys = clientkeys,
-                     buttons = clientbuttons,
-                     screen = awful.screen.preferred,
-                     placement = awful.placement.no_overlap+awful.placement.no_offscreen
-     }
+    {
+        rule = { },
+        properties = { border_width = theme.border_width,
+                       border_color = theme.border_normal,
+                       focus = awful.client.focus.filter,
+                       raise = true,
+                       keys = clientkeys,
+                       buttons = clientbuttons,
+                       screen = awful.screen.preferred,
+                       placement = awful.placement.no_overlap+awful.placement.no_offscreen
+                     }
     },
-
-    { rule_any = {
-        class = {
-          "Gpick",
-          "Tor Browser",
-          "Galculator",
+    {
+        rule_any = {
+            class = {
+              "Gpick",
+              "Tor Browser",
+              "Galculator",
+            },
+            role = {
+              "pop-up",
+            }
         },
-        role = {
-          "pop-up",
-        }
-      }, properties = { floating = true, placement = awful.placement.centered }
-      ,
+        properties = { floating = true, placement = awful.placement.centered }
     },
 }
 -- }}}
