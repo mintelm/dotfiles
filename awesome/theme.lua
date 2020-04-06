@@ -18,15 +18,13 @@ theme.bg_urgent     = "#ff0000"
 theme.bg_minimize   = "#444444"
 theme.bg_systray    = theme.bg_focus
 
-theme.tasklist_bg_normal    = theme.bg_focus
-theme.tasklist_bg_focus     = theme.bg_normal
-
 theme.fg_normal     = "#ebdbb2"
 theme.fg_focus      = "#fbf1c7"
 theme.fg_urgent     = "#fbf1c7"
 theme.fg_minimize   = "#fbf1c7"
 
 theme.useless_gap   = dpi(7)
+
 theme.border_width  = dpi(1)
 theme.border_normal = theme.bg_focus
 theme.border_focus  = "#fe8019"
@@ -37,9 +35,11 @@ theme.maximized_hide_border  = true
 theme.wibar_bg      = theme.bg_focus
 theme.wibar_height  = 32
 
-theme.bar_width = dpi(3)
+theme.taglist_bg_focus = theme.border_focus
 
-theme.taglist_bg_focus = "#fe8019"
+theme.tasklist_bg_normal    = theme.bg_focus
+theme.tasklist_bg_focus     = theme.bg_normal
+
 
 -- Generate taglist squares:
 local taglist_square_size = dpi(4)
