@@ -9,11 +9,10 @@ require("awful.hotkeys_popup.keys")
 -- Widget and layout library
 local wibox = require("wibox")
 -- Theme handling library
-local beautiful = require("beautiful")
-beautiful.init("/home/mario/.config/awesome/theme.lua")
+local theme = require("beautiful")
+theme.init("/home/mario/.config/awesome/theme.lua")
 -- Notification library
 local naughty = require("naughty")
-local menubar = require("menubar")
 -- Vicious + Widgets
 local battery = require("awm-widgets.battery")
 
@@ -63,8 +62,8 @@ local layouts = {
 
 -- {{{ Wallpaper
 local function set_wallpaper(s)
-    if beautiful.wallpaper then
-        local wallpaper = beautiful.wallpaper
+    if theme.wallpaper then
+        local wallpaper = theme.wallpaper
         if type(wallpaper) == "function" then
             wallpaper = wallpaper(s)
         end
@@ -81,7 +80,7 @@ end)
 -- {{{ Statusbar
 -- Create a textclock widget
 mytextclock = wibox.widget.textclock()
-mytextclock.font = beautiful.clock_font
+mytextclock.font = theme.clock_font
 
 -- Create mouse events for taglist
 local taglist_buttons = awful.util.table.join(
@@ -177,11 +176,11 @@ awful.screen.connect_for_each_screen(function(s)
         widget = wibox.widget.separator,
         orientation = "vertical",
         forced_width = 10,
-        color = beautiful.fg_normal
+        color = theme.fg_normal
     }
 
     -- Create statusbar
-    s.statusbar= awful.wibar({ position = "top", screen = s, bg = beautiful.wibar_bg, height = beautiful.wibar_height})
+    s.statusbar= awful.wibar({ position = "top", screen = s, bg = theme.wibar_bg, height = theme.wibar_height})
     s.statusbar:setup {
         layout = wibox.layout.align.horizontal,
         { -- Left widgets
@@ -381,8 +380,8 @@ root.keys(globalkeys)
 awful.rules.rules = {
     -- All clients will match this rule.
     { rule = { },
-      properties = { border_width = beautiful.border_width,
-                     border_color = beautiful.border_normal,
+      properties = { border_width = theme.border_width,
+                     border_color = theme.border_normal,
                      focus = awful.client.focus.filter,
                      raise = true,
                      keys = clientkeys,
@@ -425,8 +424,8 @@ client.connect_signal("mouse::enter", function(c)
 end)
 
 -- Draw border on focus
-client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
+client.connect_signal("focus", function(c) c.border_color = theme.border_focus end)
 
 -- Hide border on unfocus
-client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
+client.connect_signal("unfocus", function(c) c.border_color = theme.border_normal end)
 -- }}}
