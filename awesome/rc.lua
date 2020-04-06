@@ -412,6 +412,7 @@ awful.rules.rules = {
 -- Re-set wallpaper when a screen's geometry changes (e.g. different resolution)
 screen.connect_signal("property::geometry", set_wallpaper)
 
+-- Set new windows to slave stack instead of master
 client.connect_signal("manage", function (c)
     c.maximized = false
     if not awesome.startup then
