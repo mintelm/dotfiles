@@ -419,86 +419,6 @@ client.connect_signal("manage", function (c)
     end
 end)
 
--- Titlebar
-client.connect_signal("request::titlebars", function(c)
-    local buttons = gears.table.join(
-        awful.button({ }, 1, function()
-            c:emit_signal("request::activate", "titlebar", {raise = true})
-            awful.mouse.client.move(c)
-        end),
-        awful.button({ }, 3, function()
-            c:emit_signal("request::activate", "titlebar", {raise = true})
-            awful.mouse.client.resize(c)
-        end)
-    )
-    awful.titlebar(c) : setup {
-        { -- Left
-            awful.titlebar.widget.iconwidget(c),
-            buttons = buttons,
-            layout  = wibox.layout.fixed.horizontal
-        },
-        { -- Middle
-            { -- Title
-                align  = "center",
-                widget = awful.titlebar.widget.titlewidget(c)
-            },
-            buttons = buttons,
-            layout  = wibox.layout.flex.horizontal
-        },
-        { -- Right
-            awful.titlebar.widget.closebutton    (c),
-            layout = wibox.layout.fixed.horizontal()
-        },
-        layout = wibox.layout.align.horizontal
-    }
-end)
-
--- Show titlebar and resize window to compensate
-function show_titlebar(c)
-    awful.titlebar.show(c)
-    if not c.maximized then
-        c:relative_move(0,
-                        0,
-                        0,
-                        - beautiful.get_font_height(beautiful.font) * 1.5)
-    end
-end
-
--- Hide titlebar and resize window to compensate
-function hide_titlebar(c)
-    title_height = beautiful.get_font_height(beautiful.font) * 1.5
-
-    awful.titlebar.hide(c)
-    if c.maximized then
-        c:relative_move(0,
-                        0,
-                        0,
-                        - title_height)
-    else
-        c:relative_move(0,
-                        0,
-                        0,
-                        title_height)
-    end
-end
-
--- Titlebars only on floating windows
-function dynamic_title(c)
-    if c.floating or (c.first_tag ~= nil and c.first_tag.layout.name == "floating") then
-        show_titlebar(c)
-    else
-        hide_titlebar(c)
-    end
-end
-
--- Dynamic titles on layout change
-tag.connect_signal("property::layout", function(t)
-    local clients = t:clients()
-    for k,c in pairs(clients) do
-        dynamic_title(c)
-    end
-end)
-
 -- Enable sloppy focus, so that focus follows mouse.
 client.connect_signal("mouse::enter", function(c)
     c:emit_signal("request::activate", "mouse_enter", {raise = false})
@@ -506,6 +426,7 @@ end)
 
 -- Draw border on focus
 client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
+
 -- Hide border on unfocus
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 -- }}}

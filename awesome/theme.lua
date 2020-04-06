@@ -26,9 +26,6 @@ theme.fg_focus      = "#fbf1c7"
 theme.fg_urgent     = "#fbf1c7"
 theme.fg_minimize   = "#fbf1c7"
 
-theme.titlebar_bg       = "#282828"
-theme.titlebar_bg_focus = "#3c3836"
-
 theme.useless_gap   = dpi(7)
 theme.border_width  = dpi(1)
 theme.border_normal = theme.bg_focus
@@ -57,10 +54,6 @@ theme.taglist_squares_unsel = theme_assets.taglist_squares_unsel(
 theme.notification_font = "noto sans display medium 12"
 
 theme.menu_height = dpi(15)
-
--- Define the image to load
-theme.titlebar_close_button_normal = icon_path .. "close.png"
-theme.titlebar_close_button_focus  = icon_path .. "close.png"
 
 -- You can use your own layout icons like this:
 theme.layout_fairv = layout_path .."fairv.png"
