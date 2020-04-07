@@ -180,6 +180,21 @@ awful.screen.connect_for_each_screen(function(s)
         color = theme.fg_normal
     }
 
+    local systray = wibox.widget{
+        {
+            {
+                id = "tray",
+                widget = wibox.widget.systray()
+            },
+            layout = wibox.container.margin(_, 6, 6, 0, 0),
+        },
+        {
+            id = "sep",
+            widget = vert_sep,
+        },
+        layout = wibox.layout.fixed.horizontal,
+    }
+
     -- Create statusbar
     s.statusbar= awful.wibar({ position = "top", screen = s, bg = theme.wibar_bg, height = theme.wibar_height})
     s.statusbar:setup {
@@ -187,16 +202,13 @@ awful.screen.connect_for_each_screen(function(s)
         { -- Left widgets
             layout = wibox.layout.fixed.horizontal,
             s.mytaglist,
-            vert_sep,
         },
         -- { Middle widget
             s.mytasklist,
         -- }
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
-            vert_sep,
-            wibox.widget.systray(),
-            vert_sep,
+            systray,
             battery_widget,
             vert_sep,
             mytextclock,
