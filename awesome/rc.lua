@@ -187,14 +187,16 @@ awful.screen.connect_for_each_screen(function(s)
     local systray = wibox.widget{
         {
             {
-                id = "tray",
-                widget = wibox.widget.systray()
+                widget = wibox.widget.systray(),
             },
             layout = wibox.container.margin(_, 6, 6, 0, 0),
         },
         {
-            id = "sep",
-            widget = vert_sep,
+            {
+                widget = vert_sep,
+            },
+            layout = awful.widget.only_on_screen,
+            screen = "primary",
         },
         layout = wibox.layout.fixed.horizontal,
     }
