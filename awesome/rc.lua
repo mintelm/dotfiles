@@ -14,7 +14,8 @@ theme.init("/home/mario/.config/awesome/theme.lua")
 -- Notification library
 local naughty = require("naughty")
 -- Vicious + Widgets
-local battery = require("awm-widgets.battery")
+local vicious = require("vicious")
+local battery_widget = require("widgets.battery")
 
 -- Autorun
 awful.spawn.with_shell("~/.config/awesome/scripts/autorun.sh")
@@ -196,7 +197,7 @@ awful.screen.connect_for_each_screen(function(s)
             vert_sep,
             wibox.widget.systray(),
             vert_sep,
-            battery(),
+            battery_widget,
             vert_sep,
             mytextclock,
             s.mylayoutbox,
