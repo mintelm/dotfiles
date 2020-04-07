@@ -61,6 +61,6 @@ local function bat_format(widget, args)
     return args[2] .. "%"
 end
 
-vicious.register(text_widget.text, vicious.widgets.bat, bat_format, 10, "BAT0")
+vicious.register(text_widget.text, vicious.widgets.bat, bat_format, 31, "BAT0")
 
 return battery_widget
