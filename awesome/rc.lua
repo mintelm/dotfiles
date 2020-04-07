@@ -135,18 +135,22 @@ awful.screen.connect_for_each_screen(function(s)
         icon     = awful.util.get_configuration_dir() .. "icons/tags/code-braces-colored.png",
         layout   = layouts[2],
         selected = true,
+        screen   = s,
     })
     awful.tag.add("", {
         icon     = awful.util.get_configuration_dir() .. "icons/tags/firefox-colored.png",
         layout   = layouts[2],
+        screen   = s,
     })
     awful.tag.add("", {
         icon     = awful.util.get_configuration_dir() .. "icons/tags/text-file-colored.png",
         layout   = layouts[2],
+        screen   = s,
     })
     awful.tag.add("", {
         icon     = awful.util.get_configuration_dir() .. "icons/tags/flask-colored.png",
         layout   = layouts[2],
+        screen   = s,
     })
 
     -- Create layoutbox
