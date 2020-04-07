@@ -9,5 +9,4 @@ function run {
 
 run compton --vsync --config ~/.config/compton.conf
 run nm-applet
-run slack -u
 run redshift-gtk
