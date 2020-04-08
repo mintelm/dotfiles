@@ -16,6 +16,7 @@ local naughty = require("naughty")
 local vicious = require("vicious")
 local battery_widget = require("widgets.battery")
 local pkg_widget = require("widgets.pkg")
+local network_widget = require("widgets.network")
 
 -- Autorun
 awful.spawn.with_shell("~/.config/awesome/scripts/autorun.sh")
@@ -216,6 +217,10 @@ awful.screen.connect_for_each_screen(function(s)
             layout = wibox.layout.fixed.horizontal,
             systray,
             pkg_widget,
+            vert_sep,
+            network_widget.down_widget,
+            vert_sep,
+            network_widget.up_widget,
             vert_sep,
             battery_widget,
             vert_sep,
