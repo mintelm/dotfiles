@@ -19,7 +19,7 @@ local text_widget = wibox.widget {
     layout = wibox.container.margin(_, 4, 6, 4, 4),
 }
 
-local pkgwatch_widget = wibox.widget {
+local pkg_widget = wibox.widget {
     icon_widget,
     text_widget,
     layout = wibox.layout.fixed.horizontal,
@@ -29,4 +29,4 @@ icon_widget.icon:set_image(PATH_TO_ICONS .. "software-update-available-symbolic.
 
 vicious.register(text_widget.text, vicious.widgets.pkg, "$1", 2309, "Arch")
 
-return pkgwatch_widget 
+return pkg_widget
