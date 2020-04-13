@@ -11,10 +11,6 @@ while getopts "f" opt; do
         esac
 done
 
-# init submodules
-git submodule init
-git submodule update
-
 # create dirs
 if ! [ -z ${force} ]; then
 	mkdir -p ~/.cache
