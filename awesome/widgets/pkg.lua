@@ -1,7 +1,8 @@
 local vicious = require("vicious")
 local wibox = require("wibox")
 
-local PATH_TO_ICONS = "/usr/share/icons/Papirus-Dark/symbolic/status/"
+local gfs = require("gears.filesystem")
+local icon_path = gfs.get_configuration_dir() .. "/icons/widgets/"
 
 local icon_widget = wibox.widget {
     {
@@ -16,7 +17,7 @@ local text_widget = wibox.widget {
         id = "text",
         widget = wibox.widget.textbox,
     },
-    layout = wibox.container.margin(_, 4, 6, 4, 4),
+    layout = wibox.container.margin(_, 6, 6, 4, 4),
 }
 
 local pkg_widget = wibox.widget {
@@ -25,7 +26,7 @@ local pkg_widget = wibox.widget {
     layout = wibox.layout.fixed.horizontal,
 }
 
-icon_widget.icon:set_image(PATH_TO_ICONS .. "software-update-available-symbolic.svg")
+icon_widget.icon:set_image(icon_path.. "pkg.png")
 
 vicious.register(text_widget.text, vicious.widgets.pkg, "$1", 2309, "Arch")
 
