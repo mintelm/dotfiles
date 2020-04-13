@@ -32,7 +32,6 @@ ln -sv$force $PWD/tmux.conf ~/.tmux.conf
 ln -sv$force $PWD/screenrc ~/.screenrc
 ln -sv$force $PWD/gitconfig ~/.gitconfig
 
-ln -sv$force $PWD/awesome ~/.config/
 ln -sv$force $PWD/alacritty.yml ~/.config/alacritty.yml
 ln -sv$force $PWD/compton.conf ~/.config/compton.conf
 ln -sv$force $PWD/themes/rofi/* ~/.config/rofi/
