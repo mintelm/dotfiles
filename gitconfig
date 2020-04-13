@@ -28,3 +28,8 @@
   path = ~/.gitconfig_diovision
 [includeIf "gitdir:~/uni/"]
   path = ~/.gitconfig_othr
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
