@@ -1,7 +1,8 @@
 local vicious = require("vicious")
 local wibox = require("wibox")
 
-local PATH_TO_ICONS = "/usr/share/icons/Papirus-Dark/symbolic/status/"
+local gfs = require("gears.filesystem")
+local icon_path = gfs.get_configuration_dir() .. "/icons/widgets/"
 
 local icon_widget = wibox.widget {
     {
@@ -16,7 +17,7 @@ local text_widget = wibox.widget {
         id = "text",
         widget = wibox.widget.textbox,
     },
-    layout = wibox.container.margin(_, 4, 6, 4, 4),
+    layout = wibox.container.margin(_, 6, 6, 4, 4),
 }
 
 local battery_widget = wibox.widget {
@@ -30,33 +31,41 @@ local function bat_format(widget, args)
     local batvalue = args[2]
     local icon = ""
 
-    if (batvalue > 80) then
+    if (batvalue >= 99) then
+        icon = "battery-level-100"
+    else if (batvalue >= 90) then
         icon = "battery-level-90"
-    elseif (batvalue > 70) then
+    elseif (batvalue >= 80) then
         icon = "battery-level-80"
-    elseif (batvalue > 60) then
+    elseif (batvalue >= 70) then
         icon = "battery-level-70"
-    elseif (batvalue > 50) then
+    elseif (batvalue >= 60) then
         icon = "battery-level-60"
-    elseif (batvalue > 40) then
+    elseif (batvalue >= 50) then
         icon = "battery-level-50"
-    elseif (batvalue > 30) then
+    elseif (batvalue >= 40) then
         icon = "battery-level-40"
-    elseif (batvalue > 20) then
+    elseif (batvalue >= 30) then
         icon = "battery-level-30"
-    elseif (batvalue > 10) then
+    elseif (batvalue >= 20) then
         icon = "battery-level-20"
-    elseif (batvalue <= 10) then
+    elseif (batvalue >= 10) then
         icon = "battery-level-10"
+    else
+        icon = "battery-level-0"
     end
 
     if (status == "+") then
-        icon = icon .. "-charging"
+        if (batvalue >= 99) then
+            icon = icon .. "-charged"
+            args[2] = 100
+        else
+            icon = icon .. "-charging"
+        end
+    end
     end
 
-    icon = icon .. "-symbolic.svg"
-
-    icon_widget.icon:set_image(PATH_TO_ICONS .. icon)
+    icon_widget.icon:set_image(icon_path .. icon .. ".png")
 
     return args[2] .. "%"
 end
