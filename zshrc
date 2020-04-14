@@ -1,9 +1,17 @@
+# {{{ AUTOLOADS
+autoload -Uz colors && colors
+autoload -Uz add-zsh-hook
+autoload -Uz compinit && compinit
+autoload -Uz chpwd_recent_dirs cdr
+# }}}
+
+
 # {{{ PLUGIN INIT
 # assumes github and slash separated plugin names
 github_plugins=(
+    romkatv/gitstatus
     zsh-users/zsh-autosuggestions
     zsh-users/zsh-syntax-highlighting
-    romkatv/gitstatus
 )
 
 for plugin in $github_plugins; do
@@ -55,7 +63,6 @@ zstyle ':completion:*' list-colors 'di=34;01:ln=36:so=32:pi=33:ex=33;01:bd=46;34
 
 
 # {{{ PROMPT
-autoload -U colors && colors
 setopt PROMPT_SUBST
 
 function set_prompt() {
@@ -73,13 +80,11 @@ function set_prompt() {
 }
 
 gitstatus_stop 'MY' && gitstatus_start -s -1 -u -1 -c -1 -d -1 'MY'
-autoload -Uz add-zsh-hook
 add-zsh-hook precmd set_prompt
 # }}}
 
 
 # {{{ FUZZY FINDER 
-autoload -Uz compinit && compinit
 zstyle ':completion:*' menu select
 zstyle ':completion:*' matcher-list '' \
     'm:{a-z\-}={A-Z\_}' \
@@ -90,7 +95,6 @@ zstyle ':completion:*' matcher-list '' \
 
 # {{{ DIRSTACK
 zstyle ':chpwd:*' recent-dirs-max 10
-autoload -Uz chpwd_recent_dirs cdr
 add-zsh-hook chpwd chpwd_recent_dirs
 # }}}
 
