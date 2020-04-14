@@ -3,6 +3,7 @@
 github_plugins=(
     zsh-users/zsh-autosuggestions
     zsh-users/zsh-syntax-highlighting
+    romkatv/gitstatus
 )
 
 for plugin in $github_plugins; do
@@ -57,16 +58,23 @@ zstyle ':completion:*' list-colors 'di=34;01:ln=36:so=32:pi=33:ex=33;01:bd=46;34
 autoload -U colors && colors
 setopt PROMPT_SUBST
 
-git_branch() {
-    git symbolic-ref --short HEAD 2> /dev/null | sed 's/.*/ (&)/'
-}
-git_dirty() {
-    [[ $(git diff --shortstat 2> /dev/null | tail -n1) != "" ]] && echo "*"
+function set_prompt() {
+    TOKEN="{}"
+    PROMPT="%(?:%{$fg_bold[green]%}$TOKEN :%{$fg_bold[red]%}$TOKEN )"
+    PROMPT+='%{$fg[cyan]%}%c'
+
+    if gitstatus_query MY && [[ $VCS_STATUS_RESULT == ok-sync ]]; then
+        PROMPT+='%{$fg[red]%}('
+        PROMPT+=${${VCS_STATUS_LOCAL_BRANCH:-@${VCS_STATUS_COMMIT}}//\%/%%}
+        PROMPT+=')'
+        (( $VCS_STATUS_NUM_UNSTAGED  )) || (( $VCS_STATUS_NUM_UNTRACKED )) && PROMPT+='%{$fg[yellow]%}*'
+    fi
+    PROMPT+='%{$reset_color%} '
 }
 
-TOKEN="{}"
-PROMPT="%(?:%{$fg_bold[green]%}$TOKEN :%{$fg_bold[red]%}$TOKEN )"
-PROMPT+='%{$fg[cyan]%}%c%{$fg[red]%}$(git_branch)%{$fg[yellow]%}$(git_dirty)%{$reset_color%} '
+gitstatus_stop 'MY' && gitstatus_start -s -1 -u -1 -c -1 -d -1 'MY'
+autoload -Uz add-zsh-hook
+add-zsh-hook precmd set_prompt
 # }}}
 
 
@@ -82,7 +90,7 @@ zstyle ':completion:*' matcher-list '' \
 
 # {{{ DIRSTACK
 zstyle ':chpwd:*' recent-dirs-max 10
-autoload -Uz chpwd_recent_dirs cdr add-zsh-hook
+autoload -Uz chpwd_recent_dirs cdr
 add-zsh-hook chpwd chpwd_recent_dirs
 # }}}
 
