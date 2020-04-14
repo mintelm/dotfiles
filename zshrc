@@ -1,3 +1,37 @@
+# {{{ PLUGIN INIT
+# assumes github and slash separated plugin names
+github_plugins=(
+    zsh-users/zsh-autosuggestions
+    zsh-users/zsh-syntax-highlighting
+)
+
+for plugin in $github_plugins; do
+    # clone the plugin from github if it doesn't exist
+    if [[ ! -d ${ZDOTDIR:-$HOME}/.zsh_plugins/$plugin ]]; then
+        mkdir -p ${ZDOTDIR:-$HOME}/.zsh_plugins/${plugin%/*}
+        git clone --depth 1 --recursive https://github.com/$plugin.git ${ZDOTDIR:-$HOME}/.zsh_plugins/$plugin
+    fi
+    # load the plugin
+    for initscript in ${plugin#*/}.zsh ${plugin#*/}.plugin.zsh ${plugin#*/}.sh; do
+        if [[ -f ${ZDOTDIR:-$HOME}/.zsh_plugins/$plugin/$initscript ]]; then
+            source ${ZDOTDIR:-$HOME}/.zsh_plugins/$plugin/$initscript
+            break
+        fi
+    done
+done
+
+# clean up
+unset github_plugins
+unset plugin
+unset initscript
+# }}}
+
+
+# {{{ SOURCING
+[ -f ~/.config/zshrc.local ] && source ~/.config/zshrc.local
+# }}}
+
+
 # {{{ GENERAL
 HISTFILE=~/.cache/zsh_history
 HISTSIZE=50000
@@ -76,6 +110,7 @@ bindkey '^[[Z' reverse-menu-complete
 
 
 # {{{ ALIASES
+alias plugpull="find ${ZDOTDIR:-$HOME}/.zsh_plugins -type d -exec test -e '{}/.git' ';' -print0 | xargs -I {} -0 git -C {} pull"
 alias sudo="sudo "
 alias ssh='TERM=xterm-256color \ssh'
 alias lock="i3lock-fancy-multimonitor -n -p"
@@ -107,13 +142,4 @@ lsd() {
         fi
     fi
 }
-# }}}
-
-
-# {{{ SOURCING
-[ -d "/usr/share/zsh/plugins/zsh-syntax-highlighting" ] && \
-  source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-[ -d "/usr/share/zsh/plugins/zsh-autosuggestions" ] && \
-  source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
-[ -f ~/.config/zshrc.local ] && source ~/.config/zshrc.local
 # }}}
