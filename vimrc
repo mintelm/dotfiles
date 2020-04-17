@@ -5,7 +5,7 @@ if empty(glob('~/.vim/autoload/plug.vim'))
   autocmd VimEnter * PlugInstall --sync | source ~/.vimrc
 endif
 
-call plug#begin('~/.vim/bundle')
+call plug#begin('~/.vim/plugged')
     Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
     Plug 'morhetz/gruvbox'                      " color scheme
     Plug 'itchyny/lightline.vim'                " bottom info bar
