@@ -4,26 +4,26 @@
 [core]
 	editor = nvim
 [alias]
-	a = add
-  ap = add --patch
-	c = commit
-  cs = commit -S
-	ca = commit --amend
-  csa = commit --amend -S
-	s = status
-	p = push
-  pf = push -f
-	pl = pull
-	d = diff
-	co = checkout
-	st = stash
-	f = fetch
-	fa = fetch --all
-  rm = remove
-	rb = rebase
-        rbi = "!sh -c \"git rebase -i HEAD~$1\" -"
-	rbc = rebase --continue
-	unstage = reset HEAD --
+    a = add
+    ap = add --patch
+    c = commit
+    cs = commit -S
+    ca = commit --amend
+    csa = commit --amend -S
+    s = status
+    p = push
+    pf = push -f
+    pl = pull
+    d = diff
+    co = checkout
+    st = stash
+    f = fetch
+    fa = fetch --all
+    rm = remove
+    rb = rebase
+    rbi = "!sh -c \"git rebase -i HEAD~$1\" -"
+    rbc = rebase --continue
+    unstage = reset HEAD --
 [includeIf "gitdir:~/diovision/"]
   path = ~/.gitconfig_diovision
 [includeIf "gitdir:~/uni/"]
