@@ -17,6 +17,7 @@
     d = diff
     co = checkout
     st = stash
+    b = branch
     f = fetch
     fa = fetch --all
     rm = remove
