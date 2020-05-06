@@ -46,9 +46,9 @@ HISTFILE=~/.cache/zsh_history
 HISTSIZE=50000
 SAVEHIST=10000
 setopt appendhistory
-setopt extendedhistory
 setopt sharehistory
-setopt incappendhistory
+setopt histfcntllock
+setopt histignorealldups
 
 set -o emacs
 
@@ -130,6 +130,7 @@ alias open="xdg-open"
 alias grep='grep  --color=auto --exclude-dir={.bzr,CVS,.git,.hg,.svn}'
 alias wttr="curl wttr.in/regensburg"
 alias vvim="vim"
+alias nnn="nnn -SQ"
 
 [ -x "$(command -v nvim)" ] && alias vim="nvim"
 
