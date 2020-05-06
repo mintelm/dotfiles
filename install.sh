@@ -29,7 +29,7 @@ ln -sv$force $PWD/screenrc ~/.screenrc
 ln -sv$force $PWD/gitconfig ~/.gitconfig
 
 ln -sv$force $PWD/alacritty.yml ~/.config/alacritty.yml
-ln -sv$force $PWD/compton.conf ~/.config/compton.conf
+ln -sv$force $PWD/picom.conf ~/.config/picom.conf
 ln -sv$force $PWD/themes/rofi/* ~/.config/rofi/
 ln -sv$force $PWD/themes/oomox/* ~/.config/oomox/colors/
 ln -sv$force $PWD/init.vim ~/.config/nvim/init.vim
