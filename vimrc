@@ -6,15 +6,15 @@ if empty(glob('~/.vim/autoload/plug.vim'))
 endif
 
 call plug#begin('~/.vim/plugged')
-    Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
-    Plug 'morhetz/gruvbox'                      " color scheme
+    Plug 'neoclide/coc.nvim', {'branch': 'release'}
+    Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+    Plug 'junegunn/fzf.vim'                     " fzf <3 vim
+    Plug 'mintelm/gruvbox'                      " color scheme
     Plug 'itchyny/lightline.vim'                " bottom info bar
     Plug 'airblade/vim-gitgutter'               " git info on left bar
     Plug 'tpope/vim-fugitive'                   " git branch info etc.
-    Plug 'scrooloose/nerdtree'                  " file explorer
-    Plug 'Xuyuanp/nerdtree-git-plugin'          " git extension for NERDTree
     Plug 'scrooloose/nerdcommenter'             " ez comments
-    Plug 'junegunn/fzf'                         " fuzzy finder
+    Plug 'mcchrish/nnn.vim'                     " floating file browser
 call plug#end()
 " }}}
 
@@ -59,15 +59,18 @@ command W w
 command Wq wq
 command Q q
 
-imap jj <Esc>
+" unmap
 map <C-b> <Nop>
 map <C-f> <Nop>
-map <leader>f :FZF<CR>
-map <leader>n :NERDTreeToggle<CR>
+
+map <leader>e :NnnPicker '%:p:h'<CR>
+map <leader>b :Buffers<CR>
+map <leader>f :Files<CR>
+map <leader>gf :GFiles<CR>
 map <leader>k <Plug>NERDCommenterToggle
 map <leader>gv :GitGutterPreviewHunk<CR>
-map <leader>gj :GitGutterNextHunk<CR>
-map <leader>gk :GitGutterPrevHunk<CR>
+map <leader>gn :GitGutterNextHunk<CR>
+map <leader>gN :GitGutterPrevHunk<CR>
 map <leader>gs :Gstatus<CR>
 map <leader>qf :CocFix<CR>
 
@@ -76,6 +79,9 @@ nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
+
+" Symbol renaming.
+nmap <leader>rn <Plug>(coc-rename)
 
 " turn off search highlight with <space>
 nnoremap <silent><Space> :nohlsearch<Bar>:echo<CR> 
@@ -156,6 +162,10 @@ let g:NERDCompactSexyComs = 1
 let g:NERDTrimTrailingWhitespace = 1
 " Enable NERDCommenterToggle to check all selected lines is commented or not 
 let g:NERDToggleCheckAllLines = 1
-" Close NERDTree if the only window left open is a NERDTree
-autocmd BufEnter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+" nnn command
+let g:nnn#command = 'nnn -Q'
+" floating fuzzy finder
+let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6, 'highlight': 'Debug' } }
+" floating nnn
+let g:nnn#layout = { 'window': { 'width': 0.9, 'height': 0.6, 'highlight': 'Debug' } }
 " }}}
