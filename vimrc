@@ -6,7 +6,9 @@ if empty(glob('~/.vim/autoload/plug.vim'))
 endif
 
 call plug#begin('~/.vim/plugged')
-    Plug 'neoclide/coc.nvim', {'branch': 'release'}
+    if has('nvim')
+        Plug 'neoclide/coc.nvim', {'branch': 'release'}
+    endif
     Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
     Plug 'junegunn/fzf.vim'                     " fzf <3 vim
     Plug 'mintelm/gruvbox'                      " color scheme
