@@ -110,6 +110,7 @@ export LANG=en_US.UTF-8
 export LANGUAGE=en_US.UTF-8
 export ZSH_AUTOSUGGEST_USE_ASYNC=1
 export EDITOR='nvim'
+export TERM=xterm-256color
 [[ -n $SSH_CONNECTION ]] && export EDITOR='vim'
 # }}}
 
