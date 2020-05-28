@@ -137,6 +137,8 @@ alias grep='grep  --color=auto --exclude-dir={.bzr,CVS,.git,.hg,.svn}'
 alias wttr="curl wttr.in/regensburg"
 alias vvim="vim"
 alias nnn="nnn -SQ"
+alias intel="optimus-manager --no-confirm --switch intel"
+alias nvidia="optimus-manager --no-confirm --switch nvidia"
 
 [ -x "$(command -v nvim)" ] && alias vim="nvim"
 
