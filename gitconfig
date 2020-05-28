@@ -30,6 +30,8 @@
     rbi = "!sh -c \"git rebase -i HEAD~$1\" -"
     rbc = rebase --continue
     unstage = reset HEAD --
+[include]
+    path = ~/.gitconfig_local
 [includeIf "gitdir:~/diovision/"]
     path = ~/.gitconfig_diovision
 [includeIf "gitdir:~/uni/"]
