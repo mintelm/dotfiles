@@ -7,7 +7,7 @@
     smtpUser = mariomintel@gmail.com
     smtpServerPort = 587
 [core]
-	editor = nvim
+	editor = vim
 [alias]
     a = add
     ap = add --patch
