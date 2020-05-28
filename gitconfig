@@ -28,6 +28,7 @@
     rm = remove
     rb = rebase
     rbi = "!sh -c \"git rebase -i HEAD~$1\" -"
+    rbs = "!sh -c \"git rebase --exec 'git commit --amend --no-edit -n -S' -i $1\" -"
     rbc = rebase --continue
     unstage = reset HEAD --
 [include]
