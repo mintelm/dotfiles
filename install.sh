@@ -27,6 +27,7 @@ ln -sv$force $PWD/coc-settings.json ~/.vim/coc-settings.json
 ln -sv$force $PWD/tmux.conf ~/.tmux.conf
 ln -sv$force $PWD/screenrc ~/.screenrc
 ln -sv$force $PWD/gitconfig ~/.gitconfig
+ln -sv$force $PWD/tigrc ~/.tigrc
 
 ln -sv$force $PWD/alacritty.yml ~/.config/alacritty.yml
 ln -sv$force $PWD/picom.conf ~/.config/picom.conf
