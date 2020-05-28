@@ -1,6 +1,11 @@
 [user]
 	name = Mario Mintel
 	email = mariomintel@gmail.com
+[sendemail]
+    smtpEncryption = tls
+    smtpServer = smtp.gmail.com
+    smtpUser = mariomintel@gmail.com
+    smtpServerPort = 587
 [core]
 	editor = nvim
 [alias]
