@@ -17,6 +17,7 @@ call plug#begin('~/.vim/plugged')
     Plug 'tpope/vim-fugitive'                   " git branch info etc.
     Plug 'scrooloose/nerdcommenter'             " ez comments
     Plug 'mcchrish/nnn.vim'                     " floating file browser
+    Plug 'leafgarland/typescript-vim'           " syntax highlighting
 call plug#end()
 " }}}
 
@@ -73,11 +74,16 @@ map <leader>b :Buffers<CR>
 map <leader>f :Files<CR>
 map <leader>gf :GFiles<CR>
 map <leader>k <Plug>NERDCommenterToggle
-map <leader>gv :GitGutterPreviewHunk<CR>
-map <leader>gn :GitGutterNextHunk<CR>
-map <leader>gN :GitGutterPrevHunk<CR>
 map <leader>gs :Gstatus<CR>
 map <leader>qf :CocFix<CR>
+map <leader>hv <Plug>(GitGutterPreviewHunk)
+map <leader>ha <Plug>(GitGutterStageHunk)
+nmap ]h <Plug>(GitGutterNextHunk)
+nmap [h <Plug>(GitGutterPrevHunk)
+map [q :cprev<CR>
+map ]q :cnext<CR>
+map [Q :cfirst<CR>
+map ]Q :clast<CR>
 
 " Remap keys for gotos
 nmap <silent> gd <Plug>(coc-definition)
@@ -173,4 +179,6 @@ let g:nnn#command = 'nnn -Q'
 let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6, 'highlight': 'Debug' } }
 " floating nnn
 let g:nnn#layout = { 'window': { 'width': 0.9, 'height': 0.6, 'highlight': 'Debug' } }
+" disable standard hotkeys
+let g:gitgutter_map_keys = 0
 " }}}
