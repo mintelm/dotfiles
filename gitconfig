@@ -21,6 +21,7 @@
     pl = pull
     d = diff
     co = checkout
+    cp = cherry-pick
     st = stash
     b = branch
     f = fetch
@@ -42,3 +43,5 @@
     smudge = git-lfs smudge -- %f
     process = git-lfs filter-process
     required = true
+[commit]
+	verbose = true
