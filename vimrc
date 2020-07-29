@@ -22,11 +22,21 @@ call plug#end()
 
 
 " {{{ GENERAL
+" tabs
 let tabsize=4
 set expandtab
-execute "set tabstop=".tabsize
-execute "set shiftwidth=".tabsize
-execute "set softtabstop=".tabsize
+
+function SetTabs(tabwidth)
+    execute "set tabstop=".a:tabwidth
+    execute "set shiftwidth=".a:tabwidth
+    execute "set softtabstop=".a:tabwidth
+endfunction
+call SetTabs(tabsize)
+au FileType c,cpp,objc,objcpp,sh,make call SetTabs(8)
+
+" highlight characters over 80 line length if c
+highlight ColorColumn ctermbg=magenta
+au FileType c,cpp,objc,objcpp,sh,make call matchadd('ColorColumn', '\%>80v.\+', 100)
 
 set background=dark
 colorscheme gruvbox             " set color scheme
@@ -43,14 +53,7 @@ set showmatch                   " highlight matching [{()}]
 set noshowmode                  " dont show --insert-- (as lightline does)
 set scrolloff=5                 " scroll before end of lines
 set sidescrolloff=15            " scroll before side end of lines
-
-" highlight characters over 80 line length
-highlight ColorColumn ctermbg=magenta
-call matchadd('ColorColumn', '\%>80v.\+', 100)
-
-autocmd BufNewFile,BufRead *.c set tabstop=8 | set shiftwidth=8 | set softtabstop=8 | set expandtab!
-autocmd BufNewFile,BufRead *.h set tabstop=8 | set shiftwidth=8 | set softtabstop=8 | set expandtab!
-autocmd BufNewFile,BufRead *.sh set tabstop=8 | set shiftwidth=8 | set softtabstop=8 | set expandtab!
+set clipboard=unnamed           " sync system and vim clipboard
 " }}}
 
 
