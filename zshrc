@@ -79,7 +79,8 @@ function set_prompt() {
             GITSTR="@${VCS_STATUS_COMMIT:0:8}"
         fi
         PROMPT+="%{$fg[red]%}(${GITSTR})"
-        (( $VCS_STATUS_NUM_UNSTAGED  )) || (( $VCS_STATUS_NUM_UNTRACKED )) && PROMPT+="%{$fg[yellow]%}*"
+        (( $VCS_STATUS_NUM_UNSTAGED )) && PROMPT+="%{$fg[yellow]%}*"
+        (( $VCS_STATUS_NUM_UNTRACKED )) && PROMPT+="%{$fg[yellow]%}+"
     fi
     PROMPT+="%{$reset_color%} "
 }
@@ -139,6 +140,7 @@ alias vvim="vim"
 alias nnn="nnn -SQ"
 alias intel="optimus-manager --no-confirm --switch intel"
 alias nvidia="optimus-manager --no-confirm --switch nvidia"
+eval $(thefuck --alias)
 
 [ -x "$(command -v nvim)" ] && alias vim="nvim"
 
