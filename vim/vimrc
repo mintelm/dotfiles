@@ -26,14 +26,8 @@ call plug#end()
 " tabs
 let tabsize=4
 set expandtab
-
-function SetTabs(tabwidth)
-    execute "set tabstop=".a:tabwidth
-    execute "set shiftwidth=".a:tabwidth
-    execute "set softtabstop=".a:tabwidth
-endfunction
-call SetTabs(tabsize)
-au FileType c,cpp,objc,objcpp,sh,make call SetTabs(8)
+call utils#SetTabs(tabsize)
+au FileType c,cpp,objc,objcpp,sh,make call utils#SetTabs(8)
 
 " highlight characters over 80 line length if c
 highlight ColorColumn ctermbg=magenta
@@ -102,14 +96,6 @@ nnoremap <silent><Space> :nohlsearch<Bar>:echo<CR>
 " {{{ LIGHTLINE
 set laststatus=2
 
-function! GitStatus()
-    if !get(g:, 'gitgutter_enabled', 0) || empty(FugitiveHead())
-        return ''
-    endif
-    let [ l:added, l:modified, l:removed ] = GitGutterGetHunkSummary()
-    return printf('~%d +%d -%d', l:modified, l:added, l:removed)
-endfunction
-
 let g:lightline = {
     \ 'colorscheme': 'gruvbox',
     \ 'active': {
@@ -123,7 +109,7 @@ let g:lightline = {
     \ },
     \ 'component_function': {
     \   'cocstatus': 'coc#status',
-    \   'githunks': 'GitStatus',
+    \   'githunks': 'utils#GitStatus',
     \   'gitbranch': 'FugitiveHead',
     \ },
 \ }
