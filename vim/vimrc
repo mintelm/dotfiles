@@ -75,6 +75,7 @@ map <leader>qf :CocFix<CR>
 map <leader>cr :CocRestart<CR><CR>
 map <leader>hv <Plug>(GitGutterPreviewHunk)
 map <leader>ha <Plug>(GitGutterStageHunk)
+map <leader>hr <Plug>(GitGutterUndoHunk)
 nmap ]h <Plug>(GitGutterNextHunk)
 nmap [h <Plug>(GitGutterPrevHunk)
 map [q :cprev<CR>
