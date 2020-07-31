@@ -32,6 +32,7 @@ au FileType c,cpp,objc,objcpp,sh,make call utils#SetTabs(8)
 " highlight characters over 80 line length if c
 highlight ColorColumn ctermbg=magenta
 au FileType c,cpp,objc,objcpp,sh,make call matchadd('ColorColumn', '\%>80v.\+', 100)
+au FileType typescript call matchadd('ColorColumn', '\%>140v.\+', 100)
 
 let g:gruvbox_contrast_dark='hard'
 set background=dark
@@ -71,6 +72,7 @@ map <leader>gf :GFiles<CR>
 map <leader>k <Plug>NERDCommenterToggle
 map <leader>gs :Gstatus<CR>
 map <leader>qf :CocFix<CR>
+map <leader>cr :CocRestart<CR><CR>
 map <leader>hv <Plug>(GitGutterPreviewHunk)
 map <leader>ha <Plug>(GitGutterStageHunk)
 nmap ]h <Plug>(GitGutterNextHunk)
