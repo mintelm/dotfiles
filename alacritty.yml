@@ -1,16 +1,16 @@
-dynamic_title: true
+window.dynamic_title: true
 draw_bold_text_with_bright_colors: true
 
 font:
-  size: 14
+  size: 12
   normal:
-    family: Inconsolata
+    family: Roboto Mono
     style: Medium
   bold:
-    family: Inconsolata
+    family: Roboto Mono
     style: Bold
   italic:
-    family: Inconsolata
+    family: Roboto Mono
     style: Italic
 
 colors:
