@@ -1,15 +1,15 @@
 * {
-    backgroundcolor: #282828;
-    bg1: #282828;
-    backgroundcoloralternate: #282828;
+    backgroundcolor: #1d2021;
+    bg1: #1d2021;
+    backgroundcoloralternate: #1d2021;
     separatorcolor: #29353b;
     scrollbarcolor: #29353b;
     foregroundcolor: #fbf1c7;
     foregroundcolorinverse: #fbf1c7;
     selectioncolor: #fe8019;
     font-size: 1px;
-    font: "Noto Sans 18";
-    border-color: @separatorcolor;
+    font: "Roboto Mono 16";
+    border-color: @selectioncolor;
     background-color: @backgroundcolor;
     text-color: @foregroundcolor;
     margin: 0;
@@ -33,7 +33,7 @@
 }
 
 #mainbox {
-    border: 0;
+    border: 1;
     padding: 0;
     background-color: @backgroundcoloralternate;
 }
@@ -76,7 +76,7 @@
 }
 
 #inputbar {
-    border: 0 solid 0 solid 1 solid 0 solid;
+    border: 1 1 1 1;
     margin: 0;
     spacing: 0;
     border-color: @separatorcolor;
@@ -85,7 +85,7 @@
 #prompt {
     padding: 16;
     background-color: @backgroundcoloralternate;
-    border: 0 1 0 0;
+    border: 0 1 1 0;
 }
 
 #entry {
@@ -94,13 +94,13 @@
 
 #scrollbar {
     border: 0;
-    width: 8px;
+    width: 0px;
     handle-color: @scrollbarcolor;
-    handle-width: 8px;
+    handle-width: 0px;
     background-color: @backgroundcoloralternate;
 }
 
 #scrollbar handle {
-    border: 1px;
+    border: 0px;
     border-color: #ff0000;
 }
