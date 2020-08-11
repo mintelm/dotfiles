@@ -23,6 +23,9 @@ call plug#end()
 
 
 " {{{ GENERAL
+set title
+set titlestring=vim\ %{expand(\"%:p:~\")}
+
 " tabs
 let tabsize=4
 set expandtab
