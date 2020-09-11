@@ -4,13 +4,13 @@ draw_bold_text_with_bright_colors: true
 font:
   size: 12
   normal:
-    family: Roboto Mono
+    family: Fira Code
     style: Medium
   bold:
-    family: Roboto Mono
+    family: Fira Code
     style: Bold
   italic:
-    family: Roboto Mono
+    family: Fira Code
     style: Italic
 
 colors:
