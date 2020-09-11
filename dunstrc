@@ -29,14 +29,14 @@
     # the top and down respectively.
     # The width can be negative.  In this case the actual width is the
     # screen width minus the width defined in within the geometry option.
-    geometry = "300x5-30+50"
+    geometry = "400x5-20+40"
 
     # Show how many messages are currently hidden (because of geometry).
     indicate_hidden = yes
 
     # Shrink window if it's smaller than the width.  Will be ignored if
     # width is 0.
-    shrink = no
+    shrink = yes
 
     # The transparency of the window.  Range: [0; 100].
     # This option will only work if a compositing window manager is
@@ -54,8 +54,8 @@
     separator_height = 1
 
     # Padding between text and separator.
-    padding = 18
-    horizontal_padding = 18
+    padding = 15
+    horizontal_padding = 15
 
     # Defines width in pixels of frame around the notification window.
     # Set to 0 to disable.
@@ -160,10 +160,10 @@
     icon_position = left
 
     # Scale larger icons down to this size, set to 0 to disable
-    max_icon_size = 0
+    max_icon_size = 50
 
     # Paths to default icons.
-    icon_path = /usr/share/icons/Papirus-Dark/16x16/devices:/usr/share/icons/Papirus-Dark/22x22/status
+    # icon_path = /usr/share/icons/Papirus-Dark/16x16/devices:/usr/share/icons/Papirus-Dark/22x22/status
 
     ### History ###
 
@@ -243,14 +243,14 @@
 [urgency_low]
     # IMPORTANT: colors have to be defined in quotation marks.
     # Otherwise the "#" and following would be interpreted as a comment.
-    background = "#1d2021"
+    background = "#282828"
     foreground = "#ebdbb2"
     timeout = 10
     # Icon for notifications with low urgency, uncomment to enable
     #icon = /path/to/icon
 
 [urgency_normal]
-    background = "#1d2021"
+    background = "#282828"
     foreground = "#ebdbb2"
     timeout = 10
     # Icon for notifications with normal urgency, uncomment to enable
