@@ -100,7 +100,8 @@ zstyle ':completion:*' matcher-list '' \
 
 
 # {{{ DIRSTACK
-zstyle ':chpwd:*' recent-dirs-max 10
+zstyle ':chpwd:*' recent-dirs-max 9
+zstyle ':chpwd:*' recent-dirs-prune parent
 add-zsh-hook chpwd chpwd_recent_dirs
 # }}}
 
@@ -115,7 +116,6 @@ export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 export LANGUAGE=en_US.UTF-8
 export ZSH_AUTOSUGGEST_USE_ASYNC=1
-export TERM=xterm-256color
 # }}}
 
 
@@ -135,7 +135,6 @@ bindkey '^[[Z' reverse-menu-complete
 alias plugpull="find ${ZDOTDIR:-$HOME}/.zsh_plugins -type d -exec test -e '{}/.git' ';' -print0 | xargs -I {} -0 git -C {} pull"
 alias sudo="sudo "
 alias ssh='TERM=xterm-256color \ssh'
-alias lock="i3lock-fancy-multimonitor -n -p"
 alias open="xdg-open"
 alias grep='grep  --color=auto --exclude-dir={.bzr,CVS,.git,.hg,.svn}'
 alias wttr="curl wttr.in/regensburg"
