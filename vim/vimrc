@@ -8,6 +8,7 @@ endif
 call plug#begin('~/.vim/plugged')
     if has('nvim')
         Plug 'neoclide/coc.nvim', {'branch': 'release'}
+        Plug 'leafgarland/typescript-vim'       " syntax highlighting
     endif
     Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
     Plug 'junegunn/fzf.vim'                     " fzf <3 vim
@@ -15,9 +16,8 @@ call plug#begin('~/.vim/plugged')
     Plug 'itchyny/lightline.vim'                " bottom info bar
     Plug 'airblade/vim-gitgutter'               " git info on left bar
     Plug 'tpope/vim-fugitive'                   " git branch info etc.
-    Plug 'scrooloose/nerdcommenter'             " ez comments
     Plug 'mcchrish/nnn.vim'                     " floating file browser
-    Plug 'leafgarland/typescript-vim'           " syntax highlighting
+    Plug 'vimwiki/vimwiki'
 call plug#end()
 " }}}
 
@@ -76,6 +76,7 @@ map <leader>k <Plug>NERDCommenterToggle
 map <leader>gs :Gstatus<CR>
 map <leader>qf :CocFix<CR>
 map <leader>cr :CocRestart<CR><CR>
+map <leader>ca :CocAction<CR>
 map <leader>hv <Plug>(GitGutterPreviewHunk)
 map <leader>ha <Plug>(GitGutterStageHunk)
 map <leader>hr <Plug>(GitGutterUndoHunk)
@@ -158,14 +159,6 @@ nnoremap <silent> K :call <SID>show_documentation()<CR>
 
 
 " {{{ OTHER PLUGINS
-" Add spaces after comment delimiters by default
-let g:NERDSpaceDelims = 1
-" Use compact syntax for prettified multi-line comments
-let g:NERDCompactSexyComs = 1
-" Enable trimming of trailing whitespace when uncommenting
-let g:NERDTrimTrailingWhitespace = 1
-" Enable NERDCommenterToggle to check all selected lines is commented or not 
-let g:NERDToggleCheckAllLines = 1
 " nnn command
 let g:nnn#command = 'nnn -Q'
 " floating fuzzy finder
@@ -174,4 +167,8 @@ let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6, 'highlight': 'Debu
 let g:nnn#layout = { 'window': { 'width': 0.9, 'height': 0.6, 'highlight': 'Debug' } }
 " disable standard hotkeys
 let g:gitgutter_map_keys = 0
+let g:vimwiki_list = [{ 'path': '~/.vim/wiki/', 'path_html': '~/.vim/wiki_html/' }]
 " }}}
+
+set timeoutlen=1000
+set ttimeoutlen=5
