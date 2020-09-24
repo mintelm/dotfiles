@@ -4,6 +4,7 @@
   "suggest.snippetIndicator": "►",
   "coc.source.around.enable": false,
   "coc.source.buffer.enable": false,
+  "eslint.options": { "resolvePluginsRelativeTo": "." },
   "languageserver": {
     "clangd": {
       "command": "clangd",
