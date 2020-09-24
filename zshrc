@@ -38,6 +38,8 @@ unset initscript
 
 # {{{ SOURCING
 [ -f ~/.config/zshrc.local ] && source ~/.config/zshrc.local
+source /usr/share/nvm/init-nvm.sh
+source ~/.zsh/expand-multiple-dots.zsh
 # }}}
 
 
@@ -64,7 +66,6 @@ zstyle ':completion:*' list-colors 'di=34;01:ln=36:so=32:pi=33:ex=33;01:bd=46;34
 
 # {{{ PROMPT
 setopt PROMPT_SUBST
-
 function set_prompt() {
     TOKEN="{}"
     PROMPT="%(?:%{$fg_bold[green]%}$TOKEN :%{$fg_bold[red]%}$TOKEN )"
@@ -131,6 +132,33 @@ bindkey '^[[Z' reverse-menu-complete
 # }}}
 
 
+# {{{ DIRECTORY FUNCTIONS
+lsd() {
+    if [ -z "$1" ]; then
+        cdr -l
+    else
+        if [ "$1" ]; then
+            cdr $1
+        fi
+    fi
+}
+
+lfcd () {
+    tmp="$(mktemp)"
+    lf -last-dir-path="$tmp" "$@"
+    if [ -f "$tmp" ]; then
+        dir="$(cat "$tmp")"
+        rm -f "$tmp"
+        if [ -d "$dir" ]; then
+            if [ "$dir" != "$(pwd)" ]; then
+                cd "$dir"
+            fi
+        fi
+    fi
+}
+# }}}
+
+
 # {{{ ALIASES
 alias plugpull="find ${ZDOTDIR:-$HOME}/.zsh_plugins -type d -exec test -e '{}/.git' ';' -print0 | xargs -I {} -0 git -C {} pull"
 alias sudo="sudo "
@@ -142,6 +170,7 @@ alias vvim="vim"
 alias nnn="nnn -SQ"
 alias intel="optimus-manager --no-confirm --switch intel"
 alias nvidia="optimus-manager --no-confirm --switch nvidia"
+alias lf="lfcd"
 eval $(thefuck --alias)
 
 [ -x "$(command -v nvim)" ] && alias vim="nvim"
@@ -157,14 +186,4 @@ else
     alias ll="ls --color=tty -lh"
     alias lla="ls --color=tty -lah"
 fi
-
-lsd() {
-    if [ -z "$1" ]; then
-        cdr -l
-    else
-        if [ "$1" ]; then
-            cdr $1
-        fi
-    fi
-}
 # }}}
