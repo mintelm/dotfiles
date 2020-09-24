@@ -1,49 +1,10 @@
-# {{{ AUTOLOADS
-autoload -Uz colors && colors
-autoload -Uz add-zsh-hook
-autoload -Uz compinit && compinit
-autoload -Uz chpwd_recent_dirs cdr
-# }}}
+# general
+fpath+=(~/.zsh)
+title() { export TITLE="$*" }
+precmd() { print -Pn "\e]2;%(!.@@@ .)%~\a" }
+set -o emacs
 
-
-# {{{ PLUGIN INIT
-# assumes github and slash separated plugin names
-github_plugins=(
-    romkatv/gitstatus
-    zsh-users/zsh-autosuggestions
-    zsh-users/zsh-syntax-highlighting
-)
-
-for plugin in $github_plugins; do
-    # clone the plugin from github if it doesn't exist
-    if [[ ! -d ${ZDOTDIR:-$HOME}/.zsh_plugins/$plugin ]]; then
-        mkdir -p ${ZDOTDIR:-$HOME}/.zsh_plugins/${plugin%/*}
-        git clone --depth 1 --recursive https://github.com/$plugin.git ${ZDOTDIR:-$HOME}/.zsh_plugins/$plugin
-    fi
-    # load the plugin
-    for initscript in ${plugin#*/}.zsh ${plugin#*/}.plugin.zsh ${plugin#*/}.sh; do
-        if [[ -f ${ZDOTDIR:-$HOME}/.zsh_plugins/$plugin/$initscript ]]; then
-            source ${ZDOTDIR:-$HOME}/.zsh_plugins/$plugin/$initscript
-            break
-        fi
-    done
-done
-
-# clean up
-unset github_plugins
-unset plugin
-unset initscript
-# }}}
-
-
-# {{{ SOURCING
-[ -f ~/.config/zshrc.local ] && source ~/.config/zshrc.local
-source /usr/share/nvm/init-nvm.sh
-source ~/.zsh/expand-multiple-dots.zsh
-# }}}
-
-
-# {{{ GENERAL
+# history settings
 HISTFILE=~/.cache/zsh_history
 HISTSIZE=50000
 SAVEHIST=10000
@@ -52,62 +13,7 @@ setopt sharehistory
 setopt histfcntllock
 setopt histignorealldups
 
-set -o emacs
-
-title() { export TITLE="$*" }
-precmd () { print -Pn "\e]2;%(!.@@@ .)%~\a" }
-[[ -n $SSH_CONNECTION ]] && precmd () { print -Pn "\e]2;%n@%m: %~\a" }
-
-# http://zsh.sourceforge.net/Doc/Release/Zsh-Modules.html#The-zsh_002fcomplist-Module
-# https://askubuntu.com/questions/17299/what-do-the-different-colors-mean-in-ls
-zstyle ':completion:*' list-colors 'di=34;01:ln=36:so=32:pi=33:ex=33;01:bd=46;34:cd=43;34:su=41;30:sg=46;30:tw=42;30:ow=43;30'
-# }}}
-
-
-# {{{ PROMPT
-setopt PROMPT_SUBST
-function set_prompt() {
-    TOKEN="{}"
-    PROMPT="%(?:%{$fg_bold[green]%}$TOKEN :%{$fg_bold[red]%}$TOKEN )"
-    PROMPT+="%{$fg[cyan]%}%c"
-
-    if gitstatus_query MY && [[ $VCS_STATUS_RESULT == ok-sync ]]; then
-        if [[ -n "$VCS_STATUS_LOCAL_BRANCH" ]]; then
-            GITSTR="$VCS_STATUS_LOCAL_BRANCH"
-        elif [[ -n "$VCS_STATUS_TAG" ]]; then
-            GITSTR="#$VCS_STATUS_TAG"
-        else
-            GITSTR="@${VCS_STATUS_COMMIT:0:8}"
-        fi
-        PROMPT+="%{$fg[red]%}(${GITSTR})"
-        (( $VCS_STATUS_NUM_UNSTAGED )) && PROMPT+="%{$fg[yellow]%}*"
-        (( $VCS_STATUS_NUM_UNTRACKED )) && PROMPT+="%{$fg[yellow]%}+"
-    fi
-    PROMPT+="%{$reset_color%} "
-}
-
-gitstatus_stop 'MY' && gitstatus_start -s -1 -u -1 -c -1 -d -1 'MY'
-add-zsh-hook precmd set_prompt
-# }}}
-
-
-# {{{ FUZZY FINDER 
-zstyle ':completion:*' menu select
-zstyle ':completion:*' matcher-list '' \
-    'm:{a-z\-}={A-Z\_}' \
-    'r:[^[:alpha:]]||[[:alpha:]]=** r:|=* m:{a-z\-}={A-Z\_}' \
-    'r:|?=** m:{a-z\-}={A-Z\_}'
-# }}}
-
-
-# {{{ DIRSTACK
-zstyle ':chpwd:*' recent-dirs-max 9
-zstyle ':chpwd:*' recent-dirs-prune parent
-add-zsh-hook chpwd chpwd_recent_dirs
-# }}}
-
-
-# {{{ EXPORTS
+# exports
 if [[ -x "$(command -v nvim)" ]]; then
     export EDITOR='nvim'
 else
@@ -117,73 +23,14 @@ export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 export LANGUAGE=en_US.UTF-8
 export ZSH_AUTOSUGGEST_USE_ASYNC=1
-# }}}
 
-
-# {{{ KEYBINDS
-zmodload zsh/complist
-bindkey -M menuselect 'h' vi-backward-char
-bindkey -M menuselect 'k' vi-up-line-or-history
-bindkey -M menuselect 'l' vi-forward-char
-bindkey -M menuselect 'j' vi-down-line-or-history
-bindkey '^R' history-incremental-pattern-search-backward
-bindkey "^[[3~" delete-char
-bindkey '^[[Z' reverse-menu-complete
-# }}}
-
-
-# {{{ DIRECTORY FUNCTIONS
-lsd() {
-    if [ -z "$1" ]; then
-        cdr -l
-    else
-        if [ "$1" ]; then
-            cdr $1
-        fi
-    fi
-}
-
-lfcd () {
-    tmp="$(mktemp)"
-    lf -last-dir-path="$tmp" "$@"
-    if [ -f "$tmp" ]; then
-        dir="$(cat "$tmp")"
-        rm -f "$tmp"
-        if [ -d "$dir" ]; then
-            if [ "$dir" != "$(pwd)" ]; then
-                cd "$dir"
-            fi
-        fi
-    fi
-}
-# }}}
-
-
-# {{{ ALIASES
-alias plugpull="find ${ZDOTDIR:-$HOME}/.zsh_plugins -type d -exec test -e '{}/.git' ';' -print0 | xargs -I {} -0 git -C {} pull"
-alias sudo="sudo "
-alias ssh='TERM=xterm-256color \ssh'
-alias open="xdg-open"
-alias grep='grep  --color=auto --exclude-dir={.bzr,CVS,.git,.hg,.svn}'
-alias wttr="curl wttr.in/regensburg"
-alias vvim="vim"
-alias nnn="nnn -SQ"
-alias intel="optimus-manager --no-confirm --switch intel"
-alias nvidia="optimus-manager --no-confirm --switch nvidia"
-alias lf="lfcd"
-eval $(thefuck --alias)
-
-[ -x "$(command -v nvim)" ] && alias vim="nvim"
-
-if [ -x "$(command -v exa)" ]; then
-    alias ls="exa "
-    alias ll="exa --icons -l"
-    alias lla="exa --icons -la"
-    alias llg="exa --git --git-ignore --no-permissions --no-filesize --no-user -l"
-    alias lt="exa --icons --tree --level=5"
-else
-    alias ls="ls --color=tty"
-    alias ll="ls --color=tty -lh"
-    alias lla="ls --color=tty -lah"
-fi
-# }}}
+# source it up
+source ~/.zsh/plugin-loader.zsh
+source ~/.zsh/keybinds.zsh
+source ~/.zsh/aliases.zsh
+source ~/.zsh/prompt.zsh
+source ~/.zsh/fzf.zsh
+source ~/.zsh/lsd.zsh
+source ~/.zsh/completion-list-colors.zsh
+source ~/.zsh/manydots-magic.zsh
+source ~/.zsh/lfcd.zsh

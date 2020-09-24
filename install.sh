@@ -14,11 +14,17 @@ done
 # create dirs
 if ! [ -z ${force} ]; then
 	mkdir -p ~/.cache
+        mkdir -p ~/.zsh
 	mkdir -p ~/.vim/autoload
 	mkdir -p ~/.config/nvim
 	mkdir -p ~/.config/rofi
 	mkdir -p ~/.config/oomox/colors/
 fi
+
+# zsh stuff
+ln -sv$force $PWD/zshrc ~/.zshrc
+ln -sv$force $PWD/zsh/* ~/.zsh/
+ln -sv$force $PWD/sandboxrc ~/.sandboxrc
 
 # vim stuff
 ln -sv$force $PWD/vim/vimrc ~/.vimrc
@@ -28,7 +34,6 @@ ln -sv$force $PWD/vim/coc-settings.json ~/.vim/coc-settings.json
 ln -sv$force $PWD/vim/coc-settings.json ~/.config/nvim/coc-settings.json
 
 # cli tools
-ln -sv$force $PWD/zshrc ~/.zshrc
 ln -sv$force $PWD/tmux.conf ~/.tmux.conf
 ln -sv$force $PWD/screenrc ~/.screenrc
 ln -sv$force $PWD/gitconfig ~/.gitconfig
