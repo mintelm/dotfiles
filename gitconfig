@@ -21,6 +21,7 @@
     co = checkout
     cp = cherry-pick
     st = stash
+    sw = switch
     b = branch
     f = fetch
     fa = fetch --all
