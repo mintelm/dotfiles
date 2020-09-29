@@ -1,29 +1,29 @@
 {
-  "suggest.floatEnable": true,
-  "suggest.autoTrigger": "none",
-  "diagnostic.virtualText": true,
-  "diagnostic.virtualTextCurrentLineOnly": false,
-  "suggest.snippetIndicator": "►",
-  "coc.source.around.enable": false,
-  "coc.source.buffer.enable": false,
-  "eslint.options": { "resolvePluginsRelativeTo": "." },
-  "languageserver": {
-    "clangd": {
-      "command": "clangd",
-      "args": ["--background-index"],
-      "rootPatterns": [
-        "compile_flags.txt",
-        "compile_commands.json",
-        ".vim/",
-        ".git/",
-        ".hg/"
-      ],
-      "filetypes": [
-        "c",
-        "cpp",
-        "objc",
-        "objcpp"
-      ]
+    "suggest.floatEnable": true,
+    "suggest.autoTrigger": "none",
+    "diagnostic.virtualText": true,
+    "diagnostic.virtualTextCurrentLineOnly": false,
+    "suggest.snippetIndicator": "►",
+    "coc.source.around.enable": false,
+    "coc.source.buffer.enable": false,
+    "eslint.options": { "resolvePluginsRelativeTo": "." },
+    "languageserver": {
+        "clangd": {
+            "command": "clangd",
+            "args": ["--background-index"],
+            "rootPatterns": [
+                "compile_flags.txt",
+                "compile_commands.json",
+                ".vim/",
+                ".git/",
+                ".hg/"
+            ],
+            "filetypes": [
+                "c",
+                "cpp",
+                "objc",
+                "objcpp"
+            ]
+        }
     }
-  }
 }
