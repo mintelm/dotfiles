@@ -6,6 +6,7 @@
     "suggest.snippetIndicator": "►",
     "coc.source.around.enable": false,
     "coc.source.buffer.enable": false,
+    "typescript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces": true,
     "eslint.options": { "resolvePluginsRelativeTo": "." },
     "languageserver": {
         "clangd": {
