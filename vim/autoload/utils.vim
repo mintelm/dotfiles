@@ -4,10 +4,15 @@ function utils#SetTabs(tabwidth)
     execute "set softtabstop=".a:tabwidth
 endfunction
 
-function! GitStatus()
-    if !get(g:, 'gitgutter_enabled', 0) || empty(FugitiveHead())
-        return ''
+function! utils#GitStatus()
+  let [a,m,r] = GitGutterGetHunkSummary()
+  return printf('+%d ~%d -%d', a, m, r)
+endfunction
+
+function! utils#ShowDocumentation()
+    if (index(['vim','help'], &filetype) >= 0)
+        execute 'h '.expand('<cword>')
+    else
+        call CocAction('doHover')
     endif
-    let [ l:added, l:modified, l:removed ] = GitGutterGetHunkSummary()
-    return printf('~%d +%d -%d', l:modified, l:added, l:removed)
 endfunction

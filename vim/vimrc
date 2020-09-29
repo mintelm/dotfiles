@@ -8,7 +8,6 @@ endif
 call plug#begin('~/.vim/plugged')
     if has('nvim')
         Plug 'neoclide/coc.nvim', {'branch': 'release'}
-        Plug 'leafgarland/typescript-vim'       " syntax highlighting
     endif
     Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
     Plug 'junegunn/fzf.vim'                     " fzf <3 vim
@@ -16,8 +15,8 @@ call plug#begin('~/.vim/plugged')
     Plug 'itchyny/lightline.vim'                " bottom info bar
     Plug 'airblade/vim-gitgutter'               " git info on left bar
     Plug 'tpope/vim-fugitive'                   " git branch info etc.
-    Plug 'mcchrish/nnn.vim'                     " floating file browser
-    Plug 'vimwiki/vimwiki'
+    Plug 'leafgarland/typescript-vim'           " syntax highlighting
+    Plug 'vimwiki/vimwiki'                      " my wiki
 call plug#end()
 " }}}
 
@@ -37,73 +36,75 @@ highlight ColorColumn ctermbg=magenta
 au FileType c,cpp,objc,objcpp,sh,make call matchadd('ColorColumn', '\%>80v.\+', 100)
 au FileType typescript call matchadd('ColorColumn', '\%>140v.\+', 100)
 
+" colors
 let g:gruvbox_contrast_dark='hard'
 set background=dark
+set termguicolors               " activate 256 color support
 colorscheme gruvbox             " set color scheme
 
+" others
 syntax enable                   " enable syntax processing
 filetype plugin on              " allow vim to recognize filetypes
 set number                      " activate line numbers
 set relativenumber              " relative numbers from current line
-set termguicolors               " activate 256 color support
 set mouse=a
-
 set cursorline                  " highlight current line
 set showmatch                   " highlight matching [{()}]
 set noshowmode                  " dont show --insert-- (as lightline does)
 set scrolloff=5                 " scroll before end of lines
 set sidescrolloff=15            " scroll before side end of lines
 set clipboard=unnamed           " sync system and vim clipboard
+set ttimeoutlen=5               " time in ms to wait for a key code sequence to complete
 " }}}
 
 
 " {{{ MAPS AND KEYBINDS
 let mapleader = ","
 
-command W w
-command Wq wq
-command Q q
-
 " unmap
 map <C-b> <Nop>
 map <C-f> <Nop>
 
-map <leader>e :NnnPicker '%:p:h'<CR>
-map <leader>b :Buffers<CR>
-map <leader>f :Files<CR>
-map <leader>gf :GFiles<CR>
-map <leader>k <Plug>NERDCommenterToggle
-map <leader>gs :Gstatus<CR>
-map <leader>qf :CocFix<CR>
-map <leader>cr :CocRestart<CR><CR>
-map <leader>ca :CocAction<CR>
-map <leader>hv <Plug>(GitGutterPreviewHunk)
-map <leader>ha <Plug>(GitGutterStageHunk)
-map <leader>hr <Plug>(GitGutterUndoHunk)
-nmap ]h <Plug>(GitGutterNextHunk)
-nmap [h <Plug>(GitGutterPrevHunk)
+" navigation
 map [q :cprev<CR>
 map ]q :cnext<CR>
 map [Q :cfirst<CR>
 map ]Q :clast<CR>
 
-" Remap keys for gotos
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
-
-" Symbol renaming.
-nmap <leader>rn <Plug>(coc-rename)
-
 " turn off search highlight with <space>
-nnoremap <silent><Space> :nohlsearch<Bar>:echo<CR> 
+nnoremap <silent><Space> :nohlsearch<Bar>:echo<CR>
+
+" typos
+command W w
+command Wq wq
+command Q q
+
+" fzf
+map <leader>b :Buffers<CR>
+map <leader>f :Files<CR>
+map <leader>gf :GFiles<CR>
+
+" fugitive
+map <leader>gs :Gstatus<CR>
+
+" gitgutter
+map <leader>hv <Plug>(GitGutterPreviewHunk)
+map <leader>ha <Plug>(GitGutterStageHunk)
+map <leader>hr <Plug>(GitGutterUndoHunk)
+nmap ]h <Plug>(GitGutterNextHunk)
+nmap [h <Plug>(GitGutterPrevHunk)
+
+" coc
+nmap <leader>qf  <Plug>(coc-fix-current)
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gr <Plug>(coc-references)
+nmap <leader>rn <Plug>(coc-rename)
+map <leader>cr :CocRestart<CR><CR>
 " }}}
 
 
 " {{{ LIGHTLINE
 set laststatus=2
-
 let g:lightline = {
     \ 'colorscheme': 'gruvbox',
     \ 'active': {
@@ -134,6 +135,9 @@ set signcolumn=yes              " always show signcolumns
 " highlight comments in json correctly
 autocmd FileType json syntax match Comment +\/\/.\+$+
 
+" highlight the symbol and its references when holding the cursor
+autocmd CursorHold * silent call CocActionAsync('highlight')
+
 " use <c-space>for trigger completion
 inoremap <silent><expr> <c-space> coc#refresh()
 
@@ -147,28 +151,20 @@ let g:coc_snippet_prev = '<S-TAB>'
 inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 
 " Use K to show documentation in preview window
-function! s:show_documentation()
-    if (index(['vim','help'], &filetype) >= 0)
-        execute 'h '.expand('<cword>')
-    else
-        call CocAction('doHover')
-    endif
-endfunction
-nnoremap <silent> K :call <SID>show_documentation()<CR>
+nnoremap <silent> K :call utils#ShowDocumentation()<CR>
+
+" Add `:OI` command for organize imports of the current buffer.
+command! -nargs=0 OI   :call     CocAction('runCommand', 'editor.action.organizeImport')
+
+" Add `:Format` command to format current buffer.
+command! -nargs=0 Format :call CocAction('format')
 " }}}
 
 
 " {{{ OTHER PLUGINS
-" nnn command
-let g:nnn#command = 'nnn -Q'
 " floating fuzzy finder
 let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6, 'highlight': 'Debug' } }
-" floating nnn
-let g:nnn#layout = { 'window': { 'width': 0.9, 'height': 0.6, 'highlight': 'Debug' } }
 " disable standard hotkeys
 let g:gitgutter_map_keys = 0
 let g:vimwiki_list = [{ 'path': '~/.vim/wiki/', 'path_html': '~/.vim/wiki_html/' }]
 " }}}
-
-set timeoutlen=1000
-set ttimeoutlen=5
