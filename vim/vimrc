@@ -8,6 +8,12 @@ endif
 call plug#begin('~/.vim/plugged')
     if has('nvim')
         Plug 'neoclide/coc.nvim', {'branch': 'release'}
+        " requires yarn
+        Plug 'neoclide/coc-tsserver', {'do': 'yarn install --frozen-lockfile'}
+        Plug 'neoclide/coc-eslint', {'do': 'yarn install --frozen-lockfile'}
+        Plug 'neoclide/coc-rls', {'do': 'yarn install --frozen-lockfile'}
+        Plug 'neoclide/coc-python', {'do': 'yarn install --frozen-lockfile'}
+        Plug 'neoclide/coc-json', {'do': 'yarn install --frozen-lockfile'}
     endif
     Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
     Plug 'junegunn/fzf.vim'                     " fzf <3 vim
@@ -22,6 +28,8 @@ call plug#end()
 
 
 " {{{ GENERAL
+syntax enable
+filetype plugin on
 set title
 set titlestring=vim\ %{expand(\"%:p:~\")}
 
@@ -41,10 +49,11 @@ let g:gruvbox_contrast_dark='hard'
 set background=dark
 set termguicolors               " activate 256 color support
 colorscheme gruvbox             " set color scheme
+highlight SignColumn ctermbg=234 guibg=#1d2021
+highlight CursorLineNr ctermfg=214 ctermbg=234 guifg=#fabd2f guibg=#1d2021
+highlight CursorLine ctermbg=234 guibg=#1d2021
 
 " others
-syntax enable                   " enable syntax processing
-filetype plugin on              " allow vim to recognize filetypes
 set number                      " activate line numbers
 set relativenumber              " relative numbers from current line
 set mouse=a
@@ -55,6 +64,11 @@ set scrolloff=5                 " scroll before end of lines
 set sidescrolloff=15            " scroll before side end of lines
 set clipboard=unnamed           " sync system and vim clipboard
 set ttimeoutlen=5               " time in ms to wait for a key code sequence to complete
+set signcolumn=yes              " always show signcolumns
+set hidden                      " allow to open new buffer if last was unsafed
+set nobackup|set nowritebackup  " some server have issues with backup files
+set updatetime=300              " smaller updatetime for cursorhold
+set shortmess+=c                " don't give ins-completion-menu messages.
 " }}}
 
 
@@ -109,33 +123,47 @@ let g:lightline = {
     \ 'colorscheme': 'gruvbox',
     \ 'active': {
     \   'left': [ [ 'mode', 'paste' ],
-    \             [ 'cocstatus', 'readonly', 'filename', 'modified' ],
+    \             [ 'readonly', 'filename', 'modified' ],
     \             [ 'gitbranch', 'githunks' ] ],
     \
     \   'right': [ [ 'lineinfo' ],
     \              [ 'percent' ],
-    \              [ 'fileformat', 'fileencoding', 'filetype' ] ],
+    \              [ 'cocstatus', 'fileformat', 'fileencoding', 'filetype', 'cocerrors', 'cocwarns', 'cocinfos', 'cochints' ] ],
     \ },
     \ 'component_function': {
-    \   'cocstatus': 'coc#status',
+    \   'cocstatus': 'utils#CocShortStatus',
     \   'githunks': 'utils#GitStatus',
     \   'gitbranch': 'FugitiveHead',
     \ },
+    \ 'component_expand': {
+    \   'cocerrors': 'utils#CocErrors',
+    \   'cocwarns': 'utils#CocWarnings',
+    \   'cocinfos': 'utils#CocInfos',
+    \   'cochints': 'utils#CocHints',
+    \ },
+    \ 'component_type': {
+    \   'cocerrors': 'cocerror',
+    \   'cocwarns': 'cocwarn',
+    \   'cocinfos': 'cocinfo',
+    \   'cochints': 'cochint',
+    \ },
 \ }
+autocmd User CocDiagnosticChange call lightline#update()
 " }}}
 
 
 " {{{ COC
-set hidden                      " if hidden is not set, TextEdit might fail.
-set nobackup|set nowritebackup  " Some server have issues with backup files
-set updatetime=300              " Smaller updatetime for CursorHold
-set shortmess+=c                " don't give ins-completion-menu messages.
-set signcolumn=yes              " always show signcolumns
-
 if has('nvim')
+    let g:coc_status_error_sign=''
+    let g:coc_status_warning_sign=''
+    let g:coc_status_info_sign=''
+    let g:coc_status_hint_sign=''
+
     " don't highlight virtual text
-    highlight CocErrorVirtualText ctermfg=Red  guifg=#ff0000
-    highlight CocWarningVirtualText ctermfg=Red  guifg=#ff0000
+    highlight CocErrorSign ctermfg=167 guifg=#fb4934
+    highlight CocWarningSign ctermfg=208 guifg=#fe8019
+    highlight CocInfoSign ctermfg=214 guifg=#fabd2f
+    highlight CocHintSign ctermfg=108 guifg=#689d6a
 
     " highlight comments in json correctly
     autocmd FileType json syntax match Comment +\/\/.\+$+
@@ -168,9 +196,16 @@ endif
 
 
 " {{{ OTHER PLUGINS
-" floating fuzzy finder
+" fzf
 let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6, 'highlight': 'Debug' } }
-" disable standard hotkeys
+
+" gitgutter
 let g:gitgutter_map_keys = 0
+highlight GitGutterAdd ctermfg=142 ctermbg=234 guifg=#b8bb26 guibg=#1d2021
+highlight GitGutterDelete ctermfg=167 ctermbg=234 guifg=#fb4934 guibg=#1d2021
+highlight GitGutterChange ctermfg=108 ctermbg=234 guifg=#8ec07c guibg=#1d2021
+highlight GitGutterChangeDelete ctermfg=108 ctermbg=234 guifg=#8ec07c guibg=#1d2021
+
+" vimwiki
 let g:vimwiki_list = [{ 'path': '~/.vim/wiki/', 'path_html': '~/.vim/wiki_html/' }]
 " }}}
