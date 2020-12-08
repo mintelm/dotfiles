@@ -18,6 +18,7 @@ if ! [ -z ${force} ]; then
 	mkdir -p ~/.vim/autoload
 	mkdir -p ~/.config/nvim
 	mkdir -p ~/.config/rofi
+	mkdir -p ~/.config/bat
 	mkdir -p ~/.config/oomox/colors/
 fi
 
@@ -37,6 +38,7 @@ ln -sv$force $PWD/cli/tmux.conf ~/.config/tmux.conf
 ln -sv$force $PWD/cli/screenrc ~/.config/screenrc
 ln -sv$force $PWD/cli/gitconfig ~/.gitconfig
 ln -sv$force $PWD/cli/tigrc ~/.config/tigrc
+ln -sv$force $PWD/cli/batconfig ~/.config/bat/config
 
 # utils
 ln -sv$force $PWD/utils/alacritty.yml ~/.config/alacritty.yml
