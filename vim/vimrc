@@ -255,5 +255,5 @@ highlight GitGutterChange ctermfg=108 ctermbg=234 guifg=#8ec07c guibg=#1d2021
 highlight GitGutterChangeDelete ctermfg=108 ctermbg=234 guifg=#8ec07c guibg=#1d2021
 
 " vimwiki
-let g:vimwiki_list = [{ 'path': '~/.vim/wiki/', 'path_html': '~/.vim/wiki_html/' }]
+let g:vimwiki_list = [{ 'path': '~/mintelm/wiki/', 'path_html': '~/mintelm/wiki/html' }]
 " }}}
