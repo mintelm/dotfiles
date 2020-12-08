@@ -1,6 +1,0 @@
-sandbox_init_nvm() {
-    source /usr/share/nvm/init-nvm.sh
-}
-
-sandbox_hook nvm node
-sandbox_hook nvm npm

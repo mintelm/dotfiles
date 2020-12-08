@@ -1,6 +1,5 @@
 github_plugins=(
     romkatv/gitstatus
-    benvan/sandboxd
     zsh-users/zsh-autosuggestions
     zsh-users/zsh-syntax-highlighting
 )

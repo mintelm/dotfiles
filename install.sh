@@ -24,7 +24,6 @@ fi
 # zsh stuff
 ln -sv$force $PWD/zshrc ~/.zshrc
 ln -sv$force $PWD/zsh/* ~/.zsh/
-ln -sv$force $PWD/sandboxrc ~/.sandboxrc
 
 # vim stuff
 ln -sv$force $PWD/vim/vimrc ~/.vimrc
