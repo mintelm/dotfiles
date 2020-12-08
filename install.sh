@@ -22,8 +22,8 @@ if ! [ -z ${force} ]; then
 fi
 
 # zsh stuff
-ln -sv$force $PWD/zshrc ~/.zshrc
-ln -sv$force $PWD/zsh/* ~/.zsh/
+ln -sv$force $PWD/zsh/zshrc ~/.zshrc
+ln -sv$force $PWD/zsh/*.*sh ~/.zsh/
 
 # vim stuff
 ln -sv$force $PWD/vim/vimrc ~/.vimrc
@@ -33,13 +33,17 @@ ln -sv$force $PWD/vim/coc-settings.json ~/.vim/coc-settings.json
 ln -sv$force $PWD/vim/coc-settings.json ~/.config/nvim/coc-settings.json
 
 # cli tools
-ln -sv$force $PWD/tmux.conf ~/.tmux.conf
-ln -sv$force $PWD/screenrc ~/.screenrc
-ln -sv$force $PWD/gitconfig ~/.gitconfig
-ln -sv$force $PWD/tigrc ~/.tigrc
+ln -sv$force $PWD/cli/tmux.conf ~/.config/tmux.conf
+ln -sv$force $PWD/cli/screenrc ~/.config/screenrc
+ln -sv$force $PWD/cli/gitconfig ~/.gitconfig
+ln -sv$force $PWD/cli/tigrc ~/.config/tigrc
 
-# others
-ln -sv$force $PWD/alacritty.yml ~/.config/alacritty.yml
-ln -sv$force $PWD/picom.conf ~/.config/picom.conf
+# utils
+ln -sv$force $PWD/utils/alacritty.yml ~/.config/alacritty.yml
+ln -sv$force $PWD/utils/dunstrc ~/.config/dunstrc
+ln -sv$force $PWD/utils/picom.conf ~/.config/picom.conf
+ln -sv$force $PWD/utils/Xresources ~/.Xresources
+
+# themes
 ln -sv$force $PWD/themes/rofi/* ~/.config/rofi/
 ln -sv$force $PWD/themes/oomox/* ~/.config/oomox/colors/

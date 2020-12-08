@@ -4,7 +4,9 @@ alias ssh='TERM=xterm-256color \ssh'
 alias open="xdg-open"
 alias grep='grep  --color=auto --exclude-dir={.bzr,CVS,.git,.hg,.svn}'
 alias wttr="curl wttr.in/regensburg"
-alias vvim="vim"
+alias vvim="/usr/bin/vim"
+alias tmux="tmux -f ~/.config/tmux.conf"
+alias screen="screen -c ~/.config/screenrc"
 alias intel="optimus-manager --no-confirm --switch intel"
 alias nvidia="optimus-manager --no-confirm --switch nvidia"
 [ -x "$(command -v nvim)" ] && alias vim="nvim"
