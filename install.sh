@@ -24,6 +24,7 @@ fi
 
 # zsh stuff
 ln -sv$force $PWD/zsh/zshrc ~/.zshrc
+ln -sv$force $PWD/zsh/manydots-magic ~/.zsh
 ln -sv$force $PWD/zsh/*.*sh ~/.zsh/
 
 # vim stuff
