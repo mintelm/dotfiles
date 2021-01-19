@@ -1,4 +1,12 @@
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
 # general
+PATH=$PATH:~/.local/bin
 fpath+=(~/.zsh)
 title() { export TITLE="$*" }
 precmd() { print -Pn "\e]2;%(!.@@@ .)%~\a" }
@@ -28,9 +36,12 @@ export ZSH_AUTOSUGGEST_USE_ASYNC=1
 source ~/.zsh/plugin-loader.zsh
 source ~/.zsh/keybinds.zsh
 source ~/.zsh/aliases.zsh
-source ~/.zsh/prompt.zsh
+#source ~/.zsh/prompt.zsh
 source ~/.zsh/fzf.zsh
 source ~/.zsh/lsd.zsh
 source ~/.zsh/completion-list-colors.zsh
 source ~/.zsh/manydots-magic.zsh
 source ~/.zsh/lfcd.zsh
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh

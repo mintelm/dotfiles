@@ -1,5 +1,5 @@
 github_plugins=(
-    romkatv/gitstatus
+    romkatv/powerlevel10k
     zsh-users/zsh-autosuggestions
     zsh-users/zsh-syntax-highlighting
 )
@@ -11,7 +11,7 @@ for plugin in $github_plugins; do
         git clone --depth 1 --recursive https://github.com/$plugin.git ${ZDOTDIR:-$HOME}/.zsh_plugins/$plugin
     fi
     # load the plugin
-    for initscript in ${plugin#*/}.zsh ${plugin#*/}.plugin.zsh ${plugin#*/}.sh; do
+    for initscript in ${plugin#*/}.zsh ${plugin#*/}.plugin.zsh ${plugin#*/}.sh ${plugin#*/}.zsh-theme; do
         if [[ -f ${ZDOTDIR:-$HOME}/.zsh_plugins/$plugin/$initscript ]]; then
             source ${ZDOTDIR:-$HOME}/.zsh_plugins/$plugin/$initscript
             break
