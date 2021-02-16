@@ -120,6 +120,9 @@ nmap <silent> gr <Plug>(coc-references)
 nmap <leader>rn <Plug>(coc-rename)
 map <leader>cr :CocRestart<CR><CR>
 nmap <leader>e :CocCommand explorer<CR>
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
+nmap <leader>? :call CocAction('diagnosticInfo') <CR>
 
 " lightline bufferline
 nmap <Leader>1 <Plug>lightline#bufferline#go(1)
