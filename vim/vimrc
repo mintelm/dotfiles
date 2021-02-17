@@ -9,10 +9,8 @@ call plug#begin('~/.vim/plugged')
     if has('nvim')
         Plug 'neoclide/coc.nvim', {'branch': 'release'}
         " requires yarn
-        Plug 'weirongxu/coc-explorer', {'do': 'yarn install --frozen-lockfile'}
         Plug 'neoclide/coc-tsserver', {'do': 'yarn install --frozen-lockfile'}
         Plug 'neoclide/coc-eslint', {'do': 'yarn install --frozen-lockfile'}
-        Plug 'neoclide/coc-rls', {'do': 'yarn install --frozen-lockfile'}
         Plug 'neoclide/coc-python', {'do': 'yarn install --frozen-lockfile'}
         Plug 'neoclide/coc-json', {'do': 'yarn install --frozen-lockfile'}
     endif
@@ -20,11 +18,11 @@ call plug#begin('~/.vim/plugged')
     Plug 'junegunn/fzf.vim'                     " fzf <3 vim
     Plug 'mintelm/gruvbox'                      " color scheme
     Plug 'itchyny/lightline.vim'                " bottom info bar
+    Plug 'mengelbrecht/lightline-bufferline'    " buftab line
     Plug 'airblade/vim-gitgutter'               " git info on left bar
     Plug 'tpope/vim-fugitive'                   " git branch info etc.
     Plug 'leafgarland/typescript-vim'           " syntax highlighting
     Plug 'vimwiki/vimwiki'                      " my wiki
-    Plug 'mengelbrecht/lightline-bufferline'    " buftab line
 call plug#end()
 " }}}
 
@@ -119,10 +117,11 @@ nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gr <Plug>(coc-references)
 nmap <leader>rn <Plug>(coc-rename)
 map <leader>cr :CocRestart<CR><CR>
-nmap <leader>e :CocCommand explorer<CR>
 nmap <silent> [g <Plug>(coc-diagnostic-prev)
 nmap <silent> ]g <Plug>(coc-diagnostic-next)
 nmap <leader>? :call CocAction('diagnosticInfo') <CR>
+xmap <leader>sf <Plug(coc-format-selected)
+nmap <leader>sf <Plug(coc-format-selected)
 
 " lightline bufferline
 nmap <Leader>1 <Plug>lightline#bufferline#go(1)
