@@ -2,7 +2,7 @@ window.dynamic_title: true
 draw_bold_text_with_bright_colors: true
 
 font:
-  size: 11
+  size: 12
   normal:
     family: FiraMono Nerd Font
     style: Medium
@@ -12,6 +12,10 @@ font:
   italic:
     family: FiraMono Nerd Font
     style: Italic
+
+dimensions:
+    columns: 120
+    lines: 60
 
 colors:
   primary:
