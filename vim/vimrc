@@ -14,9 +14,9 @@ call plug#begin('~/.vim/plugged')
         Plug 'neoclide/coc-python', {'do': 'yarn install --frozen-lockfile'}
         Plug 'neoclide/coc-json', {'do': 'yarn install --frozen-lockfile'}
     endif
+    Plug 'mintelm/gruvbox', {'branch': 'colorchanges'}
     Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
     Plug 'junegunn/fzf.vim'                     " fzf <3 vim
-    Plug 'mintelm/gruvbox'                      " color scheme
     Plug 'itchyny/lightline.vim'                " bottom info bar
     Plug 'mengelbrecht/lightline-bufferline'    " buftab line
     Plug 'airblade/vim-gitgutter'               " git info on left bar
@@ -208,12 +208,6 @@ if has('nvim')
     let g:coc_status_warning_sign=''
     let g:coc_status_info_sign=''
     let g:coc_status_hint_sign=''
-
-    " don't highlight virtual text
-    highlight CocErrorSign ctermfg=167 guifg=#fb4934
-    highlight CocWarningSign ctermfg=208 guifg=#fe8019
-    highlight CocInfoSign ctermfg=214 guifg=#fabd2f
-    highlight CocHintSign ctermfg=108 guifg=#689d6a
 
     " highlight comments in json correctly
     autocmd FileType json syntax match Comment +\/\/.\+$+
