@@ -13,19 +13,23 @@ done
 
 # create dirs
 if ! [ -z ${force} ]; then
-	mkdir -p ~/.cache
+        mkdir -p ~/.cache
         mkdir -p ~/.zsh
-	mkdir -p ~/.vim/autoload
-	mkdir -p ~/.config/nvim
-	mkdir -p ~/.config/rofi
-	mkdir -p ~/.config/bat
-	mkdir -p ~/.config/oomox/colors/
+        mkdir -p ~/.xmonad
+        mkdir -p ~/.vim/autoload
+        mkdir -p ~/.config/nvim
+        mkdir -p ~/.config/rofi
+        mkdir -p ~/.config/bat
+        mkdir -p ~/.config/oomox/colors/
 fi
 
 # zsh stuff
 ln -sv$force $PWD/zsh/zshrc ~/.zshrc
 ln -sv$force $PWD/zsh/manydots-magic ~/.zsh
 ln -sv$force $PWD/zsh/*.*sh ~/.zsh/
+
+# xmonad
+ln -sv$force $PWD/xmonad/* ~/.xmonad
 
 # vim stuff
 ln -sv$force $PWD/vim/vimrc ~/.vimrc
