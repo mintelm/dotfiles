@@ -30,7 +30,7 @@ ln -sv$force $PWD/zsh/manydots-magic ~/.zsh
 ln -sv$force $PWD/zsh/*.*sh ~/.zsh/
 
 # xmonad
-ln -sv$force $PWD/xmonad/* ~/.xmonad
+ln -sv$force $PWD/xmonad/* ~/.xmonad/
 
 # vim stuff
 ln -sv$force $PWD/vim/vimrc ~/.vimrc
