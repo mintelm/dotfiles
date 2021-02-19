@@ -11,6 +11,7 @@ while getopts "f" opt; do
         esac
 done
 
+set -x
 # create dirs
 if ! [ -z ${force} ]; then
         mkdir -p ~/.cache
