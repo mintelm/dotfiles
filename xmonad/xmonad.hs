@@ -1,8 +1,9 @@
-import XMonad
+import XMonad hiding ( (|||) )
 import XMonad.Util.EZConfig
 import XMonad.Layout.IndependentScreens
 import XMonad.Layout.Spacing
 import XMonad.Layout.SimplestFloat
+import XMonad.Layout.LayoutCombinators
 
 import qualified XMonad.StackSet as W
 
@@ -31,6 +32,13 @@ myKeybinds =
     ]
     ++
     -- layout
+    [ ("M-v", sendMessage $ JumpToLayout "Tall")
+    , ("M-b", sendMessage $ JumpToLayout "Mirror Tall")
+    , ("M-f", sendMessage $ JumpToLayout "SimplestFloat")
+    , ("M-S-f", sendMessage $ JumpToLayout "Full")
+    ]
+    ++
+    -- rebind workspace keybinds for IndependentScreens
     [ (otherModMasks ++ "M-" ++ key, action tag)
         | (tag, key) <- zip myWorkspaces $ map show[1..length myWorkspaces]
         , (otherModMasks, action) <- [ ("", windows . onCurrentScreen W.greedyView)
@@ -50,4 +58,4 @@ enableSpacing   = False
 uselessGaps     = spacingRaw smartGaps outerSpacing enableSpacing gap enableGap
 tiled           = Tall 1 (3/100) myTilingRatio
 
-myLayoutHook = uselessGaps (tiled ||| Mirror tiled ||| Full ||| simplestFloat)
+myLayoutHook = uselessGaps (tiled ||| Mirror tiled) ||| Full ||| simplestFloat
