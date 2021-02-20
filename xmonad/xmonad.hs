@@ -4,6 +4,7 @@ import XMonad.Layout.IndependentScreens
 import XMonad.Layout.Spacing
 import XMonad.Layout.SimplestFloat
 import XMonad.Layout.LayoutCombinators
+import XMonad.Util.Cursor
 
 import qualified XMonad.StackSet as W
 
@@ -27,7 +28,8 @@ main = xmonad $ def {
     , borderWidth = myBorderWidth
     , workspaces  = withScreens 2 myWorkspaces
     , layoutHook  = myLayoutHook
-    , startupHook = myStartupHook
+    , startupHook = myStartupHook >>
+                    setDefaultCursor xC_left_ptr
     }
     `additionalKeysP` myKeybinds
 
