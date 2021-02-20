@@ -11,7 +11,9 @@ import qualified XMonad.StackSet as W
 myTerminal    = "alacritty"
 myRunMenu     = "rofi -show run -theme gruvbox.rasi -lines 7"
 myModMask     = mod4Mask -- Win key
-myBorderWidth = 2
+myBorderWidth = 3
+myFocusedBorderColor = "#fe8019"
+myNormalBorderColor  = "#3c3836"
 myTilingRatio = 0.55
 myGap         = [10, 10, 10, 10]
 mySpacing     = [0, 0, 0, 0]
@@ -23,13 +25,15 @@ myStartupHook = do
                 spawn "redshift-gtk"
 
 main = xmonad $ def {
-      terminal    = myTerminal
-    , modMask     = myModMask
-    , borderWidth = myBorderWidth
-    , workspaces  = withScreens 2 myWorkspaces
-    , layoutHook  = myLayoutHook
-    , startupHook = myStartupHook >>
-                    setDefaultCursor xC_left_ptr
+      terminal              = myTerminal
+    , modMask               = myModMask
+    , borderWidth           = myBorderWidth
+    , focusedBorderColor    = myFocusedBorderColor
+    , normalBorderColor     = myNormalBorderColor
+    , workspaces            = withScreens 2 myWorkspaces
+    , layoutHook            = myLayoutHook
+    , startupHook           = myStartupHook >>
+                              setDefaultCursor xC_left_ptr
     }
     `additionalKeysP` myKeybinds
 
