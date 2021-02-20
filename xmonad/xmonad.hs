@@ -15,6 +15,11 @@ myTilingRatio = 0.55
 myGap         = [10, 10, 10, 10]
 mySpacing     = [0, 0, 0, 0]
 myWorkspaces  = ["1", "2", "3", "4"]
+myStartupHook = do
+                spawn "picom"
+                spawn "element-desktop --hidden"
+                spawn "dunst"
+                spawn "redshift-gtk"
 
 main = xmonad $ def {
       terminal    = myTerminal
@@ -22,6 +27,7 @@ main = xmonad $ def {
     , borderWidth = myBorderWidth
     , workspaces  = withScreens 2 myWorkspaces
     , layoutHook  = myLayoutHook
+    , startupHook = myStartupHook
     }
     `additionalKeysP` myKeybinds
 
