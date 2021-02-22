@@ -1,0 +1,52 @@
+#!/bin/bash
+
+# run with `./fuck_vodafone 2> log_file`
+
+GW=`/sbin/ip route | awk '/default/ { print $3 }'`
+checkdns=`cat /etc/resolv.conf | awk '/nameserver/ {print $2}' | awk 'NR == 1 {print; exit}'`
+checkdomain=google.com
+
+function portscan
+{
+  tput setaf 6; tput sgr0;
+  if nc -zw1 $checkdomain  80; then
+    tput setaf 2; tput sgr0;
+  else
+    echo && echo $(date +%T) "Port scan of $checkdomain port 80 failed." >&2
+  fi
+}
+
+function pingnet
+{
+  tput setaf 6; tput sgr0;
+  ping $checkdomain -c 4
+
+  if [ $? -eq 0 ]
+    then
+      tput setaf 2; tput sgr0;
+    else
+      echo && echo $(date +%T) "Could not establish internet connection. Something may be wrong here." >&2
+  fi
+}
+
+while [ 1 ]; do
+  #Ping gateway first to verify connectivity with LAN
+  tput setaf 6; tput sgr0;
+  if [ "$GW" = "" ]; then
+          tput setaf 1;echo && echo $(date +%T) "There is no gateway. Probably disconnected..." >&2; tput sgr0;
+  fi
+
+  ping $GW -c 4
+
+  if [ $? -eq 0 ]
+  then
+    tput setaf 6; tput sgr0;
+    pingnet
+    portscan
+  else
+    echo && echo $(date +%T) "Something is wrong with LAN (Gateway unreachable)" >&2
+    pingnet
+    portscan
+  fi
+  sleep 3
+done
