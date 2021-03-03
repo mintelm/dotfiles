@@ -25,6 +25,7 @@ call plug#begin('~/.vim/plugged')
     Plug 'vimwiki/vimwiki'                      " my wiki
     Plug 'raimondi/delimitmate'
     Plug 'ryanoasis/vim-devicons'
+    Plug 'tpope/vim-surround'
 call plug#end()
 " }}}
 
