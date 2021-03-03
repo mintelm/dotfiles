@@ -21,6 +21,7 @@ if ! [ -z ${force} ]; then
         mkdir -p ~/.config/nvim
         mkdir -p ~/.config/rofi
         mkdir -p ~/.config/bat
+        mkdir -p ~/.config/kitty
         mkdir -p ~/.config/oomox/colors/
 fi
 
@@ -47,6 +48,7 @@ ln -sv$force $PWD/cli/tigrc ~/.config/tigrc
 ln -sv$force $PWD/cli/batconfig ~/.config/bat/config
 
 # utils
+ln -sv$force $PWD/utils/kitty.conf ~/.config/kitty/kitty.conf
 ln -sv$force $PWD/utils/alacritty.yml ~/.config/alacritty.yml
 ln -sv$force $PWD/utils/dunstrc ~/.config/dunstrc
 ln -sv$force $PWD/utils/picom.conf ~/.config/picom.conf
