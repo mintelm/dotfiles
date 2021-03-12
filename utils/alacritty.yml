@@ -13,9 +13,10 @@ font:
     family: FiraMono Nerd Font
     style: Italic
 
-dimensions:
-    columns: 120
-    lines: 60
+window:
+    dimensions:
+        columns: 90
+        lines: 24
 
 colors:
   primary:
@@ -52,3 +53,8 @@ scrolling:
   # Number of lines the viewport will move for every line
   # scrolled when scrollback is enabled (history > 0).
   multiplier: 3
+
+cursor:
+  style:
+    blinking: Always
+    blink_interval: 500
