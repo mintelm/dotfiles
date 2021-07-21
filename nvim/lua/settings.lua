@@ -6,9 +6,8 @@ local indent = 4
 cmd('syntax enable')
 cmd('filetype plugin indent on')
 cmd('au TextYankPost * lua vim.highlight.on_yank { on_visual = false, timeout = 250 }')
--- cmd([[au VimEnter * highlight GitSignsChange guibg=bg1 guifg=bg4]])
--- cmd('autocmd InsertEnter * lua vim.wo.list = false')
--- cmd('autocmd InsertLeave * lua vim.wo.list = true')
+cmd('autocmd InsertEnter * lua vim.wo.list = false')
+cmd('autocmd InsertLeave * lua vim.wo.list = true')
 
 utils.opt('b', 'tabstop', indent)
 utils.opt('b', 'expandtab', true)
