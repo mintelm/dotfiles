@@ -1,7 +1,14 @@
-lsp = { }
+M = { }
 
-lsp.signs = { Error = ' ', Warning = ' ', Hint = ' ', Information = ' ' }
-lsp.icons = {
+M.servers = {
+    'pyright',
+    'clangd',
+    'sumneko_lua',
+}
+
+M.signs = { Error = ' ', Warning = ' ', Hint = ' ', Information = ' ' }
+
+M.icons = {
   Class = ' Class',
   Color = ' Color',
   Constant = ' Constant',
@@ -28,30 +35,15 @@ lsp.icons = {
   Variable = ' Variable',
 }
 
-function lsp.setup_icons()
-    local kinds = vim.lsp.protocol.CompletionItemKind
-
-    for type, icon in pairs(lsp.signs) do
-        local hl = 'LspDiagnosticsSign' .. type
-        vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = '' })
-    end
-
-    for i, kind in ipairs(kinds) do
-        kinds[i] = lsp.icons[kind] or kind
-    end
-end
-
-return function()
-    require('lspconfig').pyright.setup{ }
-    require('lspconfig').clangd.setup{ }
-
+function M.sumneko_setup()
     local sumneko_root_path = '/usr/share/lua-language-server'
     local sumneko_binary = '/usr/bin/lua-language-server'
     local runtime_path = vim.split(package.path, ';')
+
     table.insert(runtime_path, 'lua/?.lua')
     table.insert(runtime_path, 'lua/?/init.lua')
 
-    require('lspconfig').sumneko_lua.setup {
+    return {
         cmd = { sumneko_binary, '-E', sumneko_root_path .. '/main.lua' };
         settings = {
             Lua = {
@@ -71,6 +63,32 @@ return function()
             },
         },
     }
+end
 
-    lsp.setup_icons()
+function M.setup_icons()
+    local kinds = vim.lsp.protocol.CompletionItemKind
+
+    for type, icon in pairs(M.signs) do
+        local hl = 'LspDiagnosticsSign' .. type
+        vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = '' })
+    end
+
+    for i, kind in ipairs(kinds) do
+        kinds[i] = M.icons[kind] or kind
+    end
+end
+
+function M.setup_servers()
+    for _, name in ipairs(M.servers) do
+        if name == 'sumneko_lua' then
+            require('lspconfig')[name].setup(M.sumneko_setup())
+        else
+            require('lspconfig')[name].setup({ })
+        end
+    end
+end
+
+return function()
+    M.setup_servers()
+    M.setup_icons()
 end

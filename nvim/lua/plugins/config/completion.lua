@@ -6,7 +6,7 @@ return function()
 
     utils.opt('o', 'completeopt', 'menuone,noinsert,noselect')
 
-    vim.g.completion_confirm_key = ""
+    vim.g.completion_confirm_key = ''
     vim.g.completion_matching_strategy_list = { 'exact', 'substring', 'fuzzy' }
     vim.g.completion_enable_auto_popup = 0
 end

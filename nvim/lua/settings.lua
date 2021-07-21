@@ -14,6 +14,7 @@ utils.opt('b', 'expandtab', true)
 utils.opt('b', 'smartindent', true)
 utils.opt('b', 'shiftwidth', indent)
 
+utils.opt('o', 'title', true)
 utils.opt('o', 'termguicolors', true)
 utils.opt('o', 'shiftround', true)
 utils.opt('o', 'hidden', true)
