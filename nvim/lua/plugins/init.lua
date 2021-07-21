@@ -78,5 +78,8 @@ return require('packer').startup(function()
         config = conf('gitsigns'),
     }
 
-    use "lukas-reineke/indent-blankline.nvim"
+    use {
+        'lukas-reineke/indent-blankline.nvim',
+        config = conf('indentline'),
+    }
 end)
