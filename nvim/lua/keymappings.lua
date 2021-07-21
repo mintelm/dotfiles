@@ -38,7 +38,15 @@ utils.map('i', '<S-Tab>', 'pumvisible() ? "\\<C-p>" : "\\<Tab>"', { expr = true 
 utils.map('i', '<Tab>', 'pumvisible() ? "\\<C-n>" : "\\<Tab>"', { expr = true })
 
 -- bufferline
-utils.map('n', '[b', '<cmd>BufferLineCyclePrev<CR>', silenced)
 utils.map('n', ']b', '<cmd>BufferLineCycleNext<CR>', silenced)
+utils.map('n', '[b', '<cmd>BufferLineCyclePrev<CR>', silenced)
 utils.map('n', '<leader>bf', '<cmd>BufferLinePick<CR>', silenced)
 utils.map('n', '<leader>bd', '<cmd>BufferLinePickClose<CR>', silenced)
+
+-- gitsigns
+utils.map('n', '<leader>hv', '<cmd>lua require"gitsigns".preview_hunk()<CR>')
+utils.map('n', '<leader>ha', '<cmd>lua require"gitsigns".stage_hunk()<CR>')
+utils.map('n', '<leader>hu', '<cmd>lua require"gitsigns".undo_stage_hunk()<CR>')
+utils.map('n', '<leader>hr', '<cmd>lua require"gitsigns".reset_hunk()<CR>')
+utils.map('n', ']h', '<cmd>lua require"gitsigns".next_hunk()<CR>')
+utils.map('n', '[h', '<cmd>lua require"gitsigns".prev_hunk()<CR>')
