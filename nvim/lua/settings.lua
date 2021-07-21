@@ -3,8 +3,12 @@ local utils = require('utils')
 local cmd = vim.cmd
 local indent = 4
 
-cmd 'syntax enable'
-cmd 'filetype plugin indent on'
+cmd('syntax enable')
+cmd('filetype plugin indent on')
+cmd('au TextYankPost * lua vim.highlight.on_yank { on_visual = false, timeout = 250 }')
+-- cmd([[au VimEnter * highlight GitSignsChange guibg=bg1 guifg=bg4]])
+-- cmd('autocmd InsertEnter * lua vim.wo.list = false')
+-- cmd('autocmd InsertLeave * lua vim.wo.list = true')
 
 utils.opt('b', 'tabstop', indent)
 utils.opt('b', 'expandtab', true)
@@ -18,14 +22,10 @@ utils.opt('o', 'ignorecase', true)
 utils.opt('o', 'smartcase', true)
 utils.opt('o', 'scrolloff', 4 )
 utils.opt('o', 'mouse', 'a')
---utils.opt('o', 'cursorline', true)
 utils.opt('o', 'clipboard','unnamed,unnamedplus')
 
 utils.opt('w', 'number', true)
 utils.opt('w', 'relativenumber', true)
 utils.opt('w', 'signcolumn', 'yes:2')
-
--- Highlight on yank
-vim.cmd 'au TextYankPost * lua vim.highlight.on_yank {on_visual = false}'
-
---vim.cmd 'highlight ColorColumn ctermbg=magenta'
+utils.opt('w', 'list', true)
+utils.opt('w', 'listchars', 'eol: ,tab:│ ,extends:»,precedes:«,trail:•')

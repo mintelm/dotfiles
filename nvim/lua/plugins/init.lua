@@ -25,11 +25,7 @@ return require('packer').startup(function()
     use {
         'npxbr/gruvbox.nvim',
         requires = { 'rktjmp/lush.nvim' },
-        config = function()
-            vim.cmd([[colorscheme gruvbox]])
-            vim.g.gruvbox_contrast_dark = 'hard'
-            vim.o.background = 'dark'
-        end,
+        config = conf('gruvbox'),
     }
 
     -- Fuzzy finder
@@ -63,4 +59,24 @@ return require('packer').startup(function()
         requires = 'kyazdani42/nvim-web-devicons',
         config = conf('bufferline'),
     }
+
+    --[[ Statusline
+    use {
+        'datwaft/bubbly.nvim',
+    }
+    --]]
+
+    -- Lightspeed
+    use 'ggandor/lightspeed.nvim'
+
+    -- git hunks/signs
+    use {
+        'lewis6991/gitsigns.nvim',
+        requires = {
+            'nvim-lua/plenary.nvim'
+        },
+        config = conf('gitsigns'),
+    }
+
+    use "lukas-reineke/indent-blankline.nvim"
 end)

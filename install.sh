@@ -39,7 +39,7 @@ ln -sv$force $PWD/xmonad/* ~/.xmonad/
 # ln -sv$force $PWD/vim/autoload/* ~/.vim/autoload/
 # ln -sv$force $PWD/vim/coc-settings.json ~/.vim/coc-settings.json
 # ln -sv$force $PWD/vim/coc-settings.json ~/.config/nvim/coc-settings.json
-ln -sv$force $PWD/nvim/* ~/.config/nvim/
+ln -sv$force $PWD/nvim/ ~/.config/
 
 # cli tools
 ln -sv$force $PWD/cli/tmux.conf ~/.config/tmux.conf
