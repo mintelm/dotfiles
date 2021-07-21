@@ -34,11 +34,12 @@ ln -sv$force $PWD/zsh/*.*sh ~/.zsh/
 ln -sv$force $PWD/xmonad/* ~/.xmonad/
 
 # vim stuff
-ln -sv$force $PWD/vim/vimrc ~/.vimrc
-ln -sv$force $PWD/vim/init.vim ~/.config/nvim/init.vim
-ln -sv$force $PWD/vim/autoload/* ~/.vim/autoload/
-ln -sv$force $PWD/vim/coc-settings.json ~/.vim/coc-settings.json
-ln -sv$force $PWD/vim/coc-settings.json ~/.config/nvim/coc-settings.json
+# ln -sv$force $PWD/vim/vimrc ~/.vimrc
+# ln -sv$force $PWD/vim/init.vim ~/.config/nvim/init.vim
+# ln -sv$force $PWD/vim/autoload/* ~/.vim/autoload/
+# ln -sv$force $PWD/vim/coc-settings.json ~/.vim/coc-settings.json
+# ln -sv$force $PWD/vim/coc-settings.json ~/.config/nvim/coc-settings.json
+ln -sv$force $PWD/nvim/* ~/.config/nvim/
 
 # cli tools
 ln -sv$force $PWD/cli/tmux.conf ~/.config/tmux.conf
