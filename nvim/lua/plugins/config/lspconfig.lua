@@ -123,6 +123,14 @@ function M.setup_severity_filter()
 end
 
 return function()
+    vim.o.updatetime = 250
+    vim.cmd('autocmd CursorHold,CursorHoldI * lua vim.lsp.diagnostic.show_line_diagnostics({focusable=false})')
+
+    vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(
+        vim.lsp.diagnostic.on_publish_diagnostics, {
+            virtual_text = false,
+        }
+    )
     M.setup_severity_filter()
     M.setup_servers()
     M.setup_icons()
