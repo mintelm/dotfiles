@@ -35,7 +35,7 @@ M.icons = {
   Variable = ' Variable',
 }
 
-function M.sumneko_setup()
+function M.sumneko_setup(on_attach)
     local sumneko_root_path = '/usr/share/lua-language-server'
     local sumneko_binary = '/usr/bin/lua-language-server'
     local runtime_path = vim.split(package.path, ';')
@@ -62,6 +62,7 @@ function M.sumneko_setup()
                 },
             },
         },
+        on_attach = on_attach,
     }
 end
 
@@ -78,12 +79,12 @@ function M.setup_icons()
     end
 end
 
-function M.setup_servers()
+function M.setup_servers(on_attach)
     for _, name in ipairs(M.servers) do
         if name == 'sumneko_lua' then
-            require('lspconfig')[name].setup(M.sumneko_setup())
+            require('lspconfig')[name].setup(M.sumneko_setup(on_attach))
         else
-            require('lspconfig')[name].setup({ })
+            require('lspconfig')[name].setup({ on_attach = on_attach })
         end
     end
 end
@@ -123,15 +124,28 @@ function M.setup_severity_filter()
 end
 
 return function()
-    vim.o.updatetime = 250
-    vim.cmd('autocmd CursorHold,CursorHoldI * lua vim.lsp.diagnostic.show_line_diagnostics({focusable=false})')
+    local function on_attach(client, bufnr)
+        vim.o.updatetime = 250
+        vim.cmd('autocmd CursorHold,CursorHoldI * lua vim.lsp.diagnostic.show_line_diagnostics({focusable=false, border="single"})')
+        vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(
+            vim.lsp.diagnostic.on_publish_diagnostics, {
+                virtual_text = false,
+            }
+        )
+        vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(
+            vim.lsp.handlers.hover, {
+                border = 'single',
+            }
+        )
 
-    vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(
-        vim.lsp.diagnostic.on_publish_diagnostics, {
-            virtual_text = false,
-        }
-    )
+        vim.lsp.handlers['textDocument/signatureHelp'] = vim.lsp.with(
+            vim.lsp.handlers.signature_help, {
+                border = 'single',
+            }
+        )
+    end
+
+    M.setup_servers(on_attach)
     M.setup_severity_filter()
-    M.setup_servers()
     M.setup_icons()
 end
