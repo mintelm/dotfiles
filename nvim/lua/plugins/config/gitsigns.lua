@@ -1,5 +1,5 @@
 return function()
-    require('gitsigns').setup {
+    require('gitsigns').setup({
         signs = {
             add = { hl = 'GitSignsAdd'   , text = '+' },
             change = { hl = 'GitSignsChange', text = '~' },
@@ -8,5 +8,5 @@ return function()
             changedelete = { hl = 'GitSignsChange', text = '~' },
         },
         keymaps = { },
-    }
+    })
 end

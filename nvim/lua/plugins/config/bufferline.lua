@@ -1,5 +1,5 @@
 return function()
-    require('bufferline').setup {
+    require('bufferline').setup({
         options = {
             mappings = false,
             right_mouse_command = '',
@@ -7,5 +7,5 @@ return function()
             show_close_icon = false,
             separator_style = 'thin',
         },
-    }
+    })
 end
