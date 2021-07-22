@@ -6,6 +6,7 @@ local indent = 4
 cmd('syntax enable')
 cmd('filetype plugin indent on')
 cmd('au TextYankPost * lua vim.highlight.on_yank { on_visual = false, timeout = 250 }')
+-- toggle hiding invisible chars on insert
 cmd('autocmd InsertEnter * lua vim.wo.list = false')
 cmd('autocmd InsertLeave * lua vim.wo.list = true')
 
