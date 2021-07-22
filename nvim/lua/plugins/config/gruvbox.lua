@@ -1,5 +1,6 @@
 return function()
     vim.g.gruvbox_contrast_dark = 'hard'
+    vim.cmd([[autocmd ColorScheme * highlight NormalFloat guibg=#1d2021]])
     vim.cmd([[colorscheme gruvbox]])
     vim.cmd('highlight! clear TSError')
     vim.cmd('highlight! clear SignColumn')
