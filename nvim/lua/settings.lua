@@ -1,19 +1,21 @@
 local utils = require('utils')
 
 local cmd = vim.cmd
-local indent = 4
+
+local tab_width = 4
+local c_tab_width = 8
 
 cmd('syntax enable')
 cmd('filetype plugin indent on')
-cmd('au TextYankPost * lua vim.highlight.on_yank { on_visual = false, timeout = 250 }')
+cmd('autocmd TextYankPost * lua vim.highlight.on_yank { on_visual = false, timeout = 250 }')
 -- toggle hiding invisible chars on insert
 cmd('autocmd InsertEnter * lua vim.wo.list = false')
 cmd('autocmd InsertLeave * lua vim.wo.list = true')
+cmd('autocmd FileType c,cpp,objc,objcpp,sh,make lua require("utils").set_tab_width(' .. c_tab_width .. ')')
 
-utils.opt('b', 'tabstop', indent)
+utils.set_tab_width(tab_width)
 utils.opt('b', 'expandtab', true)
 utils.opt('b', 'smartindent', true)
-utils.opt('b', 'shiftwidth', indent)
 
 utils.opt('o', 'title', true)
 utils.opt('o', 'termguicolors', true)

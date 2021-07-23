@@ -19,4 +19,9 @@ function utils.map(mode, lhs, rhs, opts)
   vim.api.nvim_set_keymap(mode, lhs, rhs, options)
 end
 
+function utils.set_tab_width(tab_width)
+    utils.opt('b', 'tabstop', tab_width)
+    utils.opt('b', 'shiftwidth', tab_width)
+end
+
 return utils

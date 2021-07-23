@@ -11,7 +11,7 @@ if fn.empty(fn.glob(install_path)) > 0 then
     )
 end
 
-vim.cmd([[packadd packer.nvim]])
+vim.cmd('packadd packer.nvim')
 
 local function conf(name)
     return require(fmt('plugins.config.%s', name))
