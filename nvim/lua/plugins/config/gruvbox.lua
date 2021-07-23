@@ -1,9 +1,10 @@
 return function()
     vim.g.gruvbox_contrast_dark = 'hard'
-    vim.cmd([[autocmd ColorScheme * highlight NormalFloat guibg=#1d2021]])
-    vim.cmd([[colorscheme gruvbox]])
+    vim.cmd('colorscheme gruvbox')
     vim.cmd('highlight! clear TSError')
     vim.cmd('highlight! clear SignColumn')
+    vim.cmd('highlight! link NormalFloat GruvboxFg1')
+    vim.cmd('highlight! link Pmenu NormalFloat')
     vim.cmd('highlight! link CursorLineNR GruvboxYellow')
     vim.cmd('highlight! link GitSignsAdd GruvboxGreen')
     vim.cmd('highlight! link GitSignsChange GruvboxAqua')
