@@ -82,9 +82,8 @@ return require('packer').startup(function()
     use {
         'dstein64/nvim-scrollview',
         config = function()
-            require('telescope').setup({
-                scrollview_blend = 100,
-            })
+            vim.g.scrollview_column = 1
+            vim.g.scrollview_current_only = true
         end,
     }
 
