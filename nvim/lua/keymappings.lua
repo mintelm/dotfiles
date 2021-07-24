@@ -50,3 +50,6 @@ utils.map('n', '<leader>hu', '<cmd>lua require"gitsigns".undo_stage_hunk()<CR>')
 utils.map('n', '<leader>hr', '<cmd>lua require"gitsigns".reset_hunk()<CR>')
 utils.map('n', ']h', '<cmd>lua require"gitsigns".next_hunk()<CR>')
 utils.map('n', '[h', '<cmd>lua require"gitsigns".prev_hunk()<CR>')
+
+-- neogit
+utils.map('n', '<leader>gs', '<cmd>lua require"neogit".open()<CR>')
