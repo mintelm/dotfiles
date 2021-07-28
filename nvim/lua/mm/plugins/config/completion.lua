@@ -1,5 +1,5 @@
 return function()
-    local utils = require('utils')
+    local utils = require('mm.utils')
 
     vim.cmd('autocmd BufEnter * lua require"completion".on_attach()')
     vim.cmd('set shortmess+=c')

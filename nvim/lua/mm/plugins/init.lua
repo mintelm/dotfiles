@@ -14,7 +14,7 @@ end
 vim.cmd('packadd packer.nvim')
 
 local function conf(name)
-    return require(fmt('plugins.config.%s', name))
+    return require(fmt('mm.plugins.config.%s', name))
 end
 
 return require('packer').startup(function()

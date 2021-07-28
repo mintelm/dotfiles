@@ -1,4 +1,4 @@
-require('settings')
-require('plugins')
-require('highlights')
-require('keymappings')
+require('mm.settings')
+require('mm.plugins')
+require('mm.highlights')
+require('mm.keymappings')

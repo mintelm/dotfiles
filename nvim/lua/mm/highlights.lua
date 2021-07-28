@@ -2,8 +2,6 @@
 -- 1. https://github.com/akinsho/dotfiles/blob/main/.config/nvim/lua/as/highlights.lua
 local fmt = string.format
 
-local fmt = string.format
-
 local M = { }
 
 --- NOTE: vim.highlight's link and create are private, so
@@ -16,10 +14,7 @@ function M.set_hl(name, opts)
         if opts.link then
             vim.highlight.link(name, opts.link, opts.force)
         else
-            local ok, msg = pcall(vim.highlight.create, name, opts)
-            if not ok then
-                vim.notify(fmt('Failed to set %s because: %s', name, msg))
-            end
+            vim.highlight.create(name, opts)
         end
     end
 end
