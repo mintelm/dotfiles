@@ -23,7 +23,6 @@ return require('packer').startup(function()
     use {
         'npxbr/gruvbox.nvim',
         requires = 'rktjmp/lush.nvim',
-        config = conf('gruvbox'),
     }
 
     use {
@@ -46,12 +45,6 @@ return require('packer').startup(function()
         'nvim-treesitter/nvim-treesitter',
         run = ':TSUpdate',
         config = conf('treesitter'),
-    }
-
-    use {
-        'hoob3rt/lualine.nvim',
-        requires = 'kyazdani42/nvim-web-devicons',
-        config = conf('lualine'),
     }
 
     use {
