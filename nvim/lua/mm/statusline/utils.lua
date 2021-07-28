@@ -1,7 +1,99 @@
+local H = require('mm.highlights')
+local icons_loaded, devicons
+
 local fn = vim.fn
+local expand = fn.expand
+local fnamemodify = fn.fnamemodify
 local strwidth = fn.strwidth
+local contains = vim.tbl_contains
 
 local M = { }
+
+local plain_filetypes = {
+    'help',
+    'ctrlsf',
+    'minimap',
+    'Trouble',
+    'tsplayground',
+    'coc-explorer',
+    'NvimTree',
+    'undotree',
+    'neoterm',
+    'vista',
+    'fugitive',
+    'startify',
+    'vimwiki',
+    'markdown',
+    'NeogitStatus',
+}
+
+local plain_buftypes = {
+    'terminal',
+    'quickfix',
+    'nofile',
+    'nowrite',
+    'acwrite',
+}
+
+local exceptions = {
+    buftypes = {
+        terminal = ' ',
+        quickfix = '',
+    },
+    filetypes = {
+        org = '',
+        orgagenda = '',
+        ['himalaya-msg-list'] = '',
+        mail = '',
+        dbui = '',
+        vista = 'פּ',
+        tsplayground = '侮',
+        fugitive = '',
+        fugitiveblame = '',
+        gitcommit = '',
+        startify = '',
+        defx = '⌨',
+        ctrlsf = '🔍',
+        Trouble = '',
+        NeogitStatus = '',
+        ['vim-plug'] = '⚉',
+        vimwiki = 'ﴬ',
+        help = '',
+        undotree = 'פּ',
+        ['coc-explorer'] = '',
+        NvimTree = 'פּ',
+        toggleterm = ' ',
+        calendar = '',
+        minimap = '',
+        octo = '',
+        ['dap-repl'] = '',
+    },
+    names = {
+        orgagenda = 'Org',
+        ['himalaya-msg-list'] = 'Inbox',
+        mail = 'Mail',
+        minimap = '',
+        dbui = 'Dadbod UI',
+        tsplayground = 'Treesitter',
+        vista = 'Vista',
+        fugitive = 'Fugitive',
+        fugitiveblame = 'Git blame',
+        NeogitStatus = 'Neogit Status',
+        Trouble = 'Lsp Trouble',
+        gitcommit = 'Git commit',
+        startify = 'Startify',
+        defx = 'Defx',
+        ctrlsf = 'CtrlSF',
+        ['vim-plug'] = 'vim plug',
+        vimwiki = 'vim wiki',
+        help = 'help',
+        undotree = 'UndoTree',
+        octo = 'Octo',
+        ['coc-explorer'] = 'Coc Explorer',
+        NvimTree = 'Nvim Tree',
+        ['dap-repl'] = 'Debugger REPL',
+    },
+}
 
 local function sum_lengths(tbl)
     local length = 0
@@ -59,6 +151,223 @@ function M.prioritize(statusline, space, length)
     return M.prioritize(statusline, space, length - lowest.length)
 end
 
+--- @param ctx table
+function M.is_plain(ctx)
+    return contains(plain_filetypes, ctx.filetype)
+        or contains(plain_buftypes, ctx.buftype)
+        or ctx.preview
+end
+
+--- @param ctx table
+--- @param icon string | nil
+function M.modified(ctx, icon)
+    icon = icon or '✎'
+    if ctx.filetype == 'help' then
+        return ''
+    end
+    return ctx.modified and icon or ''
+end
+
+--- @param ctx table
+--- @param icon string | nil
+function M.readonly(ctx, icon)
+    icon = icon or ''
+    if ctx.readonly then
+        return ' ' .. icon
+    else
+        return ''
+    end
+end
+
+--- This function allow me to specify titles for special case buffers
+--- like the preview window or a quickfix window
+--- CREDIT: https://vi.stackexchange.com/a/18090
+--- @param ctx table
+local function special_buffers(ctx)
+    local location_list = fn.getloclist(0, { filewinid = 0 })
+    local is_loc_list = location_list.filewinid > 0
+    local normal_term = ctx.buftype == 'terminal' and ctx.filetype == ''
+
+    if is_loc_list then
+        return 'Location List'
+    end
+    if ctx.buftype == 'quickfix' then
+        return 'Quickfix'
+    end
+    if normal_term then
+        return 'Terminal(' .. fnamemodify(vim.env.SHELL, ':t') .. ')'
+    end
+    if ctx.preview then
+        return 'preview'
+    end
+
+    return nil
+end
+
+--- @param bufnum number
+--- @param mod string
+local function buf_expand(bufnum, mod)
+    return expand('#' .. bufnum .. mod)
+end
+
+--- @param ctx table
+--- @param modifier string
+local function filename(ctx, modifier)
+    modifier = modifier or ':t'
+    local special_buf = special_buffers(ctx)
+    if special_buf then
+        return '', '', special_buf
+    end
+
+    local fname = buf_expand(ctx.bufnum, modifier)
+
+    local name = exceptions.names[ctx.filetype]
+    if type(name) == 'function' then
+        return '', '', name(fname, ctx.bufnum)
+    end
+
+    if name then
+        return '', '', name
+    end
+
+    if not fname then
+        return '', '', 'No Name'
+    end
+
+    local path = (ctx.buftype == '' and not ctx.preview) and buf_expand(ctx.bufnum, ':~:.:h') or nil
+    local is_root = path and #path == 1 -- "~" or "."
+    local dir = path and not is_root and fn.pathshorten(fnamemodify(path, ':h')) .. '/' or ''
+    local parent = path and (is_root and path or fnamemodify(path, ':t')) or ''
+    parent = parent ~= '' and parent .. '/' or ''
+
+    return dir, parent, fname
+end
+
+--- @param hl string
+--- @param bg_hl string
+local function set_ft_icon_highlight(hl, bg_hl)
+    if not hl then
+        return ''
+    end
+    local name = hl .. 'Statusline'
+    -- TODO: find a mechanism to cache this so it isn't repeated constantly
+    local fg_color = H.get_hl(hl, 'fg')
+    local bg_color = H.get_hl(bg_hl, 'bg')
+    if bg_color and fg_color then
+        local cmd = { 'highlight ', name, ' guibg=', bg_color, ' guifg=', fg_color }
+        local str = table.concat(cmd)
+        mm.augroup(name, { { events = { 'ColorScheme' }, targets = { '*' }, command = str } })
+        vim.cmd(string.format("silent execute '%s'", str))
+    end
+    return name
+end
+
+--- @param ctx table
+--- @param opts table
+--- @return string, string
+local function filetype(ctx, opts)
+    local ft_exception = exceptions.filetypes[ctx.filetype]
+    if ft_exception then
+        return ft_exception, opts.default
+    end
+    local bt_exception = exceptions.buftypes[ctx.buftype]
+    if bt_exception then
+        return bt_exception, opts.default
+    end
+    local icon, hl
+    local extension = fnamemodify(ctx.bufname, ':e')
+    if not icons_loaded then
+        icons_loaded, devicons = pcall(require, 'nvim-web-devicons')
+    end
+    if icons_loaded then
+        icon, hl = devicons.get_icon(ctx.bufname, extension, { default = true })
+        hl = set_ft_icon_highlight(hl, opts.icon_bg)
+    end
+    return icon, hl
+end
+
+local function empty_opts()
+    return { before = '', after = '' }
+end
+
+---Create the various segments of the current filename
+---@param ctx table
+---@param minimal boolean
+---@return table
+function M.file(ctx, minimal)
+    local curwin = ctx.winid
+    -- highlight the filename components separately
+    local filename_hl = minimal and 'StFilenameInactive' or 'StFilename'
+    local directory_hl = minimal and 'StInactiveSep' or 'StDirectory'
+    local parent_hl = minimal and directory_hl or 'StParentDirectory'
+
+    if H.has_win_highlight(curwin, 'Normal', 'StatusLine') then
+        directory_hl = H.adopt_winhighlight(curwin, 'StatusLine', 'StCustomDirectory', 'StTitle')
+        filename_hl = H.adopt_winhighlight(curwin, 'StatusLine', 'StCustomFilename', 'StTitle')
+        parent_hl = H.adopt_winhighlight(curwin, 'StatusLine', 'StCustomParentDir', 'StTitle')
+    end
+
+    local ft_icon, icon_highlight = filetype(ctx, { icon_bg = 'StatusLine', default = 'StComment' })
+
+    local file_opts, parent_opts, dir_opts = empty_opts(), empty_opts(), empty_opts()
+    local directory, parent, file = filename(ctx)
+
+    -- Depending on which filename segments are empty we select a section to add the file icon to
+    local dir_empty, parent_empty = mm.empty(directory), mm.empty(parent)
+    local to_update = dir_empty and parent_empty and file_opts
+        or dir_empty and parent_opts
+        or dir_opts
+
+    to_update.prefix = ft_icon
+    to_update.prefix_color = not minimal and icon_highlight or nil
+    return {
+        file = { item = file, hl = filename_hl, opts = file_opts },
+        dir = { item = directory, hl = directory_hl, opts = dir_opts },
+        parent = { item = parent, hl = parent_hl, opts = parent_opts },
+    }
+end
+
+function M.lsp_status()
+    local icon = '  ' -- 
+    local msg = icon .. 'No Active Lsp'
+    local buf_ft = vim.api.nvim_buf_get_option(0, 'filetype')
+    local clients = vim.lsp.get_active_clients()
+
+    if next(clients) == nil
+        then return msg
+    end
+
+    for _, client in ipairs(clients) do
+        local filetypes = client.config.filetypes
+        if filetypes and vim.fn.index(filetypes, buf_ft) ~= -1 then
+            return icon .. client.name
+        end
+    end
+
+    return msg
+end
+
+local function get_lsp_sign(type)
+    local name = 'LspDiagnosticsSign' .. type
+    local sign = vim.fn.sign_getdefined(name)
+
+    return sign[1].text
+end
+
+function M.diagnostic_info(context)
+    local buf = context.bufnum
+    if vim.tbl_isempty(vim.lsp.buf_get_clients(buf)) then
+        return { error = {}, warning = {}, info = {} }
+    end
+    local get_count = vim.lsp.diagnostic.get_count
+
+    return {
+        error = { count = get_count(buf, 'Error'), sign = get_lsp_sign('Error') },
+        warning = { count = get_count(buf, 'Warning'), sign = get_lsp_sign('Warning') },
+        info = { count = get_count(buf, 'Information'), sign = get_lsp_sign('Information') },
+    }
+end
+
 local function mode_highlight(mode)
     local visual_regex = vim.regex([[\(v\|V\|\)]])
     local command_regex = vim.regex([[\(c\|cv\|ce\)]])
@@ -107,10 +416,58 @@ function M.mode()
     return (mode_map[current_mode] or 'UNKNOWN'), hl
 end
 
+--- This function gets and decorates the current and total line count
+--- it derives this using the line() function rather than the %l/%L statusline
+--- format strings because these cannot be
+-- @param opts table
+function M.line_info(opts)
+    local sep = opts.sep or '/'
+    local prefix = opts.prefix or 'L'
+    local prefix_color = opts.prefix_color
+    local current_hl = opts.current_hl
+    local total_hl = opts.total_hl
+    local sep_hl = opts.total_hl
+
+    local current = fn.line '.'
+    local last = fn.line '$'
+
+    local length = strwidth(prefix .. current .. sep .. last)
+    return {
+        table.concat {
+        ' ',
+        M.wrap(prefix_color),
+        prefix,
+        ' ',
+        M.wrap(current_hl),
+        current,
+        M.wrap(sep_hl),
+        sep,
+        M.wrap(total_hl),
+        last,
+        ' ',
+        },
+        length,
+    }
+end
+
 --- @param hl string
 function M.wrap(hl)
     assert(hl, 'A highlight name must be specified')
     return '%#' .. hl .. '#'
+end
+
+--- Creates a spacer statusline component i.e. for padding
+--- or to represent an empty component
+--- @param size number
+--- @param filler string | nil
+function M.spacer(size, filler)
+  filler = filler or ' '
+    if size and size >= 1 then
+        local spacer = string.rep(filler, size)
+        return { spacer, #spacer }
+    else
+        return { '', 0 }
+    end
 end
 
 --- @param component string
@@ -142,6 +499,17 @@ function M.item(component, hl, opts)
 
     local parts = { before, prefix, M.wrap(hl), component, '%*', after }
     return { table.concat(parts), #component + #before + #after + prefix_size }
+end
+
+--- @param item string
+--- @param condition boolean
+--- @param hl string
+--- @param opts table
+function M.item_if(item, condition, hl, opts)
+    if not condition then
+        return M.spacer()
+    end
+    return M.item(item, hl, opts)
 end
 
 return M

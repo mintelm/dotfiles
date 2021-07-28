@@ -22,12 +22,19 @@ mm.augroup('UserSettings', {
         },
         -- toggle hiding invisible chars on insert
         {
-            events = { 'InsertEnter', 'InsertLeave' },
+            events = { 'InsertEnter' },
             targets = { '*' },
             command = function()
-                vim.wo.list = not vim.wo.list
+                vim.wo.list = false
             end,
-        }
+        },
+        {
+            events = { 'InsertLeave' },
+            targets = { '*' },
+            command = function()
+                vim.wo.list = true
+            end,
+        },
 })
 
 mm.set_tab_width(tab_width)
@@ -47,5 +54,4 @@ mm.opt('o', 'clipboard','unnamed,unnamedplus')
 mm.opt('w', 'number', true)
 mm.opt('w', 'relativenumber', true)
 mm.opt('w', 'signcolumn', 'yes:2')
-mm.opt('w', 'list', true)
 mm.opt('w', 'listchars', 'eol: ,tab:│ ,extends:»,precedes:«,trail:•')

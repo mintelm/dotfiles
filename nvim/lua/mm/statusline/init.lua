@@ -35,7 +35,8 @@ local function display(statusline, available_space)
         end
     end
 
-    return str end
+    return str
+end
 
 ---Aggregate pieces of the statusline
 ---@param tbl table
@@ -51,13 +52,111 @@ end
 
 function _G.statusline()
     local curwin = vim.g.statusline_winid or 0
+    local curbuf = vim.api.nvim_win_get_buf(curwin)
     local available_space = vim.api.nvim_win_get_width(curwin)
+    local ctx = {
+        bufnum = curbuf,
+        winid = curwin,
+        bufname = vim.fn.bufname(curbuf),
+        preview = vim.wo[curwin].previewwindow,
+        readonly = vim.bo[curbuf].readonly,
+        filetype = vim.bo[curbuf].ft,
+        buftype = vim.bo[curbuf].bt,
+        modified = vim.bo[curbuf].modified,
+        fileformat = vim.bo[curbuf].fileformat,
+        shiftwidth = vim.bo[curbuf].shiftwidth,
+        expandtab = vim.bo[curbuf].expandtab,
+    }
+    -- Modifiers
+    local plain = utils.is_plain(ctx)
+    local file_modified = utils.modified(ctx, '●')
+    local inactive = vim.api.nvim_get_current_win() ~= curwin
+    local focused = vim.g.vim_in_focus or true
+    local minimal = plain or inactive or not focused
+
+    -- Setup
     local item = utils.item
-    local statusline = {}
+    local item_if = utils.item_if
+    local separator = { '%=' }
+    local statusline = { }
     local add = make_status(statusline)
 
     add(
-        { item(utils.mode()), 0 }
+        { utils.spacer(1), 0 }
+    )
+
+    -- Filename
+    local segments = utils.file(ctx, minimal)
+    local dir, parent, file = segments.dir, segments.parent, segments.file
+    local dir_item = utils.item(dir.item, dir.hl, dir.opts)
+    local parent_item = utils.item(parent.item, parent.hl, parent.opts)
+    local file_item = utils.item(file.item, file.hl, file.opts)
+    local readonly_item = utils.item(utils.readonly(ctx), 'StError')
+
+    -- show a minimal statusline with only the mode and file component
+    if minimal then
+        add({ readonly_item, 1 }, { dir_item, 3 }, { parent_item, 2 }, { file_item, 0 })
+        return display(statusline, available_space)
+    end
+
+    local git_status = vim.b.gitsigns_status_dict or { }
+    local lsp_status = utils.diagnostic_info(ctx)
+
+    add(
+        -- Left Section
+        { item(utils.mode()), 0 },
+        { item_if(file_modified, ctx.modified, 'StModified'), 1 },
+        { readonly_item, 2 },
+        { dir_item, 3 },
+        { parent_item, 2 },
+        { file_item, 0 },
+        { item(git_status.head, 'StBlue', { prefix = '', prefix_color = 'StGit', before = ' ' }), 1 },
+        { item(git_status.added, 'StTitle', { prefix = '', prefix_color = 'StGreen' }), 3 },
+        { item(git_status.changed, 'StTitle', { prefix = '', prefix_color = 'StWarning' }), 3 },
+        { item(git_status.removed, 'StTitle', { prefix = '', prefix_color = 'StError' }), 3 },
+        { separator },
+        -- Middle Section
+        { separator },
+        -- Right Section
+        { item(utils.lsp_status(), 'StMetadata'), 4 },
+        {
+            item_if(
+                lsp_status.error.count,
+                lsp_status.error,
+                'StError',
+                { prefix = lsp_status.error.sign }
+            ),
+            1,
+        },
+        {
+            item_if(
+                lsp_status.warning.count,
+                lsp_status.warning,
+                'StWarning',
+                { prefix = lsp_status.warning.sign }
+            ),
+            3,
+        },
+        {
+            item_if(
+                lsp_status.info.count,
+                lsp_status.info,
+                'StInfo',
+                { prefix = lsp_status.info.sign }
+            ),
+            4,
+        },
+        -- Current line number/total line number
+        {
+            utils.line_info {
+                prefix = '',
+                prefix_color = 'StMetadataPrefix',
+                current_hl = 'StTitle',
+                total_hl = 'StComment',
+                sep_hl = 'StComment',
+            },
+            7,
+        }
     )
 
     return display(statusline, available_space)
