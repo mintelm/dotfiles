@@ -14,7 +14,10 @@ function M.set_hl(name, opts)
         if opts.link then
             vim.highlight.link(name, opts.link, opts.force)
         else
-            vim.highlight.create(name, opts)
+            local ok, msg = pcall(vim.highlight.create, name, opts)
+            if not ok then
+                vim.notify(fmt('Failed to set %s because: %s', name, msg))
+            end
         end
     end
 end

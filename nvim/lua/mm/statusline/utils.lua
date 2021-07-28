@@ -51,8 +51,8 @@ function M.prioritize(statusline, space, length)
     local index_to_remove
     for idx, c in ipairs(statusline) do
         if is_lowest(c, lowest) then
-        lowest = c
-        index_to_remove = idx
+            lowest = c
+            index_to_remove = idx
         end
     end
     table.remove(statusline, index_to_remove)
@@ -60,9 +60,9 @@ function M.prioritize(statusline, space, length)
 end
 
 local function mode_highlight(mode)
-    local visual_regex = vim.regex [[\(v\|V\|\)]]
-    local command_regex = vim.regex [[\(c\|cv\|ce\)]]
-    local replace_regex = vim.regex [[\(Rc\|R\|Rv\|Rx\)]]
+    local visual_regex = vim.regex([[\(v\|V\|\)]])
+    local command_regex = vim.regex([[\(c\|cv\|ce\)]])
+    local replace_regex = vim.regex([[\(Rc\|R\|Rv\|Rx\)]])
     if mode == 'i' then
         return 'StModeInsert'
     elseif visual_regex:match_str(mode) then
@@ -122,7 +122,7 @@ function M.item(component, hl, opts)
     if not component or component == '' or component == 0 then
         return M.spacer()
     end
-    opts = opts or {}
+    opts = opts or { }
     local before = opts.before or ''
     local after = opts.after or ' '
     local prefix = opts.prefix or ''

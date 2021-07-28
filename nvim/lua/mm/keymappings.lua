@@ -29,6 +29,7 @@ mm.map('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next({ popup_opts = { border
 mm.map('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev({ popup_opts = { border = "single" }})<CR>', silenced)
 mm.map('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>')
 mm.map('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help({ popup_opts = { border = "single" }})<CR>', silenced)
+mm.map('n', '<leader>qf', '<cmd>lua vim.lsp.buf.code_action()<CR>')
 
 -- completion
 mm.map('i', '<C-Space>', '<cmd>lua require"completion".triggerCompletion()<CR>')
