@@ -1,10 +1,8 @@
 return function()
-    local utils = require('mm.utils')
-
     vim.cmd('autocmd BufEnter * lua require"completion".on_attach()')
     vim.cmd('set shortmess+=c')
 
-    utils.opt('o', 'completeopt', 'menuone,noinsert,noselect')
+    mm.opt('o', 'completeopt', 'menuone,noinsert,noselect')
 
     vim.g.completion_confirm_key = ''
     vim.g.completion_matching_strategy_list = { 'exact', 'substring', 'fuzzy' }

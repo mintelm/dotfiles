@@ -1,3 +1,4 @@
+require('mm.globals')
 require('mm.settings')
 require('mm.plugins')
 require('mm.highlights')

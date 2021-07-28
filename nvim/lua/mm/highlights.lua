@@ -63,6 +63,12 @@ end
 --- then whenever the colorscheme changes
 user_highlights()
 
-vim.cmd('autocmd colorscheme * lua require("highlights").user_highlights()')
+mm.augroup('UserHighlights', {
+    {
+        events = { 'ColorScheme' },
+        targets = { '*' },
+        command = user_highlights,
+    }
+})
 
 return M
