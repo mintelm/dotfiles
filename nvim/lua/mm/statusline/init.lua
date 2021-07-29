@@ -152,7 +152,6 @@ function _G.statusline()
         -- Middle Section
         { separator },
         -- Right Section
-        { item(utils.lsp_status(), 'StMetadata'), 4 },
         {
             item_if(
                 lsp_status.error.count,
@@ -180,6 +179,7 @@ function _G.statusline()
             ),
             4,
         },
+        { item(utils.lsp_status(), 'StMetadata'), 4 },
         -- Current line number/total line number
         {
             utils.line_info {
