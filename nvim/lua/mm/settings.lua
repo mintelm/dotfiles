@@ -50,6 +50,7 @@ mm.opt('o', 'smartcase', true)
 mm.opt('o', 'scrolloff', 4 )
 mm.opt('o', 'mouse', 'a')
 mm.opt('o', 'clipboard','unnamed,unnamedplus')
+mm.opt('o', 'showmode', false)
 
 mm.opt('w', 'number', true)
 mm.opt('w', 'relativenumber', true)
