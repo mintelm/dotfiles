@@ -106,6 +106,7 @@ map <leader>gf :GFiles<CR>
 
 " fugitive
 map <leader>gs :Gstatus<CR>
+map <leader>gvs :Gvdiffsplit!<CR>
 
 " gitgutter
 map <leader>hv <Plug>(GitGutterPreviewHunk)
