@@ -1,8 +1,9 @@
-# My linux setup:
+## My Linux Dotfiles
+TBD
 
-To install run:
-
+### Installation
+To install:
 ```bash
 # OPTIONS: -f --force
-./install.sh
+./install.sh [-f]
 ```
