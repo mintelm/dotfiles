@@ -1,3 +1,25 @@
+! normal colors
+#define black       #2e3436
+#define darkred     #cc0000
+#define darkgreen   #73d216
+#define darkyellow  #edd400
+#define darkblue    #4881c0
+#define darkmagenta #75507b
+! cyan is orange on my system
+#define darkcyan    #d65d0e
+#define lightgrey   #d3d7cf
+
+! bright colors
+#define darkgrey    #2e3436
+#define red         #ef2929
+#define green       #8ae234
+#define yellow      #fce94f
+#define blue        #80a4d4
+#define magenta     #ad7fa8
+! cyan is orange on my system
+#define cyan        #fe8019
+#define white       #eeeeec
+
 Xft.dpi: 144
 
 Xft.autohint: 0
@@ -6,3 +28,22 @@ Xft.hintstyle:  hintfull
 Xft.hinting: 1
 Xft.antialias: 1
 Xft.rgba: rgb
+
+*.background:   #1d2021
+*.foreground:   #eeeeec
+*.color0:       black
+*.color1:       darkred
+*.color2:       darkgreen
+*.color3:       darkyellow
+*.color4:       darkblue
+*.color5:       darkmagenta
+*.color6:       darkcyan
+*.color7:       lightgrey
+*.color8:       darkgrey
+*.color9:       red
+*.color10:      green
+*.color11:      yellow
+*.color12:      blue
+*.color13:      magenta
+*.color14:      cyan
+*.color15:      white
