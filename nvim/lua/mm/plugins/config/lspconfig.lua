@@ -4,6 +4,7 @@ M.servers = {
     'pyright',
     'clangd',
     'sumneko_lua',
+    'texlab',
 }
 
 M.signs = { Error = ' ', Warning = ' ', Hint = ' ', Information = ' ' }
