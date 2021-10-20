@@ -145,6 +145,8 @@ return function()
                 border = 'single',
             }
         )
+
+        require('mm.keymappings').lsp_mappings(bufnr)
     end
 
     M.setup_servers(on_attach)

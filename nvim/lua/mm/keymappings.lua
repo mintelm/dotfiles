@@ -1,3 +1,5 @@
+local M = { }
+
 local silenced = { silent = true }
 
 vim.g.mapleader = ','
@@ -20,22 +22,6 @@ mm.map('n', '<leader>f', '<cmd>Telescope find_files<CR>')
 mm.map('n', '<leader>gf', '<cmd>Telescope git_files<CR>')
 mm.map('n', '<leader>gr', '<cmd>Telescope live_grep<CR>')
 
--- lsp
-mm.map('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>')
-mm.map('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>')
-mm.map('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>')
-mm.map('n', 'rn', '<cmd>lua vim.lsp.buf.rename()<CR>')
-mm.map('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next({ popup_opts = { border = "single" }})<CR>', silenced)
-mm.map('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev({ popup_opts = { border = "single" }})<CR>', silenced)
-mm.map('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>')
-mm.map('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help({ popup_opts = { border = "single" }})<CR>', silenced)
-mm.map('n', '<leader>qf', '<cmd>lua vim.lsp.buf.code_action()<CR>')
-
--- completion
-mm.map('i', '<C-Space>', '<cmd>lua require"completion".triggerCompletion()<CR>')
-mm.map('i', '<S-Tab>', 'pumvisible() ? "\\<C-p>" : "\\<Tab>"', { expr = true })
-mm.map('i', '<Tab>', 'pumvisible() ? "\\<C-n>" : "\\<Tab>"', { expr = true })
-
 -- bufferline
 mm.map('n', ']b', '<cmd>BufferLineCycleNext<CR>', silenced)
 mm.map('n', '[b', '<cmd>BufferLineCyclePrev<CR>', silenced)
@@ -52,3 +38,30 @@ mm.map('n', '[h', '<cmd>lua require"gitsigns".prev_hunk()<CR>')
 
 -- neogit
 mm.map('n', '<leader>gs', '<cmd>lua require"neogit".open()<CR>')
+
+-- lsp
+-- this function is passed to lsp's on_attach hook, so mappings are only loaded if lsp is
+function M.lsp_mappings(bufnr)
+    local function buf_set_keymap(...) mm.bmap(bufnr, ...) end
+
+    -- most common lsp functions
+    buf_set_keymap('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', silenced)
+    buf_set_keymap('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', silenced)
+    buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', silenced)
+    buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', silenced)
+    buf_set_keymap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next({ popup_opts = { border = "single" }})<CR>', silenced)
+    buf_set_keymap('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev({ popup_opts = { border = "single" }})<CR>', silenced)
+    buf_set_keymap('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', silenced)
+    buf_set_keymap('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help({ popup_opts = { border = "single" }})<CR>', silenced)
+    buf_set_keymap('n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', silenced)
+    buf_set_keymap('n', '<leader>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', silenced)
+
+    -- enable completion triggered by <C-x><C-o>
+    vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+    -- remap completion to <C-space>
+    buf_set_keymap('i', '<C-space>', '<C-x><C-o>', silenced)
+    buf_set_keymap('i', '<Tab>', 'pumvisible() ? "\\<C-n>" : "\\<Tab>"', { expr = true }, silenced)
+    buf_set_keymap('i', '<S-Tab>', 'pumvisible() ? "\\<C-p>" : "\\<Tab>"', { expr = true }, silenced)
+end
+
+return M
