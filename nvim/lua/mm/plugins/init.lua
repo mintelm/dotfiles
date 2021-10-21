@@ -37,8 +37,9 @@ return require('packer').startup(function()
     }
 
     use {
-        'nvim-lua/completion-nvim',
-        config = conf('completion'),
+        'ms-jpq/coq-nvim',
+        requires = { 'ms-jpq/coq.artifacts' },
+        config = conf('coq-nvim'),
     }
 
     use {
