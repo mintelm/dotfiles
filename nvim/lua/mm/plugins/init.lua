@@ -1,23 +1,17 @@
--- Auto install packer.nvim if not exists
 local fn = vim.fn
 local fmt = string.format
-
 local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
 
+-- Auto install packer.nvim if not exists
 if fn.empty(fn.glob(install_path)) > 0 then
-    vim.notify('Downloading packer.nvim...')
-    vim.notify(
-        fn.system { 'git', 'clone', 'https://github.com/wbthomason/packer.nvim', install_path }
-    )
+    packer_bootstrap = fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
 end
-
-vim.cmd('packadd packer.nvim')
 
 local function conf(name)
     return require(fmt('mm.plugins.config.%s', name))
 end
 
-return require('packer').startup(function()
+return require('packer').startup(function(use)
     use 'wbthomason/packer.nvim'
 
     use {
@@ -86,4 +80,8 @@ return require('packer').startup(function()
     }
 
     use 'ggandor/lightspeed.nvim'
+
+    if packer_bootstrap then
+        require('packer').sync()
+    end
 end)
