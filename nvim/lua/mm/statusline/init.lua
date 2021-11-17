@@ -7,8 +7,7 @@ local H = require('mm.highlights')
 local utils = require('mm.statusline.utils')
 
 local function colors()
-    local bg_color = H.darken_color(H.get_hl('PmenuThumb', 'bg'), -50)
-
+    local signcol_bg = H.get_hl('SignColumn', 'bg')
     local comment_fg = H.get_hl('Comment', 'fg')
     local string_fg = H.get_hl('String', 'fg')
     local delimiter_fg = H.get_hl('Delimiter', 'fg')
@@ -19,28 +18,28 @@ local function colors()
     local warning_color = H.get_hl('WarningMsg', 'fg')
 
     H.set_hls({
-        { 'StatusLine', { guibg = bg_color, gui = 'NONE' } },
-        { 'StatusLineNC', { guibg = bg_color, gui = 'NONE' } },
-        { 'StMetadata', { guibg = bg_color, guifg = comment_fg } },
-        { 'StMetadataPrefix', { guibg = bg_color, guifg = comment_fg, gui = 'bold' } },
-        { 'StModified', { guibg = bg_color, guifg = string_fg } },
-        { 'StGit', { guibg = bg_color, guifg = error_color } },
-        { 'StGreen', { guibg = bg_color, guifg = string_fg } },
-        { 'StOrange', { guibg = bg_color, guifg = delimiter_fg, gui = 'bold' } },
-        { 'StDirectory', { guibg = bg_color, guifg = 'Gray', gui = 'italic' } },
-        { 'StParentDirectory', { guibg = bg_color, guifg = string_fg, gui = 'bold' } },
-        { 'StFilename', { guibg = bg_color, guifg = 'LightGray', gui = 'bold' }, },
-        { 'StFilenameInactive', { guibg = bg_color, guifg = 'LightGray', gui = 'italic,bold' }, },
-        { 'StTitle', { guibg = bg_color, guifg = 'LightGray', gui = 'bold' } },
-        { 'StComment', { guibg = bg_color, guifg = comment_fg } },
-        { 'StError', { guibg = bg_color, guifg = error_color } },
-        { 'StWarning', { guibg = bg_color, guifg = warning_color } },
-        { 'StInfo', { guibg = bg_color, guifg = comment_fg, gui = 'bold' } },
-        { 'StModeNormal', { guibg = bg_color, gui = 'bold' } },
-        { 'StModeInsert', { guibg = bg_color, guifg = string_fg, gui = 'bold' } },
-        { 'StModeVisual', { guibg = bg_color, guifg = number_fg, gui = 'bold' } },
-        { 'StModeReplace', { guibg = bg_color, guifg = identifier_fg, gui = 'bold' } },
-        { 'StModeCommand', { guibg = bg_color, guifg = inc_search_fg, gui = 'bold' } },
+        { 'StatusLine', { guibg = signcol_bg, gui = 'NONE' } },
+        { 'StatusLineNC', { guibg = signcol_bg, gui = 'NONE' } },
+        { 'StMetadata', { guibg = signcol_bg, guifg = comment_fg } },
+        { 'StMetadataPrefix', { guibg = signcol_bg, guifg = comment_fg, gui = 'bold' } },
+        { 'StModified', { guibg = signcol_bg, guifg = string_fg } },
+        { 'StGit', { guibg = signcol_bg, guifg = error_color } },
+        { 'StGreen', { guibg = signcol_bg, guifg = string_fg } },
+        { 'StOrange', { guibg = signcol_bg, guifg = delimiter_fg, gui = 'bold' } },
+        { 'StDirectory', { guibg = signcol_bg, guifg = 'Gray', gui = 'italic' } },
+        { 'StParentDirectory', { guibg = signcol_bg, guifg = string_fg, gui = 'bold' } },
+        { 'StFilename', { guibg = signcol_bg, guifg = 'LightGray', gui = 'bold' }, },
+        { 'StFilenameInactive', { guibg = signcol_bg, guifg = 'LightGray', gui = 'italic,bold' }, },
+        { 'StTitle', { guibg = signcol_bg, guifg = 'LightGray', gui = 'bold' } },
+        { 'StComment', { guibg = signcol_bg, guifg = comment_fg } },
+        { 'StError', { guibg = signcol_bg, guifg = error_color } },
+        { 'StWarning', { guibg = signcol_bg, guifg = warning_color } },
+        { 'StInfo', { guibg = signcol_bg, guifg = comment_fg, gui = 'bold' } },
+        { 'StModeNormal', { guibg = signcol_bg, gui = 'bold' } },
+        { 'StModeInsert', { guibg = signcol_bg, guifg = string_fg, gui = 'bold' } },
+        { 'StModeVisual', { guibg = signcol_bg, guifg = number_fg, gui = 'bold' } },
+        { 'StModeReplace', { guibg = signcol_bg, guifg = identifier_fg, gui = 'bold' } },
+        { 'StModeCommand', { guibg = signcol_bg, guifg = inc_search_fg, gui = 'bold' } },
     })
 end
 
