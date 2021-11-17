@@ -4,7 +4,7 @@ local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
 
 -- Auto install packer.nvim if not exists
 if fn.empty(fn.glob(install_path)) > 0 then
-    packer_bootstrap = fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
+    packer_bootstrap = fn.system({ 'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path })
 end
 
 local function conf(name)
@@ -15,14 +15,14 @@ return require('packer').startup(function(use)
     use 'wbthomason/packer.nvim'
 
     use {
-        'npxbr/gruvbox.nvim',
+        'ellisonleao/gruvbox.nvim',
         requires = 'rktjmp/lush.nvim',
         config = conf('gruvbox'),
     }
 
     use {
         'nvim-telescope/telescope.nvim',
-        requires = { 'nvim-lua/plenary.nvim' },
+        requires = 'nvim-lua/plenary.nvim',
         config = conf('telescope')
     }
 
@@ -34,7 +34,7 @@ return require('packer').startup(function(use)
     use {
         'ms-jpq/coq-nvim',
         run = ':silent COQdeps',
-        requires = { 'ms-jpq/coq.artifacts' },
+        requires = 'ms-jpq/coq.artifacts',
         config = conf('coq-nvim'),
     }
 
