@@ -5,7 +5,9 @@ local c_tab_width = 8
 
 cmd('syntax enable')
 cmd('filetype plugin indent on')
+
 mm.augroup('UserSettings', {
+        -- highlight yank for 250ms
         {
             events = { 'TextYankPost' },
             targets = { '*' },
@@ -13,6 +15,7 @@ mm.augroup('UserSettings', {
                 vim.highlight.on_yank({ on_visual = false, timeout = 250 })
             end,
         },
+        -- set tab width dynamically on c-like files
         {
             events = { 'FileType' },
             targets = { 'c', 'cpp', 'objc', 'objcpp', 'sh', 'make' },
@@ -22,17 +25,10 @@ mm.augroup('UserSettings', {
         },
         -- toggle hiding invisible chars on insert
         {
-            events = { 'InsertEnter' },
+            events = { 'InsertEnter', 'InsertLeave' },
             targets = { '*' },
             command = function()
-                vim.wo.list = false
-            end,
-        },
-        {
-            events = { 'InsertLeave' },
-            targets = { '*' },
-            command = function()
-                vim.wo.list = true
+                mm.set_opt('w', 'list', not mm.get_opt('w', 'list'))
             end,
         },
 })
@@ -55,4 +51,5 @@ mm.set_opt('o', 'showmode', false)
 mm.set_opt('w', 'number', true)
 mm.set_opt('w', 'relativenumber', true)
 mm.set_opt('w', 'signcolumn', 'yes:2')
-mm.set_opt('w', 'listchars', 'eol: ,tab:│ ,extends:»,precedes:«,trail:•')
+mm.set_opt('w', 'list', true)
+mm.set_opt('w', 'listchars', 'tab:→ ,trail:•,nbsp:␣,extends:»,precedes:«')
