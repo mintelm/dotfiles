@@ -1,39 +1,37 @@
--- Resources
--- 1. https://github.com/akinsho/dotfiles/blob/main/.config/nvim/lua/as/globals.lua
 local fmt = string.format
------------------------------------------------------------------------------//
--- Global namespace
------------------------------------------------------------------------------//
---- Inspired by @tjdevries' astraunauta.nvim/ @TimUntersberger's config
---- store all callbacks in one global table so they are able to survive re-requiring this file
+
+---Global namespace
+---store all callbacks in one global table so they are able to survive re-requiring this file
 _G.__mm_global_callbacks = __mm_global_callbacks or { }
 
 _G.mm = {
     _store = __mm_global_callbacks,
 }
 
------------------------------------------------------------------------------//
--- Debugging
------------------------------------------------------------------------------//
--- inspect the contents of an object very quickly
--- in your code or from the command-line:
--- USAGE:
--- in lua: dump({1, 2, 3})
--- in commandline: :lua dump(vim.loop)
+---Inspect contents of any object
 ---@vararg any
 function _G.dump(...)
     local objects = vim.tbl_map(vim.inspect, { ... })
     print(unpack(objects))
 end
 
------------------------------------------------------------------------------//
--- Utils
------------------------------------------------------------------------------//
+---Set tabstop and shiftwdith
+---@param tab_width number
+function _G.set_tab_width(tab_width)
+    mm.opt('b', 'tabstop', tab_width)
+    mm.opt('b', 'shiftwidth', tab_width)
+end
+
+---Add callback to global store
+---@param f function
 function mm._create(f)
     table.insert(mm._store, f)
     return #mm._store
 end
 
+---Execute callback with id
+---@param id number
+---@param args any
 function mm._execute(id, args)
     mm._store[id](args)
 end
@@ -76,12 +74,14 @@ end
 ---@return T
 function mm.find(haystack, matcher)
     local found
+
     for _, needle in ipairs(haystack) do
         if matcher(needle) then
-        found = needle
-        break
+            found = needle
+            break
         end
     end
+
     return found
 end
 
@@ -92,7 +92,9 @@ function mm.empty(item)
     if not item then
         return true
     end
+
     local item_type = type(item)
+
     if item_type == 'string' then
         return item == ''
     elseif item_type == 'table' then
@@ -100,6 +102,10 @@ function mm.empty(item)
     end
 end
 
+---Set vim option
+---@param scope string
+---@param key string
+---@param value any
 function mm.opt(scope, key, value)
     local scopes = { o = vim.o, b = vim.bo, w = vim.wo }
     scopes[scope][key] = value
@@ -109,6 +115,11 @@ function mm.opt(scope, key, value)
     end
 end
 
+---Set global vim keymap
+---@param mode string
+---@param lhs string
+---@param rhs string
+---@param opts table
 function mm.map(mode, lhs, rhs, opts)
     local options = { noremap = true }
 
@@ -119,6 +130,12 @@ function mm.map(mode, lhs, rhs, opts)
     vim.api.nvim_set_keymap(mode, lhs, rhs, options)
 end
 
+---Set buffer vim keymap
+---@param bufnr number
+---@param mode string
+---@param lhs string
+---@param rhs string
+---@param opts table
 function mm.bmap(bufnr, mode, lhs, rhs, opts)
     local options = { noremap = true }
 
@@ -127,9 +144,4 @@ function mm.bmap(bufnr, mode, lhs, rhs, opts)
     end
 
     vim.api.nvim_buf_set_keymap(bufnr, mode, lhs, rhs, options)
-end
-
-function mm.set_tab_width(tab_width)
-    mm.opt('b', 'tabstop', tab_width)
-    mm.opt('b', 'shiftwidth', tab_width)
 end

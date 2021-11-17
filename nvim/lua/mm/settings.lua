@@ -17,7 +17,7 @@ mm.augroup('UserSettings', {
             events = { 'FileType' },
             targets = { 'c', 'cpp', 'objc', 'objcpp', 'sh', 'make' },
             command = function()
-                mm.set_tab_width(c_tab_width)
+                set_tab_width(c_tab_width)
             end,
         },
         -- toggle hiding invisible chars on insert
@@ -37,7 +37,7 @@ mm.augroup('UserSettings', {
         },
 })
 
-mm.set_tab_width(tab_width)
+set_tab_width(tab_width)
 mm.opt('b', 'expandtab', true)
 mm.opt('b', 'smartindent', true)
 
