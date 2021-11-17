@@ -25,10 +25,17 @@ mm.augroup('UserSettings', {
         },
         -- toggle hiding invisible chars on insert
         {
-            events = { 'InsertEnter', 'InsertLeave' },
+            events = { 'InsertEnter' },
             targets = { '*' },
             command = function()
-                mm.set_opt('w', 'list', not mm.get_opt('w', 'list'))
+                mm.set_opt('w', 'list', false)
+            end,
+        },
+        {
+            events = { 'InsertLeave' },
+            targets = { '*' },
+            command = function()
+                mm.set_opt('w', 'list', true)
             end,
         },
 })
