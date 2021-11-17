@@ -1,12 +1,11 @@
 -- Resources
--- 1. https://github.com/akinsho/dotfiles/blob/main/.config/nvim/lua/as/statusline/init.lua
--- 2. https://github.com/ahmedelgabri/dotfiles/blob/acf6dc587f6b76024fad32391655fa910fc1ae3e/config/.vim/lua/_/statusline.lua
--- 3. https://github.com/elenapan/dotfiles/blob/master/config/nvim/statusline.vim
+-- 1. https://github.com/akinsho/dotfiles/tree/main/.config/nvim
 
 local H = require('mm.highlights')
 local utils = require('mm.statusline.utils')
 
-local function colors()
+---Set colors with highlight groups
+local function set_colors()
     local bg = '#1d2021'
     local comment_fg = H.get_hl('Comment', 'fg')
     local string_fg = H.get_hl('String', 'fg')
@@ -43,19 +42,26 @@ local function colors()
     })
 end
 
+---Append to table
+---@param tbl table
+---@param next table
+---@param priority number
 local function append(tbl, next, priority)
     priority = priority or 0
     local component, length = unpack(next)
+
     if component and component ~= '' and next and tbl then
         table.insert(tbl, { component = component, priority = priority, length = length })
     end
 end
 
---- @param statusline table
---- @param available_space number
+---Display statusline
+---@param statusline table
+---@param available_space number
 local function display(statusline, available_space)
     local str = ''
     local items = utils.prioritize(statusline, available_space)
+
     for _, item in ipairs(items) do
         if type(item.component) == 'string' then
             str = str .. item.component
@@ -194,7 +200,7 @@ local function setup_autocommands()
         {
             events = { 'VimEnter', 'ColorScheme' },
             targets = { '*' },
-            command = colors,
+            command = set_colors,
         },
     })
 end

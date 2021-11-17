@@ -95,8 +95,11 @@ local exceptions = {
     },
 }
 
+---Sums up table lengths
+---@param tbl table
 local function sum_lengths(tbl)
     local length = 0
+
     for _, c in ipairs(tbl) do
         if c.length then
         length = c.length + length
@@ -127,49 +130,55 @@ local function is_lowest(item, lowest)
     return item.priority > lowest.priority
 end
 
---- Take the lowest priority items out of the statusline if we don't have
---- space for them.
---- TODO currently this doesn't account for if an item that has a lower priority
---- could be fit in instead
---- @param statusline table
---- @param space number
---- @param length number
+---Take the lowest priority items out of the statusline if we don't have
+---space for them.
+---TODO currently this doesn't account for if an item that has a lower priority
+---could be fit in instead
+---@param statusline table
+---@param space number
+---@param length number
 function M.prioritize(statusline, space, length)
     length = length or sum_lengths(statusline)
+
     if length <= space then
         return statusline
     end
+
     local lowest
     local index_to_remove
+
     for idx, c in ipairs(statusline) do
         if is_lowest(c, lowest) then
             lowest = c
             index_to_remove = idx
         end
     end
+
     table.remove(statusline, index_to_remove)
     return M.prioritize(statusline, space, length - lowest.length)
 end
 
---- @param ctx table
+---@param ctx table
 function M.is_plain(ctx)
     return contains(plain_filetypes, ctx.filetype)
         or contains(plain_buftypes, ctx.buftype)
         or ctx.preview
 end
 
---- @param ctx table
---- @param icon string | nil
+---@param ctx table
+---@param icon string | nil
 function M.modified(ctx, icon)
     icon = icon or '✎'
+
     if ctx.filetype == 'help' then
         return ''
     end
+
     return ctx.modified and icon or ''
 end
 
---- @param ctx table
---- @param icon string | nil
+---@param ctx table
+---@param icon string | nil
 function M.readonly(ctx, icon)
     icon = icon or ''
     if ctx.readonly then
@@ -179,10 +188,10 @@ function M.readonly(ctx, icon)
     end
 end
 
---- This function allow me to specify titles for special case buffers
---- like the preview window or a quickfix window
---- CREDIT: https://vi.stackexchange.com/a/18090
---- @param ctx table
+---This function allow me to specify titles for special case buffers
+---like the preview window or a quickfix window
+---CREDIT: https://vi.stackexchange.com/a/18090
+---@param ctx table
 local function special_buffers(ctx)
     local location_list = fn.getloclist(0, { filewinid = 0 })
     local is_loc_list = location_list.filewinid > 0
@@ -204,14 +213,14 @@ local function special_buffers(ctx)
     return nil
 end
 
---- @param bufnum number
---- @param mod string
+---@param bufnum number
+---@param mod string
 local function buf_expand(bufnum, mod)
     return expand('#' .. bufnum .. mod)
 end
 
---- @param ctx table
---- @param modifier string
+---@param ctx table
+---@param modifier string
 local function filename(ctx, modifier)
     modifier = modifier or ':t'
     local special_buf = special_buffers(ctx)
@@ -243,46 +252,56 @@ local function filename(ctx, modifier)
     return dir, parent, fname
 end
 
---- @param hl string
---- @param bg_hl string
+---@param hl string
+---@param bg_hl string
 local function set_ft_icon_highlight(hl, bg_hl)
     if not hl then
         return ''
     end
+
     local name = hl .. 'Statusline'
     -- TODO: find a mechanism to cache this so it isn't repeated constantly
     local fg_color = H.get_hl(hl, 'fg')
     local bg_color = H.get_hl(bg_hl, 'bg')
+
     if bg_color and fg_color then
         local cmd = { 'highlight ', name, ' guibg=', bg_color, ' guifg=', fg_color }
         local str = table.concat(cmd)
         mm.augroup(name, { { events = { 'ColorScheme' }, targets = { '*' }, command = str } })
         vim.cmd(string.format("silent execute '%s'", str))
     end
+
     return name
 end
 
---- @param ctx table
---- @param opts table
---- @return string, string
+---@param ctx table
+---@param opts table
+---@return string, string
 local function filetype(ctx, opts)
     local ft_exception = exceptions.filetypes[ctx.filetype]
+
     if ft_exception then
         return ft_exception, opts.default
     end
+
     local bt_exception = exceptions.buftypes[ctx.buftype]
+
     if bt_exception then
         return bt_exception, opts.default
     end
+
     local icon, hl
     local extension = fnamemodify(ctx.bufname, ':e')
+
     if not icons_loaded then
         icons_loaded, devicons = pcall(require, 'nvim-web-devicons')
     end
+
     if icons_loaded then
         icon, hl = devicons.get_icon(ctx.bufname, extension, { default = true })
         hl = set_ft_icon_highlight(hl, opts.icon_bg)
     end
+
     return icon, hl
 end
 
@@ -320,6 +339,7 @@ function M.file(ctx, minimal)
 
     to_update.prefix = ft_icon
     to_update.prefix_color = not minimal and icon_highlight or nil
+
     return {
         file = { item = file, hl = filename_hl, opts = file_opts },
         dir = { item = directory, hl = directory_hl, opts = dir_opts },
@@ -356,9 +376,11 @@ end
 
 function M.diagnostic_info(context)
     local buf = context.bufnum
+
     if vim.tbl_isempty(vim.lsp.buf_get_clients(buf)) then
         return { error = {}, warning = {}, info = {} }
     end
+
     local get_count = vim.lsp.diagnostic.get_count
 
     return {
@@ -372,6 +394,7 @@ local function mode_highlight(mode)
     local visual_regex = vim.regex([[\(v\|V\|\)]])
     local command_regex = vim.regex([[\(c\|cv\|ce\)]])
     local replace_regex = vim.regex([[\(Rc\|R\|Rv\|Rx\)]])
+
     if mode == 'i' then
         return 'StModeInsert'
     elseif visual_regex:match_str(mode) then
@@ -416,10 +439,10 @@ function M.mode()
     return (mode_map[current_mode] or 'UNKNOWN'), hl
 end
 
---- This function gets and decorates the current and total line count
---- it derives this using the line() function rather than the %l/%L statusline
---- format strings because these cannot be
--- @param opts table
+---This function gets and decorates the current and total line count
+---it derives this using the line() function rather than the %l/%L statusline
+---format strings because these cannot be
+---@param opts table
 function M.line_info(opts)
     local sep = opts.sep or '/'
     local prefix = opts.prefix or 'L'
@@ -450,16 +473,16 @@ function M.line_info(opts)
     }
 end
 
---- @param hl string
+---@param hl string
 function M.wrap(hl)
     assert(hl, 'A highlight name must be specified')
     return '%#' .. hl .. '#'
 end
 
---- Creates a spacer statusline component i.e. for padding
---- or to represent an empty component
---- @param size number
---- @param filler string | nil
+---Creates a spacer statusline component i.e. for padding
+---or to represent an empty component
+---@param size number
+---@param filler string | nil
 function M.spacer(size, filler)
   filler = filler or ' '
     if size and size >= 1 then
@@ -470,9 +493,9 @@ function M.spacer(size, filler)
     end
 end
 
---- @param component string
---- @param hl string
---- @param opts table
+---@param component string
+---@param hl string
+---@param opts table
 function M.item(component, hl, opts)
     -- do not allow empty values to be shown note 0 is considered empty
     -- since if there is nothing of something I don't need to see it
@@ -498,17 +521,19 @@ function M.item(component, hl, opts)
     end
 
     local parts = { before, prefix, M.wrap(hl), component, '%*', after }
+
     return { table.concat(parts), #component + #before + #after + prefix_size }
 end
 
---- @param item string
---- @param condition boolean
---- @param hl string
---- @param opts table
+---@param item string
+---@param condition boolean
+---@param hl string
+---@param opts table
 function M.item_if(item, condition, hl, opts)
     if not condition then
         return M.spacer()
     end
+
     return M.item(item, hl, opts)
 end
 
