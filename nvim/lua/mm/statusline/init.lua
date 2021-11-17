@@ -11,26 +11,21 @@ local function colors()
 
     local comment_fg = H.get_hl('Comment', 'fg')
     local string_fg = H.get_hl('String', 'fg')
-    local git_fg = H.get_hl('GitSignsDelete', 'fg')
     local delimiter_fg = H.get_hl('Delimiter', 'fg')
     local normal_fg = H.get_hl('Normal', 'fg')
     local number_fg = H.get_hl('Number', 'fg')
     local identifier_fg = H.get_hl('Identifier', 'fg')
     local inc_search_fg = H.get_hl('Search', 'fg')
+    local error_color = H.get_hl('ErrorMsg', 'fg')
+    local warning_color = H.get_hl('WarningMsg', 'fg')
 
-    local error_color = H.get_hl('LspDiagnosticsDefaultError', 'fg')
-    local warning_color = H.get_hl('LspDiagnosticsDefaultWarning', 'fg')
-    local info_color = H.get_hl('LspDiagnosticsDefaultInformation', 'fg')
-
-    local comment_gui = H.get_hl('Comment', 'gui')
-
-    H.all({
+    H.set_hls({
         { 'StatusLine', { guibg = bg_color, gui = 'NONE' } },
         { 'StatusLineNC', { guibg = bg_color, gui = 'NONE' } },
         { 'StMetadata', { guibg = bg_color, guifg = comment_fg } },
         { 'StMetadataPrefix', { guibg = bg_color, guifg = comment_fg, gui = 'bold' } },
         { 'StModified', { guibg = bg_color, guifg = string_fg } },
-        { 'StGit', { guibg = bg_color, guifg = git_fg } },
+        { 'StGit', { guibg = bg_color, guifg = error_color } },
         { 'StGreen', { guibg = bg_color, guifg = string_fg } },
         { 'StOrange', { guibg = bg_color, guifg = delimiter_fg, gui = 'bold' } },
         { 'StDirectory', { guibg = bg_color, guifg = 'Gray', gui = 'italic' } },
@@ -38,10 +33,10 @@ local function colors()
         { 'StFilename', { guibg = bg_color, guifg = 'LightGray', gui = 'bold' }, },
         { 'StFilenameInactive', { guibg = bg_color, guifg = 'LightGray', gui = 'italic,bold' }, },
         { 'StTitle', { guibg = bg_color, guifg = 'LightGray', gui = 'bold' } },
-        { 'StComment', { guibg = bg_color, guifg = comment_fg, gui = comment_gui } },
+        { 'StComment', { guibg = bg_color, guifg = comment_fg } },
         { 'StError', { guibg = bg_color, guifg = error_color } },
         { 'StWarning', { guibg = bg_color, guifg = warning_color } },
-        { 'StInfo', { guibg = bg_color, guifg = info_color, gui = 'bold' } },
+        { 'StInfo', { guibg = bg_color, guifg = comment_fg, gui = 'bold' } },
         { 'StModeNormal', { guibg = bg_color, guifg = normal_fg, gui = 'bold' } },
         { 'StModeInsert', { guibg = bg_color, guifg = string_fg, gui = 'bold' } },
         { 'StModeVisual', { guibg = bg_color, guifg = number_fg, gui = 'bold' } },
