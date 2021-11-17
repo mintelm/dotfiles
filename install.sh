@@ -17,6 +17,7 @@ if ! [ -z ${force} ]; then
         mkdir -p ~/.cache
         mkdir -p ~/.zsh
         mkdir -p ~/.vim/autoload
+        mkdir -p ~/.config/nvim
         mkdir -p ~/.config/bat
         mkdir -p ~/.config/kitty
 fi
@@ -25,11 +26,11 @@ fi
 echo Linking zsh stuff...
 ln -sv$force $PWD/zsh/zshrc ~/.zshrc
 ln -sv$force $PWD/zsh/manydots-magic ~/.zsh
-ln -sv$force $PWD/zsh/*.*sh ~/.zsh/
+ln -sv$force $PWD/zsh/*.*sh ~/.zsh
 
 # nvim stuff
 echo Linking nvim stuff...
-ln -sv$force $PWD/nvim/ ~/.config/
+ln -sv$force $PWD/nvim/* ~/.config/nvim
 
 # cli tools
 echo Linking cli stuff...
