@@ -2,31 +2,25 @@ local H = require('mm.highlights')
 
 function override_highlights()
     H.set_hls({
-        { 'SignColumn', { link = 'GruvboxFg1', force = true } },
-        { 'Pmenu', { link = 'GruvboxFg1', force = true } },
-        { 'NormalFloat', { link = 'GruvboxFg1', force = true } },
-        { 'CursorLineNR', { link = 'GruvboxYellow', force = true } },
-        { 'TsError', { link = 'GruvboxFg1', force = true } },
-        { 'GitSignsAdd', { link = 'GruvboxGreen', force = true } },
-        { 'GitSignsChange', { link = 'GruvboxAqua', force = true } },
-        { 'GitSignsDelete', { link = 'GruvboxRed', force = true } },
-        { 'LspDiagnosticsSignError', { link = 'GruvboxRed', force = true } },
-        { 'LspDiagnosticsSignHint', { link = 'GruvboxAqua', force = true } },
-        { 'LspDiagnosticsSignInformation', { link = 'GruvboxBlue', force = true } },
-        { 'LspDiagnosticsSignWarning', { link = 'GruvboxYellow', force = true } },
+        { 'SignColumn', { link = 'Operator', force = true } },
+        { 'Pmenu', { link = 'SignColumn', force = true } },
+        { 'NormalFloat', { link = 'SignColumn', force = true } },
+        { 'CursorLineNR', { link = 'Type', force = true } },
+        { 'TsError', { link = 'SignColumn', force = true } },
+        { 'GitSignsAdd', { link = 'Directory', force = true } },
+        { 'GitSignsChange', { link = 'Include', force = true } },
+        { 'GitSignsDelete', { link = 'SpecialChar', force = true } },
     })
 end
 
 return function()
-    vim.g.gruvbox_contrast_dark = 'hard'
-    vim.cmd('colorscheme gruvbox')
-    override_highlights()
-    -- apply highlights whenever colorscheme changes
     mm.augroup('UserHighlights', {
         {
             events = { 'ColorScheme' },
-            targets = { '*' },
+            targets = { 'gruvbox' },
             command = override_highlights,
         }
     })
+    vim.g.gruvbox_contrast_dark = 'hard'
+    vim.cmd('colorscheme gruvbox')
 end
