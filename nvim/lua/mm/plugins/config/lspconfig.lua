@@ -1,40 +1,13 @@
-M = { }
+mm.lsp = { }
 
-M.servers = {
+local servers = {
     'pyright',
     'clangd',
     'sumneko_lua',
     'texlab',
 }
 
-M.icons = {
-  Class = ' Class',
-  Color = ' Color',
-  Constant = ' Constant',
-  Constructor = ' Constructor',
-  Enum = '了 Enum',
-  EnumMember = ' Enum',
-  Event = '鬒 Event',
-  Field = '識 Field',
-  File = ' File',
-  Folder = ' Folder',
-  Function = 'ƒ Function',
-  Interface = 'ﰮ Interface',
-  Keyword = ' Keyword',
-  Method = ' Method',
-  Module = ' Module',
-  Property = ' Property',
-  Reference = '渚 Reference',
-  Snippet = ' Snippet',
-  Struct = ' Struct',
-  Text = ' Text',
-  Type = ' Type Parameter',
-  Unit = ' Unit',
-  Value = ' Value',
-  Variable = ' Variable',
-}
-
-function M.sumneko_setup(on_attach)
+local function sumneko_setup(on_attach)
     local sumneko_root_path = '/usr/share/lua-language-server'
     local sumneko_binary = '/usr/bin/lua-language-server'
     local runtime_path = vim.split(package.path, ';')
@@ -65,30 +38,53 @@ function M.sumneko_setup(on_attach)
     }
 end
 
-function M.setup_icons()
+function mm.lsp.setup_icons()
     local kinds = vim.lsp.protocol.CompletionItemKind
 
-    for type, icon in pairs(M.signs) do
+    for type, icon in pairs(mm.style.icons) do
         local hl = 'LspDiagnosticsSign' .. type
         vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = '' })
     end
 
     for i, kind in ipairs(kinds) do
-        kinds[i] = M.icons[kind] or kind
+        kinds[i] = mm.style.lsp.kinds[kind] or kind
     end
 end
 
-function M.setup_servers(on_attach)
-    for _, name in ipairs(M.servers) do
+function mm.lsp.setup_servers(on_attach)
+    for _, name in ipairs(servers) do
         if name == 'sumneko_lua' then
-            require('lspconfig')[name].setup(M.sumneko_setup(on_attach))
+            require('lspconfig')[name].setup(sumneko_setup(on_attach))
         else
             require('lspconfig')[name].setup({ on_attach = on_attach })
         end
     end
 end
 
-function M.setup_severity_filter()
+function mm.lsp.on_attach(client, bufnr)
+    vim.o.updatetime = 250
+    vim.cmd('autocmd CursorHold,CursorHoldI * lua vim.lsp.diagnostic.show_line_diagnostics({focusable=false, border="single"})')
+    vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(
+        vim.lsp.diagnostic.on_publish_diagnostics, {
+            virtual_text = false,
+        }
+    )
+    vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(
+        vim.lsp.handlers.hover, {
+            border = 'single',
+        }
+    )
+
+    vim.lsp.handlers['textDocument/signatureHelp'] = vim.lsp.with(
+        vim.lsp.handlers.signature_help, {
+            border = 'single',
+        }
+    )
+
+    require('mm.keymappings').lsp_mappings(bufnr)
+end
+
+function mm.lsp.setup_severity_filter()
     local orig_set_signs = vim.lsp.diagnostic.set_signs
     local set_signs_limited = function(diagnostics, bufnr, client_id, sign_ns, opts)
 
@@ -123,30 +119,7 @@ function M.setup_severity_filter()
 end
 
 return function()
-    local function on_attach(client, bufnr)
-        vim.o.updatetime = 250
-        vim.cmd('autocmd CursorHold,CursorHoldI * lua vim.lsp.diagnostic.show_line_diagnostics({focusable=false, border="single"})')
-        vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(
-            vim.lsp.diagnostic.on_publish_diagnostics, {
-                virtual_text = false,
-            }
-        )
-        vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(
-            vim.lsp.handlers.hover, {
-                border = 'single',
-            }
-        )
-
-        vim.lsp.handlers['textDocument/signatureHelp'] = vim.lsp.with(
-            vim.lsp.handlers.signature_help, {
-                border = 'single',
-            }
-        )
-
-        require('mm.keymappings').lsp_mappings(bufnr)
-    end
-
-    M.setup_servers(on_attach)
-    M.setup_severity_filter()
-    M.setup_icons()
+    mm.lsp.setup_servers(mm.lsp.on_attach)
+    mm.lsp.setup_severity_filter()
+    mm.lsp.setup_icons()
 end
