@@ -9,6 +9,14 @@ _G.mm = {
 }
 
 do
+    local palette = {
+        dark_grey = '#1d2021',
+        red = '#fb4632',
+        aqua = '#8ec07c',
+        blue = '#83a598',
+        yellow = '#fabd2e',
+    }
+
     mm.style = {
         icons = {
             Error = '',        -- ✗ 
@@ -18,6 +26,10 @@ do
         },
         lsp = {
             colors = {
+                error = palette.red,
+                warn = palette.yellow,
+                info = palette.blue,
+                hint = palette.aqua,
             },
             kinds = {
                 Class = 'ﴯ',
@@ -76,7 +88,7 @@ do
                 --]]
             }
         },
-        palette = palette
+        palette = palette,
     }
 end
 

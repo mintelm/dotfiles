@@ -1,5 +1,7 @@
 mm.lsp = { }
 
+local H = require('mm.highlights')
+
 local servers = {
     'pyright',
     'clangd',
@@ -42,13 +44,46 @@ function mm.lsp.setup_icons()
     local kinds = vim.lsp.protocol.CompletionItemKind
 
     for type, icon in pairs(mm.style.icons) do
+        -- Note: LspDiagnosticsSign neovim 0.5.1
         local hl = 'LspDiagnosticsSign' .. type
-        vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = '' })
+        vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
+        -- Note: DiagnosticSign neovim 0.6
+        if type == 'Error' then
+            hl = 'DiagnosticSign' .. type
+        else
+            hl = 'DiagnosticSign' .. type:sub(4)
+        end
+        vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
     end
 
     for i, kind in ipairs(kinds) do
         kinds[i] = mm.style.lsp.kinds[kind] or kind
     end
+end
+
+function mm.lsp.setup_augroups()
+    local bg = H.get_hl('Normal', 'bg', mm.style.palette.dark_grey)
+    local colors = mm.style.lsp.colors
+
+    mm.augroup('LspHighlights', {
+        {
+            events = { 'VimEnter' },
+            targets = { '*' },
+            command = function() H.set_hls({
+                { 'LspDiagnosticsSignError', { guibg = bg, guifg = colors.error } },
+                { 'LspDiagnosticsSignWarning', { guibg = bg, guifg = colors.warn } },
+                { 'LspDiagnosticsSignInformation', { guibg = bg, guifg = colors.info } },
+                { 'LspDiagnosticsSignHint', { guibg = bg, guifg = colors.hint } },
+                { 'DiagnosticSignError', { guibg = bg, guifg = colors.error } },
+                { 'DiagnosticSignWarn', { guibg = bg, guifg = colors.warn } },
+                { 'DiagnosticSignInfo', { guibg = bg, guifg = colors.info } },
+                { 'DiagnosticSignHint', { guibg = bg, guifg = colors.hint } },
+                { 'LspReferenceText', { gui = 'underline' } },
+                { 'LspReferenceRead', { gui = 'underline' } },
+            })
+            end,
+        }
+    })
 end
 
 function mm.lsp.setup_servers(on_attach)
@@ -122,4 +157,5 @@ return function()
     mm.lsp.setup_servers(mm.lsp.on_attach)
     mm.lsp.setup_severity_filter()
     mm.lsp.setup_icons()
+    mm.lsp.setup_augroups()
 end

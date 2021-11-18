@@ -1,4 +1,5 @@
 local fmt = string.format
+local levels = vim.log.levels
 
 local M = { }
 
@@ -18,11 +19,11 @@ end
 ---@param color string
 ---@param percent number
 ---@return string
-function M.darken_color(color, percent)
+function M.alter_color(color, percent)
+    local r, g, b = hex_to_rgb(color)
     local alter = function(attr, percent)
         return math.floor(attr * (100 + percent) / 100)
     end
-    local r, g, b = hex_to_rgb(color)
 
     if not r or not g or not b then
         return 'NONE'
@@ -98,44 +99,64 @@ function M.set_hl(name, opts)
     end
 end
 
----convert a table of gui values into a string
----@param hl table<string, string>
----@return string
-local function flatten_gui(hl)
-    local gui_attr = { 'underline', 'bold', 'undercurl', 'italic' }
+---Get a highlight groups details from the nvim API and format the result
+---to match the attributes seen when using `:highlight GroupName`
+---`nvim_get_hl_by_name` e.g.
+---```json
+---{
+--- foreground: 123456
+--- background: 123456
+--- italic: true
+--- bold: true
+--}
+---```
+--- is converted to
+---```json
+---{
+--- gui: {"italic", "bold"}
+--- guifg: #FFXXXX
+--- guibg: #FFXXXX
+--}
+---```
+---@param group_name string A highlight group name
+local function get_hl(group_name)
+  local attrs = { foreground = 'guifg', background = 'guibg' }
+  local hl = vim.api.nvim_get_hl_by_name(group_name, true)
+  local result = {}
+  if hl then
     local gui = {}
-    for name, value in pairs(hl) do
-        if value and vim.tbl_contains(gui_attr, name) then
-        table.insert(gui, name)
-        end
+    for key, value in pairs(hl) do
+      local t = type(value)
+      if t == 'number' and attrs[key] then
+        result[attrs[key]] = '#' .. bit.tohex(value, 6)
+      elseif t == 'boolean' then -- NOTE: we presume that a boolean value is a GUI attribute
+        table.insert(gui, key)
+      end
     end
-    return table.concat(gui, ',')
+    result.gui = #gui > 0 and gui or nil
+  end
+  return result
 end
 
----Get the value a highlight group
----this function is a small wrapper around `nvim_get_hl_by_name`
----which handles errors, fallbacks as well as returning a gui value
+---Get the value a highlight group whilst handling errors, fallbacks as well as returning a gui value
 ---in the right format
 ---@param grp string
 ---@param attr string
 ---@param fallback string
 ---@return string
 function M.get_hl(grp, attr, fallback)
-    assert(grp, 'Cannot get a highlight without specifying a group')
-    local attrs = { fg = 'foreground', bg = 'background' }
-    attr = attrs[attr] or attr
-    local hl = vim.api.nvim_get_hl_by_name(grp, true)
-    if attr == 'gui' then
-        return flatten_gui(hl)
-    end
-    local color = hl[attr] or fallback
-    -- convert the decimal rgba value from the hl by name to a 6 character hex + padding if needed
-    if not color then
-        vim.notify(fmt('%s %s does not exist', grp, attr))
-        return 'NONE'
-    end
-    -- convert the decimal rgba value from the hl by name to a 6 character hex + padding if needed
-    return '#' .. bit.tohex(color, 6)
+  if not grp then
+    vim.notify('Cannot get a highlight without specifying a group', levels.ERROR)
+    return 'NONE'
+  end
+  local hl = get_hl(grp)
+  local color = hl[attr:match 'gui' and attr or fmt('gui%s', attr)] or fallback
+  if not color then
+    vim.notify(fmt('%s %s does not exist', grp, attr), levels.INFO)
+    return 'NONE'
+  end
+  -- convert the decimal RGBA value from the hl by name to a 6 character hex + padding if needed
+  return color
 end
 
 ---Clear a highlight group
