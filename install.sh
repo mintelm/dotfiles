@@ -1,5 +1,10 @@
 #!/bin/bash
 
+usage() {
+        printf "Usage: $0 [-f] \n\nOptions:\n    -f: force link; also creates dirs\n";
+        exit 1;
+}
+
 SCRIPT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 
 # reset in case getopts has been used previously in shell
@@ -11,6 +16,8 @@ while getopts "f" opt; do
                         echo Creating required directories...
                         mkdir -p ~/.cache ~/.zsh ~/.config/nvim ~/.config/bat ~/.config/kitty
                         ;;
+                *)
+                        usage
         esac
 done
 
