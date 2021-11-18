@@ -39,10 +39,10 @@ ln -sv$force $PWD/cli/screenrc ~/.config/screenrc
 ln -sv$force $PWD/cli/gitconfig ~/.gitconfig
 ln -sv$force $PWD/cli/tigrc ~/.config/tigrc
 ln -sv$force $PWD/cli/batconfig ~/.config/bat/config
+ln -sv$force $PWD/cli/Xresources ~/.Xresources
 
 # utils
 echo Linking utils stuff...
 ln -sv$force $PWD/utils/kitty.conf ~/.config/kitty/kitty.conf
 ln -sv$force $PWD/utils/alacritty.yml ~/.config/alacritty.yml
 ln -sv$force $PWD/utils/dunstrc ~/.config/dunstrc
-ln -sv$force $PWD/utils/Xresources ~/.Xresources
