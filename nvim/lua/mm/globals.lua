@@ -8,6 +8,17 @@ _G.mm = {
     _store = __mm_global_callbacks,
 }
 
+do
+    mm.style = {
+        icons = {
+            Error = '',        -- ✗ 
+            Warning = '',      -- 
+            Information = '',  --  
+            Hint = '',         -- 
+        },
+    }
+end
+
 ---Inspect contents of any object
 ---@vararg any
 function _G.dump(...)

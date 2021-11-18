@@ -7,9 +7,6 @@ M.servers = {
     'texlab',
 }
 
-M.signs = { Error = ' ', Warning = ' ', Hint = ' ', Information = ' ' }
--- M.signs = { Error = ' ', Warning = ' ', Hint = ' ', Information = ' ' }
-
 M.icons = {
   Class = ' Class',
   Color = ' Color',
