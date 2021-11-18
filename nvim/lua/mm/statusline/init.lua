@@ -3,18 +3,22 @@
 
 local H = require('mm.highlights')
 local utils = require('mm.statusline.utils')
+local P = mm.style.palette
 
 ---Set colors with highlight groups
 local function set_colors()
-    local bg = '#1d2021'
+    local bg = H.alter_color(H.get_hl('Normal', 'bg', P.dark_grey), -50)
+
     local comment_fg = H.get_hl('Comment', 'fg')
     local string_fg = H.get_hl('String', 'fg')
     local delimiter_fg = H.get_hl('Delimiter', 'fg')
     local number_fg = H.get_hl('Number', 'fg')
     local identifier_fg = H.get_hl('Identifier', 'fg')
     local inc_search_fg = H.get_hl('Search', 'fg')
-    local error_color = H.get_hl('ErrorMsg', 'fg')
-    local warning_color = H.get_hl('WarningMsg', 'fg')
+
+    local info_color = mm.style.lsp.colors.info
+    local error_color = mm.style.lsp.colors.error
+    local warning_color = mm.style.lsp.colors.warn
 
     H.set_hls({
         { 'StatusLine', { guibg = bg, gui = 'NONE' } },
@@ -33,7 +37,7 @@ local function set_colors()
         { 'StComment', { guibg = bg, guifg = comment_fg } },
         { 'StError', { guibg = bg, guifg = error_color } },
         { 'StWarning', { guibg = bg, guifg = warning_color } },
-        { 'StInfo', { guibg = bg, guifg = comment_fg, gui = 'bold' } },
+        { 'StInfo', { guibg = bg, guifg = info_color, gui = 'bold' } },
         { 'StModeNormal', { guibg = bg, gui = 'bold' } },
         { 'StModeInsert', { guibg = bg, guifg = string_fg, gui = 'bold' } },
         { 'StModeVisual', { guibg = bg, guifg = number_fg, gui = 'bold' } },
