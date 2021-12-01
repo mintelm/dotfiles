@@ -7,8 +7,14 @@ alias wttr="curl wttr.in/regensburg"
 alias vvim="/usr/bin/vim"
 alias tmux="tmux -f ~/.config/tmux.conf"
 alias screen="screen -c ~/.config/screenrc"
+alias Make="make"
 alias intel="optimus-manager --no-confirm --switch intel"
 alias nvidia="optimus-manager --no-confirm --switch nvidia"
+alias dkup='docker-compose -f docker-compose.yml up -d'
+alias dkdown='docker-compose -f docker-compose.yml stop'
+alias dkpull='docker-compose -f docker-compose.yml pull'
+alias dklogs='docker-compose -f docker-compose.yml logs -tf --tail="50"'
+alias dktail='docker logs -tf --tail="50" "$@"'
 [ -x "$(command -v nvim)" ] && alias vim="nvim"
 if [ -x "$(command -v exa)" ]; then
     alias ls="exa "
