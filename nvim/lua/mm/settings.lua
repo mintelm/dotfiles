@@ -21,6 +21,8 @@ mm.augroup('UserSettings', {
             targets = { 'c', 'cpp', 'objc', 'objcpp', 'sh', 'make' },
             command = function()
                 set_tab_width(c_tab_width)
+                mm.set_opt('b', 'expandtab', false)
+                mm.set_opt('b', 'smartindent', false)
             end,
         },
         -- toggle hiding invisible chars on insert
