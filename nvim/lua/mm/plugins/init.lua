@@ -33,12 +33,15 @@ return require('packer').startup(function(use)
 
     use {
         'L3MON4D3/LuaSnip',
+        requires = 'rafamadriz/friendly-snippets',
+        config = conf('luasnip'),
     }
 
     use {
         'hrsh7th/nvim-cmp',
         requires = {
             'hrsh7th/cmp-nvim-lsp',
+            'saadparwaiz1/cmp_luasnip',
         },
         config = conf('cmp'),
     }

@@ -52,6 +52,7 @@ return function()
         },
         sources = cmp.config.sources({
             { name = 'nvim_lsp' },
+            { name = 'luasnip' },
         }),
         documentation = {
             border = 'rounded',
