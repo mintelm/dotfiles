@@ -1,46 +1,13 @@
 mm.lsp = { }
 
-local H = require('mm.highlights')
-
-local servers = {
+mm.lsp.servers = {
     'pyright',
     'clangd',
     'sumneko_lua',
     'texlab',
 }
 
-local function sumneko_setup(on_attach)
-    local sumneko_root_path = '/usr/share/lua-language-server'
-    local sumneko_binary = '/usr/bin/lua-language-server'
-    local runtime_path = vim.split(package.path, ';')
-
-    table.insert(runtime_path, 'lua/?.lua')
-    table.insert(runtime_path, 'lua/?/init.lua')
-
-    return {
-        cmd = { sumneko_binary, '-E', sumneko_root_path .. '/main.lua' };
-        settings = {
-            Lua = {
-                runtime = {
-                    version = 'LuaJIT',
-                    path = runtime_path,
-                },
-                diagnostics = {
-                    globals = {'vim'},
-                },
-                workspace = {
-                    library = vim.api.nvim_get_runtime_file('', true),
-                },
-                telemetry = {
-                    enable = false,
-                },
-            },
-        },
-        on_attach = on_attach,
-    }
-end
-
-function mm.lsp.setup_icons()
+local function setup_icons()
     local kinds = vim.lsp.protocol.CompletionItemKind
 
     for type, icon in pairs(mm.style.icons) do
@@ -61,23 +28,24 @@ function mm.lsp.setup_icons()
     end
 end
 
-function mm.lsp.setup_augroups()
-    local bg = H.get_hl('Normal', 'bg', mm.style.palette.dark_grey)
-    local colors = mm.style.lsp.colors
+local function setup_augroups()
+    local hl = require('mm.highlights')
+    local bg = hl.get_hl('Normal', 'bg', mm.style.palette.dark_grey)
+    local lsp_colors = mm.style.lsp.colors
 
     mm.augroup('LspHighlights', {
         {
             events = { 'VimEnter' },
             targets = { '*' },
-            command = function() H.set_hls({
-                { 'LspDiagnosticsSignError', { guibg = bg, guifg = colors.error } },
-                { 'LspDiagnosticsSignWarning', { guibg = bg, guifg = colors.warn } },
-                { 'LspDiagnosticsSignInformation', { guibg = bg, guifg = colors.info } },
-                { 'LspDiagnosticsSignHint', { guibg = bg, guifg = colors.hint } },
-                { 'DiagnosticSignError', { guibg = bg, guifg = colors.error } },
-                { 'DiagnosticSignWarn', { guibg = bg, guifg = colors.warn } },
-                { 'DiagnosticSignInfo', { guibg = bg, guifg = colors.info } },
-                { 'DiagnosticSignHint', { guibg = bg, guifg = colors.hint } },
+            command = function() hl.set_hls({
+                { 'LspDiagnosticsSignError', { guibg = bg, guifg = lsp_colors.error } },
+                { 'LspDiagnosticsSignWarning', { guibg = bg, guifg = lsp_colors.warn } },
+                { 'LspDiagnosticsSignInformation', { guibg = bg, guifg = lsp_colors.info } },
+                { 'LspDiagnosticsSignHint', { guibg = bg, guifg = lsp_colors.hint } },
+                { 'DiagnosticSignError', { guibg = bg, guifg = lsp_colors.error } },
+                { 'DiagnosticSignWarn', { guibg = bg, guifg = lsp_colors.warn } },
+                { 'DiagnosticSignInfo', { guibg = bg, guifg = lsp_colors.info } },
+                { 'DiagnosticSignHint', { guibg = bg, guifg = lsp_colors.hint } },
                 { 'LspReferenceText', { gui = 'underline' } },
                 { 'LspReferenceRead', { gui = 'underline' } },
             })
@@ -86,17 +54,41 @@ function mm.lsp.setup_augroups()
     })
 end
 
-function mm.lsp.setup_servers(on_attach)
-    for _, name in ipairs(servers) do
-        if name == 'sumneko_lua' then
-            require('lspconfig')[name].setup(sumneko_setup(on_attach))
-        else
-            require('lspconfig')[name].setup({ on_attach = on_attach })
+local function setup_severity_filter()
+    local orig_set_signs = vim.lsp.diagnostic.set_signs
+    local set_signs_limited = function(diagnostics, bufnr, client_id, sign_ns, opts)
+        -- early escape
+        if not diagnostics then
+            return
         end
+
+        -- Work out max severity diagnostic per line
+        local max_severity_per_line = { }
+        for _,d in pairs(diagnostics) do
+            if max_severity_per_line[d.range.start.line] then
+            local current_d = max_severity_per_line[d.range.start.line]
+            if d.severity < current_d.severity then
+                max_severity_per_line[d.range.start.line] = d
+            end
+            else
+            max_severity_per_line[d.range.start.line] = d
+            end
+        end
+
+        -- map to list
+        local filtered_diagnostics = { }
+        for _,v in pairs(max_severity_per_line) do
+            table.insert(filtered_diagnostics, v)
+        end
+
+        -- call original function
+        orig_set_signs(filtered_diagnostics, bufnr, client_id, sign_ns, opts)
     end
+
+    vim.lsp.diagnostic.set_signs = set_signs_limited
 end
 
-function mm.lsp.on_attach(client, bufnr)
+local function on_attach(_, bufnr)
     vim.o.updatetime = 250
     vim.cmd('autocmd CursorHold,CursorHoldI * lua vim.lsp.diagnostic.show_line_diagnostics({focusable=false, border="single"})')
     vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(
@@ -116,46 +108,60 @@ function mm.lsp.on_attach(client, bufnr)
         }
     )
 
+    setup_icons()
+    setup_augroups()
+    setup_severity_filter()
+
     require('mm.keymappings').lsp_mappings(bufnr)
 end
 
-function mm.lsp.setup_severity_filter()
-    local orig_set_signs = vim.lsp.diagnostic.set_signs
-    local set_signs_limited = function(diagnostics, bufnr, client_id, sign_ns, opts)
+function mm.lsp.get_server_config(server)
+    local config = {
+        on_attach = on_attach,
+        flags = {
+            debounce_text_changes = 500,
+        },
+    }
+    -- special config for sumneko lua
+    local sumneko_config = function()
+        local sumneko_root_path = '/usr/share/lua-language-server'
+        local sumneko_binary = '/usr/bin/lua-language-server'
+        local runtime_path = vim.split(package.path, ';')
 
-    -- early escape
-    if not diagnostics then
-        return
+        table.insert(runtime_path, 'lua/?.lua')
+        table.insert(runtime_path, 'lua/?/init.lua')
+
+        return {
+            cmd = { sumneko_binary, '-E', sumneko_root_path .. '/main.lua' };
+            settings = {
+                Lua = {
+                    runtime = {
+                        version = 'LuaJIT',
+                        path = runtime_path,
+                    },
+                    diagnostics = {
+                        globals = {'vim'},
+                    },
+                    workspace = {
+                        library = vim.api.nvim_get_runtime_file('', true),
+                    },
+                    telemetry = {
+                        enable = false,
+                    },
+                },
+            },
+        }
     end
 
-    -- Work out max severity diagnostic per line
-    local max_severity_per_line = { }
-    for _,d in pairs(diagnostics) do
-        if max_severity_per_line[d.range.start.line] then
-        local current_d = max_severity_per_line[d.range.start.line]
-        if d.severity < current_d.severity then
-            max_severity_per_line[d.range.start.line] = d
-        end
-        else
-        max_severity_per_line[d.range.start.line] = d
-        end
+    if server == 'sumneko_lua' then
+        config = mm.merge(sumneko_config(), config)
     end
 
-    -- map to list
-    local filtered_diagnostics = { }
-    for _,v in pairs(max_severity_per_line) do
-        table.insert(filtered_diagnostics, v)
-    end
-
-    -- call original function
-    orig_set_signs(filtered_diagnostics, bufnr, client_id, sign_ns, opts)
-    end
-    vim.lsp.diagnostic.set_signs = set_signs_limited
+    return config
 end
 
 return function()
-    mm.lsp.setup_servers(mm.lsp.on_attach)
-    mm.lsp.setup_severity_filter()
-    mm.lsp.setup_icons()
-    mm.lsp.setup_augroups()
+    for _, server in ipairs(mm.lsp.servers) do
+        require('lspconfig')[server].setup(mm.lsp.get_server_config(server))
+    end
 end

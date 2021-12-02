@@ -106,6 +106,22 @@ function _G.set_tab_width(tab_width)
     mm.set_opt('b', 'shiftwidth', tab_width)
 end
 
+---Merge table t1, t2
+---Source: https://stackoverflow.com/questions/1283388/lua-merge-tables
+---@param t1 table
+---@param t2 table
+---@return table
+function mm.merge(t1, t2)
+    for k, v in pairs(t2) do
+        if (type(v) == "table") and (type(t1[k] or false) == "table") then
+            mm.merge(t1[k], t2[k])
+        else
+            t1[k] = v
+        end
+    end
+    return t1
+end
+
 ---Add callback to global store
 ---@param f function
 function mm._create(f)
