@@ -34,6 +34,7 @@ return require('packer').startup(function(use)
     use {
         'L3MON4D3/LuaSnip',
     }
+
     use {
         'hrsh7th/nvim-cmp',
         requires = {
@@ -62,14 +63,7 @@ return require('packer').startup(function(use)
 
     use {
         'TimUntersberger/neogit',
-        requires = { 'nvim-lua/plenary.nvim', 'sindrets/diffview.nvim' },
-        config = function()
-            require('neogit').setup({
-                integrations = {
-                    diffview = true
-                }
-            })
-        end
+        requires = 'nvim-lua/plenary.nvim',
     }
 
     use {
