@@ -116,11 +116,13 @@ local function on_attach(_, bufnr)
 end
 
 function mm.lsp.get_server_config(server)
+    local cmp_nvim_lsp_loaded, cmp_nvim_lsp = mm.safe_require('cmp_nvim_lsp')
     local config = {
         on_attach = on_attach,
         flags = {
             debounce_text_changes = 500,
         },
+        capabilities = vim.lsp.protocol.make_client_capabilities(),
     }
     -- special config for sumneko lua
     local sumneko_config = function()
@@ -151,6 +153,10 @@ function mm.lsp.get_server_config(server)
                 },
             },
         }
+    end
+
+    if cmp_nvim_lsp_loaded then
+        cmp_nvim_lsp.update_capabilities(config.capabilities)
     end
 
     if server == 'sumneko_lua' then

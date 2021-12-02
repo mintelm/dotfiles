@@ -136,6 +136,19 @@ function mm._execute(id, args)
     mm._store[id](args)
 end
 
+---Require a module using [pcall] and report any errors
+---@param module string
+---@param opts table?
+---@return boolean, any
+function mm.safe_require(module, opts)
+    opts = opts or { silent = false }
+    local ok, result = pcall(require, module)
+    if not ok and not opts.silent then
+        vim.notify(result, vim.log.levels.error, { title = fmt('Error requiring: %s', module) })
+    end
+    return ok, result
+end
+
 ---@class Autocommand
 ---@field events string[] list of autocommand events
 ---@field targets string[] list of autocommand patterns

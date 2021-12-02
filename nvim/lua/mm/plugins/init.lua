@@ -32,10 +32,14 @@ return require('packer').startup(function(use)
     }
 
     use {
-        'ms-jpq/coq-nvim',
-        run = ':silent COQdeps',
-        requires = 'ms-jpq/coq.artifacts',
-        config = conf('coq-nvim'),
+        'L3MON4D3/LuaSnip',
+    }
+    use {
+        'hrsh7th/nvim-cmp',
+        requires = {
+            'hrsh7th/cmp-nvim-lsp',
+        },
+        config = conf('cmp'),
     }
 
     use {
