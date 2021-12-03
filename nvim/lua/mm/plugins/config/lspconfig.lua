@@ -12,7 +12,7 @@ local function setup_icons()
 
     for type, icon in pairs(mm.style.icons) do
         local hl = 'DiagnosticSign' .. type:sub(1,1):upper()..type:sub(2)
-        vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
+        vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl, linehl = string.format('%sLine', hl) })
     end
 
     for i, kind in ipairs(kinds) do
