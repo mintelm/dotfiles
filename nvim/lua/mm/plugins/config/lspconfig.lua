@@ -11,35 +11,16 @@ local function setup_icons()
     local kinds = vim.lsp.protocol.CompletionItemKind
 
     for type, icon in pairs(mm.style.icons) do
-        local hl = 'DiagnosticSign' .. type:sub(1,1):upper()..type:sub(2)
-        vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl, linehl = string.format('%sLine', hl) })
+        type = type:sub(1,1):upper()..type:sub(2)
+        local sign = 'DiagnosticSign' .. type
+        local hl = 'Diagnostic' .. type
+
+        vim.fn.sign_define(sign, { text = icon, texthl = hl, numhl = hl })
     end
 
     for i, kind in ipairs(kinds) do
         kinds[i] = mm.style.lsp.kinds[kind] or kind
     end
-end
-
-local function setup_augroups()
-    local hl = require('mm.highlights')
-    local bg = hl.get_hl('Normal', 'bg', mm.style.palette.dark_grey)
-    local lsp_colors = mm.style.lsp.colors
-
-    mm.augroup('LspHighlights', {
-        {
-            events = { 'VimEnter' },
-            targets = { '*' },
-            command = function() hl.set_hls({
-                { 'DiagnosticSignError', { guibg = bg, guifg = lsp_colors.error } },
-                { 'DiagnosticSignWarn', { guibg = bg, guifg = lsp_colors.warn } },
-                { 'DiagnosticSignInfo', { guibg = bg, guifg = lsp_colors.info } },
-                { 'DiagnosticSignHint', { guibg = bg, guifg = lsp_colors.hint } },
-                { 'LspReferenceText', { gui = 'underline' } },
-                { 'LspReferenceRead', { gui = 'underline' } },
-            })
-            end,
-        }
-    })
 end
 
 local function setup_severity_filter()
@@ -97,7 +78,6 @@ local function on_attach(_, bufnr)
     )
 
     setup_icons()
-    setup_augroups()
     setup_severity_filter()
 
     require('mm.keymappings').lsp_mappings(bufnr)
