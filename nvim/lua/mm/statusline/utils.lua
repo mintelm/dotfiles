@@ -294,7 +294,7 @@ local function filetype(ctx, opts)
     local extension = fnamemodify(ctx.bufname, ':e')
 
     if not icons_loaded then
-        icons_loaded, devicons = pcall(require, 'nvim-web-devicons')
+        icons_loaded, devicons = mm.safe_require('nvim-web-devicons')
     end
 
     if icons_loaded then
