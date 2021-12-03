@@ -33,6 +33,7 @@ mm.map('n', '<leader>hv', '<cmd>lua require"gitsigns".preview_hunk()<CR>')
 mm.map('n', '<leader>ha', '<cmd>lua require"gitsigns".stage_hunk()<CR>')
 mm.map('n', '<leader>hu', '<cmd>lua require"gitsigns".undo_stage_hunk()<CR>')
 mm.map('n', '<leader>hr', '<cmd>lua require"gitsigns".reset_hunk()<CR>')
+mm.map('n', '<leader>gb', '<cmd>lua require"gitsigns".blame_line{full=true}<CR>')
 mm.map('n', ']h', '<cmd>lua require"gitsigns".next_hunk()<CR>')
 mm.map('n', '[h', '<cmd>lua require"gitsigns".prev_hunk()<CR>')
 
