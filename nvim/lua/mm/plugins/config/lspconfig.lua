@@ -56,7 +56,7 @@ local function overwrite_handlers()
             local diagnostics = vim.diagnostic.get(bufnr)
 
             -- find the 'worst' diagnostic per line
-            local max_severity_per_line = {}
+            local max_severity_per_line = { }
             for _, d in pairs(diagnostics) do
             local m = max_severity_per_line[d.lnum]
             if not m or d.severity < m.severity then
@@ -109,7 +109,7 @@ function mm.lsp.get_server_config(server)
                         path = runtime_path,
                     },
                     diagnostics = {
-                        globals = {'vim'},
+                        globals = { 'vim' },
                     },
                     workspace = {
                         library = vim.api.nvim_get_runtime_file('', true),
