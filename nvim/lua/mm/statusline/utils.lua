@@ -367,13 +367,6 @@ function M.lsp_status()
     return msg
 end
 
-local function get_lsp_sign(type)
-    local name = 'DiagnosticSign' .. type
-    local sign = vim.fn.sign_getdefined(name)
-
-    return sign[1].text
-end
-
 function M.diagnostic_info(context)
     local buf = context.bufnum
 
@@ -381,12 +374,13 @@ function M.diagnostic_info(context)
         return { error = {}, warning = {}, info = {} }
     end
 
+    local icons = mm.style.icons
     local get_count = vim.lsp.diagnostic.get_count
 
     return {
-        error = { count = get_count(buf, 'Error'), sign = get_lsp_sign('Error') },
-        warning = { count = get_count(buf, 'Warning'), sign = get_lsp_sign('Warn') },
-        info = { count = get_count(buf, 'Information'), sign = get_lsp_sign('Info') },
+        error = { count = get_count(buf, 'Error'), sign = icons.error or 'E' },
+        warning = { count = get_count(buf, 'Warning'), sign = icons.warn or 'W' },
+        info = { count = get_count(buf, 'Information'), sign = icons.info or 'I' },
     }
 end
 
