@@ -86,7 +86,7 @@ end
 ---@param name string
 ---@param opts table
 function M.set_hl(name, opts)
-    assert(name and opts, "Both 'name' and 'opts' must be specified")
+    assert(name and opts, 'Both "name" and "opts" must be specified')
     if not vim.tbl_isempty(opts) then
         if opts.link then
             vim.highlight.link(name, opts.link, opts.force)
@@ -113,7 +113,7 @@ end
 --- is converted to
 ---```json
 ---{
---- gui: {"italic", "bold"}
+--- gui: {'italic', 'bold'}
 --- guifg: #FFXXXX
 --- guibg: #FFXXXX
 --}

@@ -46,7 +46,7 @@ local function overwrite_handlers()
     vim.lsp.handlers['textDocument/signatureHelp'] = vim.lsp.with(vim.lsp.handlers.signature_help, popup_opts)
 
     -- single sign severity filter handler
-    local ns = vim.api.nvim_create_namespace("mm_sign_filter")
+    local ns = vim.api.nvim_create_namespace('mm_sign_filter')
     local orig_signs_handler = vim.diagnostic.handlers.signs
     -- override the built-in signs handler
     vim.diagnostic.handlers.signs = {
@@ -55,7 +55,7 @@ local function overwrite_handlers()
             -- diagnostics passed to the handler
             local diagnostics = vim.diagnostic.get(bufnr)
 
-            -- find the "worst" diagnostic per line
+            -- find the 'worst' diagnostic per line
             local max_severity_per_line = {}
             for _, d in pairs(diagnostics) do
             local m = max_severity_per_line[d.lnum]
