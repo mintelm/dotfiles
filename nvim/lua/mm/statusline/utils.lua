@@ -368,7 +368,7 @@ function M.lsp_status()
 end
 
 local function get_lsp_sign(type)
-    local name = 'LspDiagnosticsSign' .. type
+    local name = 'DiagnosticSign' .. type
     local sign = vim.fn.sign_getdefined(name)
 
     return sign[1].text
@@ -385,8 +385,8 @@ function M.diagnostic_info(context)
 
     return {
         error = { count = get_count(buf, 'Error'), sign = get_lsp_sign('Error') },
-        warning = { count = get_count(buf, 'Warning'), sign = get_lsp_sign('Warning') },
-        info = { count = get_count(buf, 'Information'), sign = get_lsp_sign('Information') },
+        warning = { count = get_count(buf, 'Warning'), sign = get_lsp_sign('Warn') },
+        info = { count = get_count(buf, 'Information'), sign = get_lsp_sign('Info') },
     }
 end
 

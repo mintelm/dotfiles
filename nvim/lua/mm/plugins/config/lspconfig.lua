@@ -11,15 +11,7 @@ local function setup_icons()
     local kinds = vim.lsp.protocol.CompletionItemKind
 
     for type, icon in pairs(mm.style.icons) do
-        -- Note: LspDiagnosticsSign neovim 0.5.1
-        local hl = 'LspDiagnosticsSign' .. type
-        vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
-        -- Note: DiagnosticSign neovim 0.6
-        if type == 'Error' then
-            hl = 'DiagnosticSign' .. type
-        else
-            hl = 'DiagnosticSign' .. type:sub(4)
-        end
+        local hl = 'DiagnosticSign' .. type:sub(1,1):upper()..type:sub(2)
         vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
     end
 
@@ -38,10 +30,6 @@ local function setup_augroups()
             events = { 'VimEnter' },
             targets = { '*' },
             command = function() hl.set_hls({
-                { 'LspDiagnosticsSignError', { guibg = bg, guifg = lsp_colors.error } },
-                { 'LspDiagnosticsSignWarning', { guibg = bg, guifg = lsp_colors.warn } },
-                { 'LspDiagnosticsSignInformation', { guibg = bg, guifg = lsp_colors.info } },
-                { 'LspDiagnosticsSignHint', { guibg = bg, guifg = lsp_colors.hint } },
                 { 'DiagnosticSignError', { guibg = bg, guifg = lsp_colors.error } },
                 { 'DiagnosticSignWarn', { guibg = bg, guifg = lsp_colors.warn } },
                 { 'DiagnosticSignInfo', { guibg = bg, guifg = lsp_colors.info } },

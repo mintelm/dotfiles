@@ -19,10 +19,10 @@ do
 
     mm.style = {
         icons = {
-            Error = '',        -- ✗ 
-            Warning = '',      -- 
-            Information = '',  --  
-            Hint = '',         -- 
+            error = '',  -- ✗ 
+            warn = '',   -- 
+            info = '',   --  
+            hint = '',   -- 
         },
         lsp = {
             colors = {
