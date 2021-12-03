@@ -23,62 +23,61 @@ local function setup_icons()
     end
 end
 
-local function setup_severity_filter()
-    local orig_set_signs = vim.lsp.diagnostic.set_signs
-    local set_signs_limited = function(diagnostics, bufnr, client_id, sign_ns, opts)
-        -- early escape
-        if not diagnostics then
-            return
-        end
+local function setup_diagnostics()
+    -- also used for cursorhold event
+    vim.o.updatetime = 250
+    vim.cmd('autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float()')
 
-        -- Work out max severity diagnostic per line
-        local max_severity_per_line = { }
-        for _,d in pairs(diagnostics) do
-            if max_severity_per_line[d.range.start.line] then
-            local current_d = max_severity_per_line[d.range.start.line]
-            if d.severity < current_d.severity then
-                max_severity_per_line[d.range.start.line] = d
+    vim.diagnostic.config({
+        virtual_text = false,
+        float = {
+            focusable = false,
+            border = 'single',
+        },
+    })
+end
+
+local function overwrite_handlers()
+    local popup_opts = {
+        focusable = false,
+        border = 'single',
+    }
+    vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, popup_opts)
+    vim.lsp.handlers['textDocument/signatureHelp'] = vim.lsp.with(vim.lsp.handlers.signature_help, popup_opts)
+
+    -- single sign severity filter handler
+    local ns = vim.api.nvim_create_namespace("mm_sign_filter")
+    local orig_signs_handler = vim.diagnostic.handlers.signs
+    -- override the built-in signs handler
+    vim.diagnostic.handlers.signs = {
+        show = function(_, bufnr, _, opts)
+            -- get all diagnostics from the whole buffer rather than just the
+            -- diagnostics passed to the handler
+            local diagnostics = vim.diagnostic.get(bufnr)
+
+            -- find the "worst" diagnostic per line
+            local max_severity_per_line = {}
+            for _, d in pairs(diagnostics) do
+            local m = max_severity_per_line[d.lnum]
+            if not m or d.severity < m.severity then
+                max_severity_per_line[d.lnum] = d
             end
-            else
-            max_severity_per_line[d.range.start.line] = d
             end
-        end
 
-        -- map to list
-        local filtered_diagnostics = { }
-        for _,v in pairs(max_severity_per_line) do
-            table.insert(filtered_diagnostics, v)
-        end
-
-        -- call original function
-        orig_set_signs(filtered_diagnostics, bufnr, client_id, sign_ns, opts)
-    end
-
-    vim.lsp.diagnostic.set_signs = set_signs_limited
+            -- pass the filtered diagnostics to the original handler
+            local filtered_diagnostics = vim.tbl_values(max_severity_per_line)
+            orig_signs_handler.show(ns, bufnr, filtered_diagnostics, opts)
+        end,
+        hide = function(_, bufnr)
+            orig_signs_handler.hide(ns, bufnr)
+        end,
+    }
 end
 
 local function on_attach(_, bufnr)
-    vim.o.updatetime = 250
-    vim.cmd('autocmd CursorHold,CursorHoldI * lua vim.lsp.diagnostic.show_line_diagnostics({focusable=false, border="single"})')
-    vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(
-        vim.lsp.diagnostic.on_publish_diagnostics, {
-            virtual_text = false,
-        }
-    )
-    vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(
-        vim.lsp.handlers.hover, {
-            border = 'single',
-        }
-    )
-
-    vim.lsp.handlers['textDocument/signatureHelp'] = vim.lsp.with(
-        vim.lsp.handlers.signature_help, {
-            border = 'single',
-        }
-    )
-
     setup_icons()
-    setup_severity_filter()
+    setup_diagnostics()
+    overwrite_handlers()
 
     require('mm.keymappings').lsp_mappings(bufnr)
 end

@@ -367,6 +367,15 @@ function M.lsp_status()
     return msg
 end
 
+---Get count of severity in buffer
+---@param buf number
+---@param severity string
+---@return number
+local function get_count(buf, severity)
+    local s = vim.diagnostic.severity[severity:upper()]
+    return #vim.diagnostic.get(buf, { severity = s })
+end
+
 function M.diagnostic_info(context)
     local buf = context.bufnum
 
@@ -375,12 +384,11 @@ function M.diagnostic_info(context)
     end
 
     local icons = mm.style.icons
-    local get_count = vim.lsp.diagnostic.get_count
 
     return {
         error = { count = get_count(buf, 'Error'), sign = icons.error or 'E' },
-        warning = { count = get_count(buf, 'Warning'), sign = icons.warn or 'W' },
-        info = { count = get_count(buf, 'Information'), sign = icons.info or 'I' },
+        warning = { count = get_count(buf, 'Warn'), sign = icons.warn or 'W' },
+        info = { count = get_count(buf, 'Info'), sign = icons.info or 'I' },
     }
 end
 
