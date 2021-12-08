@@ -25,9 +25,10 @@ local function setup_icons()
 end
 
 local function setup_diagnostics()
-    -- also used for cursorhold event
+    --[[ also used for cursorhold event
     vim.o.updatetime = 250
     vim.cmd('autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float()')
+    --]]
 
     vim.diagnostic.config({
         virtual_text = false,
