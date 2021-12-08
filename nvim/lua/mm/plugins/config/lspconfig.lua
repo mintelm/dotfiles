@@ -5,6 +5,7 @@ mm.lsp.servers = {
     'clangd',
     'sumneko_lua',
     'texlab',
+    'rust_analyzer',
 }
 
 local function setup_icons()
@@ -84,6 +85,7 @@ end
 
 function mm.lsp.get_server_config(server)
     local cmp_nvim_lsp_loaded, cmp_nvim_lsp = mm.safe_require('cmp_nvim_lsp')
+    -- global config
     local config = {
         on_attach = on_attach,
         flags = {
