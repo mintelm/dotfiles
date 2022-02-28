@@ -24,6 +24,7 @@ done
 # zsh stuff
 echo Linking zsh stuff...
 ln -sv$f $SCRIPT_DIR/zsh/zshrc ~/.zshrc
+ln -sv$f $SCRIPT_DIR/zsh/zshenv ~/.zshenv
 ln -sv$f $SCRIPT_DIR/zsh/manydots-magic ~/.zsh
 ln -sv$f $SCRIPT_DIR/zsh/*.*sh ~/.zsh
 
