@@ -16,6 +16,7 @@
     s = status
     p = push
     pf = push -f
+    pa = !git remote | xargs -L1 git push --all
     pl = pull
     d = diff
     co = checkout
@@ -33,8 +34,6 @@
     unstage = reset HEAD --
 [include]
     path = ~/.gitconfig_local
-[includeIf "gitdir:~/diovision/"]
-    path = ~/.gitconfig_diovision
 [includeIf "gitdir:~/uni/"]
     path = ~/.gitconfig_othr
 [filter "lfs"]
