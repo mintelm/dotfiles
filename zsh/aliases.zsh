@@ -1,7 +1,7 @@
+open() { xdg-open "$*" & disown }
 alias plugpull="find ${ZDOTDIR:-$HOME}/.zsh_plugins -type d -exec test -e '{}/.git' ';' -print0 | xargs -I {} -0 git -C {} pull"
 alias sudo="sudo "
 alias ssh='TERM=xterm-256color \ssh'
-alias open="xdg-open"
 alias grep='grep  --color=auto --exclude-dir={.bzr,CVS,.git,.hg,.svn}'
 alias wttr="curl wttr.in/regensburg"
 alias vvim="/usr/bin/vim"
