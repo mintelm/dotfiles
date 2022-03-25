@@ -1,10 +1,12 @@
 return function()
     require('bufferline').setup({
         options = {
+            numbers = 'ordinal',
             right_mouse_command = '',
             middle_mouse_command = 'bdelete! %d',
-            show_close_icon = false,
             separator_style = 'thin',
+            persist_buffer_sort = false,
+            show_close_icon = false,
         },
     })
 end
