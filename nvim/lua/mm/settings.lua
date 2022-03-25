@@ -47,6 +47,7 @@ mm.set_opt('b', 'expandtab', true)
 mm.set_opt('b', 'smartindent', true)
 
 mm.set_opt('o', 'title', true)
+mm.set_opt('o', 'titlestring', '❐ %{fnamemodify(getcwd(), ":~")} %m')
 mm.set_opt('o', 'termguicolors', true)
 mm.set_opt('o', 'shiftround', true)
 mm.set_opt('o', 'hidden', true)
