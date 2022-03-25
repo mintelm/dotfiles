@@ -449,27 +449,33 @@ function M.line_info(opts)
     local sep = opts.sep or '/'
     local prefix = opts.prefix or 'L'
     local prefix_color = opts.prefix_color
-    local current_hl = opts.current_hl
+    local currentl_hl = opts.currentl_hl
+    local currentc_hl = opts.currentc_hl
     local total_hl = opts.total_hl
     local sep_hl = opts.total_hl
 
-    local current = fn.line '.'
-    local last = fn.line '$'
+    local pos = fn.getpos('.')
+    local last = fn.line('$')
+    local currentl = pos[2]
+    local currentc = pos[3]
 
-    local length = strwidth(prefix .. current .. sep .. last)
+    -- 2 spaces
+    local length = 2 + strwidth(prefix .. currentl .. sep .. last .. ',' .. currentc)
     return {
         table.concat {
         ' ',
         M.wrap(prefix_color),
         prefix,
         ' ',
-        M.wrap(current_hl),
-        current,
+        M.wrap(currentl_hl),
+        currentl,
         M.wrap(sep_hl),
         sep,
         M.wrap(total_hl),
         last,
-        ' ',
+        ',',
+        M.wrap(currentc_hl),
+        currentc,
         },
         length,
     }

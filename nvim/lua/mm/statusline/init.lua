@@ -188,7 +188,8 @@ function _G.statusline()
             utils.line_info {
                 prefix = '',
                 prefix_color = 'StMetadataPrefix',
-                current_hl = 'StTitle',
+                currentl_hl = 'StTitle',
+                currentc_hl = 'StOrange',
                 total_hl = 'StComment',
                 sep_hl = 'StComment',
             },
