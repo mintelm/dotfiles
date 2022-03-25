@@ -102,8 +102,8 @@ end
 ---Set tabstop and shiftwdith
 ---@param tab_width number
 function _G.set_tab_width(tab_width)
-    mm.set_opt('b', 'tabstop', tab_width)
-    mm.set_opt('b', 'shiftwidth', tab_width)
+    vim.bo.tabstop = tab_width
+    vim.bo.shiftwidth = tab_width
 end
 
 ---Merge table t1, t2
@@ -213,27 +213,6 @@ function mm.empty(item)
     elseif item_type == 'table' then
         return vim.tbl_isempty(item)
     end
-end
-
----Set vim option
----@param scope string
----@param key string
----@param value any
-function mm.set_opt(scope, key, value)
-    local scopes = { o = vim.o, b = vim.bo, w = vim.wo }
-    scopes[scope][key] = value
-
-    if scope ~= 'o' then
-        scopes['o'][key] = value
-    end
-end
-
----Get vim option
----@param scope string
----@param key string
-function mm.get_opt(scope, key)
-    local scopes = { o = vim.o, b = vim.bo, w = vim.wo }
-    return scopes[scope][key]
 end
 
 ---Set global vim keymap

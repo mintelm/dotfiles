@@ -1,8 +1,5 @@
 local cmd = vim.cmd
 
-local tab_width = 4
-local c_tab_width = 8
-
 cmd('syntax enable')
 cmd('filetype plugin indent on')
 
@@ -20,9 +17,10 @@ mm.augroup('UserSettings', {
             events = { 'FileType' },
             targets = { 'c', 'cpp', 'objc', 'objcpp', 'sh', 'make' },
             command = function()
-                set_tab_width(c_tab_width)
-                mm.set_opt('b', 'expandtab', false)
-                mm.set_opt('b', 'smartindent', false)
+                vim.bo.tabstop = 8
+                vim.bo.shiftwidth = 8
+                vim.b.expandtab = false
+                vim.b.smartindent = false
             end,
         },
         -- toggle hiding invisible chars on insert
@@ -30,36 +28,37 @@ mm.augroup('UserSettings', {
             events = { 'InsertEnter' },
             targets = { '*' },
             command = function()
-                mm.set_opt('w', 'list', false)
+                vim.wo.list = false
             end,
         },
         {
             events = { 'InsertLeave' },
             targets = { '*' },
             command = function()
-                mm.set_opt('w', 'list', true)
+                vim.wo.list = true
             end,
         },
 })
 
-set_tab_width(tab_width)
-mm.set_opt('b', 'expandtab', true)
-mm.set_opt('b', 'smartindent', true)
+vim.o.title = true
+vim.o.titlestring = '❐ %{fnamemodify(getcwd(), ":~")} %m'
+vim.o.termguicolors = true
+vim.o.shiftround = true
+vim.o.hidden = true
+vim.o.ignorecase = true
+vim.o.smartcase = true
+vim.o.scrolloff = 4
+vim.o.mouse = 'a'
+vim.o.clipboard = 'unnamed,unnamedplus'
+vim.o.showmode = false
 
-mm.set_opt('o', 'title', true)
-mm.set_opt('o', 'titlestring', '❐ %{fnamemodify(getcwd(), ":~")} %m')
-mm.set_opt('o', 'termguicolors', true)
-mm.set_opt('o', 'shiftround', true)
-mm.set_opt('o', 'hidden', true)
-mm.set_opt('o', 'ignorecase', true)
-mm.set_opt('o', 'smartcase', true)
-mm.set_opt('o', 'scrolloff', 4 )
-mm.set_opt('o', 'mouse', 'a')
-mm.set_opt('o', 'clipboard','unnamed,unnamedplus')
-mm.set_opt('o', 'showmode', false)
+vim.bo.tabstop = 4
+vim.bo.shiftwidth = 4
+vim.bo.expandtab = true
+vim.bo.smartindent = true
 
-mm.set_opt('w', 'number', true)
-mm.set_opt('w', 'relativenumber', true)
-mm.set_opt('w', 'signcolumn', 'yes:2')
-mm.set_opt('w', 'list', true)
-mm.set_opt('w', 'listchars', 'tab:→ ,trail:•,nbsp:␣,extends:»,precedes:«')
+vim.wo.number = true
+vim.wo.relativenumber = true
+vim.wo.signcolumn = 'yes:2'
+vim.wo.list = true
+vim.wo.listchars = 'tab:→ ,trail:•,nbsp:␣,extends:»,precedes:«'
