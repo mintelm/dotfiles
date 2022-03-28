@@ -19,8 +19,8 @@ mm.augroup('UserSettings', {
             command = function()
                 vim.bo.tabstop = 8
                 vim.bo.shiftwidth = 8
-                vim.b.expandtab = false
-                vim.b.smartindent = false
+                vim.bo.expandtab = false
+                vim.bo.smartindent = false
             end,
         },
         -- toggle hiding invisible chars on insert
@@ -42,23 +42,26 @@ mm.augroup('UserSettings', {
 
 vim.o.title = true
 vim.o.titlestring = '❐ %{fnamemodify(getcwd(), ":~")} %m'
+
+vim.o.tabstop = 4
+vim.o.shiftwidth = 4
+vim.o.expandtab = true
+vim.o.smartindent = true
+
 vim.o.termguicolors = true
 vim.o.shiftround = true
 vim.o.hidden = true
+
 vim.o.ignorecase = true
 vim.o.smartcase = true
+
 vim.o.scrolloff = 4
 vim.o.mouse = 'a'
 vim.o.clipboard = 'unnamed,unnamedplus'
 vim.o.showmode = false
 
-vim.bo.tabstop = 4
-vim.bo.shiftwidth = 4
-vim.bo.expandtab = true
-vim.bo.smartindent = true
-
-vim.wo.number = true
-vim.wo.relativenumber = true
-vim.wo.signcolumn = 'yes:2'
-vim.wo.list = true
-vim.wo.listchars = 'tab:→ ,trail:•,nbsp:␣,extends:»,precedes:«'
+vim.o.number = true
+vim.o.relativenumber = true
+vim.o.signcolumn = 'yes:2'
+vim.o.list = true
+vim.o.listchars = 'tab:→ ,trail:•,nbsp:␣,extends:»,precedes:«'
