@@ -58,9 +58,6 @@ return function()
             { name = 'nvim_lsp' },
             { name = 'luasnip' },
         }),
-        documentation = {
-            border = 'rounded',
-        },
         mapping = {
             ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
             ['<Tab>'] = cmp.mapping(tab, { 'i', 's'}),
@@ -69,6 +66,9 @@ return function()
             ['<C-u>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
             ['<C-d>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
             ['<C-q>'] = cmp.mapping({ i = cmp.mapping.abort(), c = cmp.mapping.close(), }),
+        },
+        window = {
+            documentation = cmp.config.window.bordered(),
         },
         formatting = {
             deprecated = true,
