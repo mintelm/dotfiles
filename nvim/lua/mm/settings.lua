@@ -28,14 +28,14 @@ mm.augroup('UserSettings', {
             events = { 'InsertEnter' },
             targets = { '*' },
             command = function()
-                vim.wo.list = false
+                vim.o.list = false
             end,
         },
         {
             events = { 'InsertLeave' },
             targets = { '*' },
             command = function()
-                vim.wo.list = true
+                vim.o.list = true
             end,
         },
 })
