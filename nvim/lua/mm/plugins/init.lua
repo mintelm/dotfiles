@@ -84,6 +84,11 @@ return require('packer').startup(function(use)
         end,
     }
 
+    use {
+        'anuvyklack/hydra.nvim',
+        config = conf('hydra'),
+    }
+
     if packer_bootstrap then
         require('packer').sync()
     end
