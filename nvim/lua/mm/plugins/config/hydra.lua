@@ -1,5 +1,6 @@
 return function()
     local hydra = require('hydra')
+    local gitsigns = require('gitsigns')
     local cmd = function(command)
         return table.concat({ '<cmd>', command, '<CR>' })
     end
@@ -10,6 +11,19 @@ return function()
                 border = 'rounded',
             },
     }
+
+    hydra({
+        name = 'Git',
+        config = default_config,
+        mode = 'n',
+        body = '<leader>g',
+        heads = {
+            { '<Enter>', cmd 'Neogit', { exit = true } },
+            { 's', cmd 'Gitsigns stage_hunk' },
+            { 'u', gitsigns.undo_stage_hunk },
+            { 'S', gitsigns.stage_buffer },
+        },
+    })
 
     hydra({
         name = 'Window Management',

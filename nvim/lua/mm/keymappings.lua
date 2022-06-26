@@ -47,7 +47,7 @@ mm.map('n', ']h', '<cmd>lua require"gitsigns".next_hunk()<CR>', {})
 mm.map('n', '[h', '<cmd>lua require"gitsigns".prev_hunk()<CR>', {})
 
 -- neogit
-mm.map('n', '<leader>gs', '<cmd>lua require"neogit".open()<CR>', {})
+--mm.map('n', '<leader>gs', '<cmd>lua require"neogit".open()<CR>', {})
 
 -- lsp
 -- this function is passed to lsp's on_attach hook, so mappings are only loaded if lsp is
