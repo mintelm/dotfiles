@@ -75,7 +75,14 @@ return require('packer').startup(function(use)
         config = conf('indentline'),
     }
 
-    use 'ggandor/lightspeed.nvim'
+    -- use 'ggandor/lightspeed.nvim'
+
+    use {
+        'phaazon/hop.nvim',
+        config = function()
+            require'hop'.setup{}
+        end,
+    }
 
     if packer_bootstrap then
         require('packer').sync()
