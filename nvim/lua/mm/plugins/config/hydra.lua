@@ -1,22 +1,24 @@
 return function()
     local hydra = require('hydra')
-    local function cmd(command)
+    local cmd = function(command)
         return table.concat({ '<cmd>', command, '<CR>' })
     end
-
-    hydra({
-        name = 'Window Management',
-        config = {
-            timeout = 4000,
+    local default_config = {
+            invoke_on_body = true,
             hint = {
                 position = 'bottom',
                 border = 'rounded',
             },
-        },
+    }
+
+    hydra({
+        name = 'Window Management',
+        config = default_config,
         mode = 'n',
         body = '<C-w>',
         heads = {
             -- Move focus
+            { 'w', '<C-w>w' },
             { 'h', '<C-w>h' },
             { 'j', '<C-w>j' },
             { 'k', '<C-w>k' },
