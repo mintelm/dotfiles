@@ -42,7 +42,7 @@ return function()
 
     hydra({
         name = 'Telescope',
-        config = default_config,
+        config = mm.merge({color = 'teal'}, default_config),
         mode = 'n',
         body = '<Leader>f',
         heads = {
