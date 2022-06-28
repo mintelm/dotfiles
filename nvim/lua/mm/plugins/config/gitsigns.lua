@@ -8,5 +8,6 @@ return function()
             changedelete = { hl = 'GitSignsChange', text = '▌' },
         },
         keymaps = { },
+        update_debounce = 50,
     })
 end

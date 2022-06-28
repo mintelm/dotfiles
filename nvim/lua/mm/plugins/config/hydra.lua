@@ -5,6 +5,7 @@ return function()
         return table.concat({ '<cmd>', command, '<CR>' })
     end
     local default_config = {
+            color = 'red',
             invoke_on_body = true,
             hint = {
                 position = 'bottom',
@@ -15,13 +16,28 @@ return function()
     hydra({
         name = 'Git',
         config = default_config,
-        mode = 'n',
+        mode = { 'n', 'x' },
         body = '<leader>g',
         heads = {
-            { '<Enter>', cmd 'Neogit', { exit = true } },
+            { 'g', cmd 'Neogit', { exit = true } },
             { 's', cmd 'Gitsigns stage_hunk' },
-            { 'u', gitsigns.undo_stage_hunk },
             { 'S', gitsigns.stage_buffer },
+            { 'u', gitsigns.undo_stage_hunk },
+            { 'r', cmd 'Gitsigns reset_hunk' },
+            { 'R', gitsigns.reset_buffer },
+            { 'v', gitsigns.preview_hunk },
+            { 'b', gitsigns.toggle_current_line_blame },
+            { 'n', function()
+                    if vim.wo.diff then return ']c' end
+                    vim.schedule(function() gitsigns.next_hunk() end)
+                    return '<Ignore>'
+                end, { expr = true } },
+            { 'N', function()
+                    if vim.wo.diff then return '[c' end
+                    vim.schedule(function() gitsigns.prev_hunk() end)
+                    return '<Ignore>'
+                end, { expr = true } },
+            { '<Esc>', nil, { exit = true, nowait = true } },
         },
     })
 
@@ -53,7 +69,7 @@ return function()
             { '<', '2<C-w><', { desc = 'decrease width' } },
             { '=', '<C-w>=', { desc = 'equalize'} },
             --
-            { '<Esc>', nil,  { exit = true }},
+            { '<Esc>', nil, { exit = true, nowait = true } },
         },
         hint = [[
             ^^^^^^     Move     ^^^^^^   ^^     Split         ^^^^    Size
