@@ -86,6 +86,7 @@ return require('packer').startup(function(use)
 
     use {
         'anuvyklack/hydra.nvim',
+        requires = 'anuvyklack/keymap-layer.nvim',
         config = conf('hydra'),
     }
 

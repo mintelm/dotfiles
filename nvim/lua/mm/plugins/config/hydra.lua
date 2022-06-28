@@ -5,21 +5,20 @@ return function()
         return table.concat({ '<cmd>', command, '<CR>' })
     end
     local default_config = {
-            color = 'red',
-            invoke_on_body = true,
-            hint = {
-                position = 'bottom',
-                border = 'rounded',
-            },
+        invoke_on_body = true,
+        hint = {
+            position = 'bottom',
+            border = 'rounded',
+        },
     }
 
     hydra({
         name = 'Git',
-        config = default_config,
+        config = mm.merge({color = 'pink'}, default_config),
         mode = { 'n', 'x' },
         body = '<leader>g',
         heads = {
-            { 'g', cmd 'Neogit', { exit = true } },
+            { 'g', cmd 'Neogit', { exit = true, nowait = true } },
             { 's', cmd 'Gitsigns stage_hunk' },
             { 'S', gitsigns.stage_buffer },
             { 'u', gitsigns.undo_stage_hunk },
