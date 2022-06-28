@@ -47,7 +47,8 @@ return function()
         body = '<Leader>f',
         heads = {
             { 'f', cmd 'Telescope find_files' },
-            { 'g', cmd 'Telescope live_grep' },
+            { 'r', cmd 'Telescope live_grep' },
+            { 'g', cmd 'Telescope git_files' },
             { '/', cmd 'Telescope current_buffer_fuzzy_find', { desc = 'Search in file' } },
             { '?', cmd 'Telescope search_history',  { desc = 'Search history' } },
             { ';', cmd 'Telescope command_history', { desc = 'Command-line history' } },
