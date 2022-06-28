@@ -411,8 +411,14 @@ local function mode_highlight(mode)
 end
 
 function M.mode()
+    local hydra_loaded, hydra_status = mm.safe_require('hydra.statusline')
     local current_mode = vim.fn.mode()
     local hl = mode_highlight(current_mode)
+
+    if hydra_loaded and hydra_status.is_active() then
+        current_mode = hydra_status.get_name()
+        hl = 'Hydra' .. hydra_status.get_color():gsub("^%l", string.upper)
+    end
 
     local mode_map = {
         ['n'] = 'NORMAL',
@@ -436,6 +442,9 @@ function M.mode()
         ['r?'] = 'CONFIRM',
         ['!'] = 'SHELL',
         ['t'] = 'TERMINAL',
+        ['Git'] = 'GIT',
+        ['Telescope'] = 'TELESCOPE',
+        ['Window Management'] = 'WINDOW MANAGEMENT',
     }
 
     return (mode_map[current_mode] or 'UNKNOWN'), hl
