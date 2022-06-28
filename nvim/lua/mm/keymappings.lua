@@ -17,11 +17,6 @@ mm.map('', '[Q', ':cfirst<CR>', {})
 -- clear highlight on space
 mm.map('n', '<Space>', '<cmd>noh<CR>', silenced)
 
--- telescope
-mm.map('n', '<leader>f', '<cmd>Telescope find_files<CR>', {})
-mm.map('n', '<leader>gf', '<cmd>Telescope git_files<CR>', {})
-mm.map('n', '<leader>gr', '<cmd>Telescope live_grep<CR>', {})
-
 -- bufferline
 mm.map('n', ']b', '<cmd>BufferLineCycleNext<CR>', silenced)
 mm.map('n', '[b', '<cmd>BufferLineCyclePrev<CR>', silenced)

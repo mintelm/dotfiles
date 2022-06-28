@@ -42,6 +42,23 @@ return function()
     })
 
     hydra({
+        name = 'Telescope',
+        config = default_config,
+        mode = 'n',
+        body = '<Leader>f',
+        heads = {
+            { 'f', cmd 'Telescope find_files' },
+            { 'g', cmd 'Telescope live_grep' },
+            { '/', cmd 'Telescope current_buffer_fuzzy_find', { desc = 'Search in file' } },
+            { '?', cmd 'Telescope search_history',  { desc = 'Search history' } },
+            { ';', cmd 'Telescope command_history', { desc = 'Command-line history' } },
+            { 'c', cmd 'Telescope commands', { desc = 'Execute command' } },
+            { '<Enter>', cmd 'Telescope', { exit = true, desc = 'List all pickers' } },
+            { '<Esc>', nil, { exit = true, nowait = true } },
+        }
+    })
+
+    hydra({
         name = 'Window Management',
         config = default_config,
         mode = 'n',
