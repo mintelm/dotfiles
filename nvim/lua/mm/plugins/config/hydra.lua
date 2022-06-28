@@ -1,6 +1,7 @@
 return function()
     local hydra = require('hydra')
     local gitsigns = require('gitsigns')
+    local hints = require('mm.plugins.config.hydra_hints')
     local cmd = function(command)
         return table.concat({ '<cmd>', command, '<CR>' })
     end
@@ -15,6 +16,7 @@ return function()
     hydra({
         name = 'Git',
         config = mm.merge({color = 'pink'}, default_config),
+        hint = hints.git,
         mode = { 'n', 'x' },
         body = '<leader>g',
         heads = {
@@ -26,6 +28,7 @@ return function()
             { 'R', gitsigns.reset_buffer },
             { 'v', gitsigns.preview_hunk },
             { 'b', gitsigns.toggle_current_line_blame },
+            { 'B', function() gitsigns.blame_line{ full = true } end },
             { 'n', function()
                     if vim.wo.diff then return ']c' end
                     vim.schedule(function() gitsigns.next_hunk() end)
@@ -36,7 +39,7 @@ return function()
                     vim.schedule(function() gitsigns.prev_hunk() end)
                     return '<Ignore>'
                 end, { expr = true } },
-            { '<Esc>', nil, { exit = true, nowait = true } },
+            { '<Esc>', nil, { exit = true, nowait = true, desc = false } },
         },
     })
 
@@ -61,6 +64,7 @@ return function()
     hydra({
         name = 'Window Management',
         config = default_config,
+        hint = hints.window,
         mode = 'n',
         body = '<C-w>',
         heads = {
@@ -89,13 +93,5 @@ return function()
             --
             { '<Esc>', nil, { exit = true, nowait = true, desc = false } },
         },
-        hint = [[
-^^^^^^     Move     ^^^^^^   ^^     Split         ^^^^    Size
-^^^^^^--------------^^^^^^   ^^---------------    ^^^^-------------
-^ ^ _k_ ^ ^   ^ ^ _K_ ^ ^    _s_: horizontally    _+_ _-_: height
-_h_ _w_ _l_   _H_ ^ ^ _L_    _v_: vertically      _>_ _<_: width
-^ ^ _j_ ^ ^   ^ ^ _J_ ^ ^    _q_: close           ^ _=_ ^: equalize
-^^^focus^^^   ^^^window^^^
-        ]],
     })
 end
