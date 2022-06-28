@@ -62,7 +62,7 @@ return function()
     })
 
     hydra({
-        name = 'Window Management',
+        name = 'Window',
         config = default_config,
         hint = hints.window,
         mode = 'n',

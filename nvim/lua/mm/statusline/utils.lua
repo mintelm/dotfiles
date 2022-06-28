@@ -449,7 +449,7 @@ function M.mode()
         ['t'] = 'TERMINAL',
         ['Git'] = 'GIT',
         ['Telescope'] = 'TELESCOPE',
-        ['Window Management'] = 'WINDOW MANAGEMENT',
+        ['Window'] = 'WINDOW',
     }
 
     return (mode_map[current_mode] or 'UNKNOWN'), hl
