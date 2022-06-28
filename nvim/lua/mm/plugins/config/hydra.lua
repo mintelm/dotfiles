@@ -46,18 +46,19 @@ return function()
     hydra({
         name = 'Telescope',
         config = mm.merge({color = 'teal'}, default_config),
+        hint = hints.telescope,
         mode = 'n',
         body = '<Leader>f',
         heads = {
             { 'f', cmd 'Telescope find_files' },
             { 'r', cmd 'Telescope live_grep' },
             { 'g', cmd 'Telescope git_files' },
-            { '/', cmd 'Telescope current_buffer_fuzzy_find', { desc = 'Search in file' } },
-            { '?', cmd 'Telescope search_history',  { desc = 'Search history' } },
-            { ';', cmd 'Telescope command_history', { desc = 'Command-line history' } },
-            { 'c', cmd 'Telescope commands', { desc = 'Execute command' } },
-            { '<Enter>', cmd 'Telescope', { exit = true, desc = 'List all pickers' } },
-            { '<Esc>', nil, { exit = true, nowait = true } },
+            { '/', cmd 'Telescope current_buffer_fuzzy_find' },
+            { '?', cmd 'Telescope search_history' },
+            { ';', cmd 'Telescope command_history' },
+            { 'c', cmd 'Telescope commands' },
+            { '<Enter>', cmd 'Telescope', { exit = true } },
+            { '<Esc>', nil, { exit = true, nowait = true, desc = false} },
         }
     })
 
