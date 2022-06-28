@@ -18,7 +18,7 @@ return function()
         mode = { 'n', 'x' },
         body = '<leader>g',
         heads = {
-            { 'g', cmd 'Neogit', { exit = true, nowait = true } },
+            { '<Enter>', cmd 'Neogit', { exit = true, nowait = true } },
             { 's', cmd 'Gitsigns stage_hunk' },
             { 'S', gitsigns.stage_buffer },
             { 'u', gitsigns.undo_stage_hunk },
