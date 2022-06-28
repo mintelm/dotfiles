@@ -9,5 +9,8 @@ return function()
         },
         keymaps = { },
         update_debounce = 50,
+        current_line_blame_opts = {
+            delay = 0,
+        },
     })
 end
