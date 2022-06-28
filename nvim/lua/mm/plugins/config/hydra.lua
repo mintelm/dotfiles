@@ -66,6 +66,7 @@ return function()
         heads = {
             -- Move focus
             { 'w', '<C-w>w' },
+            { '<C-w>', '<C-w>w', { desc = false } },
             { 'h', '<C-w>h' },
             { 'j', '<C-w>j' },
             { 'k', '<C-w>k' },
@@ -86,16 +87,15 @@ return function()
             { '<', '2<C-w><', { desc = 'decrease width' } },
             { '=', '<C-w>=', { desc = 'equalize'} },
             --
-            { '<Esc>', nil, { exit = true, nowait = true } },
+            { '<Esc>', nil, { exit = true, nowait = true, desc = false } },
         },
         hint = [[
-            ^^^^^^     Move     ^^^^^^   ^^     Split         ^^^^    Size
-            ^^^^^^--------------^^^^^^   ^^---------------    ^^^^------------- 
-            ^ ^ _k_ ^ ^   ^ ^ _K_ ^ ^    _s_: horizontally    _+_ _-_: height
-            _h_ ^ ^ _l_   _H_ ^ ^ _L_    _v_: vertically      _>_ _<_: width
-            ^ ^ _j_ ^ ^   ^ ^ _J_ ^ ^    _q_: close           ^ _=_ ^: equalize
-            focus^^^^^^   window^^^^^^
-            ^ ^ ^ ^ ^ ^   ^ ^ ^ ^ ^ ^    ^ ^ ^ ^ ^ ^ ^ ^ ^   ^ ^ ^ ^    _<Esc>_
+^^^^^^     Move     ^^^^^^   ^^     Split         ^^^^    Size
+^^^^^^--------------^^^^^^   ^^---------------    ^^^^-------------
+^ ^ _k_ ^ ^   ^ ^ _K_ ^ ^    _s_: horizontally    _+_ _-_: height
+_h_ _w_ _l_   _H_ ^ ^ _L_    _v_: vertically      _>_ _<_: width
+^ ^ _j_ ^ ^   ^ ^ _J_ ^ ^    _q_: close           ^ _=_ ^: equalize
+^^^focus^^^   ^^^window^^^
         ]],
     })
 end
