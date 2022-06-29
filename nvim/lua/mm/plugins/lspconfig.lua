@@ -41,7 +41,7 @@ return function()
     local function overwrite_handlers()
         local popup_opts = {
             focusable = false,
-            border = 'single',
+            border = mm.style.current.border,
         }
         vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, popup_opts)
         vim.lsp.handlers['textDocument/signatureHelp'] = vim.lsp.with(vim.lsp.handlers.signature_help, popup_opts)

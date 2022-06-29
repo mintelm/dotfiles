@@ -1,49 +1,57 @@
 return function()
     local cmp = require('cmp')
+    local h = require('mm.highlights')
 
-    local function get_luasnip()
-        local ok, luasnip = mm.safe_require('luasnip', { silent = true })
+    local lsp_hls = mm.style.lsp.kind_highlights
 
-        if not ok then
-            return nil
-        end
-            return luasnip
+    -- Make the source information less prominent
+    local kind_hls = {
+        CmpItemAbbr = { foreground = 'fg', background = 'NONE', italic = false, bold = false },
+        CmpItemMenu = { foreground = { from = 'FloatBorder' }, italic = true, bold = false },
+        CmpItemAbbrMatch = { foreground = { from = 'Special' } },
+        CmpItemAbbrDeprecated = { strikethrough = true, inherit = 'Comment' },
+        CmpItemAbbrMatchFuzzy = { italic = true, foreground = { from = 'Special' } },
+    }
+
+    for key, _ in pairs(lsp_hls) do
+        kind_hls['CmpItemKind' .. key] = { foreground = { from = lsp_hls[key] } }
     end
 
-    --[[ TODO: maybe not wanted??
-    local function has_words_before()
-        local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-        return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match('%s') == nil
-    end
-    --]]
+    h.plugin('Cmp', kind_hls)
 
     local function tab(fallback)
-        local luasnip = get_luasnip()
+        local ok, luasnip = mm.safe_require('luasnip', { silent = true })
 
         if cmp.visible() then
             cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
-        elseif luasnip and luasnip.expand_or_locally_jumpable() then
+        elseif ok and luasnip.expand_or_locally_jumpable() then
             luasnip.expand_or_jump()
-        --[[
-        elseif has_words_before() then
-            cmp.complete()
-        --]]
         else
             fallback()
         end
     end
 
     local function shift_tab(fallback)
-        local luasnip = get_luasnip()
+        local ok, luasnip = mm.safe_require('luasnip', { silent = true })
 
         if cmp.visible() then
             cmp.select_prev_item({ behavior = cmp.SelectBehavior.Select })
-        elseif luasnip and luasnip.jumpable(-1) then
+        elseif ok and luasnip.jumpable(-1) then
             luasnip.jump(-1)
         else
             fallback()
         end
     end
+
+    local cmp_window = {
+        border = mm.style.current.border,
+        winhighlight = table.concat({
+            'Normal:NormalFloat',
+            'FloatBorder:FloatBorder',
+            'CursorLine:Visual',
+            'Search:None',
+        }, ','),
+    }
 
     cmp.setup({
         completion = {
@@ -68,35 +76,29 @@ return function()
             ['<C-q>'] = cmp.mapping({ i = cmp.mapping.abort(), c = cmp.mapping.close(), }),
         },
         window = {
-            documentation = cmp.config.window.bordered(),
+            completion = cmp.config.window.bordered(cmp_window),
+            documentation = cmp.config.window.bordered(cmp_window),
         },
         formatting = {
             deprecated = true,
             format = function(entry, vim_item)
-                vim_item.kind = mm.style.lsp.kinds[vim_item.kind]
-                --[[
-                local name = entry.source.name
-                -- FIXME: automate this using a regex to normalise names
-                local menu = ({
+                vim_item.kind = string.format('%s %s', mm.style.lsp.kinds[vim_item.kind], vim_item.kind)
+                vim_item.menu = ({
                     nvim_lsp = '[LSP]',
                     nvim_lua = '[Lua]',
-                    emoji = '[Emoji]',
+                    emoji = '[E]',
                     path = '[Path]',
-                    calc = '[Calc]',
-                    neorg = '[Neorg]',
-                    orgmode = '[Org]',
-                    cmp_tabnine = '[TN]',
-                    luasnip = '[Luasnip]',
-                    buffer = '[Buffer]',
-                    fuzzy_buffer = '[Fuzzy Buffer]',
-                    fuzzy_path = '[Fuzzy Path]',
-                    spell = '[Spell]',
-                    cmdline = '[Command]',
-                    cmp_git = '[Git]',
-                })[name]
+                    neorg = '[N]',
+                    luasnip = '[SN]',
+                    dictionary = '[D]',
+                    buffer = '[B]',
+                    spell = '[SP]',
+                    cmdline = '[Cmd]',
+                    cmdline_history = '[Hist]',
+                    rg = '[Rg]',
+                    git = '[Git]',
+                })[entry.source.name]
 
-                vim_item.menu = menu
-                ==]]
                 return vim_item
             end,
         },
