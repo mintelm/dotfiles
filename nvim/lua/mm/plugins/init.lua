@@ -1,5 +1,4 @@
 local fn = vim.fn
-local fmt = string.format
 local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
 
 -- Auto install packer.nvim if not exists
@@ -8,8 +7,10 @@ if fn.empty(fn.glob(install_path)) > 0 then
 end
 
 local function conf(name)
-    return require(fmt('mm.plugins.config.%s', name))
+    return require(string.format('mm.plugins.config.%s', name))
 end
+
+vim.cmd [[packadd packer.nvim]]
 
 return require('packer').startup(function(use)
     use 'wbthomason/packer.nvim'

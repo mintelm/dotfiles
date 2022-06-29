@@ -1,5 +1,7 @@
 local H = require('mm.highlights')
+local silenced = { silent = true }
 local icons_loaded, devicons
+local hydra_loaded, hydra_status
 
 local fn = vim.fn
 local expand = fn.expand
@@ -294,7 +296,7 @@ local function filetype(ctx, opts)
     local extension = fnamemodify(ctx.bufname, ':e')
 
     if not icons_loaded then
-        icons_loaded, devicons = mm.safe_require('nvim-web-devicons')
+        icons_loaded, devicons = mm.safe_require('nvim-web-devicons', silenced)
     end
 
     if icons_loaded then
@@ -411,9 +413,12 @@ local function mode_highlight(mode)
 end
 
 function M.mode()
-    local hydra_loaded, hydra_status = mm.safe_require('hydra.statusline')
     local current_mode = vim.fn.mode()
     local hl = mode_highlight(current_mode)
+
+    if not hydra_loaded then
+        hydra_loaded, hydra_status = mm.safe_require('hydra.statusline', silenced)
+    end
 
     if hydra_loaded and hydra_status.is_active() then
         current_mode = hydra_status.get_name()
