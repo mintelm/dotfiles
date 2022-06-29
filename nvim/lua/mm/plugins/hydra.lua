@@ -9,7 +9,7 @@ return function()
         invoke_on_body = true,
         hint = {
             position = 'bottom',
-            border = 'rounded',
+            border = mm.style.current.border,
         },
     }
 

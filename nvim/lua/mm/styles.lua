@@ -7,6 +7,10 @@ local palette = {
 }
 
 mm.style = {
+    border = {
+        line = { '🭽', '▔', '🭾', '▕', '🭿', '▁', '🭼', '▏' },
+        rectangle = { '┌', '─', '┐', '│', '┘', '─', '└', '│' },
+    },
     icons = {
         error = '',  -- ✗ 
         warn = '',   -- 
@@ -78,4 +82,8 @@ mm.style = {
         }
     },
     palette = palette,
+}
+
+mm.style.current = {
+  border = mm.style.border.rectangle,
 }
