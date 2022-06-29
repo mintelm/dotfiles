@@ -189,12 +189,18 @@ function M.plugin(name, hls)
 end
 
 local function colorscheme_overrides()
+    local bg_base = M.get_hl('Normal', 'bg')
+    local inactive_bg_color = M.alter_color(bg_base, -10)
+
     M.clear_hl('CursorLine')
     M.all({
-        SignColumn = { background = 'NONE' }, -- background NONE: use background of window
+        VertSplit = { background = inactive_bg_color, foreground = inactive_bg_color },
+        WinSeparator = { background = inactive_bg_color, foreground = inactive_bg_color },
+        SignColumn = { background = 'NONE' },
+        CursorLineNR = { background = 'NONE', bold = true },
         Pmenu = { background = 'NONE' },
         NormalFloat = { link = 'Pmenu' },
-        CursorLineNR = { background = 'NONE', bold = true },
+        FloatBorder = { background = 'NONE', foreground = { from = 'NonText' } },
         TSError = { undercurl = true },
     })
 end

@@ -331,7 +331,7 @@ function M.file(ctx, minimal)
     local curwin = ctx.winid
     -- highlight the filename components separately
     local filename_hl = minimal and 'StFilenameInactive' or 'StFilename'
-    local directory_hl = minimal and 'StInactiveSep' or 'StDirectory'
+    local directory_hl = minimal and 'StDirectoryInactive' or 'StDirectory'
     local parent_hl = minimal and directory_hl or 'StParentDirectory'
 
     if H.winhighlight_exists(curwin, 'Normal', 'StatusLine') then

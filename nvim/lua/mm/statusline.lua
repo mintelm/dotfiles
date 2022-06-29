@@ -3,11 +3,13 @@
 
 local H = require('mm.highlights')
 local utils = require('mm.utils.statusline')
-local P = mm.style.palette
 
 ---Set colors with highlight groups
 local function set_colors()
-    local bg = H.alter_color(H.get_hl('Normal', 'bg', P.dark_grey), -50)
+    local bg_base = H.get_hl('Normal', 'bg')
+    local dim_color = H.alter_color(bg_base, 80)
+    local bg_color = H.alter_color(bg_base, -50)
+    local inactive_bg_color = H.alter_color(bg_base, -10)
 
     local comment_fg = H.get_hl('Comment', 'fg')
     local string_fg = H.get_hl('String', 'fg')
@@ -21,33 +23,34 @@ local function set_colors()
     local warning_color = mm.style.lsp.colors.warn
 
     H.all({
-        StatusLine = { background = bg, reverse = false },
-        StatusLineNC = { background = bg, reverse = false },
-        StMetadata = { background = bg, foreground = comment_fg },
-        StMetadataPrefix = { background = bg, foreground = comment_fg, bold = true},
-        StModified = { background = bg, foreground = string_fg },
-        StGit = { background = bg, foreground = error_color },
-        StGreen = { background = bg, foreground = string_fg },
-        StOrange = { background = bg, foreground = delimiter_fg, bold = true },
-        StDirectory = { background = bg, foreground = 'Gray', italic = true },
-        StParentDirectory = { background = bg, foreground = string_fg, bold = true },
-        StFilename = { background = bg, foreground = 'LightGray', bold = true },
-        StFilenameInactive = { background = bg, foreground = 'LightGray', bold = true, italic = true },
-        StTitle = { background = bg, foreground = 'LightGray', bold = true},
-        StComment = { background = bg, foreground = comment_fg },
-        StError = { background = bg, foreground = error_color },
-        StWarning = { background = bg, foreground = warning_color },
-        StInfo = { background = bg, foreground = info_color, bold = true },
-        StModeNormal = { background = bg, bold = true },
-        StModeInsert = { background = bg, foreground = string_fg, bold = true },
-        StModeVisual = { background = bg, foreground = number_fg, bold = true },
-        StModeReplace = { background = bg, foreground = identifier_fg, bold = true },
-        StModeCommand = { background = bg, foreground = inc_search_fg, bold = true },
-        StHydraAmaranth = { inherit = 'HydraAmaranth', background = bg },
-        StHydraBlue = { inherit = 'HydraBlue', background = bg },
-        StHydraPink = { inherit = 'HydraPink', background = bg },
-        StHydraRed = { inherit = 'HydraRed', background = bg },
-        StHydraTeal = { inherit = 'HydraTeal', background = bg },
+        StatusLine = { background = bg_color, reverse = false },
+        StatusLineNC = { background = inactive_bg_color, reverse = false },
+        StMetadata = { background = bg_color, foreground = comment_fg },
+        StMetadataPrefix = { background = bg_color, foreground = comment_fg, bold = true},
+        StModified = { background = bg_color, foreground = string_fg },
+        StGit = { background = bg_color, foreground = error_color },
+        StGreen = { background = bg_color, foreground = string_fg },
+        StOrange = { background = bg_color, foreground = delimiter_fg, bold = true },
+        StDirectory = { background = bg_color, foreground = 'Gray', italic = true },
+        StDirectoryInactive = { background = inactive_bg_color, foreground = dim_color, italic = true },
+        StParentDirectory = { background = bg_color, foreground = string_fg, bold = true },
+        StFilename = { background = bg_color, foreground = 'LightGray', bold = true },
+        StFilenameInactive = { background = inactive_bg_color, foreground = dim_color, bold = true, italic = true },
+        StTitle = { background = bg_color, foreground = 'LightGray', bold = true},
+        StComment = { background = bg_color, foreground = comment_fg },
+        StError = { background = bg_color, foreground = error_color },
+        StWarning = { background = bg_color, foreground = warning_color },
+        StInfo = { background = bg_color, foreground = info_color, bold = true },
+        StModeNormal = { background = bg_color, bold = true },
+        StModeInsert = { background = bg_color, foreground = string_fg, bold = true },
+        StModeVisual = { background = bg_color, foreground = number_fg, bold = true },
+        StModeReplace = { background = bg_color, foreground = identifier_fg, bold = true },
+        StModeCommand = { background = bg_color, foreground = inc_search_fg, bold = true },
+        StHydraAmaranth = { inherit = 'HydraAmaranth', background = bg_color },
+        StHydraBlue = { inherit = 'HydraBlue', background = bg_color },
+        StHydraPink = { inherit = 'HydraPink', background = bg_color },
+        StHydraRed = { inherit = 'HydraRed', background = bg_color },
+        StHydraTeal = { inherit = 'HydraTeal', background = bg_color },
     })
 end
 
