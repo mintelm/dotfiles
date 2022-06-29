@@ -9,18 +9,19 @@ function mm.dump(...)
     print(unpack(objects))
 end
 
----Set tabstop and shiftwdith
+---Set tabstop, shiftwdith and expandtab/smartindent accordingly
 ---@param tab_width number
 function mm.set_tab_width(tab_width)
+    if (tab_width >= 8) then
+        -- use real tabs
+        vim.bo.expandtab = false
+        vim.bo.smartindent = false
+    else
+        vim.bo.expandtab = true
+        vim.bo.smartindent = true
+    end
     vim.bo.tabstop = tab_width
     vim.bo.shiftwidth = tab_width
-end
-
----Set tabstop and shiftwdith
----@param use_tab boolean
-function mm.use_tab(use_tab)
-    vim.bo.expandtab = use_tab
-    vim.bo.smartindent = use_tab
 end
 
 ---Merge table t1, t2

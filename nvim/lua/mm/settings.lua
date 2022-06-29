@@ -18,7 +18,6 @@ mm.augroup('UserSettings', {
             pattern  = { 'c', 'cpp', 'objc', 'objcpp', 'sh', 'make' },
             command = function()
                 mm.set_tab_width(8)
-                mm.use_tab(true)
             end,
         },
         -- toggle hiding invisible chars on insert
