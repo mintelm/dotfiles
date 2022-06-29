@@ -6,34 +6,32 @@ cmd('filetype plugin indent on')
 mm.augroup('UserSettings', {
         -- highlight yank for 250ms
         {
-            events = { 'TextYankPost' },
-            targets = { '*' },
+            event = { 'TextYankPost' },
+            pattern = { '*' },
             command = function()
                 vim.highlight.on_yank({ on_visual = false, timeout = 250 })
             end,
         },
         -- set tab width dynamically on c-like files
         {
-            events = { 'FileType' },
-            targets = { 'c', 'cpp', 'objc', 'objcpp', 'sh', 'make' },
+            event = { 'FileType' },
+            pattern  = { 'c', 'cpp', 'objc', 'objcpp', 'sh', 'make' },
             command = function()
-                vim.bo.tabstop = 8
-                vim.bo.shiftwidth = 8
-                vim.bo.expandtab = false
-                vim.bo.smartindent = false
+                mm.set_tab_width(8)
+                mm.use_tab(true)
             end,
         },
         -- toggle hiding invisible chars on insert
         {
-            events = { 'InsertEnter' },
-            targets = { '*' },
+            event = { 'InsertEnter' },
+            pattern  = { '*' },
             command = function()
                 vim.o.list = false
             end,
         },
         {
-            events = { 'InsertLeave' },
-            targets = { '*' },
+            event = { 'InsertLeave' },
+            pattern  = { '*' },
             command = function()
                 vim.o.list = true
             end,
@@ -63,5 +61,6 @@ vim.o.showmode = false
 vim.o.number = true
 vim.o.relativenumber = true
 vim.o.signcolumn = 'yes:2'
+vim.o.cursorline = true
 vim.o.list = true
 vim.o.listchars = 'tab:→ ,trail:•,nbsp:␣,extends:»,precedes:«'

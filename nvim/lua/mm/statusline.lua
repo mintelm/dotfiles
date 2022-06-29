@@ -2,7 +2,7 @@
 -- 1. https://github.com/akinsho/dotfiles/tree/main/.config/nvim
 
 local H = require('mm.highlights')
-local utils = require('mm.statusline.utils')
+local utils = require('mm.utils.statusline')
 local P = mm.style.palette
 
 ---Set colors with highlight groups
@@ -203,8 +203,8 @@ end
 local function setup_autocommands()
     mm.augroup('CustomStatusLine', {
         {
-            events = { 'VimEnter', 'ColorScheme' },
-            targets = { '*' },
+            event = { 'VimEnter', 'ColorScheme' },
+            pattern = { '*' },
             command = set_colors,
         },
     })

@@ -1,7 +1,7 @@
 return function()
     local hydra = require('hydra')
     local gitsigns = require('gitsigns')
-    local hints = require('mm.plugins.config.hydra_hints')
+    local hints = require('mm.plugins.hydra_hints')
     local cmd = function(command)
         return table.concat({ '<cmd>', command, '<CR>' })
     end

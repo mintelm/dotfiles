@@ -1,5 +1,6 @@
 require('mm.globals')
+require('mm.styles')
 require('mm.settings')
-require('mm.plugins')
-require('mm.statusline')
 require('mm.keymappings')
+require('mm.statusline')
+require('mm.plugins')

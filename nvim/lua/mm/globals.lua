@@ -1,109 +1,26 @@
 local fmt = string.format
 
----Global namespace
----store all callbacks in one global table so they are able to survive re-requiring this file
-_G.__mm_global_callbacks = __mm_global_callbacks or { }
-
-_G.mm = {
-    _store = __mm_global_callbacks,
-}
-
-do
-    local palette = {
-        dark_grey = '#1d2021',
-        red = '#fb4632',
-        aqua = '#8ec07c',
-        blue = '#83a598',
-        yellow = '#fabd2e',
-    }
-
-    mm.style = {
-        icons = {
-            error = '',  -- ✗ 
-            warn = '',   -- 
-            info = '',   --  
-            hint = '',   -- 
-        },
-        lsp = {
-            colors = {
-                error = palette.red,
-                warn = palette.yellow,
-                info = palette.blue,
-                hint = palette.aqua,
-            },
-            kinds = {
-                Class = 'ﴯ',
-                Color = '',
-                Constant = '',
-                Constructor = '',
-                Enum = '',
-                EnumMember = '',
-                Event = '',
-                Field = 'ﰠ',
-                File = '',
-                Folder = '',
-                Function = '',
-                Interface = '',
-                Keyword = '',
-                Method = '',
-                Module = '',
-                Operator = '',
-                Property = 'ﰠ',
-                Reference = '',
-                Snippet = '',
-                Struct = 'פּ',
-                Type = '',
-                TypeParameter = '',
-                Text = '',
-                Unit = '塞',
-                Value = '',
-                Variable = '',
-                --[[
-                Class = ' Class',
-                Color = ' Color',
-                Constant = ' Constant',
-                Constructor = ' Constructor',
-                Enum = '了 Enum',
-                EnumMember = ' Enum',
-                Event = '鬒 Event',
-                Field = '識 Field',
-                File = ' File',
-                Folder = ' Folder',
-                Function = 'ƒ Function',
-                Interface = 'ﰮ Interface',
-                Keyword = ' Keyword',
-                Method = ' Method',
-                Module = ' Module',
-                Operator = ' Operator',
-                Property = ' Property',
-                Reference = '渚 Reference',
-                Snippet = ' Snippet',
-                Struct = ' Struct',
-                Text = ' Text',
-                Type = ' Type',
-                TypeParameter = ' TypeParameter',
-                Unit = ' Unit',
-                Value = ' Value',
-                Variable = ' Variable',
-                --]]
-            }
-        },
-        palette = palette,
-    }
-end
+_G.mm = { }
 
 ---Inspect contents of any object
 ---@vararg any
-function _G.dump(...)
+function mm.dump(...)
     local objects = vim.tbl_map(vim.inspect, { ... })
     print(unpack(objects))
 end
 
 ---Set tabstop and shiftwdith
 ---@param tab_width number
-function _G.set_tab_width(tab_width)
+function mm.set_tab_width(tab_width)
     vim.bo.tabstop = tab_width
     vim.bo.shiftwidth = tab_width
+end
+
+---Set tabstop and shiftwdith
+---@param use_tab boolean
+function mm.use_tab(use_tab)
+    vim.bo.expandtab = use_tab
+    vim.bo.smartindent = use_tab
 end
 
 ---Merge table t1, t2
@@ -119,21 +36,8 @@ function mm.merge(t1, t2)
             t1[k] = v
         end
     end
+
     return t1
-end
-
----Add callback to global store
----@param f function
-function mm._create(f)
-    table.insert(mm._store, f)
-    return #mm._store
-end
-
----Execute callback with id
----@param id number
----@param args any
-function mm._execute(id, args)
-    mm._store[id](args)
 end
 
 ---Require a module using [pcall] and report any errors
@@ -143,41 +47,82 @@ end
 function mm.safe_require(module, opts)
     opts = opts or { silent = false }
     local ok, result = pcall(require, module)
+
     if not ok and not opts.silent then
         vim.notify(result, vim.log.levels.error, { title = fmt('Error requiring: %s', module) })
     end
+
     return ok, result
 end
 
+---Reload lua modules
+---@param path string
+---@param recursive string
+function mm.invalidate(path, recursive)
+    if recursive then
+        for key, value in pairs(package.loaded) do
+            if key ~= '_G' and value and vim.fn.match(key, path) ~= -1 then
+                package.loaded[key] = nil
+                require(key)
+            end
+        end
+    else
+        package.loaded[path] = nil
+        require(path)
+    end
+end
+
+local installed
+---Check if a plugin is on the system not whether or not it is loaded
+---@param plugin_name string
+---@return boolean
+function mm.plugin_installed(plugin_name)
+    if not installed then
+        local dirs = vim.fn.expand(vim.fn.stdpath('data') .. '/site/pack/packer/start/*', true, true)
+        local opt = vim.fn.expand(vim.fn.stdpath('data') .. '/site/pack/packer/opt/*', true, true)
+
+        vim.list_extend(dirs, opt)
+        installed = vim.tbl_map(function(path)
+            return vim.fn.fnamemodify(path, ':t')
+        end, dirs)
+    end
+
+    return vim.tbl_contains(installed, plugin_name)
+end
+
 ---@class Autocommand
----@field events string[] list of autocommand events
----@field targets string[] list of autocommand patterns
----@field modifiers string[] e.g. nested, once
+---@field description string
+---@field event  string[] list of autocommand events
+---@field pattern string[] list of autocommand patterns
 ---@field command string | function
+---@field nested  boolean
+---@field once    boolean
+---@field buffer  number
 
 ---Create an autocommand
+---returns the group ID so that it can be cleared or manipulated.
 ---@param name string
 ---@param commands Autocommand[]
+---@return number
 function mm.augroup(name, commands)
-    vim.cmd('augroup ' .. name)
-    vim.cmd('autocmd!')
-    for _, c in ipairs(commands) do
-        local command = c.command
-        if type(command) == 'function' then
-            local fn_id = mm._create(command)
-            command = fmt('lua mm._execute(%s)', fn_id)
-        end
-        vim.cmd(
-            string.format(
-                'autocmd %s %s %s %s',
-                table.concat(c.events, ','),
-                table.concat(c.targets or { }, ','),
-                table.concat(c.modifiers or { }, ' '),
-                command
-            )
-        )
+    local id = vim.api.nvim_create_augroup(name, { clear = true })
+
+    for _, autocmd in ipairs(commands) do
+        local is_callback = type(autocmd.command) == 'function'
+
+        vim.api.nvim_create_autocmd(autocmd.event, {
+            group = name,
+            pattern = autocmd.pattern,
+            desc = autocmd.description,
+            callback = is_callback and autocmd.command or nil,
+            command = not is_callback and autocmd.command or nil,
+            once = autocmd.once,
+            nested = autocmd.nested,
+            buffer = autocmd.buffer,
+        })
     end
-    vim.cmd('augroup END')
+
+    return id
 end
 
 ---Find an item in a list

@@ -1,100 +1,107 @@
-local fn = vim.fn
-local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
+local utils = require('mm.utils.packer')
 
--- Auto install packer.nvim if not exists
-if fn.empty(fn.glob(install_path)) > 0 then
-    packer_bootstrap = fn.system({ 'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path })
-end
+local conf = utils.conf
 
-local function conf(name)
-    return require(string.format('mm.plugins.config.%s', name))
-end
+utils.bootstrap_packer()
 
-vim.cmd [[packadd packer.nvim]]
+local packer = require('packer')
 
-return require('packer').startup(function(use)
-    use 'wbthomason/packer.nvim'
+--- NOTE "use" functions cannot call *upvalues* i.e. the functions
+--- passed to setup or config etc. cannot reference aliased functions
+--- or local variables
+packer.startup({
+    function(use)
+        use 'wbthomason/packer.nvim'
 
-    use {
-        'ellisonleao/gruvbox.nvim',
-        requires = 'rktjmp/lush.nvim',
-        config = conf('gruvbox'),
-    }
+        use {
+            'ellisonleao/gruvbox.nvim',
+            requires = 'rktjmp/lush.nvim',
+            config = conf('gruvbox'),
+        }
 
-    use {
-        'nvim-telescope/telescope.nvim',
-        requires = 'nvim-lua/plenary.nvim',
-        config = conf('telescope')
-    }
+        use {
+            'nvim-telescope/telescope.nvim',
+            requires = 'nvim-lua/plenary.nvim',
+            config = conf('telescope')
+        }
 
-    use {
-        'neovim/nvim-lspconfig',
-        config = conf('lspconfig'),
-    }
+        use {
+            'neovim/nvim-lspconfig',
+            config = conf('lspconfig'),
+        }
 
-    use {
-        'L3MON4D3/LuaSnip',
-        requires = 'rafamadriz/friendly-snippets',
-        config = function()
-            require('luasnip/loaders/from_vscode').lazy_load()
-        end,
-    }
+        use {
+            'L3MON4D3/LuaSnip',
+            requires = 'rafamadriz/friendly-snippets',
+            config = function()
+                require('luasnip/loaders/from_vscode').lazy_load()
+            end,
+        }
 
-    use {
-        'hrsh7th/nvim-cmp',
-        requires = {
-            'hrsh7th/cmp-nvim-lsp',
-            'saadparwaiz1/cmp_luasnip',
-        },
-        config = conf('cmp'),
-    }
+        use {
+            'hrsh7th/nvim-cmp',
+            requires = {
+                'hrsh7th/cmp-nvim-lsp',
+                'saadparwaiz1/cmp_luasnip',
+            },
+            config = conf('cmp'),
+        }
 
-    use {
-        'nvim-treesitter/nvim-treesitter',
-        run = ':TSUpdate',
-        config = conf('treesitter'),
-    }
+        use {
+            'nvim-treesitter/nvim-treesitter',
+            run = ':TSUpdate',
+            config = conf('treesitter'),
+        }
 
-    use {
-        'akinsho/bufferline.nvim',
-        requires = 'kyazdani42/nvim-web-devicons',
-        config = conf('bufferline'),
-    }
+        use {
+            'akinsho/bufferline.nvim',
+            requires = 'kyazdani42/nvim-web-devicons',
+            config = conf('bufferline'),
+        }
 
-    use {
-        'lewis6991/gitsigns.nvim',
-        config = conf('gitsigns'),
-    }
+        use {
+            'lewis6991/gitsigns.nvim',
+            config = conf('gitsigns'),
+        }
 
-    use {
-        'TimUntersberger/neogit',
-        requires = 'nvim-lua/plenary.nvim',
-    }
+        use {
+            'TimUntersberger/neogit',
+            requires = 'nvim-lua/plenary.nvim',
+        }
 
-    use {
-        'lukas-reineke/indent-blankline.nvim',
-        config = conf('indentline'),
-    }
+        use {
+            'lukas-reineke/indent-blankline.nvim',
+            config = conf('indentline'),
+        }
 
-    -- use 'ggandor/lightspeed.nvim'
+        -- use 'ggandor/lightspeed.nvim'
 
-    use {
-        'phaazon/hop.nvim',
-        config = function()
-            require'hop'.setup{}
-        end,
-    }
+        use {
+            'phaazon/hop.nvim',
+            config = function()
+                require'hop'.setup{}
+            end,
+        }
 
-    use {
-        'anuvyklack/hydra.nvim',
-        requires = {
-            'anuvyklack/keymap-layer.nvim',
-            'sindrets/winshift.nvim'
-        },
-        config = conf('hydra'),
-    }
-
-    if packer_bootstrap then
-        require('packer').sync()
+        use {
+            'anuvyklack/hydra.nvim',
+            requires = {
+                'anuvyklack/keymap-layer.nvim',
+                'sindrets/winshift.nvim'
+            },
+            config = conf('hydra'),
+        }
     end
-end)
+})
+
+mm.augroup('PackerSetupInit', {
+    {
+        event = 'BufWritePost',
+        pattern = { '*/mm/plugins/*.lua' },
+        description = 'Packer setup and reload',
+        command = function()
+            mm.invalidate('mm.plugins', true)
+            packer.compile()
+        end,
+    },
+})
