@@ -29,12 +29,12 @@ return function()
             { 'v', gitsigns.preview_hunk },
             { 'b', gitsigns.toggle_current_line_blame },
             { 'B', function() gitsigns.blame_line{ full = true } end },
-            { 'n', function()
+            { 'j', function()
                     if vim.wo.diff then return ']c' end
                     vim.schedule(function() gitsigns.next_hunk() end)
                     return '<Ignore>'
                 end, { expr = true } },
-            { 'N', function()
+            { 'k', function()
                     if vim.wo.diff then return '[c' end
                     vim.schedule(function() gitsigns.prev_hunk() end)
                     return '<Ignore>'

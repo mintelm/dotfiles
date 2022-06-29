@@ -2,8 +2,8 @@ return {
     git = [[
 ^ ^ ^                           _<Enter>_: Neogit
 ^
-^ _n_: next hunk   _s_: stage hunk        _r_: reset hunk     _b_: blame line
-^ _N_: prev hunk   _u_: undo stage hunk   _v_: preview hunk   _B_: blame show full ^
+^ _j_: next hunk   _s_: stage hunk        _r_: reset hunk     _b_: blame line
+^ _k_: prev hunk   _u_: undo stage hunk   _v_: preview hunk   _B_: blame show full ^
 ^ ^ ^              _S_: stage buffer      _R_: reset buffer
 ]],
     window = [[
