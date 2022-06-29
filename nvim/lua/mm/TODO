@@ -1,3 +1,0 @@
-v0.7 release:
- * use native autocmd api
- * use native hl api

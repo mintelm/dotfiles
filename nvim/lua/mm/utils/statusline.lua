@@ -254,23 +254,35 @@ local function filename(ctx, modifier)
     return dir, parent, fname
 end
 
----@param hl string
----@param bg_hl string
-local function set_ft_icon_highlight(hl, bg_hl)
-    if not hl then
-        return ''
+---@param name string
+---@param fg string
+---@param bg string
+local function create_hl(name, fg, bg)
+    if fg and bg then
+        vim.api.nvim_set_hl(0, name, { foreground = fg, background = bg })
     end
+end
 
+--- @param hl string
+--- @param bg_hl string
+local function highlight_ft_icon(hl, bg_hl)
+    if not hl or not bg_hl then
+        return
+    end
     local name = hl .. 'Statusline'
     -- TODO: find a mechanism to cache this so it isn't repeated constantly
     local fg_color = H.get_hl(hl, 'fg')
     local bg_color = H.get_hl(bg_hl, 'bg')
-
     if bg_color and fg_color then
-        local cmd = { 'highlight ', name, ' guibg=', bg_color, ' guifg=', fg_color }
-        local str = table.concat(cmd)
-        mm.augroup(name, { { event = { 'ColorScheme' }, pattern = { '*' }, command = str } })
-        vim.cmd(string.format('silent execute "%s"', str))
+        mm.augroup(name, {
+            {
+                event = 'ColorScheme',
+                command = function()
+                    create_hl(name, fg_color, bg_color)
+                end,
+            },
+        })
+        create_hl(name, fg_color, bg_color)
     end
 
     return name
@@ -301,7 +313,7 @@ local function filetype(ctx, opts)
 
     if icons_loaded then
         icon, hl = devicons.get_icon(ctx.bufname, extension, { default = true })
-        hl = set_ft_icon_highlight(hl, opts.icon_bg)
+        hl = highlight_ft_icon(hl, opts.icon_bg)
     end
 
     return icon, hl
@@ -322,7 +334,7 @@ function M.file(ctx, minimal)
     local directory_hl = minimal and 'StInactiveSep' or 'StDirectory'
     local parent_hl = minimal and directory_hl or 'StParentDirectory'
 
-    if H.has_win_highlight(curwin, 'Normal', 'StatusLine') then
+    if H.winhighlight_exists(curwin, 'Normal', 'StatusLine') then
         directory_hl = H.adopt_winhighlight(curwin, 'StatusLine', 'StCustomDirectory', 'StTitle')
         filename_hl = H.adopt_winhighlight(curwin, 'StatusLine', 'StCustomFilename', 'StTitle')
         parent_hl = H.adopt_winhighlight(curwin, 'StatusLine', 'StCustomParentDir', 'StTitle')
@@ -422,7 +434,7 @@ function M.mode()
 
     if hydra_loaded and hydra_status.is_active() then
         current_mode = hydra_status.get_name()
-        hl = 'Hydra' .. hydra_status.get_color():gsub("^%l", string.upper)
+        hl = 'StHydra' .. hydra_status.get_color():gsub("^%l", string.upper)
     end
 
     local mode_map = {

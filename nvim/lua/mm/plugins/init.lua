@@ -16,7 +16,6 @@ packer.startup({
         use {
             'ellisonleao/gruvbox.nvim',
             requires = 'rktjmp/lush.nvim',
-            config = conf('gruvbox'),
         }
 
         use {

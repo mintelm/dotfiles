@@ -1,4 +1,11 @@
 return function()
+    local H = require('mm.highlights')
+
+    H.plugin('gitsigns', {
+        GitSignsAdd = { background = 'NONE' },
+        GitSignsChange = { background = 'NONE' },
+        GitSignsDelete = { background = 'NONE' },
+    })
     require('gitsigns').setup({
         signs = {
             add = { hl = 'GitSignsAdd'   , text = '▌' },
