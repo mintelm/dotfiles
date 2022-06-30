@@ -8,8 +8,8 @@ local palette = {
 
 mm.style = {
     border = {
-        line      = { '🭽', '▔', '🭾', '▕', '🭿', '▁', '🭼', '▏' },
         rectangle = { '┌', '─', '┐', '│', '┘', '─', '└', '│' },
+        rounded   = { '╭', '─', '╮', '│', '╯', '─', '╰', '│' },
     },
     icons = {
         error = '',  -- ✗ 
@@ -80,5 +80,5 @@ mm.style = {
 }
 
 mm.style.current = {
-  border = mm.style.border.rectangle,
+    border = mm.style.border.rounded,
 }
