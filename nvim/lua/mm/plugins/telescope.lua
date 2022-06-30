@@ -4,7 +4,14 @@ return function()
 
     require('mm.highlights').plugin('telescope', {
         TelescopeNormal = { link = 'NormalFloat' },
+        TelescopeTitle = { link = 'TelescopeNormal' },
         TelescopeBorder = { link = 'FloatBorder' },
+        TelescopePreviewBorder = { link = 'TelescopeBorder' },
+        TelescopeResultsBorder = { link = 'TelescopeBorder' },
+        TelescopePromptBorder = { link = 'TelescopeBorder' },
+        TelescopeMatching = { link = 'String' },
+        TelescopeSelection = { link = 'CursorLine' },
+        TelescopeSelectionCaret = { background = { from = 'CursorLine' }, foreground = { from = 'Special' } },
     })
 
     require('telescope').setup({

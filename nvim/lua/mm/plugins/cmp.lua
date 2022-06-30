@@ -8,9 +8,9 @@ return function()
     local kind_hls = {
         CmpItemAbbr = { foreground = 'fg', background = 'NONE', italic = false, bold = false },
         CmpItemMenu = { foreground = { from = 'FloatBorder' }, italic = true, bold = false },
-        CmpItemAbbrMatch = { foreground = { from = 'Special' } },
+        CmpItemAbbrMatch = { foreground = { from = 'String' } },
         CmpItemAbbrDeprecated = { strikethrough = true, inherit = 'Comment' },
-        CmpItemAbbrMatchFuzzy = { italic = true, foreground = { from = 'Special' } },
+        CmpItemAbbrMatchFuzzy = { italic = true, foreground = { from = 'String' } },
     }
 
     for key, _ in pairs(lsp_hls) do

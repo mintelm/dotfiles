@@ -196,7 +196,7 @@ local function colorscheme_overrides()
     local error_line = M.alter_color(lsp_colors.error, -80)
     local warn_line = M.alter_color(lsp_colors.warn, -80)
 
-    M.clear_hl('CursorLine')
+    --M.clear_hl('CursorLine')
     M.all({
         -----------------------------------------------------------------------------//
         -- General overrides
@@ -213,7 +213,7 @@ local function colorscheme_overrides()
             foreground = 'NONE',
             bold = false,
             underlineline = true,
-            sp = 'white',
+            sp = 'NONE',
         },
         -----------------------------------------------------------------------------//
         -- Floats
