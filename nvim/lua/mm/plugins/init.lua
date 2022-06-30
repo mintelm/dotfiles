@@ -90,6 +90,11 @@ packer.startup({
             },
             config = conf('hydra'),
         }
+
+        use {
+            'stevearc/dressing.nvim',
+            config = conf('dressing'),
+        }
     end
 })
 
