@@ -1,7 +1,7 @@
 return function()
-    local H = require('mm.highlights')
+    local h = require('mm.highlights')
 
-    H.plugin('gitsigns', {
+    h.plugin('gitsigns', {
         GitSignsAdd = { background = 'NONE' },
         GitSignsChange = { background = 'NONE' },
         GitSignsDelete = { background = 'NONE' },

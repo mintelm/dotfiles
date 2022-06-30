@@ -1,4 +1,4 @@
-local H = require('mm.highlights')
+local h = require('mm.highlights')
 local silenced = { silent = true }
 local icons_loaded, devicons
 local hydra_loaded, hydra_status
@@ -271,8 +271,8 @@ local function highlight_ft_icon(hl, bg_hl)
     end
     local name = hl .. 'Statusline'
     -- TODO: find a mechanism to cache this so it isn't repeated constantly
-    local fg_color = H.get_hl(hl, 'fg')
-    local bg_color = H.get_hl(bg_hl, 'bg')
+    local fg_color = h.get_hl(hl, 'fg')
+    local bg_color = h.get_hl(bg_hl, 'bg')
     if bg_color and fg_color then
         mm.augroup(name, {
             {
@@ -334,10 +334,10 @@ function M.file(ctx, minimal)
     local directory_hl = minimal and 'StDirectoryInactive' or 'StDirectory'
     local parent_hl = minimal and directory_hl or 'StParentDirectory'
 
-    if H.winhighlight_exists(curwin, 'Normal', 'StatusLine') then
-        directory_hl = H.adopt_winhighlight(curwin, 'StatusLine', 'StCustomDirectory', 'StTitle')
-        filename_hl = H.adopt_winhighlight(curwin, 'StatusLine', 'StCustomFilename', 'StTitle')
-        parent_hl = H.adopt_winhighlight(curwin, 'StatusLine', 'StCustomParentDir', 'StTitle')
+    if h.winhighlight_exists(curwin, 'Normal', 'StatusLine') then
+        directory_hl = h.adopt_winhighlight(curwin, 'StatusLine', 'StCustomDirectory', 'StTitle')
+        filename_hl = h.adopt_winhighlight(curwin, 'StatusLine', 'StCustomFilename', 'StTitle')
+        parent_hl = h.adopt_winhighlight(curwin, 'StatusLine', 'StCustomParentDir', 'StTitle')
     end
 
     local ft_icon, icon_highlight = filetype(ctx, { icon_bg = 'StatusLine', default = 'StComment' })
