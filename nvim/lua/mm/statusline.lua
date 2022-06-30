@@ -36,6 +36,8 @@ local function set_colors()
         StParentDirectory = { background = bg_color, foreground = string_fg, bold = true },
         StFilename = { background = bg_color, foreground = 'LightGray', bold = true },
         StFilenameInactive = { background = inactive_bg_color, foreground = dim_color, bold = true, italic = true },
+        StReadOnly = { background = bg_color, foreground = error_color },
+        StReadOnlyInactive = { background = inactive_bg_color, foreground = dim_color },
         StTitle = { background = bg_color, foreground = 'LightGray', bold = true},
         StComment = { background = bg_color, foreground = comment_fg },
         StError = { background = bg_color, foreground = error_color },
@@ -115,9 +117,9 @@ function _G.statusline()
     -- Modifiers
     local plain = utils.is_plain(ctx)
     local file_modified = utils.modified(ctx, '●')
-    local inactive = vim.api.nvim_get_current_win() ~= curwin
     local focused = vim.g.vim_in_focus or true
-    local minimal = plain or inactive or not focused
+    local inactive = vim.api.nvim_get_current_win() ~= curwin or not focused
+    local minimal = plain or inactive
 
     -- Setup
     local item = utils.item
@@ -131,12 +133,13 @@ function _G.statusline()
     )
 
     -- Filename
-    local segments = utils.file(ctx, minimal)
+    local segments = utils.file(ctx, inactive)
     local dir, parent, file = segments.dir, segments.parent, segments.file
     local dir_item = utils.item(dir.item, dir.hl, dir.opts)
     local parent_item = utils.item(parent.item, parent.hl, parent.opts)
     local file_item = utils.item(file.item, file.hl, file.opts)
-    local readonly_item = utils.item(utils.readonly(ctx), 'StError')
+    local readonly_item = inactive and utils.item(utils.readonly(ctx), 'StReadOnlyInactive')
+                                    or utils.item(utils.readonly(ctx), 'StReadOnly')
 
     -- show a minimal statusline with only the mode and file component
     if minimal then
