@@ -24,16 +24,11 @@ return function()
     end
 
     local function setup_diagnostics()
-        --[[ also used for cursorhold event
-    vim.o.updatetime = 250
-    vim.cmd('autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float()')
-    --]]
-
         vim.diagnostic.config({
             virtual_text = false,
             float = {
                 focusable = false,
-                border = 'single',
+                border = mm.style.current.border,
             },
         })
     end
