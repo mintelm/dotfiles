@@ -80,5 +80,5 @@ mm.style = {
 }
 
 mm.style.current = {
-    border = mm.style.border.rounded,
+    border = mm.style.border.rectangle,
 }
