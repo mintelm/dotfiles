@@ -21,7 +21,7 @@ packer.startup({
         use {
             'nvim-telescope/telescope.nvim',
             requires = 'nvim-lua/plenary.nvim',
-            config = conf('telescope')
+            config = conf('telescope'),
         }
 
         use {
@@ -78,7 +78,7 @@ packer.startup({
         use {
             'phaazon/hop.nvim',
             config = function()
-                require'hop'.setup{}
+                require('hop').setup{}
             end,
         }
 
