@@ -56,23 +56,6 @@ function mm.safe_require(module, opts)
     return ok, result
 end
 
----Reload lua modules
----@param path string
----@param recursive string
-function mm.invalidate(path, recursive)
-    if recursive then
-        for key, value in pairs(package.loaded) do
-            if key ~= '_G' and value and vim.fn.match(key, path) ~= -1 then
-                package.loaded[key] = nil
-                require(key)
-            end
-        end
-    else
-        package.loaded[path] = nil
-        require(path)
-    end
-end
-
 local installed
 ---Check if a plugin is on the system not whether or not it is loaded
 ---@param plugin_name string

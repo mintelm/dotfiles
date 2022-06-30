@@ -97,15 +97,3 @@ packer.startup({
         }
     end
 })
-
-mm.augroup('PackerSetupInit', {
-    {
-        event = 'BufWritePost',
-        pattern = { '*/mm/plugins/*.lua' },
-        description = 'Packer setup and reload',
-        command = function()
-            mm.invalidate('mm.plugins', true)
-            packer.compile()
-        end,
-    },
-})
