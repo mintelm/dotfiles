@@ -1,14 +1,6 @@
 return function()
     local actions = require('telescope.actions')
-    local function reorder_border()
-        local border = { }
-        local order = { 2, 4, 6, 8, 1, 3, 5, 7 }
-        for _, i in pairs(order) do
-            table.insert(border, mm.style.current.border[i])
-        end
-
-        return border
-    end
+    local bc = mm.style.current.border
 
     require('mm.highlights').plugin('telescope', {
         TelescopeNormal = { link = 'NormalFloat' },
@@ -19,7 +11,8 @@ return function()
         defaults = {
             prompt_prefix = ' ',
             border = { },
-            borderchars = reorder_border(),
+            -- telescope expects different order
+            borderchars = { bc[2], bc[4], bc[6], bc[8], bc[1], bc[3], bc[5], bc[7] },
             set_env = { ["COLORTERM"] = "truecolor" },
             mappings = {
                 i = {
