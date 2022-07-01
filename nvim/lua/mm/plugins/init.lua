@@ -76,8 +76,6 @@ packer.startup({
             config = conf('indentline'),
         }
 
-        -- use 'ggandor/lightspeed.nvim'
-
         use {
             'phaazon/hop.nvim',
             config = function()
@@ -98,5 +96,8 @@ packer.startup({
             'stevearc/dressing.nvim',
             config = conf('dressing'),
         }
+
+        -- can be removed once https://github.com/neovim/neovim/pull/15436 is merged
+        use('lewis6991/impatient.nvim')
     end
 })

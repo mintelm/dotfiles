@@ -20,6 +20,8 @@ function M.bootstrap_packer()
         M.packer_notify(
             fn.system({ 'git', 'clone', 'https://github.com/wbthomason/packer.nvim', install_path })
         )
+    else
+        mm.safe_require('impatient')
     end
     vim.cmd('packadd! packer.nvim')
 end
