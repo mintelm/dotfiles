@@ -9,7 +9,7 @@ return function()
         TelescopePreviewBorder = { link = 'TelescopeBorder' },
         TelescopeResultsBorder = { link = 'TelescopeBorder' },
         TelescopePromptBorder = { link = 'TelescopeBorder' },
-        TelescopeMatching = { link = 'String' },
+        TelescopeMatching = { foreground = { from = 'String' } },
         TelescopeSelection = { link = 'CursorLine' },
         TelescopeSelectionCaret = { background = { from = 'CursorLine' }, foreground = { from = 'Special' } },
     })
