@@ -11,7 +11,7 @@ return function()
         TelescopePromptBorder = { link = 'TelescopeBorder' },
         TelescopeMatching = { foreground = { from = 'String' } },
         TelescopeSelection = { link = 'CursorLine' },
-        TelescopeSelectionCaret = { background = { from = 'CursorLine' }, foreground = { from = 'Special' } },
+        TelescopeSelectionCaret = {link = 'CursorLineNR' },
     })
 
     require('telescope').setup({

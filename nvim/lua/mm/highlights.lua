@@ -196,7 +196,6 @@ local function colorscheme_overrides()
     local error_line = M.alter_color(lsp_colors.error, -80)
     local warn_line = M.alter_color(lsp_colors.warn, -80)
 
-    --M.clear_hl('CursorLine')
     M.all({
         -----------------------------------------------------------------------------//
         -- General overrides
@@ -204,6 +203,7 @@ local function colorscheme_overrides()
         VertSplit = { background = inactive_bg_color, foreground = inactive_bg_color },
         WinSeparator = { background = inactive_bg_color, foreground = inactive_bg_color },
         SignColumn = { background = 'NONE' },
+        CursorLine = { background = 'NONE' },
         CursorLineNR = { background = 'NONE', bold = true },
         Pmenu = { background = 'NONE' },
         TSError = { undercurl = true, sp = 'DarkRed', foreground = 'NONE' },
@@ -211,7 +211,7 @@ local function colorscheme_overrides()
         MatchParen = {
             background = 'NONE',
             foreground = 'NONE',
-            bold = false,
+            bold = true,
             underlineline = true,
             sp = 'NONE',
         },
