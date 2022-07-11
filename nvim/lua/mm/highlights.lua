@@ -206,7 +206,7 @@ local function colorscheme_overrides()
         CursorLine = { background = 'NONE' },
         CursorLineNR = { background = 'NONE', bold = true },
         Pmenu = { background = 'NONE' },
-        TSError = { undercurl = true, sp = 'DarkRed', foreground = 'NONE' },
+        --TSError = { undercurl = true, sp = 'DarkRed', foreground = 'NONE' },
         SpellBad = { undercurl = true, background = 'NONE', foreground = 'NONE', sp = 'green' },
         MatchParen = {
             background = 'NONE',
