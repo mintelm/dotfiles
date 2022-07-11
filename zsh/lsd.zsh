@@ -8,7 +8,7 @@ lsd() {
     fi
 }
 
-zstyle ':chpwd:*' recent-dirs-max 9
+zstyle ':chpwd:*' recent-dirs-max 10
 zstyle ':chpwd:*' recent-dirs-prune parent
 
 autoload -Uz chpwd_recent_dirs cdr
