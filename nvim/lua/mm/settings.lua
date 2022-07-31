@@ -20,6 +20,13 @@ mm.augroup('UserSettings', {
             mm.set_tab_width(8)
         end,
     },
+    {
+        event = { 'FileType' },
+        pattern  = { 'bib' },
+        command = function()
+            mm.set_tab_width(2)
+        end,
+    },
     -- toggle hiding invisible chars on insert
     {
         event = { 'InsertEnter' },
