@@ -35,4 +35,6 @@ return function()
             layout_strategy = 'flex',
         },
     })
+
+    require('telescope').load_extension('fzf')
 end
