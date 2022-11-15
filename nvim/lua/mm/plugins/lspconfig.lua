@@ -120,7 +120,7 @@ return function()
         end
 
         if cmp_nvim_lsp_loaded then
-            cmp_nvim_lsp.update_capabilities(config.capabilities)
+            cmp_nvim_lsp.default_capabilities(config.capabilities)
         end
 
         if server == 'sumneko_lua' then

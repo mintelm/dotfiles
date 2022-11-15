@@ -212,7 +212,7 @@ local function colorscheme_overrides()
             background = 'NONE',
             foreground = 'NONE',
             bold = true,
-            underlineline = true,
+            underline = true,
             sp = 'NONE',
         },
         -----------------------------------------------------------------------------//
