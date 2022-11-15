@@ -29,14 +29,14 @@ mm.augroup('UserSettings', {
     },
     -- toggle hiding invisible chars on insert
     {
-        event = { 'InsertEnter' },
+        event = { 'WinLeave', 'BufLeave', 'InsertEnter' },
         pattern  = { '*' },
         command = function()
             vim.o.list = false
         end,
     },
     {
-        event = { 'InsertLeave' },
+        event = { 'WinEnter', 'BufEnter', 'InsertLeave' },
         pattern  = { '*' },
         command = function()
             vim.o.list = true
