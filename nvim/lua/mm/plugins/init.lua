@@ -90,7 +90,7 @@ require('packer').startup({function(use)
     use {
         'anuvyklack/hydra.nvim',
         requires = {
-            'anuvyklack/keymap-layer.nvim',
+            -- needed for window control hydra
             'sindrets/winshift.nvim',
         },
         config = conf('hydra'),
