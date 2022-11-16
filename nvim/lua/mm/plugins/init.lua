@@ -10,12 +10,12 @@ utils.bootstrap_packer()
 require('packer').startup({function(use)
     use 'wbthomason/packer.nvim'
 
+    -- can be removed once https://github.com/neovim/neovim/pull/15436 is merged
+    use 'lewis6991/impatient.nvim'
+
     use 'ellisonleao/gruvbox.nvim'
 
     use 'kyazdani42/nvim-web-devicons'
-
-    -- can be removed once https://github.com/neovim/neovim/pull/15436 is merged
-    use('lewis6991/impatient.nvim')
 
     use {
         'nvim-telescope/telescope.nvim',
