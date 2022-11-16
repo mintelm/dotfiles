@@ -2,7 +2,7 @@ local utils = require('mm.utils.packer')
 
 local conf = utils.conf
 
-utils.bootstrap_packer()
+local bootstrapped = utils.bootstrap_packer()
 
 --- NOTE "use" functions cannot call *upvalues* i.e. the functions
 --- passed to setup or config etc. cannot reference aliased functions
@@ -107,5 +107,9 @@ require('packer').startup({function(use)
         after = 'telescope.nvim',
         config = conf('dressing'),
     }
+
+    if bootstrapped then
+        require('packer').sync()
+    end
 end,
 })

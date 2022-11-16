@@ -18,12 +18,14 @@ function M.bootstrap_packer()
     if fn.empty(fn.glob(install_path)) > 0 then
         M.packer_notify('Downloading packer.nvim...')
         M.packer_notify(
-            fn.system({ 'git', 'clone', 'https://github.com/wbthomason/packer.nvim', install_path })
+            fn.system({ 'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path })
         )
+        vim.cmd('packadd! packer.nvim')
+        return true
     else
         mm.safe_require('impatient')
+        return false
     end
-    vim.cmd('packadd! packer.nvim')
 end
 
 ---Require a plugin config
