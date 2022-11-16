@@ -29,6 +29,9 @@ require('packer').startup({function(use)
     use {
         'neovim/nvim-lspconfig',
         config = conf('lspconfig'),
+        requires = {
+            { 'ray-x/lsp_signature.nvim', config = conf('lsp_signature') }
+        }
     }
 
     use {
