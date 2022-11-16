@@ -1,7 +1,5 @@
 local utils = require('mm.utils.packer')
-
 local conf = utils.conf
-
 local bootstrapped = utils.bootstrap_packer()
 
 --- NOTE "use" functions cannot call *upvalues* i.e. the functions
