@@ -33,13 +33,12 @@ return function()
                 name = 'file_info',
                 opts = {
                     type = 'relative-short',
-                    file_readonly_icon = mm.style.icons.readonly,
-                    file_modified_icon = mm.style.icons.modified,
+                    file_readonly_icon = mm.style.icons.readonly .. ' ',
+                    file_modified_icon = mm.style.icons.modified .. ' ',
                 },
             },
             hl = {
                 fg = 'grey',
-                style = 'bold'
             },
             right_sep = ' ',
         },
