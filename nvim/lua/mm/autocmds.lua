@@ -57,4 +57,11 @@ mm.augroup('UserSettings', {
             end
         end,
     },
+    {
+        event = { 'BufWritePost' },
+        pattern = { '*' },
+        command = function()
+            vim.cmd('Gitsigns refresh')
+        end,
+    },
 })
