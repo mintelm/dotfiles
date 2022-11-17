@@ -1,6 +1,6 @@
 return function()
     require('github-theme').setup({
         theme_style = 'dark_default',
-        -- other config
+        function_style = 'bold',
     })
 end
