@@ -7,9 +7,7 @@ return function()
         'rust_analyzer',
     }
 
-    local function setup_icons()
-        local kinds = vim.lsp.protocol.CompletionItemKind
-
+    local function overwrite_icons()
         for type, icon in pairs(mm.style.icons) do
             type = type:sub(1,1):upper()..type:sub(2)
             local sign = 'DiagnosticSign' .. type
@@ -17,13 +15,9 @@ return function()
 
             vim.fn.sign_define(sign, { text = icon, texthl = hl, numhl = hl })
         end
-
-        for i, kind in ipairs(kinds) do
-            kinds[i] = mm.style.lsp.kinds[kind] or kind
-        end
     end
 
-    local function setup_diagnostics()
+    local function overwrite_diagnostic_config()
         vim.diagnostic.config({
             virtual_text = false,
             float = {
@@ -71,8 +65,8 @@ return function()
     end
 
     local function on_attach(_, bufnr)
-        setup_icons()
-        setup_diagnostics()
+        overwrite_icons()
+        overwrite_diagnostic_config()
         overwrite_handlers()
 
         require('mm.keymappings').lsp_mappings(bufnr)

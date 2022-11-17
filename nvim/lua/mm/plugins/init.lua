@@ -13,7 +13,10 @@ require('packer').startup({function(use)
     -- can be removed once https://github.com/neovim/neovim/pull/15436 is merged
     use 'lewis6991/impatient.nvim'
 
-    use 'ellisonleao/gruvbox.nvim'
+    use {
+        'projekt0n/github-nvim-theme',
+        config = conf('github-nvim-theme'),
+    }
 
     use 'kyazdani42/nvim-web-devicons'
 

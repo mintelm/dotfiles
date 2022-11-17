@@ -1,18 +1,11 @@
 return function()
-    local h = require('mm.highlights')
-
-    h.plugin('gitsigns', {
-        GitSignsAdd = { background = 'NONE' },
-        GitSignsChange = { background = 'NONE' },
-        GitSignsDelete = { background = 'NONE' },
-    })
     require('gitsigns').setup({
         signs = {
-            add = { hl = 'GitSignsAdd'   , text = '▌' },
-            change = { hl = 'GitSignsChange', text = '▌' },
-            delete = { hl = 'GitSignsDelete', text = '▌' },
-            topdelete = { hl = 'GitSignsDelete', text = '▌' },
-            changedelete = { hl = 'GitSignsChange', text = '▌' },
+            add = { text = '▌' },
+            change = { text = '▌' },
+            delete = { text = '▌' },
+            topdelete = { text = '▌' },
+            changedelete = { text = '▌' },
         },
         keymaps = { },
         update_debounce = 50,

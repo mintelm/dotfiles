@@ -1,23 +1,5 @@
 return function()
     local cmp = require('cmp')
-    local h = require('mm.highlights')
-
-    local lsp_hls = mm.style.lsp.kind_highlights
-
-    -- Make the source information less prominent
-    local kind_hls = {
-        CmpItemAbbr = { foreground = 'fg', background = 'NONE', italic = false, bold = false },
-        CmpItemMenu = { foreground = { from = 'FloatBorder' }, italic = true, bold = false },
-        CmpItemAbbrMatch = { foreground = { from = 'String' } },
-        CmpItemAbbrDeprecated = { strikethrough = true, inherit = 'Comment' },
-        CmpItemAbbrMatchFuzzy = { italic = true, foreground = { from = 'String' } },
-    }
-
-    for key, _ in pairs(lsp_hls) do
-        kind_hls['CmpItemKind' .. key] = { foreground = { from = lsp_hls[key] } }
-    end
-
-    h.plugin('Cmp', kind_hls)
 
     local function tab(fallback)
         local ok, luasnip = mm.safe_require('luasnip', { silent = true })
@@ -42,16 +24,6 @@ return function()
             fallback()
         end
     end
-
-    local cmp_window = {
-        border = mm.style.current.border,
-        winhighlight = table.concat({
-            'Normal:NormalFloat',
-            'FloatBorder:FloatBorder',
-            'CursorLine:Visual',
-            'Search:None',
-        }, ','),
-    }
 
     cmp.setup({
         completion = {
@@ -78,10 +50,6 @@ return function()
             ['<C-u>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
             ['<C-d>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
             ['<C-q>'] = cmp.mapping({ i = cmp.mapping.abort(), c = cmp.mapping.close(), }),
-        },
-        window = {
-            completion = cmp.config.window.bordered(cmp_window),
-            documentation = cmp.config.window.bordered(cmp_window),
         },
         formatting = {
             deprecated = true,

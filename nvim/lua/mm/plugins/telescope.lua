@@ -2,18 +2,6 @@ return function()
     local actions = require('telescope.actions')
     local bc = mm.style.current.border
 
-    require('mm.highlights').plugin('telescope', {
-        TelescopeNormal = { link = 'NormalFloat' },
-        TelescopeTitle = { link = 'TelescopeNormal' },
-        TelescopeBorder = { link = 'FloatBorder' },
-        TelescopePreviewBorder = { link = 'TelescopeBorder' },
-        TelescopeResultsBorder = { link = 'TelescopeBorder' },
-        TelescopePromptBorder = { link = 'TelescopeBorder' },
-        TelescopeMatching = { foreground = { from = 'String' } },
-        TelescopeSelection = { link = 'CursorLine' },
-        TelescopeSelectionCaret = {link = 'CursorLineNR' },
-    })
-
     require('telescope').setup({
         defaults = {
             prompt_prefix = ' ',

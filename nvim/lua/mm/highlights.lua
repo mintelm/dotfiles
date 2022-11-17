@@ -1,6 +1,5 @@
 local fmt = string.format
 local levels = vim.log.levels
-local lsp_colors = mm.style.lsp.colors
 
 local M = { }
 
@@ -187,119 +186,6 @@ function M.plugin(name, hls)
             end,
         },
     })
-end
-
-local function colorscheme_overrides()
-    local bg_base = M.get_hl('Normal', 'bg')
-    local inactive_bg_color = M.alter_color(bg_base, -10)
-    local hint_line = M.alter_color(lsp_colors.hint, -70)
-    local error_line = M.alter_color(lsp_colors.error, -80)
-    local warn_line = M.alter_color(lsp_colors.warn, -80)
-
-    M.all({
-        -----------------------------------------------------------------------------//
-        -- General overrides
-        -----------------------------------------------------------------------------//
-        VertSplit = { background = inactive_bg_color, foreground = inactive_bg_color },
-        WinSeparator = { background = inactive_bg_color, foreground = inactive_bg_color },
-        SignColumn = { background = 'NONE' },
-        CursorLine = { background = 'NONE' },
-        CursorLineNR = { background = 'NONE', bold = true },
-        Pmenu = { background = 'NONE' },
-        --TSError = { undercurl = true, sp = 'DarkRed', foreground = 'NONE' },
-        SpellBad = { undercurl = true, background = 'NONE', foreground = 'NONE', sp = 'green' },
-        MatchParen = {
-            background = 'NONE',
-            foreground = 'NONE',
-            bold = true,
-            underline = true,
-            sp = 'NONE',
-        },
-        -----------------------------------------------------------------------------//
-        -- Floats
-        -----------------------------------------------------------------------------//
-        NormalFloat = { link = 'Pmenu' },
-        FloatBorder = { background = 'NONE', foreground = { from = 'NonText' } },
-        -----------------------------------------------------------------------------//
-        -- LSP
-        -----------------------------------------------------------------------------//
-        LspCodeLens = { link = 'NonText' },
-        LspReferenceText = { underline = true, background = 'NONE' },
-        LspReferenceRead = { underline = true, background = 'NONE' },
-        -- This represents when a reference is assigned which is more interesting than regular
-        -- occurrences so should be highlighted more distinctly
-        LspReferenceWrite = { underline = true, bold = true, italic = true, background = 'NONE' },
-        DiagnosticHint = { foreground = lsp_colors.hint },
-        DiagnosticError = { foreground = lsp_colors.error },
-        DiagnosticWarning = { foreground = lsp_colors.warn },
-        DiagnosticInfo = { foreground = lsp_colors.info },
-        DiagnosticUnderlineError = {
-            underline = false,
-            undercurl = true,
-            sp = lsp_colors.error,
-            foreground = 'none',
-        },
-        DiagnosticUnderlineHint = {
-            underline = false,
-            undercurl = true,
-            sp = lsp_colors.hint,
-            foreground = 'none',
-        },
-        DiagnosticUnderlineWarn = {
-            underline = false,
-            undercurl = true,
-            sp = lsp_colors.warn,
-            foreground = 'none',
-        },
-        DiagnosticUnderlineInfo = {
-            underline = false,
-            undercurl = true,
-            sp = lsp_colors.info,
-            foreground = 'none',
-        },
-        DiagnosticSignHintLine = { background = hint_line },
-        DiagnosticSignErrorLine = { background = error_line },
-        DiagnosticSignWarnLine = { background = warn_line },
-        DiagnosticSignHintNr = {
-            inherit = 'DiagnosticSignHintLine',
-            foreground = { from = 'Normal' },
-            bold = true,
-        },
-        DiagnosticSignErrorNr = {
-            inherit = 'DiagnosticSignErrorLine',
-            foreground = { from = 'Normal' },
-            bold = true,
-        },
-        DiagnosticSignWarnNr = {
-            inherit = 'DiagnosticSignWarnLine',
-            foreground = { from = 'Normal' },
-            bold = true,
-        },
-        DiagnosticSignWarn = { link = 'DiagnosticWarn' },
-        DiagnosticSignInfo = { link = 'DiagnosticInfo' },
-        DiagnosticSignHint = { link = 'DiagnosticHint' },
-        DiagnosticSignError = { link = 'DiagnosticError' },
-        DiagnosticFloatingWarn = { link = 'DiagnosticWarn' },
-        DiagnosticFloatingInfo = { link = 'DiagnosticInfo' },
-        DiagnosticFloatingHint = { link = 'DiagnosticHint' },
-        DiagnosticFloatingError = { link = 'DiagnosticError' },
-    })
-end
-
-mm.augroup('UserHighlights', {
-    {
-        event = 'ColorScheme',
-        command = function()
-            colorscheme_overrides()
-        end,
-    },
-})
-
-if mm.plugin_installed('gruvbox.nvim') then
-    require('gruvbox').setup({
-        contrast = 'hard',
-    })
-    vim.cmd('colorscheme gruvbox')
 end
 
 return M
