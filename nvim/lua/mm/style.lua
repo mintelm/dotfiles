@@ -8,6 +8,7 @@ mm.style = {
         readonly = '',
         lines = '',
         columns = '',
+        telescope = '',
         git = {
             add = '',
             delete = '',

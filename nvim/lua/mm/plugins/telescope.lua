@@ -4,7 +4,7 @@ return function()
 
     require('telescope').setup({
         defaults = {
-            prompt_prefix = ' ',
+            prompt_prefix = mm.style.icons.telescope .. ' ',
             -- telescope expects different order
             borderchars = { bc[2], bc[4], bc[6], bc[8], bc[1], bc[3], bc[5], bc[7] },
             set_env = { ['COLORTERM'] = 'truecolor' },
