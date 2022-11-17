@@ -6,7 +6,16 @@ mm.style = {
     icons = {
         modified = '',
         readonly = '',
+        lines = '',
+        columns = '',
+        git = {
+            add = '',
+            delete = '',
+            change = '',
+            branch = '',
+        },
         lsp = {
+            server = ' ', -- 
             signs = {
                 error = '',  -- ✗ 
                 warn = '',   -- 
