@@ -1,6 +1,6 @@
 return function()
     local hydra = require('hydra.statusline')
-    local get_hl = require('mm.highlights').get_hl
+    local get_hl = require('mm.utils').get_hl
     local colors = require('github-theme.palette').get_palette('dark_default')
     local icons = mm.style.icons
     local components = {

@@ -1,6 +1,6 @@
 require('mm.globals')
 require('mm.style')
+require('mm.autocmds')
 require('mm.settings')
 require('mm.keymappings')
-require('mm.highlights')
 require('mm.plugins')

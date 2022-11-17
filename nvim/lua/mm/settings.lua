@@ -3,67 +3,6 @@ local cmd = vim.cmd
 cmd('syntax enable')
 cmd('filetype plugin indent on')
 
-mm.augroup('UserSettings', {
-    -- highlight yank for 250ms
-    {
-        event = { 'TextYankPost' },
-        pattern = { '*' },
-        command = function()
-            vim.highlight.on_yank({ on_visual = false, timeout = 250 })
-        end,
-    },
-    -- set tab width dynamically on c-like files
-    {
-        event = { 'FileType' },
-        pattern  = { 'c', 'cpp', 'objc', 'objcpp', 'sh', 'make' },
-        command = function()
-            mm.set_tab_width(8)
-        end,
-    },
-    {
-        event = { 'FileType' },
-        pattern  = { 'bib' },
-        command = function()
-            mm.set_tab_width(2)
-        end,
-    },
-    -- toggle hiding invisible chars on insert
-    {
-        event = { 'WinLeave', 'BufLeave', 'InsertEnter' },
-        pattern  = { '*' },
-        command = function()
-            vim.o.list = false
-        end,
-    },
-    {
-        event = { 'WinEnter', 'BufEnter', 'InsertLeave' },
-        pattern  = { '*' },
-        command = function()
-            vim.o.list = true
-        end,
-    },
-    {
-        event = { 'WinEnter' },
-        pattern  = { '*' },
-        command = function()
-            if (vim.wo.number) then
-                vim.wo.cursorline = true
-                vim.wo.relativenumber = true
-            end
-        end,
-    },
-    {
-        event = { 'WinLeave' },
-        pattern  = { '*' },
-        command = function()
-            if (vim.wo.number) then
-                vim.wo.cursorline = false
-                vim.wo.relativenumber = false
-            end
-        end,
-    },
-})
-
 vim.o.title = true
 vim.o.titlestring = '❐ %{fnamemodify(getcwd(), ":~")} %m'
 
