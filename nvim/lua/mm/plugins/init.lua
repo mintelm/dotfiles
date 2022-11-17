@@ -106,6 +106,11 @@ require('packer').startup({function(use)
         config = conf('dressing'),
     }
 
+    use {
+        'feline-nvim/feline.nvim',
+        config = conf('feline'),
+    }
+
     if bootstrapped then
         require('packer').sync()
     end

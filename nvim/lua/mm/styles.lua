@@ -4,10 +4,14 @@ mm.style = {
         rounded   = { '╭', '─', '╮', '│', '╯', '─', '╰', '│' },
     },
     icons = {
-        error = '',  -- ✗ 
-        warn = '',   -- 
-        info = '',   --  
-        hint = '',   -- 
+        modified = '',
+        readonly = '',
+        lsp = {
+            error = '',  -- ✗ 
+            warn = '',   -- 
+            info = '',   --  
+            hint = '',   -- 
+        },
     },
     lsp = {
         kinds = {
