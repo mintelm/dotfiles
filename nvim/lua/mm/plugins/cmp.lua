@@ -34,14 +34,22 @@ return function()
                 require('luasnip').lsp_expand(args.body)
             end
         },
-        sources = cmp.config.sources({
-            { name = 'nvim_lsp' },
-            { name = 'luasnip' },
-            { name = 'path' },
+        sources = {
+            { name = 'path', priority_weight = 110 },
+            { name = 'nvim_lsp', max_item_count = 20, priority_weight = 100 },
+            { name = 'nvim_lua', priority_weight = 90 },
+            { name = 'luasnip', priority_weight = 80 },
+            { name = 'buffer', max_item_count = 5, priority_weight = 70 },
+            {
+                name = 'rg',
+                keyword_length = 5,
+                max_item_count = 5,
+                priority_weight = 60,
+                option = {
+                    additional_arguments = '--smart-case --hidden',
+                },
+            },
         },
-            -- fallback
-            { { name = 'buffer' }, }
-        ),
         mapping = {
             ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
             ['<Tab>'] = cmp.mapping(tab, { 'i', 's'}),
@@ -51,6 +59,19 @@ return function()
             ['<C-d>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
             ['<C-q>'] = cmp.mapping({ i = cmp.mapping.abort(), c = cmp.mapping.close(), }),
         },
+        sorting = {
+            priority_weight = 100,
+            comparators = {
+                cmp.config.compare.offset,
+                cmp.config.compare.exact,
+                cmp.config.compare.score,
+                require('cmp-under-comparator').under,
+                cmp.config.compare.kind,
+                cmp.config.compare.sort_text,
+                cmp.config.compare.length,
+                cmp.config.compare.order,
+            },
+        },
         formatting = {
             deprecated = true,
             format = function(entry, vim_item)
@@ -58,17 +79,12 @@ return function()
                 vim_item.menu = ({
                     nvim_lsp = '[LSP]',
                     nvim_lua = '[Lua]',
-                    emoji = '[E]',
                     path = '[Path]',
-                    neorg = '[N]',
                     luasnip = '[SN]',
-                    dictionary = '[D]',
                     buffer = '[B]',
-                    spell = '[SP]',
                     cmdline = '[Cmd]',
                     cmdline_history = '[Hist]',
                     rg = '[Rg]',
-                    git = '[Git]',
                 })[entry.source.name]
 
                 return vim_item
