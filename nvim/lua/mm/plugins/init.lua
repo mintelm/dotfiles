@@ -2,7 +2,7 @@ local utils = require('mm.utils')
 local conf = utils.conf
 local bootstrapped = utils.bootstrap_packer()
 
---- NOTE "use" functions cannot call *upvalues* i.e. the functions
+--- NOTE 'use' functions cannot call *upvalues* i.e. the functions
 --- passed to setup or config etc. cannot reference aliased functions
 --- or local variables
 require('packer').startup({function(use)

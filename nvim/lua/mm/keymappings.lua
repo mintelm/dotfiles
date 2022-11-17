@@ -39,10 +39,10 @@ mm.map('n', '<leader>9', cmd 'BufferLineGoToBuffer 9', silenced)
 mm.map('n', 's', cmd 'HopChar2AC', silenced)
 mm.map('n', 'S', cmd 'HopChar2BC', silenced)
 -- not dot repeatable yet ...
--- mm.map('', 'f', cmd "lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR, current_line_only = true })", {})
--- mm.map('', 'F', cmd "lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR, current_line_only = true })", {})
--- mm.map('', 't', cmd "lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR, current_line_only = true, hint_offset = -1 })", {})
--- mm.map('', 'T', cmd "lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR, current_line_only = true, hint_offset = 1 })", {})
+-- mm.map('', 'f', cmd 'lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR, current_line_only = true })', {})
+-- mm.map('', 'F', cmd 'lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR, current_line_only = true })', {})
+-- mm.map('', 't', cmd 'lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR, current_line_only = true, hint_offset = -1 })', {})
+-- mm.map('', 'T', cmd 'lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR, current_line_only = true, hint_offset = 1 })', {})
 
 -- lsp
 -- this function is passed to lsp's on_attach hook, so mappings are only loaded if lsp is
