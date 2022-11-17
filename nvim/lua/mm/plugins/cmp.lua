@@ -54,7 +54,7 @@ return function()
         formatting = {
             deprecated = true,
             format = function(entry, vim_item)
-                vim_item.kind = string.format('%s %s', mm.style.lsp.kinds[vim_item.kind], vim_item.kind)
+                vim_item.kind = string.format('%s %s', mm.style.icons.lsp.kinds[vim_item.kind], vim_item.kind)
                 vim_item.menu = ({
                     nvim_lsp = '[LSP]',
                     nvim_lua = '[Lua]',

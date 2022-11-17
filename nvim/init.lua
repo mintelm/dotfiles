@@ -1,5 +1,5 @@
 require('mm.globals')
-require('mm.styles')
+require('mm.style')
 require('mm.settings')
 require('mm.keymappings')
 require('mm.highlights')

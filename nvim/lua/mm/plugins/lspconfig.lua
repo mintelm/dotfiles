@@ -8,7 +8,7 @@ return function()
     }
 
     local function overwrite_icons()
-        for type, icon in pairs(mm.style.icons.lsp) do
+        for type, icon in pairs(mm.style.icons.lsp.signs) do
             type = type:sub(1,1):upper()..type:sub(2)
             local sign = 'DiagnosticSign' .. type
             local hl = 'Diagnostic' .. type
