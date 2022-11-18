@@ -112,6 +112,13 @@ require('packer').startup({function(use)
         config = conf('feline'),
     }
 
+    use {
+        'rcarriga/nvim-notify',
+        config = function()
+            vim.notify = require('notify')
+        end,
+    }
+
     if bootstrapped then
         require('packer').sync()
     end
