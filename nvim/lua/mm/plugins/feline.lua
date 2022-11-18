@@ -46,7 +46,7 @@ return function()
                 opts = {
                     type = 'relative-short',
                     file_readonly_icon = icons.readonly,
-                    file_modified_icon = icons.modified,
+                    file_modified_icon = pad_icon(icons.modified, 'right'),
                 },
             },
             hl = {
