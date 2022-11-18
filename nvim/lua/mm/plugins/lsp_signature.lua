@@ -3,6 +3,7 @@ return function()
         bind = true,
         handler_opts = {
             border = mm.style.current.border,
-        }
+        },
+        hint_enable = false,
     })
 end
