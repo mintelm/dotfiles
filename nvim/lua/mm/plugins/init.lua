@@ -31,7 +31,9 @@ require('packer').startup({function(use)
         'neovim/nvim-lspconfig',
         config = conf('lspconfig'),
         requires = {
-            { 'ray-x/lsp_signature.nvim', config = conf('lsp_signature') }
+            'williamboman/mason.nvim',
+            'williamboman/mason-lspconfig.nvim',
+            { 'ray-x/lsp_signature.nvim', config = conf('lsp_signature') },
         }
     }
 
@@ -88,7 +90,7 @@ require('packer').startup({function(use)
     use {
         'phaazon/hop.nvim',
         config = function()
-            require('hop').setup{}
+            require('hop').setup({})
         end,
     }
 

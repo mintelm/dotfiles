@@ -1,11 +1,7 @@
 return function()
-    local servers = {
-        'pyright',
-        'clangd',
-        'sumneko_lua',
-        'texlab',
-        'rust_analyzer',
-    }
+    local cmp_nvim_lsp_loaded, cmp_nvim_lsp = mm.safe_require('cmp_nvim_lsp')
+    local lsp_mappings = require('mm.keymappings').lsp_mappings
+    local mason_icons = mm.style.icons.lsp.mason
 
     local function overwrite_icons()
         for type, icon in pairs(mm.style.icons.lsp.signs) do
@@ -68,33 +64,41 @@ return function()
         overwrite_icons()
         overwrite_diagnostic_config()
         overwrite_handlers()
-
-        require('mm.keymappings').lsp_mappings(bufnr)
+        lsp_mappings(bufnr)
     end
 
-    local function get_server_config(server)
-        local cmp_nvim_lsp_loaded, cmp_nvim_lsp = mm.safe_require('cmp_nvim_lsp')
-        -- global config
-        local config = {
-            on_attach = on_attach,
-            capabilities = vim.lsp.protocol.make_client_capabilities(),
-        }
-        -- special config for sumneko lua
-        local sumneko_config = function()
-            local sumneko_root_path = '/usr/share/lua-language-server'
-            local sumneko_binary = '/usr/bin/lua-language-server'
-            local runtime_path = vim.split(package.path, ';')
+    local server_config = {
+        on_attach = on_attach,
+    }
 
-            table.insert(runtime_path, 'lua/?.lua')
-            table.insert(runtime_path, 'lua/?/init.lua')
+    if cmp_nvim_lsp_loaded then
+        server_config.capabilities = cmp_nvim_lsp.default_capabilities(server_config.capabilities)
+    end
 
-            return {
-                cmd = { sumneko_binary, '-E', sumneko_root_path .. '/main.lua' };
+    require('mason').setup({
+        ui = {
+            icons = {
+                package_installed = mason_icons.installed,
+                package_pending = mason_icons.pending,
+                package_uninstalled = mason_icons.uninstalled,
+            },
+        },
+    })
+    require('mason-lspconfig').setup()
+    require('mason-lspconfig').setup_handlers({
+        -- The first entry (without a key) will be the default handler
+        -- and will be called for each installed server that doesn't have
+        -- a dedicated handler.
+        function (server_name) -- default handler (optional)
+            require('lspconfig')[server_name].setup(server_config)
+        end,
+        -- Next, you can provide a dedicated handler for specific servers.
+        ['sumneko_lua'] = function()
+            local sumneko_config = {
                 settings = {
                     Lua = {
                         runtime = {
                             version = 'LuaJIT',
-                            path = runtime_path,
                         },
                         diagnostics = {
                             globals = { 'vim' },
@@ -108,20 +112,7 @@ return function()
                     },
                 },
             }
-        end
-
-        if cmp_nvim_lsp_loaded then
-            cmp_nvim_lsp.default_capabilities(config.capabilities)
-        end
-
-        if server == 'sumneko_lua' then
-            config = mm.merge(sumneko_config(), config)
-        end
-
-        return config
-    end
-
-    for _, server in ipairs(servers) do
-        require('lspconfig')[server].setup(get_server_config(server))
-    end
+            require('lspconfig')['sumneko_lua'].setup(mm.merge(sumneko_config, server_config))
+        end,
+    })
 end

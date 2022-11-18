@@ -50,6 +50,11 @@ mm.style = {
                 Operator = '',
                 TypeParameter = '',
             },
+            mason = {
+                installed = '✓',
+                pending = '➜',
+                uninstalled = '✗',
+            },
         },
     },
 }
