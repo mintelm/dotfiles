@@ -77,9 +77,6 @@ return function()
         -- global config
         local config = {
             on_attach = on_attach,
-            flags = {
-                debounce_text_changes = 500,
-            },
             capabilities = vim.lsp.protocol.make_client_capabilities(),
         }
         -- special config for sumneko lua
