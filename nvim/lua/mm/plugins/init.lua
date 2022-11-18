@@ -61,7 +61,6 @@ require('packer').startup({function(use)
 
     use {
         'nvim-treesitter/nvim-treesitter',
-        run = ':TSUpdate',
         config = conf('treesitter'),
     }
 
