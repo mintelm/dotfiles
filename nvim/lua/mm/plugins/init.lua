@@ -76,6 +76,10 @@ require('packer').startup({function(use)
     use {
         'williamboman/mason.nvim',
         config = conf('mason'),
+        before = {
+            'nvim-lspconfig',
+            'null-ls.nvim',
+        },
     }
 
     use {
@@ -85,7 +89,12 @@ require('packer').startup({function(use)
             { 'williamboman/mason-lspconfig.nvim' },
         },
         config = conf('lspconfig'),
-        after = 'mason.nvim',
+    }
+
+    use {
+        'jose-elias-alvarez/null-ls.nvim',
+        requires = 'jayp0521/mason-null-ls.nvim',
+        config = conf('null_ls'),
     }
 
     use {

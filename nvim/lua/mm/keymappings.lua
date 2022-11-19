@@ -60,6 +60,7 @@ function M.lsp_mappings(bufnr)
     buf_set_keymap('n', '<C-k>', cmd('lua vim.lsp.buf.signature_help()'), silenced)
     buf_set_keymap('n', '<leader>rn', cmd('lua vim.lsp.buf.rename()'), silenced)
     buf_set_keymap('n', '<leader>ca', cmd('lua vim.lsp.buf.code_action()'), silenced)
+    buf_set_keymap('n', '<C-f>', cmd('lua vim.lsp.buf.format({ async = true })'), silenced)
 end
 
 return M
