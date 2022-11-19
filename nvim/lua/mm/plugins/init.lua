@@ -13,7 +13,7 @@ require('packer').startup({function(use)
 
     use {
         'projekt0n/github-nvim-theme',
-        config = conf('github-nvim-theme'),
+        config = conf('github_theme'),
     }
 
     use 'kyazdani42/nvim-web-devicons'
@@ -21,55 +21,16 @@ require('packer').startup({function(use)
     use {
         'nvim-telescope/telescope.nvim',
         requires = {
-            { 'nvim-lua/plenary.nvim' },
             { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' },
+            { 'nvim-lua/plenary.nvim' },
         },
         config = conf('telescope'),
     }
 
     use {
-        'neovim/nvim-lspconfig',
-        config = conf('lspconfig'),
-        requires = {
-            'williamboman/mason.nvim',
-            'williamboman/mason-lspconfig.nvim',
-            { 'ray-x/lsp_signature.nvim', config = conf('lsp_signature') },
-        }
-    }
-
-    use {
-        'L3MON4D3/LuaSnip',
-        event = 'InsertEnter',
-        requires = 'rafamadriz/friendly-snippets',
-        config = function()
-            require('luasnip/loaders/from_vscode').lazy_load()
-        end,
-    }
-
-    use {
-        'hrsh7th/nvim-cmp',
-        requires = {
-            { 'hrsh7th/cmp-path' },
-            { 'hrsh7th/cmp-nvim-lsp' },
-            { 'hrsh7th/cmp-nvim-lua' },
-            { 'saadparwaiz1/cmp_luasnip' },
-            { 'hrsh7th/cmp-buffer' },
-            { 'hrsh7th/cmp-cmdline' },
-            { 'lukas-reineke/cmp-rg' },
-            { 'lukas-reineke/cmp-under-comparator' },
-        },
-        config = conf('cmp'),
-    }
-
-    use {
-        'nvim-treesitter/nvim-treesitter',
-        config = conf('treesitter'),
-    }
-
-    use {
-        'akinsho/bufferline.nvim',
-        requires = 'kyazdani42/nvim-web-devicons',
-        config = conf('bufferline'),
+        'stevearc/dressing.nvim',
+        after = 'telescope.nvim',
+        config = conf('dressing'),
     }
 
     use {
@@ -83,30 +44,13 @@ require('packer').startup({function(use)
     }
 
     use {
-        'lukas-reineke/indent-blankline.nvim',
-        config = conf('indentline'),
+        'rcarriga/nvim-notify',
+        config = conf('notify'),
     }
 
     use {
-        'phaazon/hop.nvim',
-        config = function()
-            require('hop').setup({})
-        end,
-    }
-
-    use {
-        'anuvyklack/hydra.nvim',
-        requires = {
-            -- needed for window control hydra
-            'sindrets/winshift.nvim',
-        },
-        config = conf('hydra'),
-    }
-
-    use {
-        'stevearc/dressing.nvim',
-        after = 'telescope.nvim',
-        config = conf('dressing'),
+        'nvim-treesitter/nvim-treesitter',
+        config = conf('treesitter'),
     }
 
     use {
@@ -115,10 +59,61 @@ require('packer').startup({function(use)
     }
 
     use {
-        'rcarriga/nvim-notify',
-        config = function()
-            vim.notify = require('notify')
-        end,
+        'akinsho/bufferline.nvim',
+        config = conf('bufferline'),
+    }
+
+    use {
+        'lukas-reineke/indent-blankline.nvim',
+        config = conf('indentline'),
+    }
+
+    use {
+        'phaazon/hop.nvim',
+        config = conf('hop'),
+    }
+
+    use {
+        'williamboman/mason.nvim',
+        config = conf('mason'),
+    }
+
+    use {
+        'neovim/nvim-lspconfig',
+        requires = {
+            { 'ray-x/lsp_signature.nvim', config = conf('lsp_signature') },
+            { 'williamboman/mason-lspconfig.nvim' },
+        },
+        config = conf('lspconfig'),
+        after = 'mason.nvim',
+    }
+
+    use {
+        'hrsh7th/nvim-cmp',
+        requires = {
+            'hrsh7th/cmp-path',
+            'hrsh7th/cmp-nvim-lsp',
+            'hrsh7th/cmp-nvim-lua',
+            'saadparwaiz1/cmp_luasnip',
+            'hrsh7th/cmp-buffer',
+            'hrsh7th/cmp-cmdline',
+            'lukas-reineke/cmp-rg',
+            'lukas-reineke/cmp-under-comparator',
+        },
+        config = conf('cmp'),
+    }
+
+    use {
+        'L3MON4D3/LuaSnip',
+        requires = 'rafamadriz/friendly-snippets',
+        event = 'InsertEnter',
+        config = conf('luasnip'),
+    }
+
+    use {
+        'anuvyklack/hydra.nvim',
+        requires = 'sindrets/winshift.nvim',
+        config = conf('hydra'),
     }
 
     if bootstrapped then

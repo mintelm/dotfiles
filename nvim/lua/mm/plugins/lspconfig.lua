@@ -1,7 +1,6 @@
 return function()
     local cmp_nvim_lsp_loaded, cmp_nvim_lsp = mm.safe_require('cmp_nvim_lsp')
     local lsp_mappings = require('mm.keymappings').lsp_mappings
-    local mason_icons = mm.style.icons.lsp.mason
 
     local function overwrite_icons()
         for type, icon in pairs(mm.style.icons.lsp.signs) do
@@ -75,15 +74,6 @@ return function()
         server_config.capabilities = cmp_nvim_lsp.default_capabilities(server_config.capabilities)
     end
 
-    require('mason').setup({
-        ui = {
-            icons = {
-                package_installed = mason_icons.installed,
-                package_pending = mason_icons.pending,
-                package_uninstalled = mason_icons.uninstalled,
-            },
-        },
-    })
     require('mason-lspconfig').setup()
     require('mason-lspconfig').setup_handlers({
         -- The first entry (without a key) will be the default handler
