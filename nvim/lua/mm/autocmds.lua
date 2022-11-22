@@ -10,7 +10,7 @@ mm.augroup('UserSettings', {
     -- set tab width dynamically on c-like files
     {
         event = { 'FileType' },
-        pattern  = { 'c', 'cpp', 'objc', 'objcpp', 'sh', 'make' },
+        pattern  = { 'c', 'sh', 'make' },
         command = function()
             mm.set_tab_width(8)
         end,
