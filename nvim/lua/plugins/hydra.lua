@@ -119,4 +119,20 @@ return function()
             { '<Esc>', nil, { exit = true, nowait = true, desc = false } },
         },
     })
+
+    hydra({
+        name = 'Debugging',
+        config = utils.merge({ color = 'pink' }, default_config),
+        hint = hints.dap,
+        mode = 'n',
+        body = '<Leader>d',
+        heads = {
+            { 'b', cmd('DapToggleBreakpoint') },
+            { 'c', cmd('DapContinue') },
+            { 's', cmd('DapStepOver') },
+            { 'i', cmd('DapStepInto') },
+            { 'r', cmd('DapToggleRepl') },
+            { '<Esc>', nil, { exit = true, nowait = true, desc = false } },
+        },
+    })
 end

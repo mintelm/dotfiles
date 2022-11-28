@@ -20,4 +20,8 @@ return {
 ^ _f_: find files        _r_: live grep           _/_: search in file   _;_: command-line history ^
 ^ _g_: find git files    _c_: execute command     _?_: search history
 ]],
+    dap = [[
+^ _b_: toggle breakpoint    _s_: step over    _r_: toggle repl ^
+^ _c_: continue             _i_: step into
+]],
 }

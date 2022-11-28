@@ -97,6 +97,13 @@ require('packer').startup({
         })
 
         use({
+            'mfussenegger/nvim-dap',
+            requires = { 'jayp0521/mason-nvim-dap.nvim' },
+            config = conf('dap'),
+            after = 'mason.nvim',
+        })
+
+        use({
             'hrsh7th/nvim-cmp',
             requires = {
                 'hrsh7th/cmp-path',
