@@ -19,7 +19,7 @@ return function()
 
     -- setup lsp signs
     for type, icon in pairs(style.icons.lsp.signs) do
-        type = type:sub(1,1):upper()..type:sub(2)
+        type = type:sub(1, 1):upper() .. type:sub(2)
         local sign = 'DiagnosticSign' .. type
         local hl = 'Diagnostic' .. type
 
@@ -29,7 +29,7 @@ return function()
     -- override handlers
     -- FIXME: somehow this old snippets works fine for multiple clients, while
     --        the newer snippet from `:h vim.diagnostic` does not....
-    vim.diagnostic.config({signs = false})
+    vim.diagnostic.config({ signs = false })
     local ns = vim.api.nvim_create_namespace('diagnostics-severity')
     local orig_show = vim.diagnostic.show
     local function set_signs(bufnr)
@@ -48,14 +48,17 @@ return function()
         local filtered_diagnostics = vim.tbl_values(max_severity_per_line)
         orig_show(ns, bufnr, filtered_diagnostics, { signs = true })
     end
+
     function vim.diagnostic.show(namespace, bufnr, ...)
         orig_show(namespace, bufnr, ...)
         set_signs(bufnr)
     end
-    vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, float_opts)
-    vim.lsp.handlers['textDocument/signatureHelp'] = vim.lsp.with(vim.lsp.handlers.signature_help, float_opts)
 
-    local server_config = { }
+    vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, float_opts)
+    vim.lsp.handlers['textDocument/signatureHelp'] =
+        vim.lsp.with(vim.lsp.handlers.signature_help, float_opts)
+
+    local server_config = {}
 
     if cmp_nvim_lsp_loaded then
         server_config.capabilities = cmp_nvim_lsp.default_capabilities()
@@ -66,7 +69,7 @@ return function()
     require('mason-lspconfig').setup()
     require('mason-lspconfig').setup_handlers({
         -- default handler
-        function (server_name)
+        function(server_name)
             require('lspconfig')[server_name].setup(server_config)
         end,
         -- specific handlers

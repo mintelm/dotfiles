@@ -23,7 +23,7 @@ map('n', '<Space>', cmd('noh'), silenced)
 -- bufferline
 map('n', ']b', cmd('BufferLineCycleNext'), silenced)
 map('n', '[b', cmd('BufferLineCyclePrev'), silenced)
-map('n', '<leader>bf', (cmd 'BufferLinePick'), silenced)
+map('n', '<leader>bf', cmd('BufferLinePick'), silenced)
 map('n', '<leader>bd', cmd('BufferLinePickClose'), silenced)
 map('n', '<leader>1', cmd('BufferLineGoToBuffer 1'), silenced)
 map('n', '<leader>2', cmd('BufferLineGoToBuffer 2'), silenced)

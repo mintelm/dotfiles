@@ -173,7 +173,7 @@ return function()
                 end
 
                 return ' ' .. mode
-            end
-        }
+            end,
+        },
     })
 end

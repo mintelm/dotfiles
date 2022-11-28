@@ -2,7 +2,7 @@ local fmt = string.format
 local levels = vim.log.levels
 local fn = vim.fn
 
-local M = { }
+local M = {}
 
 ---@param group_name string A highlight group name
 local function get_hl(group_name)
@@ -61,9 +61,14 @@ function M.bootstrap_packer()
 
     if fn.empty(fn.glob(install_path)) > 0 then
         packer_notify('Downloading packer.nvim...')
-        packer_notify(
-            fn.system({ 'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path })
-        )
+        packer_notify(fn.system({
+            'git',
+            'clone',
+            '--depth',
+            '1',
+            'https://github.com/wbthomason/packer.nvim',
+            install_path,
+        }))
         vim.cmd('packadd! packer.nvim')
 
         return true
@@ -141,13 +146,13 @@ local installed
 ---@return boolean
 function M.plugin_installed(plugin_name)
     if not installed then
-        local dirs = vim.fn.expand(vim.fn.stdpath('data') .. '/site/pack/packer/start/*', true, true)
+        local dir = vim.fn.expand(vim.fn.stdpath('data') .. '/site/pack/packer/start/*', true, true)
         local opt = vim.fn.expand(vim.fn.stdpath('data') .. '/site/pack/packer/opt/*', true, true)
 
-        vim.list_extend(dirs, opt)
+        vim.list_extend(dir, opt)
         installed = vim.tbl_map(function(path)
             return vim.fn.fnamemodify(path, ':t')
-        end, dirs)
+        end, dir)
     end
 
     return vim.tbl_contains(installed, plugin_name)

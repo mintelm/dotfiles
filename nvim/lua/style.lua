@@ -1,9 +1,9 @@
-local M = { }
+local M = {}
 
 M = {
     border = {
         rectangle = { '┌', '─', '┐', '│', '┘', '─', '└', '│' },
-        rounded   = { '╭', '─', '╮', '│', '╯', '─', '╰', '│' },
+        rounded = { '╭', '─', '╮', '│', '╯', '─', '╰', '│' },
     },
     icons = {
         modified = '',
@@ -20,10 +20,10 @@ M = {
         lsp = {
             server = ' ', -- 
             signs = {
-                error = '',  -- ✗ 
-                warn = '',   -- 
-                info = '',   --  
-                hint = '',   -- 
+                error = '', -- ✗ 
+                warn = '', -- 
+                info = '', --  
+                hint = '', -- 
             },
             kinds = {
                 Text = '',

@@ -12,7 +12,7 @@ return function()
             mappings = {
                 i = {
                     ['<c-c>'] = function()
-                        vim.cmd 'stopinsert!'
+                        vim.cmd('stopinsert!')
                     end,
                     ['<esc>'] = actions.close,
                     ['<c-s>'] = actions.select_horizontal,

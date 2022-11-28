@@ -34,7 +34,7 @@ return function()
         snippet = {
             expand = function(args)
                 require('luasnip').lsp_expand(args.body)
-            end
+            end,
         },
         sources = {
             { name = 'path', priority_weight = 110 },
@@ -54,12 +54,12 @@ return function()
         },
         mapping = {
             ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
-            ['<Tab>'] = cmp.mapping(tab, { 'i', 's'}),
-            ['<S-Tab>'] = cmp.mapping(shift_tab, { 'i', 's'}),
+            ['<Tab>'] = cmp.mapping(tab, { 'i', 's' }),
+            ['<S-Tab>'] = cmp.mapping(shift_tab, { 'i', 's' }),
             ['<CR>'] = cmp.mapping.confirm({ select = true }),
             ['<C-u>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
             ['<C-d>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
-            ['<C-q>'] = cmp.mapping({ i = cmp.mapping.abort(), c = cmp.mapping.close(), }),
+            ['<C-q>'] = cmp.mapping({ i = cmp.mapping.abort(), c = cmp.mapping.close() }),
         },
         sorting = {
             priority_weight = 100,
@@ -77,7 +77,8 @@ return function()
         formatting = {
             deprecated = true,
             format = function(entry, vim_item)
-                vim_item.kind = string.format('%s %s', style.icons.lsp.kinds[vim_item.kind], vim_item.kind)
+                vim_item.kind =
+                    string.format('%s %s', style.icons.lsp.kinds[vim_item.kind], vim_item.kind)
                 vim_item.menu = ({
                     nvim_lsp = '[LSP]',
                     nvim_lua = '[Lua]',
@@ -95,19 +96,20 @@ return function()
     })
     -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
     cmp.setup.cmdline('/', {
-        mapping = cmp.mapping.preset.cmdline({ }),
+        mapping = cmp.mapping.preset.cmdline({}),
         sources = {
-            { name = 'buffer' }
-        }
+            { name = 'buffer' },
+        },
     })
     -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
     cmp.setup.cmdline(':', {
         mapping = cmp.mapping.preset.cmdline(),
-        sources = cmp.config.sources({
-            { name = 'path' }
-        },
+        sources = cmp.config.sources(
+            {
+                { name = 'path' },
+            },
             -- fallback
             { { name = 'cmdline' } }
-        )
+        ),
     })
 end

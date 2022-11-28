@@ -12,14 +12,14 @@ utils.augroup('UserSettings', {
     -- set tab width dynamically on c-like files
     {
         event = { 'FileType' },
-        pattern  = { 'c', 'sh', 'make' },
+        pattern = { 'c', 'sh', 'make' },
         command = function()
             utils.set_tab_width(8)
         end,
     },
     {
         event = { 'FileType' },
-        pattern  = { 'bib' },
+        pattern = { 'bib' },
         command = function()
             utils.set_tab_width(2)
         end,
@@ -27,21 +27,21 @@ utils.augroup('UserSettings', {
     -- toggle hiding invisible chars on insert
     {
         event = { 'WinLeave', 'BufLeave', 'InsertEnter' },
-        pattern  = { '*' },
+        pattern = { '*' },
         command = function()
             vim.o.list = false
         end,
     },
     {
         event = { 'WinEnter', 'BufEnter', 'InsertLeave' },
-        pattern  = { '*' },
+        pattern = { '*' },
         command = function()
             vim.o.list = true
         end,
     },
     {
         event = { 'WinEnter' },
-        pattern  = { '*' },
+        pattern = { '*' },
         command = function()
             if vim.wo.number then
                 vim.wo.cursorline = true
@@ -51,7 +51,7 @@ utils.augroup('UserSettings', {
     },
     {
         event = { 'WinLeave' },
-        pattern  = { '*' },
+        pattern = { '*' },
         command = function()
             if vim.wo.number then
                 vim.wo.cursorline = false
