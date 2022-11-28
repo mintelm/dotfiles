@@ -1,5 +1,3 @@
-local M = { }
-
 local silenced = { silent = true }
 local cmd = function(command)
     return table.concat({ '<cmd>', command, '<CR>' })
@@ -45,22 +43,14 @@ mm.map('n', 'S', cmd('HopChar2BC'), silenced)
 -- mm.map('', 'T', cmd 'lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR, current_line_only = true, hint_offset = 1 })', {})
 
 -- lsp
--- this function is passed to lsp's on_attach hook, so mappings are only loaded if lsp is
-function M.lsp_mappings(bufnr)
-    local function buf_set_keymap(...) mm.bmap(bufnr, ...) end
-
-    -- most common lsp functions
-    buf_set_keymap('n', 'gD', cmd('lua vim.lsp.buf.declaration()'), silenced)
-    buf_set_keymap('n', 'gd', cmd('Telescope lsp_definitions theme=ivy'), silenced)
-    buf_set_keymap('n', 'gi', cmd('Telescope lsp_implementations theme=ivy'), silenced)
-    buf_set_keymap('n', 'gr', cmd('Telescope lsp_references theme=ivy'), silenced)
-    buf_set_keymap('n', ']d', cmd('lua vim.diagnostic.goto_next()'), silenced)
-    buf_set_keymap('n', '[d', cmd('lua vim.diagnostic.goto_prev()'), silenced)
-    buf_set_keymap('n', 'K', cmd('lua vim.lsp.buf.hover()'), silenced)
-    buf_set_keymap('n', '<C-k>', cmd('lua vim.lsp.buf.signature_help()'), silenced)
-    buf_set_keymap('n', '<leader>rn', cmd('lua vim.lsp.buf.rename()'), silenced)
-    buf_set_keymap('n', '<leader>ca', cmd('lua vim.lsp.buf.code_action()'), silenced)
-    buf_set_keymap('n', '<C-f>', cmd('lua vim.lsp.buf.format({ async = true })'), silenced)
-end
-
-return M
+mm.map('n', 'gD', cmd('lua vim.lsp.buf.declaration()'), silenced)
+mm.map('n', 'gd', cmd('Telescope lsp_definitions theme=ivy'), silenced)
+mm.map('n', 'gi', cmd('Telescope lsp_implementations theme=ivy'), silenced)
+mm.map('n', 'gr', cmd('Telescope lsp_references theme=ivy'), silenced)
+mm.map('n', ']d', cmd('lua vim.diagnostic.goto_next()'), silenced)
+mm.map('n', '[d', cmd('lua vim.diagnostic.goto_prev()'), silenced)
+mm.map('n', 'K', cmd('lua vim.lsp.buf.hover()'), silenced)
+mm.map('n', '<C-k>', cmd('lua vim.lsp.buf.signature_help()'), silenced)
+mm.map('n', '<leader>rn', cmd('lua vim.lsp.buf.rename()'), silenced)
+mm.map('n', '<leader>ca', cmd('lua vim.lsp.buf.code_action()'), silenced)
+mm.map('n', '<C-f>', cmd('lua vim.lsp.buf.format({ async = true })'), silenced)
