@@ -86,14 +86,14 @@ require('packer').startup({function(use)
         'neovim/nvim-lspconfig',
         requires = {
             { 'ray-x/lsp_signature.nvim', config = conf('lsp_signature') },
-            { 'williamboman/mason-lspconfig.nvim' },
+            { 'williamboman/mason-lspconfig.nvim', before = 'nvim-lspconfig' },
         },
         config = conf('lspconfig'),
     }
 
     use {
         'jose-elias-alvarez/null-ls.nvim',
-        requires = 'jayp0521/mason-null-ls.nvim',
+        requires = { 'jayp0521/mason-null-ls.nvim', before = 'null-ls.nvim' },
         config = conf('null_ls'),
     }
 
