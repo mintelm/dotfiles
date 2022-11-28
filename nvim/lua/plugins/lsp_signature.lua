@@ -2,7 +2,7 @@ return function()
     require('lsp_signature').setup({
         bind = true,
         handler_opts = {
-            border = mm.style.current.border,
+            border = require('style').current.border,
         },
         hint_enable = false,
     })

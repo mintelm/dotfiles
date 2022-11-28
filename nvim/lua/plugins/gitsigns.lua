@@ -6,7 +6,7 @@ return function()
             delay = 0,
         },
         preview_config = {
-            border = mm.style.current.border,
+            border = require('style').current.border,
         },
     })
 end

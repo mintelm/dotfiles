@@ -1,5 +1,5 @@
 return function()
-    local mason_icons = mm.style.icons.lsp.mason
+    local mason_icons = require('style').icons.lsp.mason
 
     require('mason').setup({
         ui = {

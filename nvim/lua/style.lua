@@ -1,4 +1,6 @@
-mm.style = {
+local M = { }
+
+M = {
     border = {
         rectangle = { '┌', '─', '┐', '│', '┘', '─', '└', '│' },
         rounded   = { '╭', '─', '╮', '│', '╯', '─', '╰', '│' },
@@ -59,6 +61,8 @@ mm.style = {
     },
 }
 
-mm.style.current = {
-    border = mm.style.border.rounded,
+M.current = {
+    border = M.border.rounded,
 }
+
+return M

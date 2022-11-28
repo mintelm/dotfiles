@@ -1,9 +1,9 @@
 return function()
-    local bc = mm.style.current.border
+    local bc = require('style').current.border
 
     require('dressing').setup({
         input = {
-            border = mm.style.current.border,
+            border = bc,
         },
         select = {
             telescope = require('telescope.themes').get_cursor({

@@ -1,21 +1,23 @@
 return function()
     local hydra = require('hydra')
     local gitsigns = require('gitsigns')
-    local hints = require('mm.plugins.hydra_hints')
+    local utils = require('utils')
+    local hints = require('plugins.hydra_hints')
     local cmd = function(command)
         return table.concat({ '<cmd>', command, '<CR>' })
     end
+    local style = require('style')
     local default_config = {
         invoke_on_body = true,
         hint = {
             position = 'bottom',
-            border = mm.style.current.border,
+            border = style.current.border,
         },
     }
 
     hydra({
         name = 'Git',
-        config = mm.merge({color = 'pink'}, default_config),
+        config = utils.merge({color = 'pink'}, default_config),
         hint = hints.git,
         mode = { 'n', 'x' },
         body = '<leader>g',
@@ -45,7 +47,7 @@ return function()
 
     hydra({
         name = 'Telescope',
-        config = mm.merge({color = 'teal'}, default_config),
+        config = utils.merge({color = 'teal'}, default_config),
         hint = hints.telescope,
         mode = 'n',
         body = '<Leader>f',

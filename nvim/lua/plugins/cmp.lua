@@ -1,8 +1,10 @@
 return function()
     local cmp = require('cmp')
+    local utils = require('utils')
+    local style = require('style')
 
     local function tab(fallback)
-        local ok, luasnip = mm.safe_require('luasnip', { silent = true })
+        local ok, luasnip = utils.safe_require('luasnip', { silent = true })
 
         if cmp.visible() then
             cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
@@ -14,7 +16,7 @@ return function()
     end
 
     local function shift_tab(fallback)
-        local ok, luasnip = mm.safe_require('luasnip', { silent = true })
+        local ok, luasnip = utils.safe_require('luasnip', { silent = true })
 
         if cmp.visible() then
             cmp.select_prev_item({ behavior = cmp.SelectBehavior.Select })
@@ -75,7 +77,7 @@ return function()
         formatting = {
             deprecated = true,
             format = function(entry, vim_item)
-                vim_item.kind = string.format('%s %s', mm.style.icons.lsp.kinds[vim_item.kind], vim_item.kind)
+                vim_item.kind = string.format('%s %s', style.icons.lsp.kinds[vim_item.kind], vim_item.kind)
                 vim_item.menu = ({
                     nvim_lsp = '[LSP]',
                     nvim_lua = '[Lua]',

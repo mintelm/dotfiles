@@ -1,7 +1,9 @@
 return function()
-    local cmp_nvim_lsp_loaded, cmp_nvim_lsp = mm.safe_require('cmp_nvim_lsp')
+    local utils = require('utils')
+    local style = require('style')
+    local cmp_nvim_lsp_loaded, cmp_nvim_lsp = utils.safe_require('cmp_nvim_lsp')
     local float_opts = {
-        border = mm.style.current.border,
+        border = style.current.border,
         focusable = false,
         source = 'always',
         prefix = '',
@@ -16,7 +18,7 @@ return function()
     })
 
     -- setup lsp signs
-    for type, icon in pairs(mm.style.icons.lsp.signs) do
+    for type, icon in pairs(style.icons.lsp.signs) do
         type = type:sub(1,1):upper()..type:sub(2)
         local sign = 'DiagnosticSign' .. type
         local hl = 'Diagnostic' .. type

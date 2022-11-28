@@ -1,4 +1,4 @@
-local utils = require('mm.utils')
+local utils = require('utils')
 local conf = utils.conf
 local bootstrapped = utils.bootstrap_packer()
 

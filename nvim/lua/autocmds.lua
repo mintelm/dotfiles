@@ -1,4 +1,6 @@
-mm.augroup('UserSettings', {
+local utils = require('utils')
+
+utils.augroup('UserSettings', {
     -- highlight yank for 250ms
     {
         event = { 'TextYankPost' },
@@ -12,14 +14,14 @@ mm.augroup('UserSettings', {
         event = { 'FileType' },
         pattern  = { 'c', 'sh', 'make' },
         command = function()
-            mm.set_tab_width(8)
+            utils.set_tab_width(8)
         end,
     },
     {
         event = { 'FileType' },
         pattern  = { 'bib' },
         command = function()
-            mm.set_tab_width(2)
+            utils.set_tab_width(2)
         end,
     },
     -- toggle hiding invisible chars on insert
@@ -41,7 +43,7 @@ mm.augroup('UserSettings', {
         event = { 'WinEnter' },
         pattern  = { '*' },
         command = function()
-            if (vim.wo.number) then
+            if vim.wo.number then
                 vim.wo.cursorline = true
                 vim.wo.relativenumber = true
             end
@@ -51,7 +53,7 @@ mm.augroup('UserSettings', {
         event = { 'WinLeave' },
         pattern  = { '*' },
         command = function()
-            if (vim.wo.number) then
+            if vim.wo.number then
                 vim.wo.cursorline = false
                 vim.wo.relativenumber = false
             end
