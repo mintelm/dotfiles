@@ -71,7 +71,7 @@ return function()
     }
 
     if cmp_nvim_lsp_loaded then
-        server_config.capabilities = cmp_nvim_lsp.default_capabilities(server_config.capabilities)
+        server_config.capabilities = cmp_nvim_lsp.default_capabilities()
     end
 
     require('mason-lspconfig').setup()
@@ -103,6 +103,16 @@ return function()
                 },
             }
             require('lspconfig')['sumneko_lua'].setup(mm.merge(sumneko_config, server_config))
+        end,
+        ['clangd'] = function()
+            local clangd_config = { }
+            if cmp_nvim_lsp_loaded then
+                clangd_config.capabilities = cmp_nvim_lsp.default_capabilities()
+            else
+                clangd_config.capabilities = vim.lsp.protocol.make_client_capabilities()
+            end
+            clangd_config.capabilities.offsetEncoding = 'utf-8'
+            require('lspconfig')['clangd'].setup(mm.merge(clangd_config, server_config))
         end,
     })
 end
