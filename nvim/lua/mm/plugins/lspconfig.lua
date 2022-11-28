@@ -25,32 +25,31 @@ return function()
     end
 
     -- override handlers
-    local ns = vim.api.nvim_create_namespace('diagnostic-severity')
-    local orig_signs_handler = vim.diagnostic.handlers.signs
-    vim.diagnostic.handlers.signs = {
-        show = function(_, bufnr, _, opts)
-            -- Get all diagnostics from the whole buffer rather than just the
-            -- diagnostics passed to the handler
-            local diagnostics = vim.diagnostic.get(bufnr)
-
-            -- Find the 'worst' diagnostic per line
-            local max_severity_per_line = {}
-            for _, d in pairs(diagnostics) do
-                local m = max_severity_per_line[d.lnum]
-                if not m or d.severity < m.severity then
-                    max_severity_per_line[d.lnum] = d
-                end
+    -- FIXME: somehow this old snippets works fine for multiple clients, while
+    --        the newer snippet from `:h vim.diagnostic` does not....
+    vim.diagnostic.config({signs = false})
+    local ns = vim.api.nvim_create_namespace('diagnostics-severity')
+    local orig_show = vim.diagnostic.show
+    local function set_signs(bufnr)
+        -- Get all diagnostics from the current buffer
+        local diagnostics = vim.diagnostic.get(bufnr)
+        -- Find the 'worst' diagnostic per line
+        local max_severity_per_line = {}
+        for _, d in pairs(diagnostics) do
+            local m = max_severity_per_line[d.lnum]
+            if not m or d.severity < m.severity then
+                max_severity_per_line[d.lnum] = d
             end
-
-            -- Pass the filtered diagnostics (with our custom namespace) to
-            -- the original handler
-            local filtered_diagnostics = vim.tbl_values(max_severity_per_line)
-            orig_signs_handler.show(ns, bufnr, filtered_diagnostics, opts)
-        end,
-        hide = function(_, bufnr)
-            orig_signs_handler.hide(ns, bufnr)
-        end,
-    }
+        end
+        -- Show the filtered diagnostics using the custom namespace. Use the
+        -- reference to the original function to avoid a loop.
+        local filtered_diagnostics = vim.tbl_values(max_severity_per_line)
+        orig_show(ns, bufnr, filtered_diagnostics, { signs = true })
+    end
+    function vim.diagnostic.show(namespace, bufnr, ...)
+        orig_show(namespace, bufnr, ...)
+        set_signs(bufnr)
+    end
     vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, float_opts)
     vim.lsp.handlers['textDocument/signatureHelp'] = vim.lsp.with(vim.lsp.handlers.signature_help, float_opts)
 
