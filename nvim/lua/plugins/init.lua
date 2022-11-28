@@ -77,25 +77,23 @@ require('packer').startup({
         use({
             'williamboman/mason.nvim',
             config = conf('mason'),
-            before = {
-                'nvim-lspconfig',
-                'null-ls.nvim',
-            },
         })
 
         use({
             'neovim/nvim-lspconfig',
             requires = {
                 { 'ray-x/lsp_signature.nvim', config = conf('lsp_signature') },
-                { 'williamboman/mason-lspconfig.nvim', before = 'nvim-lspconfig' },
+                { 'williamboman/mason-lspconfig.nvim' },
             },
             config = conf('lspconfig'),
+            after = 'mason.nvim',
         })
 
         use({
             'jose-elias-alvarez/null-ls.nvim',
-            requires = { 'jayp0521/mason-null-ls.nvim', before = 'null-ls.nvim' },
+            requires = { 'jayp0521/mason-null-ls.nvim' },
             config = conf('null_ls'),
+            after = 'mason.nvim',
         })
 
         use({
