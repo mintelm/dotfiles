@@ -1,11 +1,6 @@
 [user]
     name = Mario Mintel
     email = mariomintel@gmail.com
-[sendemail]
-    smtpEncryption = tls
-    smtpServer = smtp.gmail.com
-    smtpUser = mariomintel@gmail.com
-    smtpServerPort = 587
 [alias]
     a = add
     ap = add --patch
@@ -35,14 +30,12 @@
     unstage = reset HEAD --
 [include]
     path = ~/.gitconfig_local
-[includeIf "gitdir:~/uni/"]
-    path = ~/.gitconfig_othr
 [filter "lfs"]
     clean = git-lfs clean -- %f
     smudge = git-lfs smudge -- %f
     process = git-lfs filter-process
     required = true
 [commit]
-	verbose = true
+    verbose = true
 [rerere]
-	enabled = true
+    enabled = true
