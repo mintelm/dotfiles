@@ -29,6 +29,11 @@ require('packer').startup({
         })
 
         use({
+            'nvim-tree/nvim-tree.lua',
+            config = conf('nvim_tree'),
+        })
+
+        use({
             'stevearc/dressing.nvim',
             after = 'telescope.nvim',
             config = conf('dressing'),

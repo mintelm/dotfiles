@@ -56,3 +56,6 @@ map('n', '<C-k>', cmd('lua vim.lsp.buf.signature_help()'), silenced)
 map('n', '<leader>rn', cmd('lua vim.lsp.buf.rename()'), silenced)
 map('n', '<leader>ca', cmd('lua vim.lsp.buf.code_action()'), silenced)
 map('n', '<C-f>', cmd('lua vim.lsp.buf.format({ async = true })'), silenced)
+
+-- file explorer
+map('n', '<leader>e', cmd('NvimTreeToggle'), silenced)
