@@ -5,6 +5,30 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
+# checks to see if we are in a windows or linux dir
+function isWinDir {
+    case `pwd -P` in
+        /mnt/*) return $(true);;
+        *) return $(false);;
+    esac
+}
+function isVimEnv {
+    case `env | grep VIMRUNTIME` in
+        1) return $(true);;
+        *) return $(false);;
+    esac
+}
+# wrap the git command to either run windows git or linux
+function git {
+    #if (isWinDir) && (! isVimEnv)
+    if isWinDir
+    then
+        git.exe "$@"
+    else
+        /usr/bin/git "$@"
+    fi
+}
+
 # general
 PATH=$PATH:~/.local/bin
 fpath+=(~/.zsh)

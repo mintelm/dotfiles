@@ -9,6 +9,7 @@
     ca = commit --amend
     csa = commit --amend -S
     s = status
+    sv = status -v
     p = push
     pf = push -f
     pa = !git remote | xargs -L1 git push --all
@@ -30,12 +31,9 @@
     unstage = reset HEAD --
 [include]
     path = ~/.gitconfig_local
-[filter "lfs"]
-    clean = git-lfs clean -- %f
-    smudge = git-lfs smudge -- %f
-    process = git-lfs filter-process
-    required = true
 [commit]
     verbose = true
 [rerere]
     enabled = true
+[push]
+    autoSetupRemote = true

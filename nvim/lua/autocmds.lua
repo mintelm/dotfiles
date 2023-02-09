@@ -14,7 +14,7 @@ utils.augroup('UserSettings', {
         event = { 'FileType' },
         pattern = { 'c', 'sh', 'make' },
         command = function()
-            utils.set_tab_width(8)
+            utils.set_tab_width(2)
         end,
     },
     {
