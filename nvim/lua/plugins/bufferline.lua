@@ -1,4 +1,4 @@
-return function()
+local function config()
     require('bufferline').setup({
         options = {
             numbers = 'ordinal',
@@ -12,3 +12,9 @@ return function()
         },
     })
 end
+
+return {
+    'akinsho/bufferline.nvim',
+    config = config,
+    dependencies = 'kyazdani42/nvim-web-devicons',
+}

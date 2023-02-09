@@ -1,4 +1,4 @@
-return function()
+local function config()
     require('nvim-treesitter.configs').setup({
         auto_install = true,
         highlight = {
@@ -9,3 +9,8 @@ return function()
         },
     })
 end
+
+return {
+    'nvim-treesitter/nvim-treesitter',
+    config = config,
+}

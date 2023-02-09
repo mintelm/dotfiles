@@ -1,6 +1,7 @@
-return function()
-    local utils = require('utils')
-    local style = require('style')
+local utils = require('utils')
+local style = require('style')
+
+local function lsp_config()
     local cmp_nvim_lsp_loaded, cmp_nvim_lsp = utils.safe_require('cmp_nvim_lsp')
     local float_opts = {
         border = style.current.border,
@@ -98,3 +99,67 @@ return function()
         end,
     })
 end
+
+local function lsp_signature_config()
+    require('lsp_signature').setup({
+        bind = true,
+        handler_opts = {
+            border = style.current.border,
+        },
+        hint_enable = false,
+    })
+end
+
+local function mason_config()
+    local mason_icons = style.icons.lsp.mason
+    require('mason').setup({
+        ui = {
+            icons = {
+                package_installed = mason_icons.installed,
+                package_pending = mason_icons.pending,
+                package_uninstalled = mason_icons.uninstalled,
+            },
+        },
+    })
+end
+
+return {
+    {
+        'neovim/nvim-lspconfig',
+        config = lsp_config,
+        dependencies = {
+            {
+                'ray-x/lsp_signature.nvim',
+                config = lsp_signature_config,
+            },
+            {
+                'williamboman/mason.nvim',
+                config = mason_config,
+            },
+            {
+                'williamboman/mason-lspconfig.nvim',
+            },
+            {
+                'jose-elias-alvarez/null-ls.nvim',
+                config = function()
+                    require('null-ls').setup({})
+                    require('mason-null-ls').setup({
+                        automatic_setup = true,
+                    })
+                    require('mason-null-ls').setup_handlers({})
+                end,
+                dependencies = { 'jayp0521/mason-null-ls.nvim' },
+            },
+            {
+                'mfussenegger/nvim-dap',
+                config = function()
+                    require('mason-nvim-dap').setup({
+                        automatic_setup = true,
+                    })
+                    require('mason-nvim-dap').setup_handlers({})
+                end,
+                dependencies = { 'jayp0521/mason-nvim-dap.nvim' },
+            },
+        },
+    },
+}

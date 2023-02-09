@@ -1,4 +1,4 @@
-return function()
+local function config()
     local bc = require('style').current.border
 
     require('dressing').setup({
@@ -13,3 +13,11 @@ return function()
         },
     })
 end
+
+return {
+    'stevearc/dressing.nvim',
+    config = config,
+    dependencies = {
+        'nvim-telescope/telescope.nvim',
+    },
+}

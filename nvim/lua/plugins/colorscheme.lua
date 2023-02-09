@@ -1,4 +1,4 @@
-return function()
+local function config()
     local theme_style = 'dark_default'
     local colors = require('github-theme.palette').get_palette(theme_style)
 
@@ -17,3 +17,8 @@ return function()
         },
     })
 end
+
+return {
+    'projekt0n/github-nvim-theme',
+    config = config,
+}

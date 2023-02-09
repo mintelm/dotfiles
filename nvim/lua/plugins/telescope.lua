@@ -1,6 +1,7 @@
-return function()
+local style = require('style')
+
+local function config()
     local actions = require('telescope.actions')
-    local style = require('style')
     local bc = style.current.border
 
     require('telescope').setup({
@@ -27,3 +28,16 @@ return function()
 
     require('telescope').load_extension('fzf')
 end
+
+return {
+    'nvim-telescope/telescope.nvim',
+    config = config,
+    dependencies = {
+        'nvim-lua/plenary.nvim',
+        'kyazdani42/nvim-web-devicons',
+        {
+            'nvim-telescope/telescope-fzf-native.nvim',
+            build = 'make',
+        },
+    },
+}

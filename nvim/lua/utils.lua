@@ -1,6 +1,5 @@
 local fmt = string.format
 local levels = vim.log.levels
-local fn = vim.fn
 
 local M = {}
 
@@ -44,46 +43,6 @@ function M.get_hl(group, attribute, fallback)
 
     -- convert the decimal RGBA value from the hl by name to a 6 character hex + padding if needed
     return color
-end
-
----A thin wrapper around vim.notify to add packer details to the message
----@param msg string
-local function packer_notify(msg, level)
-    vim.notify(msg, level, { title = 'Packer' })
-end
-
--- Make sure packer is installed on the current machine and load
--- the dev or upstream version depending on if we are at work or not
--- NOTE: install packer as an opt plugin since it's loaded conditionally on my local machine
--- it needs to be installed as optional so the install dir is consistent across machines
-function M.bootstrap_packer()
-    local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
-
-    if fn.empty(fn.glob(install_path)) > 0 then
-        packer_notify('Downloading packer.nvim...')
-        packer_notify(fn.system({
-            'git',
-            'clone',
-            '--depth',
-            '1',
-            'https://github.com/wbthomason/packer.nvim',
-            install_path,
-        }))
-        vim.cmd('packadd! packer.nvim')
-
-        return true
-    else
-        M.safe_require('impatient')
-
-        return false
-    end
-end
-
----Require a plugin config
----@param name string
----@return any
-function M.conf(name)
-    return require(fmt('plugins.%s', name))
 end
 
 ---Inspect contents of any object
@@ -138,24 +97,6 @@ function M.safe_require(module, opts)
     end
 
     return ok, result
-end
-
-local installed
----Check if a plugin is on the system not whether or not it is loaded
----@param plugin_name string
----@return boolean
-function M.plugin_installed(plugin_name)
-    if not installed then
-        local dir = vim.fn.expand(vim.fn.stdpath('data') .. '/site/pack/packer/start/*', true, true)
-        local opt = vim.fn.expand(vim.fn.stdpath('data') .. '/site/pack/packer/opt/*', true, true)
-
-        vim.list_extend(dir, opt)
-        installed = vim.tbl_map(function(path)
-            return vim.fn.fnamemodify(path, ':t')
-        end, dir)
-    end
-
-    return vim.tbl_contains(installed, plugin_name)
 end
 
 ---@class Autocommand

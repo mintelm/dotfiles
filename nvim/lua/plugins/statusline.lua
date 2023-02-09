@@ -1,4 +1,4 @@
-return function()
+local function config()
     local hydra = require('hydra.statusline')
     local get_hl = require('utils').get_hl
     local colors = require('github-theme.palette').get_palette('dark_default')
@@ -144,6 +144,15 @@ return function()
         },
         {
             provider = {
+                name = 'line_percentage',
+            },
+            hl = {
+                fg = colors.syntax.comment
+            },
+            right_sep = ' ',
+        },
+        {
+            provider = {
                 name = 'scroll_bar',
                 opts = {
                     reverse = true,
@@ -177,3 +186,14 @@ return function()
         },
     })
 end
+
+return {
+    'feline-nvim/feline.nvim',
+    config = config,
+    dependencies = {
+        'kyazdani42/nvim-web-devicons',
+        -- these are used for statusline components and colors
+        'projekt0n/github-nvim-theme',
+        'anuvyklack/hydra.nvim',
+    },
+}

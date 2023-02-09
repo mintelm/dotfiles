@@ -4,7 +4,7 @@ cmd('syntax enable')
 cmd('filetype plugin indent on')
 
 vim.o.title = true
-vim.o.titlestring = '❐ %{fnamemodify(getcwd(), \':~\')} %m'
+vim.o.titlestring = "❐ %{fnamemodify(getcwd(), ':~')} %m"
 
 vim.o.tabstop = 4
 vim.o.shiftwidth = 4
@@ -18,9 +18,13 @@ vim.o.hidden = true
 vim.o.ignorecase = true
 vim.o.smartcase = true
 
+if vim.env.WSL_DISTRO_NAME then
+    vim.o.clipboard = ''
+else
+    vim.o.clipboard = 'unnamed,unnamedplus'
+end
 vim.o.scrolloff = 4
 vim.o.mouse = 'a'
-vim.o.clipboard = 'unnamed,unnamedplus'
 vim.o.showmode = false
 
 vim.o.number = true

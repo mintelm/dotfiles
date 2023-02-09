@@ -1,7 +1,8 @@
-return function()
+local utils = require('utils')
+local style = require('style')
+
+local function config()
     local cmp = require('cmp')
-    local utils = require('utils')
-    local style = require('style')
 
     local function tab(fallback)
         local ok, luasnip = utils.safe_require('luasnip', { silent = true })
@@ -113,3 +114,26 @@ return function()
         ),
     })
 end
+
+return {
+    'hrsh7th/nvim-cmp',
+    config = config,
+    dependencies = {
+        'hrsh7th/cmp-path',
+        'hrsh7th/cmp-nvim-lsp',
+        'hrsh7th/cmp-nvim-lua',
+        'saadparwaiz1/cmp_luasnip',
+        'hrsh7th/cmp-buffer',
+        'hrsh7th/cmp-cmdline',
+        'lukas-reineke/cmp-rg',
+        'lukas-reineke/cmp-under-comparator',
+        {
+            'L3MON4D3/LuaSnip',
+            event = 'InsertEnter',
+            config = function()
+                require('luasnip/loaders/from_vscode').lazy_load()
+            end,
+            dependencies = 'rafamadriz/friendly-snippets',
+        },
+    },
+}

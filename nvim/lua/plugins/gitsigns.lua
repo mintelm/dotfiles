@@ -1,4 +1,4 @@
-return function()
+local function config()
     require('gitsigns').setup({
         keymaps = {},
         update_debounce = 50,
@@ -10,3 +10,8 @@ return function()
         },
     })
 end
+
+return {
+    'lewis6991/gitsigns.nvim',
+    config = config,
+}

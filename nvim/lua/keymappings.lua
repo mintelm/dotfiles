@@ -35,15 +35,6 @@ map('n', '<leader>7', cmd('BufferLineGoToBuffer 7'), silenced)
 map('n', '<leader>8', cmd('BufferLineGoToBuffer 8'), silenced)
 map('n', '<leader>9', cmd('BufferLineGoToBuffer 9'), silenced)
 
--- hop
-map('n', 's', cmd('HopChar2AC'), silenced)
-map('n', 'S', cmd('HopChar2BC'), silenced)
--- not dot repeatable yet ...
--- map('', 'f', cmd 'lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR, current_line_only = true })', {})
--- map('', 'F', cmd 'lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR, current_line_only = true })', {})
--- map('', 't', cmd 'lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR, current_line_only = true, hint_offset = -1 })', {})
--- map('', 'T', cmd 'lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR, current_line_only = true, hint_offset = 1 })', {})
-
 -- lsp
 map('n', 'gD', cmd('lua vim.lsp.buf.declaration()'), silenced)
 map('n', 'gd', cmd('Telescope lsp_definitions theme=ivy'), silenced)
