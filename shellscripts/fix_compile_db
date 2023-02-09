@@ -1,0 +1,4 @@
+#!/bin/bash
+
+sed -i 's/C:/\/mnt\/c/g' $1 || true
+sed -i 's/D:/\/mnt\/d/g' $1 || true

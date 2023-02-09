@@ -14,7 +14,7 @@ while getopts "f" opt; do
                 f)
                         f='f'
                         echo Creating required directories...
-                        mkdir -p ~/.cache ~/.zsh ~/.config/nvim ~/.config/bat ~/.config/kitty
+                        mkdir -p ~/.cache ~/.zsh ~/.config/nvim ~/.config/bat ~/.config/kitty ~/.local/bin
                         ;;
                 *)
                         usage
@@ -46,3 +46,7 @@ echo Linking utils stuff...
 ln -sv$f $SCRIPT_DIR/utils/kitty.conf ~/.config/kitty/kitty.conf
 ln -sv$f $SCRIPT_DIR/utils/alacritty.yml ~/.config/alacritty.yml
 ln -sv$f $SCRIPT_DIR/utils/dunstrc ~/.config/dunstrc
+
+# shellscripts
+echo Linking shell scripts...
+ln -sv$f $SCRIPT_DIR/shellscripts/* ~/.local/bin

@@ -1,0 +1,8 @@
+#!/bin/bash
+
+CR=$(printf '\r')
+
+for file in "$@"
+do
+    sed -i "s/$/$CR/g" "$file"
+done
