@@ -150,16 +150,6 @@ return {
                 end,
                 dependencies = { 'jayp0521/mason-null-ls.nvim' },
             },
-            {
-                'mfussenegger/nvim-dap',
-                config = function()
-                    require('mason-nvim-dap').setup({
-                        automatic_setup = true,
-                    })
-                    require('mason-nvim-dap').setup_handlers({})
-                end,
-                dependencies = { 'jayp0521/mason-nvim-dap.nvim' },
-            },
         },
     },
 }
