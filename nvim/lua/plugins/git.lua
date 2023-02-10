@@ -1,4 +1,4 @@
-local function config()
+local function gitsigns_config()
     require('gitsigns').setup({
         keymaps = {},
         update_debounce = 50,
@@ -12,6 +12,12 @@ local function config()
 end
 
 return {
-    'lewis6991/gitsigns.nvim',
-    config = config,
+    {
+        'lewis6991/gitsigns.nvim',
+        config = gitsigns_config,
+    },
+    {
+        'TimUntersberger/neogit',
+        dependencies = 'nvim-lua/plenary.nvim',
+    },
 }
