@@ -50,3 +50,6 @@ map('n', '<C-f>', cmd('lua vim.lsp.buf.format({ async = true })'), silenced)
 
 -- file explorer
 map('n', '<leader>e', cmd('NvimTreeToggle'), silenced)
+
+-- terminal
+map('n', '<leader>t', cmd('ToggleTerm direction=float'), silenced)
