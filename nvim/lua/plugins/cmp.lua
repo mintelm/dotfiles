@@ -29,6 +29,12 @@ local function config()
     end
 
     cmp.setup({
+        completion = {
+            autocomplete = false,
+        },
+        enabled = function()
+            return vim.api.nvim_buf_get_option(0, 'buftype') ~= 'prompt' or require('cmp_dap').is_dap_buffer()
+        end,
         snippet = {
             expand = function(args)
                 require('luasnip').lsp_expand(args.body)
@@ -84,12 +90,13 @@ local function config()
             format = function(entry, vim_item)
                 local menu = ({
                     nvim_lsp = '(LSP)',
-                    nvim_lua = '(Lua)',
+                    nvim_lua = '(lua)',
                     path = '(Path)',
                     luasnip = '(SN)',
                     buffer = '(B)',
                     cmdline = '(Cmd)',
                     rg = '(Rg)',
+                    dap = '(DAP)',
                 })[entry.source.name]
                 vim_item.menu = '(' .. vim_item.kind .. ') ' .. menu
                 vim_item.kind = string.format(' %s ', style.icons.lsp.kinds[vim_item.kind])
@@ -99,12 +106,6 @@ local function config()
         },
     })
 
-    -- deactivate autocomplete for buffer
-    cmp.setup.buffer({
-        completion = {
-            autocomplete = false,
-        },
-    })
     -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
     cmp.setup.cmdline('/', {
         mapping = cmp.mapping.preset.cmdline(),
@@ -129,6 +130,19 @@ local function config()
             entries = { name = 'wildmenu', separator = '|' },
         },
     })
+    cmp.setup.filetype({ 'dap-repl', 'dapui_watches', 'dapui_hover' }, {
+        sources = {
+            { name = 'dap' },
+        },
+        formatting = {
+            fields = { 'kind', 'abbr', },
+            format = function(_, vim_item)
+                vim_item.kind = string.format(' %s ', style.icons.lsp.kinds[vim_item.kind])
+
+                return vim_item
+            end,
+        },
+    })
 end
 
 return {
@@ -142,6 +156,7 @@ return {
         'hrsh7th/cmp-buffer',
         'hrsh7th/cmp-cmdline',
         'lukas-reineke/cmp-rg',
+        'rcarriga/cmp-dap',
         'lukas-reineke/cmp-under-comparator',
         {
             'L3MON4D3/LuaSnip',

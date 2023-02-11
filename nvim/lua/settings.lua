@@ -32,5 +32,6 @@ vim.o.relativenumber = true
 vim.o.signcolumn = 'yes:2'
 vim.o.laststatus = 3
 vim.o.cursorline = true
+vim.o.splitbelow = true
 vim.o.list = true
 vim.o.listchars = 'tab:→ ,trail:•,nbsp:␣,extends:»,precedes:«'
