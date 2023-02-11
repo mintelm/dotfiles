@@ -53,3 +53,6 @@ map('n', '<leader>e', cmd('NvimTreeToggle'), silenced)
 
 -- terminal
 map('n', '<leader>t', cmd('ToggleTerm direction=float'), silenced)
+
+-- taskrunner
+map('n', '<leader>rt', cmd('OverseerRun'), silenced)
