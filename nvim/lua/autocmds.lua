@@ -19,7 +19,7 @@ utils.augroup('UserSettings', {
     },
     {
         event = { 'FileType' },
-        pattern = { 'bib' },
+        pattern = { 'bib', 'json' },
         command = function()
             utils.set_tab_width(2)
         end,
