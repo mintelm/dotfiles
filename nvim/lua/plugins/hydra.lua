@@ -20,7 +20,7 @@ local hints = {
     telescope = [[
 ^ ^ ^                               _<Enter>_: list all pickers
 ^
-^ _f_: find files        _r_: live grep           _/_: search in file   _;_: command-line history ^
+^ _f_: find files        _r_: live grep           _/_: search in file   _:_: command-line history ^
 ^ _g_: find git files    _c_: execute command     _?_: search history
 ]],
     dap = [[
@@ -105,7 +105,7 @@ local function config()
             { 'g', cmd('Telescope git_files') },
             { '/', cmd('Telescope current_buffer_fuzzy_find') },
             { '?', cmd('Telescope search_history') },
-            { ';', cmd('Telescope command_history') },
+            { ':', cmd('Telescope command_history') },
             { 'c', cmd('Telescope commands') },
             { '<Enter>', cmd('Telescope'), { exit = true } },
             { '<Esc>', nil, { exit = true, nowait = true, desc = false } },
