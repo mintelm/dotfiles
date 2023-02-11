@@ -147,7 +147,7 @@ local function config()
                 name = 'line_percentage',
             },
             hl = {
-                fg = colors.syntax.comment
+                fg = colors.syntax.comment,
             },
             right_sep = ' ',
         },
@@ -168,8 +168,45 @@ local function config()
         },
     }
 
-    components.inactive[1] = vim.deepcopy(components.active[1])
-    components.inactive[2] = components.active[2]
+    components.inactive[1] = {
+        -- Component that shows file info
+        {
+            provider = {
+                name = 'file_info',
+                opts = {
+                    type = 'base-only',
+                    file_readonly_icon = icons.readonly,
+                    file_modified_icon = pad_icon(icons.modified, 'right'),
+                },
+            },
+            hl = {
+                fg = colors.syntax.comment,
+            },
+        },
+    }
+    components.inactive[2] = {
+        {
+            provider = {
+                name = 'position',
+                opts = {
+                    format = icons.lines .. ' {line} ' .. icons.columns .. ' {col}',
+                },
+            },
+            hl = {
+                fg = colors.syntax.comment,
+            },
+            right_sep = ' ',
+        },
+        {
+            provider = {
+                name = 'line_percentage',
+            },
+            hl = {
+                fg = colors.syntax.comment,
+            },
+            right_sep = ' ',
+        },
+    }
 
     require('feline').setup({
         components = components,
