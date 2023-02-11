@@ -1,6 +1,10 @@
 return {
     'mfussenegger/nvim-dap',
     config = function()
+        if vim.fn.filereadable('.vscode/launch.json') then
+            -- map launch.json type to filetypes (e.g. 'cppdbg' -> ['c', 'cpp'])
+            require('dap.ext.vscode').load_launchjs(nil, { cppdbg = { 'c', 'cpp' } })
+        end
         require('mason-nvim-dap').setup({
             automatic_setup = true,
         })
