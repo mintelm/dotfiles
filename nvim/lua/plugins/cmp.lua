@@ -29,9 +29,6 @@ local function config()
     end
 
     cmp.setup({
-        completion = {
-            autocomplete = false,
-        },
         snippet = {
             expand = function(args)
                 require('luasnip').lsp_expand(args.body)
@@ -75,31 +72,47 @@ local function config()
                 cmp.config.compare.order,
             },
         },
+        window = {
+            completion = {
+                winhighlight = 'FloatBorder:Pmenu,Search:None',
+                col_offset = -3,
+                side_padding = 0,
+            },
+        },
         formatting = {
-            deprecated = true,
+            fields = { 'kind', 'abbr', 'menu' },
             format = function(entry, vim_item)
-                vim_item.kind =
-                    string.format('%s %s', style.icons.lsp.kinds[vim_item.kind], vim_item.kind)
-                vim_item.menu = ({
-                    nvim_lsp = '[LSP]',
-                    nvim_lua = '[Lua]',
-                    path = '[Path]',
-                    luasnip = '[SN]',
-                    buffer = '[B]',
-                    cmdline = '[Cmd]',
-                    cmdline_history = '[Hist]',
-                    rg = '[Rg]',
+                local menu = ({
+                    nvim_lsp = '(LSP)',
+                    nvim_lua = '(Lua)',
+                    path = '(Path)',
+                    luasnip = '(SN)',
+                    buffer = '(B)',
+                    cmdline = '(Cmd)',
+                    rg = '(Rg)',
                 })[entry.source.name]
+                vim_item.menu = '(' .. vim_item.kind .. ') ' .. menu
+                vim_item.kind = string.format(' %s ', style.icons.lsp.kinds[vim_item.kind])
 
                 return vim_item
             end,
         },
     })
+
+    -- deactivate autocomplete for buffer
+    cmp.setup.buffer({
+        completion = {
+            autocomplete = false,
+        },
+    })
     -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
     cmp.setup.cmdline('/', {
-        mapping = cmp.mapping.preset.cmdline({}),
+        mapping = cmp.mapping.preset.cmdline(),
         sources = {
             { name = 'buffer' },
+        },
+        view = {
+            entries = { name = 'wildmenu', separator = '|' },
         },
     })
     -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
@@ -112,6 +125,9 @@ local function config()
             -- fallback
             { { name = 'cmdline' } }
         ),
+        view = {
+            entries = { name = 'wildmenu', separator = '|' },
+        },
     })
 end
 
@@ -140,6 +156,6 @@ return {
             config = function()
                 require('neodev').setup()
             end,
-        }
+        },
     },
 }
