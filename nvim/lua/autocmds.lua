@@ -44,9 +44,9 @@ utils.augroup('UserSettings', {
         pattern = { '*' },
         command = function()
             if vim.wo.number then
-                vim.wo.cursorline = true
                 vim.wo.relativenumber = true
             end
+            vim.wo.cursorline = true
         end,
     },
     {
@@ -54,9 +54,9 @@ utils.augroup('UserSettings', {
         pattern = { '*' },
         command = function()
             if vim.wo.number then
-                vim.wo.cursorline = false
                 vim.wo.relativenumber = false
             end
+            vim.wo.cursorline = false
         end,
     },
     {
