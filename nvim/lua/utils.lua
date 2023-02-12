@@ -150,4 +150,19 @@ function M.map(mode, lhs, rhs, opts)
     vim.api.nvim_set_keymap(mode, lhs, rhs, options)
 end
 
+---Set global vim keymap
+---@param str string
+---@param l boolean
+---@param r boolean`
+---@return string
+function M.pad_str(str, l, r)
+    if l then
+        str = ' ' .. str
+    end
+    if r then
+        str = str .. ' '
+    end
+    return str
+end
+
 return M

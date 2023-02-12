@@ -1,236 +1,100 @@
 local function config()
-    local hydra = require('hydra.statusline')
-    local get_hl = require('utils').get_hl
-    local colors = require('github-theme.palette').get_palette('dark_default')
-    local icons = require('style').icons
-    local components = {
-        active = {},
-        inactive = {},
-    }
+    local style = require('style')
+    local pad_icon = require('utils').pad_str
 
-    local function pad_icon(icon, padding)
-        if padding == 'left' then
-            return ' ' .. icon
-        elseif padding == 'right' then
-            return icon .. ' '
-        elseif padding == 'both' then
-            return ' ' .. icon .. ' '
-        end
-    end
-
-    -- left section
-    components.active[1] = {
-        -- Component that shows vi mode and active hydra
-        {
-            provider = 'vi_mode_hydra',
-            hl = function()
-                local hl = {
-                    name = require('feline.providers.vi_mode').get_mode_highlight_name(),
-                    fg = require('feline.providers.vi_mode').get_mode_color(),
-                    style = 'bold',
-                }
-
-                if hydra.is_active() then
-                    hl.fg = get_hl('Hydra' .. hydra.get_color(), 'fg')
-                end
-
-                return hl
-            end,
-            left_sep = ' ',
-            right_sep = ' ',
+    require('lualine').setup({
+        options = {
+            theme = 'auto',
+            component_separators = '',
+            section_separators = { left = '', right = '' },
         },
-        -- Component that shows file info
-        {
-            provider = {
-                name = 'file_info',
-                opts = {
-                    type = 'relative-short',
-                    file_readonly_icon = icons.readonly,
-                    file_modified_icon = pad_icon(icons.modified, 'right'),
+        sections = {
+            lualine_a = {
+                {
+                    'mode',
+                    fmt = function(str)
+                        return ' ' .. str
+                    end,
+                    separator = { left = '', right = '' },
                 },
             },
-            hl = {
-                fg = colors.syntax.comment,
-            },
-        },
-        -- Component that shows current git branch
-        {
-            provider = 'git_branch',
-            icon = pad_icon(icons.git.branch, 'both'),
-            hl = {
-                fg = colors.fg,
-                style = 'bold',
-            },
-        },
-        -- Component that shows git diff additions
-        {
-            provider = 'git_diff_added',
-            icon = pad_icon(icons.git.add, 'both'),
-            hl = {
-                fg = colors.git.add,
-                style = 'bold',
-            },
-        },
-        -- Component that shows git diff removals
-        {
-            provider = 'git_diff_removed',
-            icon = pad_icon(icons.git.delete, 'both'),
-            hl = {
-                fg = colors.git.delete,
-                style = 'bold',
-            },
-        },
-        -- Component that shows git diff changes
-        {
-            provider = 'git_diff_changed',
-            icon = pad_icon(icons.git.change, 'both'),
-            hl = {
-                fg = colors.git.change,
-                style = 'bold',
-            },
-        },
-    }
-
-    -- right section
-    components.active[2] = {
-        {
-            provider = 'diagnostic_errors',
-            icon = pad_icon(icons.lsp.signs.error, 'both'),
-            hl = {
-                fg = colors.error,
-            },
-        },
-        {
-            provider = 'diagnostic_warnings',
-            icon = pad_icon(icons.lsp.signs.warn, 'both'),
-            hl = {
-                fg = colors.warning,
-            },
-        },
-        {
-            provider = 'diagnostic_hints',
-            icon = pad_icon(icons.lsp.signs.hint, 'both'),
-            hl = {
-                fg = colors.hint,
-            },
-        },
-        {
-            provider = 'diagnostic_info',
-            icon = pad_icon(icons.lsp.signs.info, 'both'),
-            hl = {
-                fg = colors.info,
-            },
-        },
-        {
-            provider = 'lsp_client_names',
-            icon = pad_icon(icons.lsp.server, 'both'),
-            hl = {
-                fg = colors.fg,
-                style = 'bold',
-            },
-            right_sep = ' ',
-        },
-        {
-            provider = {
-                name = 'position',
-                opts = {
-                    format = icons.lines .. ' {line} ' .. icons.columns .. ' {col}',
+            lualine_b = {
+                { 'branch', icon = style.icons.git.branch, separator = '|' },
+                {
+                    'diff',
+                    symbols = {
+                        added = pad_icon(style.icons.git.add, false, true),
+                        modified = pad_icon(style.icons.git.change, false, true),
+                        removed = pad_icon(style.icons.git.delete, false, true),
+                    },
                 },
             },
-            hl = {
-                fg = colors.syntax.comment,
-            },
-            right_sep = ' ',
-        },
-        {
-            provider = {
-                name = 'line_percentage',
-            },
-            hl = {
-                fg = colors.syntax.comment,
-            },
-            right_sep = ' ',
-        },
-        {
-            provider = {
-                name = 'scroll_bar',
-                opts = {
-                    reverse = true,
+            lualine_c = {
+                { 'filetype', icon_only = true, padding = { left = 1, right = 0 } },
+                {
+                    'filename',
+                    newfile_status = true,
+                    symbols = {
+                        modified = style.icons.modified,
+                        readonly = style.icons.readonly,
+                        unnamed = '',
+                    },
                 },
             },
-            hl = function()
-                return {
-                    fg = require('feline.providers.vi_mode').get_mode_color(),
-                    style = 'bold',
-                }
-            end,
-            right_sep = ' ',
-        },
-    }
-
-    components.inactive[1] = {
-        -- Component that shows file info
-        {
-            provider = {
-                name = 'file_info',
-                opts = {
-                    type = 'base-only',
-                    file_readonly_icon = icons.readonly,
-                    file_modified_icon = pad_icon(icons.modified, 'right'),
+            lualine_x = { 'encoding', { 'fileformat', padding = { left = 1, right = 2 } } },
+            lualine_y = {
+                {
+                    'diagnostics',
+                    symbols = {
+                        error = pad_icon(style.icons.lsp.signs.error, false, true),
+                        warn = pad_icon(style.icons.lsp.signs.warn, false, true),
+                        info = pad_icon(style.icons.lsp.signs.info, false, true),
+                        hint = pad_icon(style.icons.lsp.signs.hint, false, true),
+                    },
+                    separator = '|',
+                },
+                -- lsp server custom component
+                {
+                    function()
+                        local msg = ''
+                        local buf_ft = vim.api.nvim_buf_get_option(0, 'filetype')
+                        local clients = vim.lsp.get_active_clients()
+                        if next(clients) then
+                            for _, client in ipairs(clients) do
+                                local filetypes = client.config.filetypes
+                                if filetypes and vim.fn.index(filetypes, buf_ft) ~= -1 then
+                                    if msg == '' then
+                                        msg = client.name
+                                    elseif not msg:find(client.name) then
+                                        msg = msg .. pad_icon(style.icons.lsp.server, true, true) .. client.name
+                                    end
+                                end
+                            end
+                        end
+                        return msg
+                    end,
+                    icon = style.icons.lsp.server,
                 },
             },
-            hl = {
-                fg = colors.syntax.comment,
+            lualine_z = {
+                { 'progress' },
+                { 'location', padding = { left = 0, right = 1 }, separator = { left = '', right = '' } },
             },
         },
-    }
-    components.inactive[2] = {
-        {
-            provider = {
-                name = 'position',
-                opts = {
-                    format = icons.lines .. ' {line} ' .. icons.columns .. ' {col}',
-                },
-            },
-            hl = {
-                fg = colors.syntax.comment,
-            },
-            right_sep = ' ',
-        },
-        {
-            provider = {
-                name = 'line_percentage',
-            },
-            hl = {
-                fg = colors.syntax.comment,
-            },
-            right_sep = ' ',
-        },
-    }
-
-    require('feline').setup({
-        components = components,
-        custom_providers = {
-            vi_mode_hydra = function()
-                local mode = require('feline.providers.vi_mode').get_vim_mode()
-
-                if hydra.is_active() then
-                    mode = hydra.get_name():upper()
-                end
-
-                return ' ' .. mode
-            end,
+        extensions = {
+            'nvim-tree',
+            'toggleterm',
+            'man',
         },
     })
 end
 
 return {
-    'feline-nvim/feline.nvim',
+    'nvim-lualine/lualine.nvim',
     config = config,
     dependencies = {
         'kyazdani42/nvim-web-devicons',
-        -- these are used for statusline components and colors
+        -- colorscheme needs to be loaded for theme = 'auto'
         'projekt0n/github-nvim-theme',
-        'anuvyklack/hydra.nvim',
     },
 }
