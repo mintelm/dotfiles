@@ -1,10 +1,33 @@
 return {
     'mfussenegger/nvim-dap',
     config = function()
-        require('dap').defaults.fallback.terminal_win_cmd = '10split terminal'
+        local dap = require('dap')
+        local close_dap_buffers = function()
+            local win_handles = vim.api.nvim_list_wins()
+            for _, win in pairs(win_handles) do
+                local buf = vim.api.nvim_win_get_buf(win)
+                if
+                    vim.api.nvim_buf_get_name(buf):find('%[dap%-repl%]')
+                    -- or vim.api.nvim_buf_get_name(buf):find('%[dap%-terminal%]')
+                    or vim.api.nvim_buf_get_name(buf):find('dap%-scopes')
+                    or vim.api.nvim_buf_get_name(buf):find('dap%-frames')
+                then
+                    vim.api.nvim_win_close(win, true)
+                    vim.api.nvim_buf_delete(buf, { force = true })
+                end
+            end
+        end
 
+        -- close dap-buffers
+        dap.listeners.after['event_terminated']['cleanup'] = function(_, _)
+            close_dap_buffers()
+        end
+        dap.listeners.after['event_exited']['cleanup'] = function(_, _)
+            close_dap_buffers()
+        end
+
+        dap.defaults.fallback.terminal_win_cmd = '10split [dap-terminal]'
         vim.fn.sign_define('DapBreakpoint', { text = '🛑', texthl = '', linehl = '', numhl = '' })
-        --vim.fn.sign_define('DapStopped', { text = '→', texthl = '#56D364', linehl = '', numhl = '' })
 
         if vim.fn.filereadable('.vscode/launch.json') then
             -- map launch.json type to filetypes (e.g. cppdbg = { 'c', 'cpp' })
@@ -23,9 +46,12 @@ return {
         {
             'theHamsta/nvim-dap-virtual-text',
             config = function()
-                require('nvim-dap-virtual-text').setup()
+                require('nvim-dap-virtual-text').setup({
+                    display_callback = function(variable, _, _, _)
+                        return ' ' .. variable.name .. ' = ' .. variable.value
+                    end,
+                })
             end,
-            dependencies = 'nvim-treesitter/nvim-treesitter',
         },
     },
 }

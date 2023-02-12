@@ -24,8 +24,8 @@ local hints = {
 ^ _g_: find git files    _c_: execute command     _?_: search history
 ]],
     dap = [[
-^ _b_: toggle breakpoint    _s_: step over    _r_: toggle repl ^
-^ _c_: continue             _i_: step into
+^ _b_: toggle breakpoint    _s_: step over    _r_: toggle repl    _f_: show callstack^
+^ _c_: continue             _i_: step into    _v_: toggle scope
 ]],
 }
 
@@ -155,6 +155,9 @@ local function config()
     end
 
     if dap_loaded then
+        local widgets = require('dap.ui.widgets')
+        local sidebar = widgets.sidebar(widgets.scopes)
+
         hydra({
             name = 'Debugging',
             config = utils.merge({ color = 'pink' }, default_config),
@@ -169,7 +172,19 @@ local function config()
                 {
                     'r',
                     function()
-                        dap.repl.toggle({}, '10split repl')
+                        dap.repl.toggle({}, '10split [dap-repl]')
+                    end,
+                },
+                {
+                    'v',
+                    function()
+                        sidebar.toggle()
+                    end,
+                },
+                {
+                    'f',
+                    function()
+                        widgets.centered_float(widgets.frames)
                     end,
                 },
                 {

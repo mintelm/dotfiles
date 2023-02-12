@@ -50,6 +50,7 @@ end
 function M.dump(...)
     local objects = vim.tbl_map(vim.inspect, { ... })
     print(unpack(objects))
+    vim.notify(objects)
 end
 
 ---Set tabstop, shiftwdith and expandtab/smartindent accordingly
