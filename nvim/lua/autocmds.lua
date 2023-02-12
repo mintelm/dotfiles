@@ -14,14 +14,14 @@ utils.augroup('UserSettings', {
         event = { 'FileType' },
         pattern = { 'c', 'sh', 'make' },
         command = function()
-            utils.set_tab_width(2)
+            set_tab_width(2)
         end,
     },
     {
         event = { 'FileType' },
         pattern = { 'bib', 'json' },
         command = function()
-            utils.set_tab_width(2)
+            set_tab_width(2)
         end,
     },
     -- toggle hiding invisible chars on insert

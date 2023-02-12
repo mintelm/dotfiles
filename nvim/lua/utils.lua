@@ -47,15 +47,14 @@ end
 
 ---Inspect contents of any object
 ---@vararg any
-function M.dump(...)
+function _G.dump(...)
     local objects = vim.tbl_map(vim.inspect, { ... })
-    print(unpack(objects))
-    vim.notify(objects)
+    vim.notify(unpack(objects))
 end
 
 ---Set tabstop, shiftwdith and expandtab/smartindent accordingly
 ---@param tab_width number
-function M.set_tab_width(tab_width)
+function _G.set_tab_width(tab_width)
     if tab_width >= 8 then
         -- use real tabs
         vim.bo.expandtab = false
