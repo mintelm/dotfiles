@@ -24,8 +24,8 @@ local hints = {
 ^ _g_: find git files    _c_: execute command     _?_: search history
 ]],
     dap = [[
-^ _b_: toggle breakpoint    _s_: step over    _o_: step out    _f_: show callstack^
-^ _c_: continue             _i_: step into    ^ ^              _v_: toggle scope
+^ _b_: toggle breakpoint    _s_: step over    _o_: step out       _f_: show callstack^
+^ _c_: continue             _i_: step into    _r_: toggle repl    _v_: toggle scope
 ]],
 }
 
@@ -34,7 +34,7 @@ local function config()
     local neogit_loaded, _ = utils.safe_require('neogit', { silent = true })
     local gitsigns_loaded, _ = utils.safe_require('gitsigns', { silent = true })
     local telescope_loaded, _ = utils.safe_require('telescope', { silent = true })
-    local dap_loaded, _ = utils.safe_require('dap', { silent = true })
+    local dap_loaded, dap = utils.safe_require('dap', { silent = true })
     local cmd = function(command)
         return table.concat({ '<cmd>', command, '<CR>' })
     end
@@ -180,6 +180,12 @@ local function config()
                     'f',
                     function()
                         widgets.centered_float(widgets.frames)
+                    end,
+                },
+                {
+                    'r',
+                    function()
+                        dap.repl.toggle({}, 'belowright 10split [dap-repl]')
                     end,
                 },
                 {
