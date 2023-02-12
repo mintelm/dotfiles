@@ -12,10 +12,14 @@ map('', '<C-b>', '', {})
 map('', '<C-f>', '', {})
 
 -- navigation
-map('', ']q', ':cnext', {})
-map('', '[q', ':cprev', {})
-map('', ']Q', ':clast', {})
-map('', '[Q', ':cfirst', {})
+map('', ']q', cmd('cnext'), silenced)
+map('', '[q', cmd('cprev'), silenced)
+map('', ']Q', cmd('clast'), silenced)
+map('', '[Q', cmd('cfirst'), silenced)
+map('', ']t', cmd('tabnext'), silenced)
+map('', '[t', cmd('tabprev'), silenced)
+map('', ']T', cmd('tablast'), silenced)
+map('', '[T', cmd('tabfirst'), silenced)
 
 -- clear highlight on space
 map('n', '<Space>', cmd('noh'), silenced)
@@ -53,6 +57,7 @@ map('n', '<leader>e', cmd('NvimTreeToggle'), silenced)
 
 -- terminal
 map('n', '<leader>t', cmd('ToggleTerm direction=float'), silenced)
+map('t', '<esc>', [[<C-\><C-n>]], silenced)
 
 -- taskrunner
 map('n', '<leader>rt', cmd('OverseerRun'), silenced)

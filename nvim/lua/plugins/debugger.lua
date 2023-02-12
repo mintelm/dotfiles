@@ -8,7 +8,7 @@ return {
                 local buf = vim.api.nvim_win_get_buf(win)
                 if
                     vim.api.nvim_buf_get_name(buf):find('%[dap%-repl%]')
-                    -- or vim.api.nvim_buf_get_name(buf):find('%[dap%-terminal%]')
+                    or vim.api.nvim_buf_get_name(buf):find('%[dap%-terminal%]')
                     or vim.api.nvim_buf_get_name(buf):find('dap%-scopes')
                     or vim.api.nvim_buf_get_name(buf):find('dap%-frames')
                 then
@@ -26,7 +26,7 @@ return {
             close_dap_buffers()
         end
 
-        dap.defaults.fallback.terminal_win_cmd = '10split [dap-terminal]'
+        dap.defaults.fallback.terminal_win_cmd = 'ToggleTerm size=10 direction=horizontal'
         vim.fn.sign_define('DapBreakpoint', { text = '🛑', texthl = '', linehl = '', numhl = '' })
 
         if vim.fn.filereadable('.vscode/launch.json') then
@@ -40,9 +40,8 @@ return {
         require('mason-nvim-dap').setup_handlers()
     end,
     dependencies = {
-        {
-            'jayp0521/mason-nvim-dap.nvim',
-        },
+        'jayp0521/mason-nvim-dap.nvim',
+        'akinsho/toggleterm.nvim',
         {
             'theHamsta/nvim-dap-virtual-text',
             config = function()

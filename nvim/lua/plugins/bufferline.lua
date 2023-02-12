@@ -7,7 +7,6 @@ local function config()
             separator_style = 'thin',
             persist_buffer_sort = false,
             show_buffer_close_icons = false,
-            show_close_icon = false,
             modified_icon = require('style').icons.modified,
         },
     })

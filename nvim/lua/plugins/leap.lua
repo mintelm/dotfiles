@@ -2,7 +2,6 @@ return {
     {
         'ggandor/leap.nvim',
         config = function()
-            require('leap').setup({ equivalence_classes = { ' \t\r\n', '([{', ')]}', '`"\'' } })
             require('leap').add_default_mappings()
         end,
     },

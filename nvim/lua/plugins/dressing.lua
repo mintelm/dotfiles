@@ -17,7 +17,5 @@ end
 return {
     'stevearc/dressing.nvim',
     config = config,
-    dependencies = {
-        'nvim-telescope/telescope.nvim',
-    },
+    dependencies = 'nvim-telescope/telescope.nvim',
 }

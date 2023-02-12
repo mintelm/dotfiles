@@ -149,6 +149,10 @@ return {
                 end,
                 dependencies = { 'jayp0521/mason-null-ls.nvim' },
             },
+            {
+                -- ensure lsp is loaded _after_ cmp
+                'hrsh7th/nvim-cmp',
+            },
         },
     },
 }
