@@ -12,9 +12,7 @@ local function config()
             lualine_a = {
                 {
                     'mode',
-                    fmt = function(str)
-                        return ' ' .. str
-                    end,
+                    icon = style.icons.vim,
                     separator = { left = '', right = '' },
                 },
             },

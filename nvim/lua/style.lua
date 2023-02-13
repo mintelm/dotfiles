@@ -6,6 +6,7 @@ M = {
         rounded = { '╭', '─', '╮', '│', '╯', '─', '╰', '│' },
     },
     icons = {
+        vim = '', -- 
         modified = '',
         readonly = '',
         lines = '',
