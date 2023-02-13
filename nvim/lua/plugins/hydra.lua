@@ -18,13 +18,13 @@ local hints = {
 ^ ^^^ focus ^^^^^ window
 ]],
     telescope = [[
-^ ^ ^                               _<Enter>_: list all pickers
+^ ^ ^                    ^ ^    _<Enter>_: list all pickers
 ^
-^ _f_: find files        _r_: live grep           _/_: search in file   _:_: command-line history ^
-^ _g_: find git files    _c_: execute command     _?_: search history
+^ _f_: find files        _r_: live grep      _/_: search in file    _c_: execute command ^
+^ _g_: find git files    _s_: lsp symbols    _?_: search history    _:_: command-line history
 ]],
     dap = [[
-^ _b_: toggle breakpoint    _s_: step over    _o_: step out       _f_: show callstack^
+^ _b_: toggle breakpoint    _s_: step over    _o_: step out       _f_: show callstack ^
 ^ _c_: continue             _i_: step into    _r_: toggle repl    _v_: toggle scope
 ]],
 }
@@ -144,10 +144,11 @@ local function config()
                 { 'f',       cmd('Telescope find_files') },
                 { 'r',       cmd('Telescope live_grep') },
                 { 'g',       cmd('Telescope git_files') },
+                { 's',       cmd('Telescope lsp_document_symbols theme=get_dropdown') },
                 { '/',       cmd('Telescope current_buffer_fuzzy_find') },
                 { '?',       cmd('Telescope search_history') },
-                { ':',       cmd('Telescope command_history') },
-                { 'c',       cmd('Telescope commands') },
+                { ':',       cmd('Telescope command_history theme=get_ivy') },
+                { 'c',       cmd('Telescope commands theme=get_ivy') },
                 { '<Enter>', cmd('Telescope'),                          { exit = true } },
                 { '<Esc>',   nil,                                       { exit = true, nowait = true, desc = false } },
             },

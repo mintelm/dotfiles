@@ -41,9 +41,9 @@ map('n', '<leader>9', cmd('BufferLineGoToBuffer 9'), silenced)
 
 -- lsp
 map('n', 'gD', cmd('lua vim.lsp.buf.declaration()'), silenced)
-map('n', 'gd', cmd('Telescope lsp_definitions theme=ivy'), silenced)
-map('n', 'gi', cmd('Telescope lsp_implementations theme=ivy'), silenced)
-map('n', 'gr', cmd('Telescope lsp_references theme=ivy'), silenced)
+map('n', 'gd', cmd('Telescope lsp_definitions'), silenced)
+map('n', 'gi', cmd('Telescope lsp_implementations'), silenced)
+map('n', 'gr', cmd('Telescope lsp_references'), silenced)
 map('n', ']d', cmd('lua vim.diagnostic.goto_next()'), silenced)
 map('n', '[d', cmd('lua vim.diagnostic.goto_prev()'), silenced)
 map('n', 'K', cmd('lua vim.lsp.buf.hover()'), silenced)
