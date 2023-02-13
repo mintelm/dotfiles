@@ -50,6 +50,7 @@ local function lsp_config()
         orig_show(ns, bufnr, filtered_diagnostics, { signs = true })
     end
 
+    ---@diagnostic disable-next-line: duplicate-set-field
     function vim.diagnostic.show(namespace, bufnr, ...)
         orig_show(namespace, bufnr, ...)
         set_signs(bufnr)
@@ -73,7 +74,7 @@ local function lsp_config()
             require('lspconfig')[server_name].setup(server_config)
         end,
         -- specific handlers
-        ['sumneko_lua'] = function()
+        ['lua_ls'] = function()
             server_config.settings = {
                 Lua = {
                     runtime = {
@@ -90,7 +91,7 @@ local function lsp_config()
                     },
                 },
             }
-            require('lspconfig')['sumneko_lua'].setup(server_config)
+            require('lspconfig')['lua_ls'].setup(server_config)
         end,
         ['clangd'] = function()
             server_config.capabilities.offsetEncoding = 'utf-8'
