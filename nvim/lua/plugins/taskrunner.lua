@@ -5,7 +5,7 @@ return {
             strategy = {
                 'toggleterm',
                 direction = 'tab',
-                close_on_exit = true,
+                close_on_exit = false,
             },
         })
     end,
