@@ -12,7 +12,7 @@ utils.augroup('UserSettings', {
     -- set tab width dynamically on c-like files
     {
         event = { 'FileType' },
-        pattern = { 'c', 'sh', 'make' },
+        pattern = { 'c', 'cpp', 'sh', 'make' },
         command = function()
             set_tab_width(2)
         end,
