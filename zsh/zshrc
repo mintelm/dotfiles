@@ -12,17 +12,9 @@ function isWinDir {
         *) return $(false);;
     esac
 }
-function isVimEnv {
-    case `env | grep VIMRUNTIME` in
-        1) return $(true);;
-        *) return $(false);;
-    esac
-}
 # wrap the git command to either run windows git or linux
 function git {
-    #if (isWinDir) && (! isVimEnv)
-    if isWinDir
-    then
+    if (isWinDir) then
         git.exe "$@"
     else
         /usr/bin/git "$@"
@@ -59,7 +51,6 @@ export ZSH_AUTOSUGGEST_USE_ASYNC=1
 # source it up
 source ~/.zsh/plugin-loader.zsh
 source ~/.zsh/keybinds.zsh
-source ~/.zsh/aliases.zsh
 #source ~/.zsh/prompt.zsh
 source ~/.zsh/fzf.zsh
 source ~/.zsh/lsd.zsh
