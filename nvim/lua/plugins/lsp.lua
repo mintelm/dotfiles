@@ -167,6 +167,7 @@ return {
                     },
                     autocmd = {
                         enabled = true,
+                        events = { 'CursorHold' },
                     },
                 },
             },
