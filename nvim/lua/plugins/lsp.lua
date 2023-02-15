@@ -154,6 +154,22 @@ return {
                 -- ensure lsp is loaded _after_ cmp
                 'hrsh7th/nvim-cmp',
             },
+            {
+                'kosayoda/nvim-lightbulb',
+                -- this calls require('plugin').setup(opts)
+                opts = {
+                    sign = {
+                        enabled = false,
+                    },
+                    virtual_text = {
+                        enabled = true,
+                        hl_mode = 'combine',
+                    },
+                    autocmd = {
+                        enabled = true,
+                    },
+                },
+            },
         },
     },
 }

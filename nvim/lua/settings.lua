@@ -37,3 +37,4 @@ vim.o.splitbelow = true
 vim.o.equalalways = false
 vim.o.list = true
 vim.o.listchars = 'tab:→ ,trail:•,nbsp:␣,extends:»,precedes:«'
+vim.o.updatetime=100
