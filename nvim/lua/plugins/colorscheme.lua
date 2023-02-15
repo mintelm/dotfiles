@@ -4,6 +4,8 @@ local function config()
 
     require('github-theme').setup({
         theme_style = theme_style,
+        dark_float = true,
+        dark_sidebar = true,
         function_style = 'bold',
         comment_style = 'NONE',
         keyword_style = 'NONE',
