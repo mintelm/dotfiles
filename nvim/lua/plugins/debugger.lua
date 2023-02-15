@@ -26,7 +26,7 @@ return {
             close_dap_buffers()
         end
 
-        dap.defaults.fallback.terminal_win_cmd = 'ToggleTerm size=10 direction=horizontal'
+        dap.defaults.fallback.terminal_win_cmd = 'ToggleTerm size=10 direction=horizontal [dap-terminal]'
         vim.fn.sign_define('DapBreakpoint', { text = '🛑', texthl = '', linehl = '', numhl = '' })
 
         if vim.fn.filereadable('.vscode/launch.json') then
