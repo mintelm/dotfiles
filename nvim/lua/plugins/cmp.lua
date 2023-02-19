@@ -21,8 +21,8 @@ local function config()
 
         if cmp.visible() then
             cmp.select_prev_item({ behavior = cmp.SelectBehavior.Select })
-        elseif luasnip_loaded and luasnip.jumpable(-1) then
-            luasnip.jump(-1)
+        elseif luasnip_loaded and luasnip.jumpable( -1) then
+            luasnip.jump( -1)
         else
             fallback()
         end
@@ -41,10 +41,10 @@ local function config()
             end,
         },
         sources = {
-            { name = 'path', priority_weight = 110 },
-            { name = 'nvim_lsp', max_item_count = 20, priority_weight = 100 },
-            { name = 'luasnip', priority_weight = 90 },
-            { name = 'buffer', max_item_count = 5, priority_weight = 80 },
+            { name = 'path',     priority_weight = 110 },
+            { name = 'nvim_lsp', max_item_count = 20,  priority_weight = 100 },
+            { name = 'luasnip',  priority_weight = 90 },
+            { name = 'buffer',   max_item_count = 5,   priority_weight = 80 },
             {
                 name = 'rg',
                 keyword_length = 5,
@@ -60,7 +60,7 @@ local function config()
             ['<Tab>'] = cmp.mapping(tab, { 'i', 's' }),
             ['<S-Tab>'] = cmp.mapping(shift_tab, { 'i', 's' }),
             ['<CR>'] = cmp.mapping.confirm({ select = true }),
-            ['<C-u>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
+            ['<C-u>'] = cmp.mapping(cmp.mapping.scroll_docs( -4), { 'i', 'c' }),
             ['<C-d>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
             ['<C-q>'] = cmp.mapping({ i = cmp.mapping.abort(), c = cmp.mapping.close() }),
         },
@@ -88,14 +88,14 @@ local function config()
             fields = { 'kind', 'abbr', 'menu' },
             format = function(entry, vim_item)
                 local menu = ({
-                    nvim_lsp = '(LSP)',
-                    path = '(Path)',
-                    luasnip = '(SN)',
-                    buffer = '(B)',
-                    cmdline = '(Cmd)',
-                    rg = '(Rg)',
-                    dap = '(DAP)',
-                })[entry.source.name]
+                        nvim_lsp = '(LSP)',
+                        path = '(Path)',
+                        luasnip = '(SN)',
+                        buffer = '(B)',
+                        cmdline = '(Cmd)',
+                        rg = '(Rg)',
+                        dap = '(DAP)',
+                    })[entry.source.name]
                 vim_item.menu = '(' .. vim_item.kind .. ') ' .. menu
                 vim_item.kind = string.format(' %s ', style.icons.lsp.kinds[vim_item.kind])
 

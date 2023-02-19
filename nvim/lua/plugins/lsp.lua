@@ -56,26 +56,6 @@ local function mason_lsp_config()
         function(server_name)
             require('lspconfig')[server_name].setup({})
         end,
-        ['lua_ls'] = function()
-            require('lspconfig')['lua_ls'].setup({
-                settings = {
-                    Lua = {
-                        runtime = {
-                            version = 'LuaJIT',
-                        },
-                        diagnostics = {
-                            globals = { 'vim' },
-                        },
-                        workspace = {
-                            library = vim.api.nvim_get_runtime_file('', true),
-                        },
-                        telemetry = {
-                            enable = false,
-                        },
-                    },
-                },
-            })
-        end,
         ['clangd'] = function()
             require('lspconfig')['clangd'].setup({
                 capabilities = { offsetEncoding = 'utf-8' },
