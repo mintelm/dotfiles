@@ -215,7 +215,7 @@ local function config()
                 {
                     'r',
                     function()
-                        dap.repl.toggle({}, 'belowright 10split [dap-repl]')
+                        dap.repl.toggle()
                     end,
                 },
                 {
