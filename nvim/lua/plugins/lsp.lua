@@ -102,5 +102,8 @@ return {
                 hint_enable = false,
             },
         },
+        {
+            'hrsh7th/nvim-cmp',
+        },
     },
 }
