@@ -149,8 +149,12 @@ local function config()
                 { '?',       cmd('Telescope search_history') },
                 { ':',       cmd('Telescope command_history theme=get_ivy') },
                 { 'c',       cmd('Telescope commands theme=get_ivy') },
-                { '<Enter>', cmd('Telescope'),                          { exit = true } },
-                { '<Esc>',   nil,                                       { exit = true, nowait = true, desc = false } },
+                { '<Enter>', cmd('Telescope'),                                        { exit = true } },
+                {
+                    '<Esc>',
+                    nil,
+                    { exit = true, nowait = true, desc = false },
+                },
             },
         })
     end
@@ -166,11 +170,36 @@ local function config()
             mode = 'n',
             body = '<Leader>d',
             heads = {
-                { 'b', cmd('DapToggleBreakpoint') },
-                { 'c', cmd('DapContinue') },
-                { 's', cmd('DapStepOver') },
-                { 'i', cmd('DapStepInto') },
-                { 'o', cmd('DapStepOut') },
+                {
+                    'b',
+                    function()
+                        dap.toggle_breakpoint()
+                    end,
+                },
+                {
+                    'c',
+                    function()
+                        dap.continue()
+                    end,
+                },
+                {
+                    's',
+                    function()
+                        dap.step_over()
+                    end,
+                },
+                {
+                    'i',
+                    function()
+                        dap.step_into()
+                    end,
+                },
+                {
+                    'o',
+                    function()
+                        dap.step_out()
+                    end,
+                },
                 {
                     'v',
                     function()
