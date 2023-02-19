@@ -3,10 +3,9 @@ local style = require('style')
 
 local function config()
     local cmp = require('cmp')
+    local luasnip_loaded, luasnip = utils.safe_require('luasnip', { silent = true })
 
     local function tab(fallback)
-        local luasnip_loaded, luasnip = utils.safe_require('luasnip', { silent = true })
-
         if cmp.visible() then
             cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
         elseif luasnip_loaded and luasnip.expand_or_locally_jumpable() then
@@ -17,8 +16,6 @@ local function config()
     end
 
     local function shift_tab(fallback)
-        local luasnip_loaded, luasnip = utils.safe_require('luasnip', { silent = true })
-
         if cmp.visible() then
             cmp.select_prev_item({ behavior = cmp.SelectBehavior.Select })
         elseif luasnip_loaded and luasnip.jumpable( -1) then
