@@ -31,10 +31,6 @@ local hints = {
 
 local function config()
     local hydra = require('hydra')
-    local neogit_loaded, _ = utils.safe_require('neogit', { silent = true })
-    local gitsigns_loaded, _ = utils.safe_require('gitsigns', { silent = true })
-    local telescope_loaded, _ = utils.safe_require('telescope', { silent = true })
-    local dap_loaded, dap = utils.safe_require('dap', { silent = true })
     local cmd = function(command)
         return table.concat({ '<cmd>', command, '<CR>' })
     end
@@ -54,163 +50,103 @@ local function config()
         body = '<C-w>',
         heads = {
             -- Move focus
-            { 'w', '<C-w>w' },
-            { '<C-w>', '<C-w>w', { desc = false } },
-            { 'h', '<C-w>h' },
-            { 'j', '<C-w>j' },
-            { 'k', '<C-w>k' },
-            { 'l', '<C-w>l' },
+            { 'w',     '<C-w>w' },
+            { '<C-w>', '<C-w>w',                            { desc = false } },
+            { 'h',     '<C-w>h' },
+            { 'j',     '<C-w>j' },
+            { 'k',     '<C-w>k' },
+            { 'l',     '<C-w>l' },
             -- Move window
-            { 'H', cmd('WinShift left') },
-            { 'J', cmd('WinShift down') },
-            { 'K', cmd('WinShift up') },
-            { 'L', cmd('WinShift right') },
+            { 'H',     cmd('WinShift left') },
+            { 'J',     cmd('WinShift down') },
+            { 'K',     cmd('WinShift up') },
+            { 'L',     cmd('WinShift right') },
             -- Split
-            { 's', '<C-w>s' },
-            { 'v', '<C-w>v' },
-            { 'q', cmd('try | close | catch | endtry'), { desc = 'close window' } },
+            { 's',     '<C-w>s' },
+            { 'v',     '<C-w>v' },
+            { 'q',     cmd('try | close | catch | endtry'), { desc = 'close window' } },
             -- Size
-            { '+', '<C-w>+' },
-            { '-', '<C-w>-' },
-            { '>', '2<C-w>>', { desc = 'increase width' } },
-            { '<', '2<C-w><', { desc = 'decrease width' } },
-            { '=', '<C-w>=', { desc = 'equalize' } },
+            { '+',     '<C-w>+' },
+            { '-',     '<C-w>-' },
+            { '>',     '2<C-w>>',                           { desc = 'increase width' } },
+            { '<',     '2<C-w><',                           { desc = 'decrease width' } },
+            { '=',     '<C-w>=',                            { desc = 'equalize' } },
             --
+            { '<Esc>', nil,                                 { exit = true, nowait = true, desc = false } },
+        },
+    })
+
+    hydra({
+        name = 'Git',
+        config = utils.merge({ color = 'pink' }, default_config),
+        hint = hints.git,
+        mode = { 'n', 'x' },
+        body = '<leader>g',
+        heads = {
+            { '<Enter>', cmd('Neogit'),                             { exit = true, nowait = true } },
+            { 's',       cmd('Gitsigns stage_hunk') },
+            { 'S',       cmd('Gitsigns stage_buffer') },
+            { 'u',       cmd('Gitsigns undo_stage_hunk') },
+            { 'r',       cmd('Gitsigns reset_hunk') },
+            { 'R',       cmd('Gitsigns reset_buffer') },
+            { 'v',       cmd('Gitsigns preview_hunk') },
+            { 'b',       cmd('Gitsigns toggle_current_line_blame') },
+            { 'B',       cmd('Gitsigns blame_line { full = true }') },
+            { 'j',
+                function()
+                    if vim.wo.diff then return ']c' end
+                    vim.schedule(function() vim.cmd('Gitsigns next_hunk') end)
+                    return '<Ignore>'
+                end,
+                { expr = true }, },
+            { 'k',
+                function()
+                    if vim.wo.diff then return '[c' end
+                    vim.schedule(function() vim.cmd('Gitsigns prev_hunk') end)
+                    return '<Ignore>'
+                end,
+                { expr = true }, },
             { '<Esc>', nil, { exit = true, nowait = true, desc = false } },
         },
     })
 
-    if neogit_loaded and gitsigns_loaded then
-        hydra({
-            name = 'Git',
-            config = utils.merge({ color = 'pink' }, default_config),
-            hint = hints.git,
-            mode = { 'n', 'x' },
-            body = '<leader>g',
-            heads = {
-                { '<Enter>', cmd('Neogit'), { exit = true, nowait = true } },
-                { 's', cmd('Gitsigns stage_hunk') },
-                { 'S', cmd('Gitsigns stage_buffer') },
-                { 'u', cmd('Gitsigns undo_stage_hunk') },
-                { 'r', cmd('Gitsigns reset_hunk') },
-                { 'R', cmd('Gitsigns reset_buffer') },
-                { 'v', cmd('Gitsigns preview_hunk') },
-                { 'b', cmd('Gitsigns toggle_current_line_blame') },
-                {
-                    'B',
-                    function()
-                        vim.cmd('Gitsigns blame_line { full = true }')
-                    end,
-                },
-                {
-                    'j',
-                    function()
-                        if vim.wo.diff then
-                            return ']c'
-                        end
-                        vim.schedule(function()
-                            vim.cmd('Gitsigns next_hunk')
-                        end)
-                        return '<Ignore>'
-                    end,
-                    { expr = true },
-                },
-                {
-                    'k',
-                    function()
-                        if vim.wo.diff then
-                            return '[c'
-                        end
-                        vim.schedule(function()
-                            vim.cmd('Gitsigns prev_hunk')
-                        end)
-                        return '<Ignore>'
-                    end,
-                    { expr = true },
-                },
-                { '<Esc>', nil, { exit = true, nowait = true, desc = false } },
-            },
-        })
-    end
+    hydra({
+        name = 'Telescope',
+        config = utils.merge({ color = 'teal' }, default_config),
+        hint = hints.telescope,
+        mode = 'n',
+        body = '<Leader>f',
+        heads = {
+            { 'f',       cmd('Telescope find_files') },
+            { 'r',       cmd('Telescope live_grep') },
+            { 'g',       cmd('Telescope git_files') },
+            { 's',       cmd('Telescope lsp_document_symbols theme=get_dropdown') },
+            { '/',       cmd('Telescope current_buffer_fuzzy_find') },
+            { '?',       cmd('Telescope search_history') },
+            { ':',       cmd('Telescope command_history theme=get_ivy') },
+            { 'c',       cmd('Telescope commands theme=get_ivy') },
+            { '<Enter>', cmd('Telescope'),                                        { exit = true } },
+            --
+            { '<Esc>',   nil,                                                     { exit = true, nowait = true, desc = false }, },
+        },
+    })
 
-    if telescope_loaded then
-        hydra({
-            name = 'Telescope',
-            config = utils.merge({ color = 'teal' }, default_config),
-            hint = hints.telescope,
-            mode = 'n',
-            body = '<Leader>f',
-            heads = {
-                { 'f', cmd('Telescope find_files') },
-                { 'r', cmd('Telescope live_grep') },
-                { 'g', cmd('Telescope git_files') },
-                { 's', cmd('Telescope lsp_document_symbols theme=get_dropdown') },
-                { '/', cmd('Telescope current_buffer_fuzzy_find') },
-                { '?', cmd('Telescope search_history') },
-                { ':', cmd('Telescope command_history theme=get_ivy') },
-                { 'c', cmd('Telescope commands theme=get_ivy') },
-                { '<Enter>', cmd('Telescope'), { exit = true } },
-                {
-                    '<Esc>',
-                    nil,
-                    { exit = true, nowait = true, desc = false },
-                },
-            },
-        })
-    end
-
-    if dap_loaded then
-        hydra({
-            name = 'Debugging',
-            config = utils.merge({ color = 'pink' }, default_config),
-            hint = hints.dap,
-            mode = 'n',
-            body = '<Leader>d',
-            heads = {
-                {
-                    'b',
-                    function()
-                        dap.toggle_breakpoint()
-                    end,
-                },
-                {
-                    'c',
-                    function()
-                        dap.continue()
-                    end,
-                },
-                {
-                    's',
-                    function()
-                        dap.step_over()
-                    end,
-                },
-                {
-                    'i',
-                    function()
-                        dap.step_into()
-                    end,
-                },
-                {
-                    'o',
-                    function()
-                        dap.step_out()
-                    end,
-                },
-                {
-                    'r',
-                    function()
-                        dap.repl.toggle()
-                    end,
-                },
-                {
-                    '<Esc>',
-                    nil,
-                    { exit = true, nowait = true, desc = false },
-                },
-            },
-        })
-    end
+    hydra({
+        name = 'Debugging',
+        config = utils.merge({ color = 'pink' }, default_config),
+        hint = hints.dap,
+        mode = 'n',
+        body = '<Leader>d',
+        heads = {
+            { 'b',     cmd('DapToggleBreakpoint') },
+            { 'c',     cmd('DapContinue') },
+            { 's',     cmd('DapStepOver') },
+            { 'i',     cmd('DapStepInto') },
+            { 'o',     cmd('DapStepOut') },
+            { 'r',     cmd('DapReplToggle') },
+            { '<Esc>', nil,                       { exit = true, nowait = true, desc = false }, },
+        },
+    })
 end
 
 return {
