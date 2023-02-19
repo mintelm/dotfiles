@@ -12,7 +12,7 @@ local function config()
             lualine_a = {
                 {
                     'mode',
-                    icon = style.icons.vim,
+                    icon = style.icons.ui.vim,
                     separator = { left = '', right = '' },
                 },
             },
@@ -33,8 +33,8 @@ local function config()
                     'filename',
                     newfile_status = true,
                     symbols = {
-                        modified = style.icons.modified,
-                        readonly = style.icons.readonly,
+                        modified = style.icons.ui.modified,
+                        readonly = style.icons.ui.readonly,
                         unnamed = '',
                     },
                 },

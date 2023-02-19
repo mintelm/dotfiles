@@ -6,12 +6,14 @@ M = {
         rounded = { '╭', '─', '╮', '│', '╯', '─', '╰', '│' },
     },
     icons = {
-        vim = '', -- 
-        modified = '',
-        readonly = '',
-        lines = '',
-        columns = '',
-        telescope = '',
+        ui = {
+            vim = '', -- 
+            modified = '',
+            readonly = '',
+            lines = '',
+            columns = '',
+            telescope = '',
+        },
         git = {
             add = '',
             delete = '',
@@ -27,6 +29,7 @@ M = {
                 hint = '', -- 
             },
             kinds = {
+                -- use PascalCase for easy mapping
                 Text = '',
                 Method = '',
                 Function = '',
