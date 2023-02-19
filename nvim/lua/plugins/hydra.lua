@@ -20,12 +20,12 @@ local hints = {
     telescope = [[
 ^ ^ ^                    ^ ^    _<Enter>_: list all pickers
 ^
-^ _f_: find files        _r_: live grep      _/_: search in file    _c_: execute command ^
-^ _g_: find git files    _s_: lsp symbols    _?_: search history    _:_: command-line history
+^ _f_: find files        _r_: live grep      _/_: search in file    _c_: execute command
+^ _g_: find git files    _s_: lsp symbols    _?_: search history    _:_: command-line history ^
 ]],
     dap = [[
-^ _b_: toggle breakpoint    _s_: step over    _o_: step out       _f_: show callstack ^
-^ _c_: continue             _i_: step into    _r_: toggle repl    _v_: toggle scope
+^ _b_: toggle breakpoint    _s_: step over    _o_: step out    ^
+^ _c_: continue             _i_: step into    _r_: toggle repl
 ]],
 }
 
@@ -54,29 +54,29 @@ local function config()
         body = '<C-w>',
         heads = {
             -- Move focus
-            { 'w',     '<C-w>w' },
-            { '<C-w>', '<C-w>w',                            { desc = false } },
-            { 'h',     '<C-w>h' },
-            { 'j',     '<C-w>j' },
-            { 'k',     '<C-w>k' },
-            { 'l',     '<C-w>l' },
+            { 'w', '<C-w>w' },
+            { '<C-w>', '<C-w>w', { desc = false } },
+            { 'h', '<C-w>h' },
+            { 'j', '<C-w>j' },
+            { 'k', '<C-w>k' },
+            { 'l', '<C-w>l' },
             -- Move window
-            { 'H',     cmd('WinShift left') },
-            { 'J',     cmd('WinShift down') },
-            { 'K',     cmd('WinShift up') },
-            { 'L',     cmd('WinShift right') },
+            { 'H', cmd('WinShift left') },
+            { 'J', cmd('WinShift down') },
+            { 'K', cmd('WinShift up') },
+            { 'L', cmd('WinShift right') },
             -- Split
-            { 's',     '<C-w>s' },
-            { 'v',     '<C-w>v' },
-            { 'q',     cmd('try | close | catch | endtry'), { desc = 'close window' } },
+            { 's', '<C-w>s' },
+            { 'v', '<C-w>v' },
+            { 'q', cmd('try | close | catch | endtry'), { desc = 'close window' } },
             -- Size
-            { '+',     '<C-w>+' },
-            { '-',     '<C-w>-' },
-            { '>',     '2<C-w>>',                           { desc = 'increase width' } },
-            { '<',     '2<C-w><',                           { desc = 'decrease width' } },
-            { '=',     '<C-w>=',                            { desc = 'equalize' } },
+            { '+', '<C-w>+' },
+            { '-', '<C-w>-' },
+            { '>', '2<C-w>>', { desc = 'increase width' } },
+            { '<', '2<C-w><', { desc = 'decrease width' } },
+            { '=', '<C-w>=', { desc = 'equalize' } },
             --
-            { '<Esc>', nil,                                 { exit = true, nowait = true, desc = false } },
+            { '<Esc>', nil, { exit = true, nowait = true, desc = false } },
         },
     })
 
@@ -88,14 +88,14 @@ local function config()
             mode = { 'n', 'x' },
             body = '<leader>g',
             heads = {
-                { '<Enter>', cmd('Neogit'),                            { exit = true, nowait = true } },
-                { 's',       cmd('Gitsigns stage_hunk') },
-                { 'S',       cmd('Gitsigns stage_buffer') },
-                { 'u',       cmd('Gitsigns undo_stage_hunk') },
-                { 'r',       cmd('Gitsigns reset_hunk') },
-                { 'R',       cmd('Gitsigns reset_buffer') },
-                { 'v',       cmd('Gitsigns preview_hunk') },
-                { 'b',       cmd('Gitsigns toggle_current_line_blame') },
+                { '<Enter>', cmd('Neogit'), { exit = true, nowait = true } },
+                { 's', cmd('Gitsigns stage_hunk') },
+                { 'S', cmd('Gitsigns stage_buffer') },
+                { 'u', cmd('Gitsigns undo_stage_hunk') },
+                { 'r', cmd('Gitsigns reset_hunk') },
+                { 'R', cmd('Gitsigns reset_buffer') },
+                { 'v', cmd('Gitsigns preview_hunk') },
+                { 'b', cmd('Gitsigns toggle_current_line_blame') },
                 {
                     'B',
                     function()
@@ -141,15 +141,15 @@ local function config()
             mode = 'n',
             body = '<Leader>f',
             heads = {
-                { 'f',       cmd('Telescope find_files') },
-                { 'r',       cmd('Telescope live_grep') },
-                { 'g',       cmd('Telescope git_files') },
-                { 's',       cmd('Telescope lsp_document_symbols theme=get_dropdown') },
-                { '/',       cmd('Telescope current_buffer_fuzzy_find') },
-                { '?',       cmd('Telescope search_history') },
-                { ':',       cmd('Telescope command_history theme=get_ivy') },
-                { 'c',       cmd('Telescope commands theme=get_ivy') },
-                { '<Enter>', cmd('Telescope'),                                        { exit = true } },
+                { 'f', cmd('Telescope find_files') },
+                { 'r', cmd('Telescope live_grep') },
+                { 'g', cmd('Telescope git_files') },
+                { 's', cmd('Telescope lsp_document_symbols theme=get_dropdown') },
+                { '/', cmd('Telescope current_buffer_fuzzy_find') },
+                { '?', cmd('Telescope search_history') },
+                { ':', cmd('Telescope command_history theme=get_ivy') },
+                { 'c', cmd('Telescope commands theme=get_ivy') },
+                { '<Enter>', cmd('Telescope'), { exit = true } },
                 {
                     '<Esc>',
                     nil,
@@ -160,9 +160,6 @@ local function config()
     end
 
     if dap_loaded then
-        local widgets = require('dap.ui.widgets')
-        local sidebar = widgets.sidebar(widgets.scopes)
-
         hydra({
             name = 'Debugging',
             config = utils.merge({ color = 'pink' }, default_config),
@@ -198,18 +195,6 @@ local function config()
                     'o',
                     function()
                         dap.step_out()
-                    end,
-                },
-                {
-                    'v',
-                    function()
-                        sidebar.toggle()
-                    end,
-                },
-                {
-                    'f',
-                    function()
-                        widgets.centered_float(widgets.frames)
                     end,
                 },
                 {
