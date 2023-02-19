@@ -91,7 +91,6 @@ return {
         {
             'williamboman/mason-lspconfig.nvim',
             config = mason_lsp_config,
-            dependencies = { 'mason.nvim' },
         },
         {
             'ray-x/lsp_signature.nvim',
