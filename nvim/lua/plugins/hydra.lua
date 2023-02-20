@@ -143,7 +143,7 @@ local function config()
             { 's',     cmd('DapStepOver') },
             { 'i',     cmd('DapStepInto') },
             { 'o',     cmd('DapStepOut') },
-            { 'r',     cmd('DapReplToggle') },
+            { 'r',     cmd('DapToggleRepl') },
             { '<Esc>', nil,                       { exit = true, nowait = true, desc = false }, },
         },
     })
