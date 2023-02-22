@@ -51,7 +51,9 @@ local function lsp_config()
 end
 
 local function mason_lsp_config()
-    require('mason-lspconfig').setup()
+    require('mason-lspconfig').setup({
+        ensure_installed = { 'lua_ls', 'clangd', },
+    })
     require('mason-lspconfig').setup_handlers({
         function(server_name)
             require('lspconfig')[server_name].setup({})
