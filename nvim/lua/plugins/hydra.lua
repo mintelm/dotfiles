@@ -24,8 +24,8 @@ local hints = {
 ^ _g_: find git files    _s_: lsp symbols    _?_: search history    _:_: command-line history ^
 ]],
     dap = [[
-^ _b_: toggle breakpoint    _s_: step over    _o_: step out    ^
-^ _c_: continue             _i_: step into    _r_: toggle repl
+^ _b_: toggle breakpoint    _s_: step over    _o_: step out          _u_: toggle ui
+^ _c_: continue             _i_: step into    _w_: add to watches    _r_: toggle repl ^
 ]],
 }
 
@@ -144,8 +144,9 @@ local function config()
             { 'i',     cmd('DapStepInto') },
             { 'o',     cmd('DapStepOut') },
             { 'r',     cmd('DapToggleRepl') },
-            { '<Esc>', nil,                       { exit = true, nowait = true, desc = false }, },
-        },
+            { 'u',     function() require('dapui').toggle({ reset = true }) end },
+            { 'w',     function() require('dapui').elements.watches.add() end },
+            { '<Esc>', nil,                                                     { exit = true, nowait = true, desc = false }, }, },
     })
 end
 
