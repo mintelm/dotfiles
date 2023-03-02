@@ -4,6 +4,7 @@ return {
         config = function()
             require('leap').add_default_mappings()
         end,
+        dependencies = 'tpope/vim-repeat',
     },
     {
         'ggandor/flit.nvim',
