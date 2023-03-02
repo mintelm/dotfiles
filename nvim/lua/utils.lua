@@ -1,5 +1,3 @@
-local fmt = string.format
-
 local M = {}
 
 ---Inspect contents of any object
@@ -39,21 +37,6 @@ function M.merge(t1, t2)
     end
 
     return t1
-end
-
----Require a module using [pcall] and report any errors
----@param module string
----@param opts table?
----@return boolean, any
-function M.safe_require(module, opts)
-    opts = opts or { silent = false }
-    local ok, result = pcall(require, module)
-
-    if not ok and not opts.silent then
-        vim.notify(result, vim.log.levels.error, { title = fmt('Error requiring: %s', module) })
-    end
-
-    return ok, result
 end
 
 ---@class Autocommand

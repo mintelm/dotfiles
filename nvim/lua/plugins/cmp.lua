@@ -1,14 +1,13 @@
-local utils = require('utils')
 local style = require('style')
 
 local function config()
     local cmp = require('cmp')
-    local luasnip_loaded, luasnip = utils.safe_require('luasnip', { silent = true })
+    local luasnip = require('luasnip')
 
     local function tab(fallback)
         if cmp.visible() then
             cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
-        elseif luasnip_loaded and luasnip.expand_or_locally_jumpable() then
+        elseif luasnip.expand_or_locally_jumpable() then
             luasnip.expand_or_jump()
         else
             fallback()
@@ -18,7 +17,7 @@ local function config()
     local function shift_tab(fallback)
         if cmp.visible() then
             cmp.select_prev_item({ behavior = cmp.SelectBehavior.Select })
-        elseif luasnip_loaded and luasnip.jumpable( -1) then
+        elseif luasnip.jumpable( -1) then
             luasnip.jump( -1)
         else
             fallback()
@@ -29,28 +28,29 @@ local function config()
         completion = {
             autocomplete = false,
         },
+        matching = {
+            disallow_partial_fuzzy_matching = false,
+        },
         enabled = function()
             return vim.api.nvim_buf_get_option(0, 'buftype') ~= 'prompt' or require('cmp_dap').is_dap_buffer()
         end,
         snippet = {
-            expand = function(args)
-                require('luasnip').lsp_expand(args.body)
-            end,
+            expand = function(args) require('luasnip').lsp_expand(args.body) end,
         },
         sources = {
             { name = 'path',     max_item_count = 5,  priority_weight = 110 },
             { name = 'nvim_lsp', max_item_count = 20, priority_weight = 100 },
-            { name = 'luasnip',  max_item_count = 5,  priority_weight = 90 },
-            { name = 'buffer',   max_item_count = 5,  priority_weight = 80 },
+            { name = 'luasnip',  max_item_count = 5,  priority_weight = 80 },
             {
                 name = 'rg',
                 keyword_length = 5,
                 max_item_count = 5,
                 priority_weight = 70,
                 option = {
-                    additional_arguments = '--smart-case --hidden',
+                    additional_arguments = '--smart-case --max-depth 8',
                 },
             },
+            { name = 'buffer', max_item_count = 5, priority_weight = 60 },
         },
         mapping = {
             ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
@@ -102,7 +102,7 @@ local function config()
     })
 
     -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
-    cmp.setup.cmdline('/', {
+    cmp.setup.cmdline({ '/', '?' }, {
         mapping = cmp.mapping.preset.cmdline(),
         sources = {
             { name = 'buffer' },
@@ -114,13 +114,11 @@ local function config()
     -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
     cmp.setup.cmdline(':', {
         mapping = cmp.mapping.preset.cmdline(),
-        sources = cmp.config.sources(
-            {
-                { name = 'path' },
-            },
-            -- fallback
-            { { name = 'cmdline' } }
-        ),
+        sources = cmp.config.sources({
+            { name = 'cmdline', keyword_pattern = [=[[^[:blank:]\!]*]=] },
+            { name = 'path' },
+
+        }),
         view = {
             entries = { name = 'wildmenu', separator = '|' },
         },
@@ -142,6 +140,7 @@ end
 
 return {
     'hrsh7th/nvim-cmp',
+    event = 'InsertEnter',
     config = config,
     dependencies = {
         'hrsh7th/cmp-path',
