@@ -160,12 +160,5 @@ return {
             end,
             dependencies = 'rafamadriz/friendly-snippets',
         },
-        {
-            'folke/neodev.nvim',
-            config = function()
-                -- uses lsp as source
-                require('neodev').setup()
-            end,
-        },
     },
 }

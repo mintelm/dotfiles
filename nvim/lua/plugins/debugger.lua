@@ -38,74 +38,63 @@ local function dap_config()
 end
 
 return {
-    'mfussenegger/nvim-dap',
-    config = dap_config,
-    dependencies = {
-        {
-            'jayp0521/mason-nvim-dap.nvim',
-            config = function()
-                require('mason-nvim-dap').setup({
-                    ensure_installed = { 'cppdbg' },
-                    automatic_setup = true,
-                })
-                require('mason-nvim-dap').setup_handlers()
-            end,
-        },
-        {
-            'theHamsta/nvim-dap-virtual-text',
-            opts = {
-                display_callback = function(variable, _, _, _)
-                    return style.icons.ui.virtual_prefix .. ' ' .. variable.name .. ' = ' .. variable.value
-                end,
+    {
+        'mfussenegger/nvim-dap',
+        config = dap_config,
+        dependencies = {
+            {
+                'theHamsta/nvim-dap-virtual-text',
+                opts = {
+                    display_callback = function(variable, _, _, _)
+                        return style.icons.ui.virtual_prefix .. ' ' .. variable.name .. ' = ' .. variable.value
+                    end,
+                },
             },
-        },
-        {
-            'rcarriga/nvim-dap-ui',
-            opts = {
-                controls = {
-                    enabled = false,
-                },
-                windows = {
-                    indent = 2,
-                },
-                floating = {
-                    border = style.current.border,
-                },
-                layouts = {
-                    {
-                        elements = {
-                            {
-                                id = 'scopes',
-                                size = 0.25,
-                            },
-                            {
-                                id = 'breakpoints',
-                                size = 0.25,
-                            },
-                            {
-                                id = 'stacks',
-                                size = 0.25,
-                            },
-                            {
-                                id = 'watches',
-                                size = 0.25,
-                            },
-                        },
-                        position = 'left',
-                        size = 40,
+            {
+                'rcarriga/nvim-dap-ui',
+                opts = {
+                    controls = {
+                        enabled = false,
                     },
-                    {
-                        elements = {
-                            {
-                                id = 'console',
-                                size = 1,
+                    windows = {
+                        indent = 2,
+                    },
+                    floating = {
+                        border = style.current.border,
+                    },
+                    layouts = {
+                        {
+                            elements = {
+                                { id = 'scopes',      size = 0.25, },
+                                { id = 'breakpoints', size = 0.25, },
+                                { id = 'stacks',      size = 0.25, },
+                                { id = 'watches',     size = 0.25, },
                             },
+                            position = 'left',
+                            size = 40,
                         },
-                        position = 'bottom',
-                        size = 10,
+                        {
+                            elements = {
+                                { id = 'console', size = 1, },
+                            },
+                            position = 'bottom',
+                            size = 10,
+                        },
                     },
                 },
             },
         },
+    },
+    {
+        'jayp0521/mason-nvim-dap.nvim',
+        event = { 'BufReadPre', 'BufNewFile' },
+        config = function()
+            require('mason-nvim-dap').setup({
+                ensure_installed = { 'cppdbg' },
+                automatic_setup = true,
+            })
+            require('mason-nvim-dap').setup_handlers()
+        end,
+        dependencies = { 'mason.nvim', 'nvim-dap' }
     },
 }

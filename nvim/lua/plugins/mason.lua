@@ -2,8 +2,6 @@ local style = require('style')
 
 return {
     'williamboman/mason.nvim',
-    lazy = false,
-    priority = 900,
     opts = {
         ui = {
             icons = {
@@ -12,10 +10,5 @@ return {
                 package_uninstalled = style.icons.lsp.mason.uninstalled,
             },
         },
-    },
-    dependencies = {
-        'williamboman/mason-lspconfig.nvim',
-        'jayp0521/mason-null-ls.nvim',
-        'jayp0521/mason-nvim-dap.nvim',
     },
 }

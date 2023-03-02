@@ -67,25 +67,41 @@ local function mason_lsp_config()
 end
 
 return {
-    'neovim/nvim-lspconfig',
-    config = lsp_config,
-    dependencies = {
-        {
-            'williamboman/mason-lspconfig.nvim',
-            config = mason_lsp_config,
-        },
-        {
-            'ray-x/lsp_signature.nvim',
-            opts = {
-                bind = true,
-                handler_opts = {
-                    border = style.current.border,
+    {
+        'williamboman/mason.nvim',
+        cmd = 'Mason',
+        opts = {
+            ui = {
+                icons = {
+                    package_installed = style.icons.lsp.mason.installed,
+                    package_pending = style.icons.lsp.mason.pending,
+                    package_uninstalled = style.icons.lsp.mason.uninstalled,
                 },
-                hint_enable = false,
             },
         },
-        {
-            'hrsh7th/nvim-cmp',
-        },
     },
+    {
+        'williamboman/mason-lspconfig.nvim',
+        event = { 'BufReadPre', 'BufNewFile' },
+        config = mason_lsp_config,
+        dependencies = {
+            'mason.nvim',
+            {
+                'neovim/nvim-lspconfig',
+                config = lsp_config,
+                dependencies = {
+                    {
+                        'folke/neodev.nvim',
+                        ft = 'lua',
+                        opts = { library = { plugins = { 'nvim-dap-ui' } } },
+                    },
+                    {
+                        'folke/neoconf.nvim',
+                        cmd = { 'Neoconf' },
+                        opts = { local_settings = '.nvim.json', global_settings = 'nvim.json' },
+                    },
+                },
+            }
+        },
+    }
 }
