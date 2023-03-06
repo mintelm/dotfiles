@@ -66,6 +66,7 @@ end
 
 return {
     'projekt0n/github-nvim-theme',
+    branch = '0.0.x',
     config = config,
     lazy = false,
     priority = 1000,
