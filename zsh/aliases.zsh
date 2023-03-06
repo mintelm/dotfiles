@@ -15,7 +15,10 @@ alias dkdown='docker-compose -f docker-compose.yml stop'
 alias dkpull='docker-compose -f docker-compose.yml pull'
 alias dklogs='docker-compose -f docker-compose.yml logs -tf --tail="50"'
 alias dktail='docker logs -tf --tail="50" "$@"'
-[ -x "$(command -v nvim)" ] && alias vim="nvim"
+if [ -x "$(command -v nvim)" ]; then
+    alias vim="nvim"
+    alias vimdiff="nvim -d"
+fi
 if [ -x "$(command -v exa)" ]; then
     alias ls="exa "
     alias ll="exa --icons -l"
