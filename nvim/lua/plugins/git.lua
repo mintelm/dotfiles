@@ -15,6 +15,11 @@ return {
     {
         'TimUntersberger/neogit',
         dependencies = 'nvim-lua/plenary.nvim',
+        opts = {
+            integrations = {
+                diffview = true,
+            },
+        },
     },
     {
         'sindrets/diffview.nvim',
