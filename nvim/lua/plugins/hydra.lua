@@ -5,9 +5,9 @@ local hints = {
     git = [[
 ^ ^ ^                           _<Enter>_: Neogit
 ^
-^ _j_: next hunk   _s_: stage hunk        _r_: reset hunk     _b_: blame line
-^ _k_: prev hunk   _u_: undo stage hunk   _v_: preview hunk   _B_: blame show full ^
-^ ^ ^              _S_: stage buffer      _R_: reset buffer
+^ _j_: next hunk      _s_: stage hunk        _r_: reset hunk     _b_: blame line
+^ _k_: prev hunk      _u_: undo stage hunk   _v_: preview hunk   _B_: blame show full ^
+^ _h_: diff history   _S_: stage buffer      _R_: reset buffer   _d_: diff view
 ]],
     window = [[
 ^ ^^^^   ^ ^ Move ^ ^   ^^^^    ^ ^   Split        ^ ^ ^ ^ Size
@@ -92,6 +92,8 @@ local function config()
             { 'v',       cmd('Gitsigns preview_hunk') },
             { 'b',       cmd('Gitsigns toggle_current_line_blame') },
             { 'B',       cmd('Gitsigns blame_line { full = true }') },
+            { 'd',       cmd('DiffviewOpen') },
+            { 'h',       cmd('DiffviewFileHistory %') },
             { 'j',
                 function()
                     if vim.wo.diff then return ']c' end
