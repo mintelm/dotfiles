@@ -1,20 +1,16 @@
-local function gitsigns_config()
-    require('gitsigns').setup({
-        keymaps = {},
-        update_debounce = 50,
-        current_line_blame_opts = {
-            delay = 0,
-        },
-        preview_config = {
-            border = require('style').current.border,
-        },
-    })
-end
-
 return {
     {
         'lewis6991/gitsigns.nvim',
-        config = gitsigns_config,
+        opts = {
+            keymaps = {},
+            update_debounce = 50,
+            current_line_blame_opts = {
+                delay = 0,
+            },
+            preview_config = {
+                border = require('style').current.border,
+            },
+        },
     },
     {
         'TimUntersberger/neogit',
@@ -23,5 +19,21 @@ return {
     {
         'sindrets/diffview.nvim',
         dependencies = 'nvim-lua/plenary.nvim',
-    }
+        opts = {
+            keymaps = {
+                view = {
+                    { 'n', '<C-w><C-f>', false },
+                    { 'n', '<C-w>gf',    false },
+                },
+                file_panel = {
+                    { 'n', '<C-w><C-f>', false },
+                    { 'n', '<C-w>gf',    false },
+                },
+                file_history_panel = {
+                    { 'n', '<C-w><C-f>', false },
+                    { 'n', '<C-w>gf',    false },
+                },
+            },
+        },
+    },
 }
