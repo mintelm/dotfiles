@@ -1,9 +1,14 @@
 return {
     'nvim-treesitter/nvim-treesitter',
-    opts = {
-        auto_install = true,
-        highlight = {
-            enable = true,
-        },
-    },
+    config = function()
+        require('nvim-treesitter.configs').setup({
+            auto_install = true,
+            ignore_install = {
+                'gitcommit',
+            },
+            highlight = {
+                enable = true,
+            },
+        })
+    end,
 }
