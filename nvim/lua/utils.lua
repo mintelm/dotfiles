@@ -76,7 +76,7 @@ function M.augroup(name, commands)
 end
 
 ---Set global vim keymap
----@param mode string
+---@param mode string|table
 ---@param lhs string
 ---@param rhs string
 ---@param opts table
@@ -87,7 +87,7 @@ function M.map(mode, lhs, rhs, opts)
         options = vim.tbl_extend('force', options, opts)
     end
 
-    vim.api.nvim_set_keymap(mode, lhs, rhs, options)
+    vim.keymap.set(mode, lhs, rhs, options)
 end
 
 ---Set global vim keymap
