@@ -1,7 +1,5 @@
-local style = require('style')
-
 vim.o.title = true
-vim.o.titlestring = style.icons.ui.vim .. " %{fnamemodify(getcwd(), ':~')} %m"
+vim.o.titlestring = require('style').icons.ui.vim .. " %{fnamemodify(getcwd(), ':~')} %m"
 
 vim.o.tabstop = 4
 vim.o.softtabstop = 4

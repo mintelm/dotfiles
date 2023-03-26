@@ -126,12 +126,7 @@ local function config()
             { ':',       cmd('Telescope command_history theme=get_ivy') },
             { 'c',       cmd('Telescope commands theme=get_ivy') },
             { '<Enter>', cmd('Telescope'),                                        { exit = true } },
-            --
-            { '<Esc>', nil, {
-                exit = true,
-                nowait = true,
-                desc = false
-            }, },
+            { '<Esc>',   nil,                                                     { exit = true, nowait = true, desc = false }, },
         },
     })
 
@@ -142,19 +137,16 @@ local function config()
         mode = 'n',
         body = '<Leader>d',
         heads = {
-            { 'b', cmd('DapToggleBreakpoint') },
-            { 'c', cmd('DapContinue') },
-            { 's', cmd('DapStepOver') },
-            { 'i', cmd('DapStepInto') },
-            { 'o', cmd('DapStepOut') },
-            { 'r', cmd('DapToggleRepl') },
-            { 'u', function() require('dapui').toggle({ reset = true }) end },
-            { 'w', function() require('dapui').elements.watches.add() end },
-            { '<Esc>', nil, {
-                exit = true,
-                nowait = true,
-                desc = false
-            }, }, },
+            { 'b',     cmd('DapToggleBreakpoint') },
+            { 'c',     cmd('DapContinue') },
+            { 's',     cmd('DapStepOver') },
+            { 'i',     cmd('DapStepInto') },
+            { 'o',     cmd('DapStepOut') },
+            { 'r',     cmd('DapToggleRepl') },
+            { 'u',     function() require('dapui').toggle({ reset = true }) end },
+            { 'w',     function() require('dapui').elements.watches.add() end },
+            { '<Esc>', nil,                                                     { exit = true, nowait = true, desc = false }, },
+        },
     })
 end
 
