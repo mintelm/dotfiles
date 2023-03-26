@@ -16,11 +16,8 @@ vim.o.hidden = true
 vim.o.ignorecase = true
 vim.o.smartcase = true
 
-if vim.env.WSL_DISTRO_NAME then
-    vim.o.clipboard = ''
-else
-    vim.o.clipboard = 'unnamed,unnamedplus'
-end
+vim.o.clipboard = 'unnamedplus'
+
 vim.o.scrolloff = 8
 vim.o.mouse = 'a'
 vim.o.showmode = false
