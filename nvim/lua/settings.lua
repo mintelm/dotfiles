@@ -14,8 +14,7 @@ vim.o.hidden = true
 vim.o.ignorecase = true
 vim.o.smartcase = true
 
-vim.o.clipboard = 'unnamedplus'
-
+vim.o.smartcase = true
 vim.o.scrolloff = 8
 vim.o.mouse = 'a'
 vim.o.showmode = false
