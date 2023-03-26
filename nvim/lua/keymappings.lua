@@ -33,6 +33,15 @@ map('n', 'N', 'Nzzzv', silenced)
 map({ 'n', 'v' }, '<leader>y', [["+y]], silenced)
 map({ 'n', 'v' }, '<leader>Y', [["+Y]], silenced)
 map('n', 'Q', '<nop>', silenced)
+map('c', '<enter>',
+    function()
+        local cmdtype = vim.fn.getcmdtype()
+        if cmdtype == '/' or cmdtype == '?' then
+            return '<CR>zzzv'
+        end
+        return '<CR>'
+    end,
+    { expr = true, silent = true })
 
 -- bufferline
 map('n', ']b', cmd('BufferLineCycleNext'), silenced)

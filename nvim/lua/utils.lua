@@ -78,7 +78,7 @@ end
 ---Set global vim keymap
 ---@param mode string|table
 ---@param lhs string
----@param rhs string
+---@param rhs string|function
 ---@param opts table
 function M.map(mode, lhs, rhs, opts)
     local options = { noremap = true }
