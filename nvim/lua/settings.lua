@@ -8,6 +8,7 @@ vim.o.title = true
 vim.o.titlestring = style.icons.ui.vim .. " %{fnamemodify(getcwd(), ':~')} %m"
 
 vim.o.tabstop = 4
+vim.o.softtabstop = 4
 vim.o.shiftwidth = 4
 vim.o.expandtab = true
 vim.o.smartindent = true
@@ -24,7 +25,7 @@ if vim.env.WSL_DISTRO_NAME then
 else
     vim.o.clipboard = 'unnamed,unnamedplus'
 end
-vim.o.scrolloff = 4
+vim.o.scrolloff = 8
 vim.o.mouse = 'a'
 vim.o.showmode = false
 
@@ -37,4 +38,9 @@ vim.o.splitbelow = true
 vim.o.equalalways = false
 vim.o.list = true
 vim.o.listchars = 'tab:→ ,trail:•,nbsp:␣,extends:»,precedes:«'
-vim.o.updatetime = 100
+vim.o.updatetime = 50
+
+vim.o.swapfile = false
+vim.o.backup = false
+vim.o.undordir = os.getenv('HOME') .. '/.vim/undodir'
+vim.o.undofile = true

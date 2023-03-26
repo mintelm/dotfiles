@@ -61,3 +61,6 @@ map('t', '<esc>', [[<C-\><C-n>]], silenced)
 
 -- taskrunner
 map('n', '<leader>rt', cmd('OverseerRun'), silenced)
+
+-- undotree
+map('n', '<leader>u', cmd('UndotreeToggle'), silenced)

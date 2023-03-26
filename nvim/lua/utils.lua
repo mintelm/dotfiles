@@ -20,6 +20,7 @@ function M.set_tab_width(tab_width)
     end
     vim.bo.tabstop = tab_width
     vim.bo.shiftwidth = tab_width
+    vim.bo.softtabstop = tab_width
 end
 
 ---Merge table t1, t2

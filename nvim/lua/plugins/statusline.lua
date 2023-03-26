@@ -33,7 +33,7 @@ local function config()
                     'filename',
                     newfile_status = true,
                     symbols = {
-                        modified = style.icons.ui.modified,
+                        modified = pad_icon(style.icons.ui.modified, false, true),
                         readonly = style.icons.ui.readonly,
                         unnamed = '',
                     },
