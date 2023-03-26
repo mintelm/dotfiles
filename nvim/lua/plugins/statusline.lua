@@ -25,6 +25,17 @@ local function config()
                         modified = pad_icon(style.icons.git.change, false, true),
                         removed = pad_icon(style.icons.git.delete, false, true),
                     },
+                    source = function()
+                        ---@diagnostic disable-next-line: undefined-field
+                        local gitsigns = vim.b.gitsigns_status_dict
+                        if gitsigns then
+                            return {
+                                added = gitsigns.added,
+                                modified = gitsigns.changed,
+                                removed = gitsigns.removed
+                            }
+                        end
+                    end,
                 },
             },
             lualine_c = {
