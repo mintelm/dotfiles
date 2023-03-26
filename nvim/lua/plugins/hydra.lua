@@ -32,6 +32,15 @@ local hints = {
 local function config()
     local hydra = require('hydra')
     local cmd = utils.cmd
+    -- delays the centering of async commands
+    local delayed_centering_cmd = function(command, delay)
+        delay = delay or 10
+        vim.schedule(function()
+            vim.cmd(command)
+            vim.wait(delay)
+            vim.cmd('normal zzzv')
+        end)
+    end
     local default_config = {
         invoke_on_body = true,
         hint = {
@@ -95,14 +104,14 @@ local function config()
             { 'j',
                 function()
                     if vim.wo.diff then return ']c' end
-                    vim.schedule(function() vim.cmd('Gitsigns next_hunk') end)
+                    delayed_centering_cmd('Gitsigns next_hunk')
                     return '<Ignore>'
                 end,
                 { expr = true }, },
             { 'k',
                 function()
                     if vim.wo.diff then return '[c' end
-                    vim.schedule(function() vim.cmd('Gitsigns prev_hunk') end)
+                    delayed_centering_cmd('Gitsigns prev_hunk')
                     return '<Ignore>'
                 end,
                 { expr = true }, },
@@ -138,11 +147,11 @@ local function config()
         body = '<Leader>d',
         heads = {
             { 'b',     cmd('DapToggleBreakpoint') },
-            { 'c',     cmd('DapContinue') },
-            { 's',     cmd('DapStepOver') },
-            { 'i',     cmd('DapStepInto') },
-            { 'o',     cmd('DapStepOut') },
-            { 'r',     cmd('DapToggleRepl') },
+            { 'c',     function() delayed_centering_cmd('DapContinue') end },
+            { 's',     function() delayed_centering_cmd('DapStepOver') end },
+            { 'i',     function() delayed_centering_cmd('DapStepInto') end },
+            { 'o',     function() delayed_centering_cmd('DapStepOut') end },
+            { 'r',     function() delayed_centering_cmd('DapToggleRepl') end },
             { 'u',     function() require('dapui').toggle({ reset = true }) end },
             { 'w',     function() require('dapui').elements.watches.add() end },
             { '<Esc>', nil,                                                     { exit = true, nowait = true, desc = false }, },
