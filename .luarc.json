@@ -1,9 +1,9 @@
 {
   "Lua.workspace.checkThirdParty": false,
   "Lua.format.defaultConfig": {
-    "indent_style": "tab",
+    "indent_style": "space",
     "indent_size": "4",
-    "max_line_length": "120",
+    "max_line_length": "140",
     "quote_style": "single"
   },
   "Lua.diagnostics.neededFileStatus": {
