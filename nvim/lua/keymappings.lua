@@ -24,6 +24,20 @@ map('', '[T', cmd('tabfirst'), silenced)
 -- clear highlight on space
 map('n', '<Space>', cmd('noh'), silenced)
 
+-- fancy remaps
+map('v', 'K', [[:m '<-2<CR>gv=gv]], silenced)
+map('v', 'J', [[:m '>+1<CR>gv=gv]], silenced)
+map('n', 'J', 'mzJ`z', silenced)
+map('n', '<C-d>', '<C-d>zz', silenced)
+map('n', '<C-u>', '<C-u>zz', silenced)
+map('n', 'n', 'nzzzv', silenced)
+map('n', 'N', 'Nzzzv', silenced)
+map('n', '<leader>y', [["+y]], silenced)
+map('v', '<leader>y', [["+y]], silenced)
+map('n', '<leader>Y', [["+Y]], silenced)
+map('v', '<leader>Y', [["+Y]], silenced)
+map('n', 'Q', '<nop>', silenced)
+
 -- bufferline
 map('n', ']b', cmd('BufferLineCycleNext'), silenced)
 map('n', '[b', cmd('BufferLineCyclePrev'), silenced)
