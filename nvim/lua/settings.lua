@@ -1,8 +1,4 @@
-local cmd = vim.cmd
 local style = require('style')
-
-cmd('syntax enable')
-cmd('filetype plugin indent on')
 
 vim.o.title = true
 vim.o.titlestring = style.icons.ui.vim .. " %{fnamemodify(getcwd(), ':~')} %m"

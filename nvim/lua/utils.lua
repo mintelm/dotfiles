@@ -93,7 +93,7 @@ end
 ---Set global vim keymap
 ---@param str string
 ---@param l boolean
----@param r boolean`
+---@param r boolean
 ---@return string
 function M.pad_str(str, l, r)
     if l then
@@ -103,6 +103,15 @@ function M.pad_str(str, l, r)
         str = str .. ' '
     end
     return str
+end
+
+---Build command table
+---@param command string
+---@tparam[opt] suffix string
+---@return string
+function M.cmd(command, suffix)
+    suffix = suffix or ''
+    return '<cmd>' .. command .. '<CR>' .. suffix
 end
 
 _G.dump = M.dump

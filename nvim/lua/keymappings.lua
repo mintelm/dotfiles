@@ -1,9 +1,7 @@
 local map = require('utils').map
+local cmd = require('utils').cmd
 
 local silenced = { silent = true }
-local cmd = function(command)
-    return table.concat({ '<cmd>', command, '<CR>' })
-end
 
 vim.g.mapleader = ','
 
@@ -12,10 +10,10 @@ map('', '<C-b>', '', {})
 map('', '<C-f>', '', {})
 
 -- navigation
-map('', ']q', cmd('cnext'), silenced)
-map('', '[q', cmd('cprev'), silenced)
-map('', ']Q', cmd('clast'), silenced)
-map('', '[Q', cmd('cfirst'), silenced)
+map('', ']q', cmd('cnext', 'zzzv'), silenced)
+map('', '[q', cmd('cprev', 'zzzv'), silenced)
+map('', ']Q', cmd('clast', 'zzzv'), silenced)
+map('', '[Q', cmd('cfirst', 'zzzv'), silenced)
 map('', ']t', cmd('tabnext'), silenced)
 map('', '[t', cmd('tabprev'), silenced)
 map('', ']T', cmd('tablast'), silenced)
@@ -58,8 +56,8 @@ map('n', 'gD', cmd('lua vim.lsp.buf.declaration()'), silenced)
 map('n', 'gd', cmd('Telescope lsp_definitions'), silenced)
 map('n', 'gi', cmd('Telescope lsp_implementations'), silenced)
 map('n', 'gr', cmd('Telescope lsp_references'), silenced)
-map('n', ']d', cmd('lua vim.diagnostic.goto_next()'), silenced)
-map('n', '[d', cmd('lua vim.diagnostic.goto_prev()'), silenced)
+map('n', ']d', cmd('lua vim.diagnostic.goto_next()', 'zzzv'), silenced)
+map('n', '[d', cmd('lua vim.diagnostic.goto_prev()', 'zzzv'), silenced)
 map('n', 'K', cmd('lua vim.lsp.buf.hover()'), silenced)
 map('n', '<C-k>', cmd('lua vim.lsp.buf.signature_help()'), silenced)
 map('n', '<leader>rn', cmd('lua vim.lsp.buf.rename()'), silenced)
