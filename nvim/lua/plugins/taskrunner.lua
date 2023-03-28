@@ -6,6 +6,7 @@ return {
                 'toggleterm',
                 direction = 'tab',
                 close_on_exit = false,
+                open_on_start = true,
             },
         })
     end,
