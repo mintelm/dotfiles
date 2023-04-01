@@ -4,7 +4,7 @@ local M = {}
 ---@vararg any
 function M.dump(...)
     local objects = vim.tbl_map(vim.inspect, { ... })
-    vim.notify(unpack(objects))
+    vim.notify(table.unpack(objects))
 end
 
 ---Set tabstop, shiftwdith and expandtab/smartindent accordingly
