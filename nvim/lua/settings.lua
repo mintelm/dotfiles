@@ -16,6 +16,7 @@ vim.o.smartcase = true
 
 vim.o.smartcase = true
 vim.o.scrolloff = 8
+vim.o.pumheight = 10
 vim.o.mouse = 'a'
 vim.o.showmode = false
 
