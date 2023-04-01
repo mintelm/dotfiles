@@ -18,7 +18,7 @@ local function diagnostics_config()
         float = float_opts,
     })
 
-    -- setup severity filter
+    -- setup diagnostic signs
     for type, icon in pairs(style.icons.lsp.signs) do
         type = type:sub(1, 1):upper() .. type:sub(2)
         local sign = 'DiagnosticSign' .. type
@@ -27,9 +27,9 @@ local function diagnostics_config()
         vim.fn.sign_define(sign, { text = icon, texthl = hl, numhl = hl })
     end
 
+    -- setup severity filter
     local ns = vim.api.nvim_create_namespace('diagonstic_severity_filter')
     local orig_signs_handler = vim.diagnostic.handlers.signs
-
     vim.diagnostic.handlers.signs = {
         show = function(_, bufnr, _, opts)
             local diagnostics = vim.diagnostic.get(bufnr)
