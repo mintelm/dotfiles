@@ -37,7 +37,7 @@ echo Linking cli stuff...
 ln -sv$f $SCRIPT_DIR/cli/tmux.conf ~/.config/tmux.conf
 ln -sv$f $SCRIPT_DIR/cli/screenrc ~/.config/screenrc
 ln -sv$f $SCRIPT_DIR/cli/gitconfig ~/.gitconfig
-ln -sv$f $SCRIPT_DIR/cli/tigrc ~/.config/tigrc
+ln -sv$f $SCRIPT_DIR/cli/tigrc ~/.tigrc
 ln -sv$f $SCRIPT_DIR/cli/batconfig ~/.config/bat/config
 ln -sv$f $SCRIPT_DIR/cli/Xresources ~/.Xresources
 
