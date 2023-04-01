@@ -1,5 +1,6 @@
 local function config()
     require('bufferline').setup({
+        highlights = require('catppuccin.groups.integrations.bufferline').get(),
         options = {
             numbers = 'ordinal',
             right_mouse_command = '',
