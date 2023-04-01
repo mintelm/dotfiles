@@ -178,7 +178,6 @@ local function lsp_config()
     })
 end
 
-
 return {
     {
         'neovim/nvim-lspconfig',
