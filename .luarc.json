@@ -1,12 +1,13 @@
 {
-  "Lua.workspace.checkThirdParty": false,
-  "Lua.format.defaultConfig": {
+  "workspace.checkThirdParty": false,
+  "format.defaultConfig": {
     "indent_style": "space",
     "indent_size": "4",
     "max_line_length": "140",
     "quote_style": "single"
   },
-  "Lua.diagnostics.neededFileStatus": {
+  "diagnostics.neededFileStatus": {
     "codestyle-check": "Any"
-  }
+  },
+  "diagnostics.globals": [ "vim" ]
 }
