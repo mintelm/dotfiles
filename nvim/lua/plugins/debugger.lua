@@ -24,6 +24,9 @@ local function dap_config()
         { text = style.icons.ui.chevron_right, texthl = 'GitSignsAdd', linehl = 'GitSignsAdd', numhl = 'GitSignsAdd' }
     )
 
+    dap.listeners.after.stackTrace['auto-center'] = function()
+        vim.cmd.normal('zzzv')
+    end
     dap.listeners.after.event_initialized['dapui'] = function()
         dapui.open({ reset = true })
     end
