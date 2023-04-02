@@ -33,12 +33,15 @@ local function config()
     local hydra = require('hydra')
     local cmd = utils.cmd
     -- delays the centering of async commands
-    local delayed_centering_cmd = function(command, delay)
-        delay = delay or 10
+    local centering_cmd = function(command)
         vim.schedule(function()
             vim.cmd(command)
-            vim.wait(delay)
-            vim.cmd('normal zzzv')
+            vim.api.nvim_create_autocmd('CursorMoved', {
+                once = true,
+                callback = function()
+                    vim.cmd.normal('zzzv')
+                end
+            })
         end)
     end
     local default_config = {
@@ -104,14 +107,14 @@ local function config()
             { 'j',
                 function()
                     if vim.wo.diff then return ']c' end
-                    delayed_centering_cmd('Gitsigns next_hunk')
+                    centering_cmd('Gitsigns next_hunk')
                     return '<Ignore>'
                 end,
                 { expr = true }, },
             { 'k',
                 function()
                     if vim.wo.diff then return '[c' end
-                    delayed_centering_cmd('Gitsigns prev_hunk')
+                    centering_cmd('Gitsigns prev_hunk')
                     return '<Ignore>'
                 end,
                 { expr = true }, },
