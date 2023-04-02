@@ -1,7 +1,7 @@
 local style = require('style')
 local utils = require('utils')
 
-local lsp_list = { 'lua_ls', 'clangd' }
+local lsp_list = { 'lua_ls', 'clangd', 'pyright' }
 local float_opts = {
     border = style.current.border,
     focusable = false,
