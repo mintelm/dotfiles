@@ -117,6 +117,7 @@ return {
                 gitsigns = true,
                 telescope = true,
                 treesitter = true,
+                treesitter_context = true,
                 notify = true,
                 leap = true,
                 mason = true,
