@@ -115,6 +115,18 @@ function M.cmd(command, suffix)
     return '<cmd>' .. command .. '<CR>' .. suffix
 end
 
+---Delete all hidden buffers
+function M.delete_hidden_buffers()
+    local function buffer_filter(buf)
+        return not vim.api.nvim_buf_is_valid(buf) or not vim.api.nvim_buf_get_option(buf, 'buflisted')
+    end
+    local buffers = vim.tbl_filter(buffer_filter, vim.api.nvim_list_bufs())
+
+    for _, buffer in ipairs(buffers) do
+        vim.cmd('bwipeout!' .. ' ' .. buffer)
+    end
+end
+
 _G.dump = M.dump
 
 return M
