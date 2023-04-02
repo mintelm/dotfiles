@@ -129,6 +129,12 @@ return {
                 },
                 native_lsp = {
                     enabled = true,
+                    underlines = {
+                        errors = { 'undercurl' },
+                        warnings = { 'undercurl' },
+                        hints = { 'underline' },
+                        information = { 'underline' },
+                    },
                 },
                 overseer = true,
             },
