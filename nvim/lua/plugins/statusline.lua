@@ -1,8 +1,9 @@
-local function config()
-    local style = require('style')
-    local pad_icon = require('utils').pad_str
+local style = require('style')
+local pad_icon = require('utils').pad_str
 
-    require('lualine').setup({
+return {
+    'nvim-lualine/lualine.nvim',
+    opts = {
         options = {
             theme = 'catppuccin',
             component_separators = '',
@@ -95,14 +96,9 @@ local function config()
             'toggleterm',
             'man',
         },
-    })
-end
-
-return {
-    'nvim-lualine/lualine.nvim',
-    config = config,
+    },
     dependencies = {
-        'kyazdani42/nvim-web-devicons',
-        'catppuccin',
+        { 'kyazdani42/nvim-web-devicons' },
+        { 'catppuccin' },
     },
 }

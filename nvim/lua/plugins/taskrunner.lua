@@ -10,5 +10,5 @@ return {
             },
         })
     end,
-    dependencies = 'akinsho/toggleterm.nvim',
+    dependencies = { 'akinsho/toggleterm.nvim' },
 }

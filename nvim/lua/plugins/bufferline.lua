@@ -16,5 +16,8 @@ end
 return {
     'akinsho/bufferline.nvim',
     config = config,
-    dependencies = 'kyazdani42/nvim-web-devicons',
+    dependencies = {
+        { 'kyazdani42/nvim-web-devicons' },
+        { 'catppuccin' },
+    },
 }

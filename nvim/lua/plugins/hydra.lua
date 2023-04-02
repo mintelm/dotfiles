@@ -165,5 +165,5 @@ end
 return {
     'anuvyklack/hydra.nvim',
     config = config,
-    dependencies = 'sindrets/winshift.nvim',
+    dependencies = { 'sindrets/winshift.nvim' },
 }
