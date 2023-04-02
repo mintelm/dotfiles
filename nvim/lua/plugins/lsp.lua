@@ -93,6 +93,19 @@ local function cmp_config()
             },
             { name = 'buffer', max_item_count = 5, priority_weight = 70 },
         },
+        sorting = {
+            priority_weight = 1.0,
+            comparators = {
+                cmp.config.compare.offset,
+                cmp.config.compare.exact,
+                cmp.config.compare.score,
+                require 'cmp-under-comparator'.under,
+                cmp.config.compare.kind,
+                cmp.config.compare.sort_text,
+                cmp.config.compare.length,
+                cmp.config.compare.order,
+            },
+        },
         mapping = {
             ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
             ['<Tab>'] = cmp.mapping(tab, { 'i', 's' }),
@@ -211,6 +224,9 @@ return {
             { 'hrsh7th/cmp-buffer' },
             { 'hrsh7th/cmp-cmdline' },
             { 'lukas-reineke/cmp-rg' },
+
+            -- comparators
+            { 'lukas-reineke/cmp-under-comparator' },
         },
     }
 }
