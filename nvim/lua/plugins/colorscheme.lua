@@ -123,6 +123,7 @@ return {
                 mason = true,
                 neotree = true,
                 neogit = true,
+                overseer = true,
                 dap = {
                     enabled = true,
                     enable_ui = true,
@@ -136,7 +137,9 @@ return {
                         information = { 'underline' },
                     },
                 },
-                overseer = true,
+                indent_blankline = {
+                    enabled = true,
+                },
             },
         },
     },
