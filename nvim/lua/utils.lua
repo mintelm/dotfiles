@@ -116,6 +116,5 @@ function M.cmd(command, suffix)
 end
 
 _G.dump = M.dump
-_G.set_tab_width = M.set_tab_width
 
 return M

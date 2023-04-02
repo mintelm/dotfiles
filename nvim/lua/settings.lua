@@ -1,11 +1,9 @@
+local utils = require('utils')
+
 vim.o.title = true
 vim.o.titlestring = require('style').icons.ui.vim .. " %{fnamemodify(getcwd(), ':~')} %m"
 
-vim.o.tabstop = 4
-vim.o.softtabstop = 4
-vim.o.shiftwidth = 4
-vim.o.expandtab = true
-vim.o.smartindent = true
+utils.set_tab_width(4)
 
 vim.o.termguicolors = true
 vim.o.shiftround = true
@@ -35,3 +33,11 @@ vim.o.swapfile = false
 vim.o.backup = false
 vim.o.undordir = os.getenv('HOME') .. '/.vim/undodir'
 vim.o.undofile = true
+
+vim.api.nvim_create_user_command(
+    'Tabs',
+    function(opts)
+        utils.set_tab_width(opts.args + 0)
+    end,
+    { nargs = 1 }
+)
