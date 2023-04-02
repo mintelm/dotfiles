@@ -3,7 +3,11 @@ local utils = require('utils')
 vim.o.title = true
 vim.o.titlestring = require('style').icons.ui.vim .. " %{fnamemodify(getcwd(), ':~')} %m"
 
-utils.set_tab_width(4)
+vim.o.expandtab = true
+vim.o.smartindent = true
+vim.o.tabstop = 4
+vim.o.shiftwidth = 4
+vim.o.softtabstop = 4
 
 vim.o.termguicolors = true
 vim.o.shiftround = true
