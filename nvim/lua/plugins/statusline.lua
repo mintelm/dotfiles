@@ -4,7 +4,7 @@ local function config()
 
     require('lualine').setup({
         options = {
-            theme = 'auto',
+            theme = 'catppuccin',
             component_separators = '',
             section_separators = { left = '', right = '' },
         },
@@ -103,7 +103,6 @@ return {
     config = config,
     dependencies = {
         'kyazdani42/nvim-web-devicons',
-        -- colorscheme needs to be loaded for theme = 'auto'
-        'projekt0n/github-nvim-theme',
+        'catppuccin',
     },
 }
