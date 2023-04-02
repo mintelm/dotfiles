@@ -15,14 +15,8 @@ local function dap_config()
         },
     })
 
-    vim.fn.sign_define(
-        'DapBreakpoint',
-        { text = style.icons.ui.breakpoint, texthl = 'GitSignsDelete', linehl = '', numhl = '' }
-    )
-    vim.fn.sign_define(
-        'DapStopped',
-        { text = style.icons.ui.chevron_right, texthl = 'GitSignsAdd', linehl = 'GitSignsAdd', numhl = 'GitSignsAdd' }
-    )
+    vim.fn.sign_define('DapBreakpoint', { text = style.icons.ui.breakpoint })
+    vim.fn.sign_define('DapStopped', { text = style.icons.ui.chevron_right })
 
     dap.listeners.after.stackTrace['auto-center'] = function()
         vim.cmd.normal('zzzv')
