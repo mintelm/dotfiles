@@ -4,6 +4,7 @@ local M = {}
 ---@vararg any
 function M.dump(...)
     local objects = vim.tbl_map(vim.inspect, { ... })
+    ---@diagnostic disable-next-line: deprecated
     vim.notify(unpack(objects))
 end
 
