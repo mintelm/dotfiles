@@ -3,8 +3,9 @@ local function config()
         highlights = require('catppuccin.groups.integrations.bufferline').get(),
         options = {
             numbers = 'ordinal',
+            close_command = 'bwipeout %d',
             right_mouse_command = '',
-            middle_mouse_command = 'bdelete! %d',
+            middle_mouse_command = 'bwipeout %d',
             separator_style = 'thin',
             persist_buffer_sort = false,
             show_buffer_close_icons = false,
