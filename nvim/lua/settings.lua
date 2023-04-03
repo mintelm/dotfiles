@@ -35,7 +35,6 @@ vim.o.updatetime = 50
 
 vim.o.swapfile = false
 vim.o.backup = false
-vim.o.undordir = os.getenv('HOME') .. '/.vim/undodir'
 vim.o.undofile = true
 
 vim.api.nvim_create_user_command(
