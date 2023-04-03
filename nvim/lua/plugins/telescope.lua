@@ -21,7 +21,9 @@ local function config()
                     ['<c-k>'] = actions.cycle_history_prev,
                 },
             },
-            file_ignore_patterns = { '%.jpg', '%.jpeg', '%.png', '%.otf', '%.ttf', '%.o' },
+            file_ignore_patterns = {
+                '%.jpg', '%.jpeg', '%.png', '%.otf', '%.ttf', '%.o', '%.arxml', '%.dvg', '%.dll*', '%.exe', '%.defines', '%.jar',
+            },
             layout_strategy = 'flex',
         },
     })
