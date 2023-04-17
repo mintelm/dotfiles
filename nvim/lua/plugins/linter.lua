@@ -11,7 +11,6 @@ return {
                         ensure_installed = { 'prettierd' },
                         automatic_setup = true
                     })
-                    require('mason-null-ls').setup_handlers({})
                 end,
                 dependencies = { 'williamboman/mason.nvim' },
             },
