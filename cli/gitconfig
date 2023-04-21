@@ -8,7 +8,7 @@
     cs = commit -S
     ca = commit --amend
     csa = commit --amend -S
-    s = status -v
+    s = status
     p = push
     pf = push -f
     pa = !git remote | xargs -L1 git push --all
