@@ -77,7 +77,6 @@ return {
                 config = function()
                     require('mason-nvim-dap').setup({
                         ensure_installed = { 'cppdbg' },
-                        automatic_setup = true,
                         handlers = {},
                     })
                 end,

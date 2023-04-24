@@ -9,7 +9,7 @@ return {
                     require('null-ls').setup()
                     require('mason-null-ls').setup({
                         ensure_installed = { 'prettierd' },
-                        automatic_setup = true
+                        handlers = {},
                     })
                 end,
                 dependencies = { 'williamboman/mason.nvim' },
