@@ -24,6 +24,13 @@ utils.augroup('UserSettings', {
             utils.set_tab_width(2)
         end,
     },
+    {
+        event = { 'FileType' },
+        pattern = { 'rst' },
+        command = function()
+            utils.set_tab_width(3)
+        end,
+    },
     -- toggle hiding invisible chars on insert
     {
         event = { 'WinLeave', 'BufLeave', 'InsertEnter' },
