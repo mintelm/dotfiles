@@ -2,7 +2,6 @@ return {
     {
         'lewis6991/gitsigns.nvim',
         opts = {
-            keymaps = {},
             update_debounce = 50,
             current_line_blame_opts = {
                 delay = 0,
