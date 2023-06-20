@@ -1,0 +1,6 @@
+#!/bin/bash
+
+for file in "$@"
+do
+    sed -i 's/[[:blank:]]*$//' "$file"
+done
