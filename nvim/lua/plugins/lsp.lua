@@ -163,6 +163,8 @@ local function cmp_config()
             entries = { name = 'wildmenu', separator = '|' },
         },
     })
+
+    require('luasnip.loaders.from_vscode').lazy_load()
 end
 
 local function lsp_config()
@@ -219,6 +221,8 @@ return {
             { 'hrsh7th/nvim-cmp' },
             { 'hrsh7th/cmp-nvim-lsp' },
             { 'L3MON4D3/LuaSnip' },
+            { 'rafamadriz/friendly-snippets' },
+            { 'saadparwaiz1/cmp_luasnip' },
             -- optional sources
             { 'hrsh7th/cmp-path' },
             { 'hrsh7th/cmp-buffer' },
