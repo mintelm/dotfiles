@@ -53,6 +53,7 @@ source ~/.zsh/plugin-loader.zsh
 source ~/.zsh/keybinds.zsh
 #source ~/.zsh/prompt.zsh
 source ~/.zsh/fzf.zsh
+source ~/.zsh/fzf-tab.zsh
 source ~/.zsh/lsd.zsh
 source ~/.zsh/completion-list-colors.zsh
 source ~/.zsh/manydots-magic.zsh
