@@ -11,20 +11,14 @@ return {
             flavour = 'mocha',
             integrations = {
                 cmp = true,
+                dap = true,
+                dap_ui = true,
+                flash = true,
                 gitsigns = true,
-                telescope = true,
-                treesitter = true,
-                treesitter_context = true,
-                notify = true,
-                leap = true,
-                mason = true,
-                neotree = true,
-                neogit = true,
-                overseer = true,
-                dap = {
+                indent_blankline = {
                     enabled = true,
-                    enable_ui = true,
                 },
+                mason = true,
                 native_lsp = {
                     enabled = true,
                     underlines = {
@@ -34,9 +28,14 @@ return {
                         information = { 'underline' },
                     },
                 },
-                indent_blankline = {
-                    enabled = true,
-                },
+                neotree = true,
+                neogit = true,
+                notify = true,
+                overseer = true,
+                semantic_tokens = true,
+                telescope = true,
+                treesitter = true,
+                treesitter_context = true,
             },
         },
     },
