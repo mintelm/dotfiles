@@ -48,7 +48,9 @@ local function config()
         invoke_on_body = true,
         hint = {
             position = 'bottom',
-            border = style.current.border,
+            float_opts = {
+                border = style.current.border,
+            },
         },
     }
 
@@ -163,7 +165,7 @@ local function config()
 end
 
 return {
-    'anuvyklack/hydra.nvim',
+    'nvimtools/hydra.nvim',
     config = config,
     dependencies = { 'sindrets/winshift.nvim' },
 }
