@@ -1,7 +1,7 @@
 local style = require('style')
 local utils = require('utils')
 
-local lsp_list = { 'lua_ls', 'clangd@15.0.6', 'pyright' }
+local lsp_list = { 'lua_ls', 'clangd', 'pyright' }
 local float_opts = {
     border = style.current.border,
     focusable = false,
@@ -188,7 +188,7 @@ local function lsp_config()
             lspconfig['clangd'].setup({
                 on_attach = lsp_attach,
                 capabilities = utils.merge(lsp_capabilities, { offsetEncoding = 'utf-8' }),
-                init_options = { compilationDatabasePath = './build-cc' },
+                -- init_options = { compilationDatabasePath = './build-cc' },
             })
         end,
     })
