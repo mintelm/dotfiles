@@ -29,6 +29,7 @@
     rbi = "!sh -c 'git rebase -i HEAD~$1' -"
     rbc = rebase --continue
     unstage = reset HEAD --
+    lh = "!sh -c 'git log --oneline --pretty=format:'%H' -n $1' -"
 [include]
     path = ~/.gitconfig_local
 [commit]
