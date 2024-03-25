@@ -91,16 +91,18 @@ local function cmp_config()
                     additional_arguments = '--smart-case --max-depth 8',
                 },
             },
-            { name = 'buffer', max_item_count = 5, priority_weight = 70 },
+            { name = 'buffer', max_item_count = 5, priority_weight = 80 },
         },
         sorting = {
             priority_weight = 1.0,
             comparators = {
                 cmp.config.compare.offset,
                 cmp.config.compare.exact,
-                cmp.config.compare.score,
-                require 'cmp-under-comparator'.under,
                 cmp.config.compare.kind,
+                cmp.config.compare.score,
+                cmp.config.compare.scopes,        -- maybe rate higher?
+                cmp.config.compare.recently_used, -- maybe rate higher?
+                require 'cmp-under-comparator'.under,
                 cmp.config.compare.sort_text,
                 cmp.config.compare.length,
                 cmp.config.compare.order,
