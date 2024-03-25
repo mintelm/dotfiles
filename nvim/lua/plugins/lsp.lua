@@ -190,6 +190,16 @@ local function lsp_config()
             lspconfig['clangd'].setup({
                 on_attach = lsp_attach,
                 capabilities = utils.merge(lsp_capabilities, { offsetEncoding = 'utf-8' }),
+                cmd = {
+                    'clangd',
+                    '--background-index',
+                    '--clang-tidy',
+                    '--header-insertion=iwyu',
+                    '--completion-style=detailed',
+                    -- '--function-arg-placeholders=0',
+                    '-j=4',
+                    '--fallback-style=llvm',
+                },
                 -- init_options = { compilationDatabasePath = './build-cc' },
             })
         end,
