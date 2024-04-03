@@ -2,9 +2,8 @@ return {
     {
         'catppuccin/nvim',
         name = 'catppuccin',
-        dependencies = 'HiPhish/rainbow-delimiters.nvim',
-        lazy = false,
         priority = 1000,
+        dependencies = 'HiPhish/rainbow-delimiters.nvim',
         init = function()
             vim.cmd.colorscheme('catppuccin')
         end,
@@ -33,6 +32,7 @@ return {
                 neogit = true,
                 notify = true,
                 overseer = true,
+                rainbow_delimiters = true,
                 semantic_tokens = true,
                 telescope = true,
                 treesitter = true,
