@@ -1,6 +1,7 @@
 return {
     {
         'lewis6991/gitsigns.nvim',
+        event = 'VeryLazy',
         opts = {
             update_debounce = 50,
             current_line_blame_opts = {
@@ -14,6 +15,7 @@ return {
     {
         'NeogitOrg/neogit',
         branch = 'nightly',
+        event = 'VeryLazy',
         dependencies = 'nvim-lua/plenary.nvim',
         opts = {
             integrations = {
@@ -23,6 +25,7 @@ return {
     },
     {
         'sindrets/diffview.nvim',
+        event = 'VeryLazy',
         dependencies = 'nvim-lua/plenary.nvim',
         opts = {
             keymaps = {
