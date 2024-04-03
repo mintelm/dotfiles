@@ -4,6 +4,12 @@ local pad_icon = require('utils').pad_str
 return {
     {
         'nvim-lualine/lualine.nvim',
+        event = 'VeryLazy',
+        after = 'catppuccin',
+        dependencies = {
+            'kyazdani42/nvim-web-devicons',
+            'catppuccin',
+        },
         opts = {
             options = {
                 theme = 'catppuccin',
@@ -97,10 +103,6 @@ return {
                 'toggleterm',
                 'man',
             },
-        },
-        dependencies = {
-            { 'kyazdani42/nvim-web-devicons' },
-            { 'catppuccin' },
         },
     }
 }
