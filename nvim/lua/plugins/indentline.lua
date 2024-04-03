@@ -21,5 +21,8 @@ return {
                 '', -- for all buffers without a file type
             },
         },
+        scope = {
+            enabled = false
+        },
     },
 }
