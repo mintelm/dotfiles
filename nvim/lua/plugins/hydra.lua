@@ -166,6 +166,22 @@ end
 
 return {
     'nvimtools/hydra.nvim',
+    event = 'VeryLazy',
+    dependencies = {
+        -- window hydra
+        'sindrets/winshift.nvim',
+
+        -- git hydra
+        'NeogitOrg/neogit',
+        'lewis6991/gitsigns.nvim',
+        'sindrets/diffview.nvim',
+
+        -- telescope hydra
+        'nvim-telescope/telescope.nvim',
+
+        -- debugging hydra
+        'mfussenegger/nvim-dap',
+        'rcarriga/nvim-dap-ui',
+    },
     config = config,
-    dependencies = { 'sindrets/winshift.nvim' },
 }
