@@ -2,6 +2,7 @@ return {
     {
         'catppuccin/nvim',
         name = 'catppuccin',
+        dependencies = 'HiPhish/rainbow-delimiters.nvim',
         lazy = false,
         priority = 1000,
         init = function()
