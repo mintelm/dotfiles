@@ -1,10 +1,22 @@
 local style = require('style')
+local actions = require('telescope.actions')
+local bc = style.current.border
 
-local function config()
-    local actions = require('telescope.actions')
-    local bc = style.current.border
-
-    require('telescope').setup({
+return {
+    'nvim-telescope/telescope.nvim',
+    event = 'VeryLazy',
+    dependencies = {
+        'nvim-lua/plenary.nvim',
+        'kyazdani42/nvim-web-devicons',
+        {
+            'nvim-telescope/telescope-fzf-native.nvim',
+            build = 'make',
+        },
+    },
+    init = function()
+        require('telescope').load_extension('fzf')
+    end,
+    opts = {
         defaults = {
             prompt_prefix = style.icons.ui.telescope .. ' ',
             -- telescope expects different order
@@ -25,21 +37,6 @@ local function config()
                 '%.jpg', '%.jpeg', '%.png', '%.otf', '%.ttf', '%.o', '%.arxml', '%.dvg', '%.dll*', '%.exe', '%.defines', '%.jar',
             },
             layout_strategy = 'flex',
-        },
-    })
-
-    require('telescope').load_extension('fzf')
-end
-
-return {
-    'nvim-telescope/telescope.nvim',
-    config = config,
-    dependencies = {
-        { 'nvim-lua/plenary.nvim' },
-        { 'kyazdani42/nvim-web-devicons' },
-        {
-            'nvim-telescope/telescope-fzf-native.nvim',
-            build = 'make',
         },
     },
 }
