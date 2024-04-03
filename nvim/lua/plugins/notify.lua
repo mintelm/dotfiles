@@ -1,10 +1,11 @@
 return {
     'rcarriga/nvim-notify',
-    config = function()
-        require('notify').setup({
-            max_width = 100,
-            minimum_width = 25,
-        })
+    event = 'VeryLazy',
+    init = function()
         vim.notify = require('notify')
     end,
+    opts = {
+        max_width = 100,
+        minimum_width = 25,
+    },
 }
