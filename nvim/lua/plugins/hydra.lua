@@ -9,6 +9,7 @@ local hints = {
 ^ _k_: prev hunk      _u_: undo stage hunk   _v_: preview hunk   _B_: blame show full ^
 ^ _h_: diff history   _S_: stage buffer      _R_: reset buffer   _d_: diff view
 ]],
+
     window = [[
 ^ ^^^^   ^ ^ Move ^ ^   ^^^^    ^ ^   Split        ^ ^ ^ ^ Size
 ^ ^^^^---^-^------^-^---^^^^   -^-^-------------   ^-^-^-^---------- ^
@@ -17,12 +18,14 @@ local hints = {
 ^  ^ ^ _j_ ^ ^  ^ ^ _J_ ^ ^    _q_: close          ^ _=_ ^: equalize
 ^ ^^^ focus ^^^^^ window
 ]],
+
     telescope = [[
 ^ ^ ^                    ^ ^    _<Enter>_: list all pickers
 ^
 ^ _f_: find files        _r_: live grep      _/_: search in file    _c_: execute command
 ^ _g_: find git files    _s_: lsp symbols    _?_: search history    _:_: command-line history ^
 ]],
+
     dap = [[
 ^ _b_: toggle breakpoint    _s_: step over    _o_: step out          _u_: toggle ui
 ^ _c_: continue             _i_: step into    _w_: add to watches    _r_: toggle repl ^
@@ -44,7 +47,9 @@ local function config()
             })
         end)
     end
-    local default_config = {
+
+    -- setup default configuration
+    hydra.setup({
         invoke_on_body = true,
         hint = {
             position = 'bottom',
@@ -52,11 +57,12 @@ local function config()
                 border = style.current.border,
             },
         },
-    }
+        exit = true,
+        foreign_keys = 'warn',
+    })
 
     hydra({
         name = 'Window',
-        config = default_config,
         hint = hints.window,
         mode = 'n',
         body = '<C-w>',
@@ -90,7 +96,7 @@ local function config()
 
     hydra({
         name = 'Git',
-        config = utils.merge({ color = 'pink' }, default_config),
+        config = { on_key = function() vim.wait(20) end, color = 'amaranth' },
         hint = hints.git,
         mode = { 'n', 'x' },
         body = '<leader>g',
@@ -126,7 +132,7 @@ local function config()
 
     hydra({
         name = 'Telescope',
-        config = utils.merge({ color = 'teal' }, default_config),
+        config = { color = 'teal' },
         hint = hints.telescope,
         mode = 'n',
         body = '<Leader>f',
@@ -144,9 +150,10 @@ local function config()
         },
     })
 
+    -- would love to enable `foreign_keys = 'warn', exit = true` here -- does not work tho
     hydra({
         name = 'Debugging',
-        config = utils.merge({ color = 'pink' }, default_config),
+        config = { color = 'pink' },
         hint = hints.dap,
         mode = 'n',
         body = '<Leader>d',
@@ -183,5 +190,5 @@ return {
         'mfussenegger/nvim-dap',
         'rcarriga/nvim-dap-ui',
     },
-    config = config,
+    config = config
 }
