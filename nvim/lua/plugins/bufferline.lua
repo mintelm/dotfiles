@@ -1,10 +1,7 @@
 return {
     'akinsho/bufferline.nvim',
     event = 'VeryLazy',
-    dependencies = {
-        'kyazdani42/nvim-web-devicons',
-        'catppuccin',
-    },
+    dependencies = 'kyazdani42/nvim-web-devicons',
     config = function()
         require('bufferline').setup({
             -- catppuccin integration needs to be set via config entry

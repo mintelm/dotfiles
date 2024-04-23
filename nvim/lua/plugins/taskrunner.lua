@@ -1,7 +1,6 @@
 return {
     'stevearc/overseer.nvim',
     event = 'VeryLazy',
-    dependencies = 'akinsho/toggleterm.nvim',
     opts = {
         strategy = {
             'toggleterm',

@@ -1,4 +1,4 @@
 return {
     'mbbill/undotree',
-    event = 'VeryLazy'
+    event = 'VeryLazy',
 }
