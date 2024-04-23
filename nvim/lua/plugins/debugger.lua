@@ -34,54 +34,52 @@ local function dap_config()
     end
 end
 
+
 return {
-    {
-        'mfussenegger/nvim-dap',
-        config = dap_config,
-        dependencies = {
-            {
-                'rcarriga/nvim-dap-ui',
-                dependencies = 'nvim-neotest/nvim-nio',
+    'rcarriga/nvim-dap-ui',
+    event = 'VeryLazy',
+    dependencies = {
+        { 'nvim-neotest/nvim-nio' },
+        {
+            'mfussenegger/nvim-dap',
+            dependencies = {
+                'jayp0521/mason-nvim-dap.nvim',
                 opts = {
-                    controls = {
-                        enabled = false,
-                    },
-                    windows = {
-                        indent = 2,
-                    },
-                    floating = {
-                        border = style.current.border,
-                    },
-                    layouts = {
-                        {
-                            elements = {
-                                { id = 'scopes',      size = 0.25, },
-                                { id = 'breakpoints', size = 0.25, },
-                                { id = 'stacks',      size = 0.25, },
-                                { id = 'watches',     size = 0.25, },
-                            },
-                            position = 'left',
-                            size = 40,
-                        },
-                        {
-                            elements = {
-                                { id = 'console', size = 1, },
-                            },
-                            position = 'bottom',
-                            size = 10,
-                        },
-                    },
+                    ensure_installed = { 'cppdbg' },
+                    handlers = {},
                 },
+                dependencies = 'williamboman/mason.nvim',
+            },
+            config = dap_config,
+        },
+    },
+    opts = {
+        controls = {
+            enabled = false,
+        },
+        windows = {
+            indent = 2,
+        },
+        floating = {
+            border = style.current.border,
+        },
+        layouts = {
+            {
+                elements = {
+                    { id = 'scopes',      size = 0.25, },
+                    { id = 'breakpoints', size = 0.25, },
+                    { id = 'stacks',      size = 0.25, },
+                    { id = 'watches',     size = 0.25, },
+                },
+                position = 'left',
+                size = 40,
             },
             {
-                'jayp0521/mason-nvim-dap.nvim',
-                config = function()
-                    require('mason-nvim-dap').setup({
-                        ensure_installed = { 'cppdbg' },
-                        handlers = {},
-                    })
-                end,
-                dependencies = { 'williamboman/mason.nvim' },
+                elements = {
+                    { id = 'console', size = 1, },
+                },
+                position = 'bottom',
+                size = 10,
             },
         },
     },
