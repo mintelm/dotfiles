@@ -5,7 +5,6 @@ return {
     {
         'nvim-lualine/lualine.nvim',
         event = 'VeryLazy',
-        after = 'catppuccin',
         dependencies = {
             'kyazdani42/nvim-web-devicons',
             'catppuccin',
