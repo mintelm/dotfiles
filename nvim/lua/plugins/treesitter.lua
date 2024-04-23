@@ -1,6 +1,7 @@
 return {
     'nvim-treesitter/nvim-treesitter',
-    event = 'VeryLazy',
+    event = { 'BufReadPre', 'BufNewFile', 'VeryLazy' },
+    dependencies = 'HiPhish/rainbow-delimiters.nvim',
     opts = {
         auto_install = true,
         ensure_installed = {

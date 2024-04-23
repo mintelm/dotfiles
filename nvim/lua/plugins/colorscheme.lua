@@ -2,7 +2,6 @@ return {
     'catppuccin/nvim',
     name = 'catppuccin',
     priority = 1000,
-    dependencies = 'HiPhish/rainbow-delimiters.nvim',
     init = function()
         vim.cmd.colorscheme('catppuccin')
     end,
