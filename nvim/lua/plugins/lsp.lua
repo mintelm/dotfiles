@@ -110,6 +110,9 @@ local function cmp_config()
         end
     end
 
+    -- increase linecount of locality comparator
+    cmp.config.compare.locality.lines_count = 300
+
     cmp.setup({
         completion = { autocomplete = false },
         snippet = { expand = function(args) require('luasnip').lsp_expand(args.body) end },
@@ -129,19 +132,38 @@ local function cmp_config()
             { name = 'buffer', max_item_count = 5, priority_weight = 80 },
         },
         sorting = {
-            priority_weight = 1.0,
+            priority_weight = 2,
             comparators = {
                 cmp.config.compare.offset,
                 cmp.config.compare.exact,
-                cmp.config.compare.kind,
                 cmp.config.compare.score,
-                cmp.config.compare.scopes,        -- maybe rate higher?
-                cmp.config.compare.recently_used, -- maybe rate higher?
-                require 'cmp-under-comparator'.under,
-                cmp.config.compare.sort_text,
+
+                -- copied from cmp-under, I don't think I need the plugin for this.
+                function(entry1, entry2)
+                    local _, entry1_under = entry1.completion_item.label:find '^_+'
+                    local _, entry2_under = entry2.completion_item.label:find '^_+'
+                    entry1_under = entry1_under or 0
+                    entry2_under = entry2_under or 0
+                    if entry1_under > entry2_under then
+                        return false
+                    elseif entry1_under < entry2_under then
+                        return true
+                    end
+                end,
+
+                cmp.config.compare.recently_used,
+                cmp.config.compare.locality,
+                cmp.config.compare.kind,
                 cmp.config.compare.length,
                 cmp.config.compare.order,
             },
+        },
+        matching = {
+            disallow_fuzzy_matching = true,
+            disallow_fullfuzzy_matching = true,
+            disallow_partial_fuzzy_matching = true,
+            disallow_partial_matching = false,
+            disallow_prefix_unmatching = true,
         },
         mapping = {
             ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
@@ -278,9 +300,6 @@ return {
                     'hrsh7th/cmp-buffer',
                     'hrsh7th/cmp-cmdline',
                     'lukas-reineke/cmp-rg',
-
-                    -- comparators
-                    'lukas-reineke/cmp-under-comparator',
                 },
                 config = function()
                     cmp_config()
