@@ -51,6 +51,43 @@ local function diagnostics_config()
     }
 end
 
+local function lsp_config()
+    local lspconfig = require('lspconfig')
+    local lsp_capabilities = require('cmp_nvim_lsp').default_capabilities()
+    local lsp_attach = function(_, bufnr)
+        require('keymappings').lsp_keymappings({ buffer = bufnr })
+    end
+
+    vim.lsp.handlers['textDocument/signatureHelp'] = vim.lsp.with(vim.lsp.handlers.signature_help, float_opts)
+
+    require('mason-lspconfig').setup({ ensure_installed = lsp_list })
+    require('mason-lspconfig').setup_handlers({
+        function(server_name)
+            lspconfig[server_name].setup({
+                on_attach = lsp_attach,
+                capabilities = lsp_capabilities,
+            })
+        end,
+        ['clangd'] = function()
+            lspconfig['clangd'].setup({
+                on_attach = lsp_attach,
+                capabilities = utils.merge(lsp_capabilities, { offsetEncoding = 'utf-8' }),
+                cmd = {
+                    'clangd',
+                    '--background-index',
+                    '--clang-tidy',
+                    '--header-insertion=iwyu',
+                    '--completion-style=detailed',
+                    -- '--function-arg-placeholders=0',
+                    '-j=4',
+                    '--fallback-style=llvm',
+                },
+                -- init_options = { compilationDatabasePath = './build-cc' },
+            })
+        end,
+    })
+end
+
 local function cmp_config()
     local cmp = require('cmp')
     local luasnip = require('luasnip')
@@ -169,91 +206,156 @@ local function cmp_config()
     require('luasnip.loaders.from_vscode').lazy_load()
 end
 
-local function lsp_config()
-    local lspconfig = require('lspconfig')
-    local lsp_capabilities = require('cmp_nvim_lsp').default_capabilities()
-    local lsp_attach = function(_, bufnr)
-        require('keymappings').lsp_keymappings({ buffer = bufnr })
+local function dap_config()
+    local dap = require('dap')
+    local dapui = require('dapui')
+
+    if vim.fn.filereadable('.vscode/launch.json') then
+        -- map launch.json type to filetypes (e.g. cppdbg = { 'c', 'cpp' })
+        require('dap.ext.vscode').load_launchjs(nil, { cppdbg = { 'c', 'cpp' } })
     end
 
-    vim.lsp.handlers['textDocument/signatureHelp'] = vim.lsp.with(vim.lsp.handlers.signature_help, float_opts)
-
-    require('mason-lspconfig').setup({ ensure_installed = lsp_list })
-    require('mason-lspconfig').setup_handlers({
-        function(server_name)
-            lspconfig[server_name].setup({
-                on_attach = lsp_attach,
-                capabilities = lsp_capabilities,
-            })
-        end,
-        ['clangd'] = function()
-            lspconfig['clangd'].setup({
-                on_attach = lsp_attach,
-                capabilities = utils.merge(lsp_capabilities, { offsetEncoding = 'utf-8' }),
-                cmd = {
-                    'clangd',
-                    '--background-index',
-                    '--clang-tidy',
-                    '--header-insertion=iwyu',
-                    '--completion-style=detailed',
-                    -- '--function-arg-placeholders=0',
-                    '-j=4',
-                    '--fallback-style=llvm',
-                },
-                -- init_options = { compilationDatabasePath = './build-cc' },
-            })
-        end,
+    dap.repl.commands = vim.tbl_extend('force', dap.repl.commands, {
+        custom_commands = {
+            ['.restart'] = dap.restart,
+        },
     })
+
+    vim.fn.sign_define('DapBreakpoint', { text = style.icons.ui.breakpoint })
+    vim.fn.sign_define('DapStopped', { text = style.icons.ui.chevron_right })
+
+    dap.listeners.after.stackTrace['auto-center'] = function()
+        vim.cmd.normal('zzzv')
+    end
+    dap.listeners.after.event_initialized['dapui'] = function()
+        dapui.open({ reset = true })
+    end
+    dap.listeners.after.event_terminated['dapui'] = function()
+        dapui.close()
+        dap.repl.close()
+    end
+    dap.listeners.after.event_exited['dapui'] = function()
+        dapui.close()
+        dap.repl.close()
+    end
 end
 
 return {
-    'neovim/nvim-lspconfig',
-    dependencies = {
-        -- LSP Support
-        {
-            'williamboman/mason-lspconfig.nvim',
-            dependencies = {
-                'williamboman/mason.nvim',
-                opts = {
-                    ui = {
-                        icons = {
-                            package_installed = style.icons.lsp.mason.installed,
-                            package_pending = style.icons.lsp.mason.pending,
-                            package_uninstalled = style.icons.lsp.mason.uninstalled,
-                        },
-                    },
-                }
-            }
-        },
-
-        -- Autocompletion
-        {
-            'hrsh7th/nvim-cmp',
-            dependencies = {
-                -- main source
-                'hrsh7th/cmp-nvim-lsp',
-
-                -- snippets
-                'L3MON4D3/LuaSnip',
-                'rafamadriz/friendly-snippets',
-                'saadparwaiz1/cmp_luasnip',
-
-                -- optional sources
-                'hrsh7th/cmp-path',
-                'hrsh7th/cmp-buffer',
-                'hrsh7th/cmp-cmdline',
-                'lukas-reineke/cmp-rg',
-
-                -- comparators
-                'lukas-reineke/cmp-under-comparator',
+    -- server manager
+    {
+        'williamboman/mason.nvim',
+        opts = {
+            ui = {
+                icons = {
+                    package_installed = style.icons.lsp.mason.installed,
+                    package_pending = style.icons.lsp.mason.pending,
+                    package_uninstalled = style.icons.lsp.mason.uninstalled,
+                },
             },
-            config = function()
-                cmp_config()
-            end,
+        }
+    },
+    -- LSP
+    {
+        'neovim/nvim-lspconfig',
+        event = { 'BufReadPre', 'BufNewFile' },
+        dependencies = {
+            -- LSP Support
+            { 'williamboman/mason-lspconfig.nvim' },
+
+            -- Autocompletion
+            {
+                'hrsh7th/nvim-cmp',
+                dependencies = {
+                    -- main source
+                    'hrsh7th/cmp-nvim-lsp',
+
+                    -- snippets
+                    'L3MON4D3/LuaSnip',
+                    'rafamadriz/friendly-snippets',
+                    'saadparwaiz1/cmp_luasnip',
+
+                    -- optional sources
+                    'hrsh7th/cmp-path',
+                    'hrsh7th/cmp-buffer',
+                    'hrsh7th/cmp-cmdline',
+                    'lukas-reineke/cmp-rg',
+
+                    -- comparators
+                    'lukas-reineke/cmp-under-comparator',
+                },
+                config = function()
+                    cmp_config()
+                end,
+            },
+        },
+        config = function()
+            diagnostics_config()
+            lsp_config()
+        end,
+    },
+    -- linter
+    {
+        'nvimtools/none-ls.nvim',
+        event = { 'BufReadPre', 'BufNewFile' },
+        dependencies = {
+            { 'nvim-lua/plenary.nvim' },
+            {
+                'jayp0521/mason-null-ls.nvim',
+                opts = {
+                    ensure_installed = { 'prettierd' },
+                    handlers = {},
+                },
+            },
+        },
+        config = true
+    },
+    -- debugger
+    {
+        'rcarriga/nvim-dap-ui',
+        event = 'VeryLazy',
+        dependencies = {
+            { 'nvim-neotest/nvim-nio' },
+            {
+                'mfussenegger/nvim-dap',
+                dependencies = {
+                    'jayp0521/mason-nvim-dap.nvim',
+                    opts = {
+                        ensure_installed = { 'cppdbg' },
+                        handlers = {},
+                    },
+                },
+                config = dap_config,
+            },
+        },
+        opts = {
+            controls = {
+                enabled = false,
+            },
+            windows = {
+                indent = 2,
+            },
+            floating = {
+                border = style.current.border,
+            },
+            layouts = {
+                {
+                    elements = {
+                        { id = 'scopes',      size = 0.25, },
+                        { id = 'breakpoints', size = 0.25, },
+                        { id = 'stacks',      size = 0.25, },
+                        { id = 'watches',     size = 0.25, },
+                    },
+                    position = 'left',
+                    size = 40,
+                },
+                {
+                    elements = {
+                        { id = 'console', size = 1, },
+                    },
+                    position = 'bottom',
+                    size = 10,
+                },
+            },
         },
     },
-    config = function()
-        diagnostics_config()
-        lsp_config()
-    end,
 }
