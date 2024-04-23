@@ -264,7 +264,7 @@ return {
     -- server manager
     {
         'williamboman/mason.nvim',
-        event = { 'BufReadPre', 'BufNewFile' },
+        event = { 'BufReadPre', 'BufNewFile', 'VeryLazy' },
         opts = {
             ui = {
                 icons = {
