@@ -207,16 +207,12 @@ local function lsp_config()
 end
 
 return {
-    {
-        'neovim/nvim-lspconfig',
-        config = function()
-            diagnostics_config()
-            cmp_config()
-            lsp_config()
-        end,
-        dependencies = {
-            -- LSP Support
-            {
+    'neovim/nvim-lspconfig',
+    dependencies = {
+        -- LSP Support
+        {
+            'williamboman/mason-lspconfig.nvim',
+            dependencies = {
                 'williamboman/mason.nvim',
                 opts = {
                     ui = {
@@ -227,23 +223,37 @@ return {
                         },
                     },
                 }
-            },
-            { 'williamboman/mason-lspconfig.nvim' },
-
-            -- Autocompletion
-            { 'hrsh7th/nvim-cmp' },
-            { 'hrsh7th/cmp-nvim-lsp' },
-            { 'L3MON4D3/LuaSnip' },
-            { 'rafamadriz/friendly-snippets' },
-            { 'saadparwaiz1/cmp_luasnip' },
-            -- optional sources
-            { 'hrsh7th/cmp-path' },
-            { 'hrsh7th/cmp-buffer' },
-            { 'hrsh7th/cmp-cmdline' },
-            { 'lukas-reineke/cmp-rg' },
-
-            -- comparators
-            { 'lukas-reineke/cmp-under-comparator' },
+            }
         },
-    }
+
+        -- Autocompletion
+        {
+            'hrsh7th/nvim-cmp',
+            dependencies = {
+                -- main source
+                'hrsh7th/cmp-nvim-lsp',
+
+                -- snippets
+                'L3MON4D3/LuaSnip',
+                'rafamadriz/friendly-snippets',
+                'saadparwaiz1/cmp_luasnip',
+
+                -- optional sources
+                'hrsh7th/cmp-path',
+                'hrsh7th/cmp-buffer',
+                'hrsh7th/cmp-cmdline',
+                'lukas-reineke/cmp-rg',
+
+                -- comparators
+                'lukas-reineke/cmp-under-comparator',
+            },
+            config = function()
+                cmp_config()
+            end,
+        },
+    },
+    config = function()
+        diagnostics_config()
+        lsp_config()
+    end,
 }
