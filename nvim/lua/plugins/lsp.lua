@@ -2,6 +2,9 @@ local style = require('style')
 local utils = require('utils')
 
 local lsp_list = { 'lua_ls', 'clangd@17.0.3', 'pyright' }
+local lint_list = { 'prettier' }
+local dap_list = { 'cppdbg' }
+
 local float_opts = {
     border = style.current.border,
     focusable = false,
@@ -298,7 +301,7 @@ return {
             {
                 'jayp0521/mason-null-ls.nvim',
                 opts = {
-                    ensure_installed = { 'prettier' },
+                    ensure_installed = lint_list,
                     handlers = {},
                 },
             },
@@ -316,7 +319,7 @@ return {
                 dependencies = {
                     'jayp0521/mason-nvim-dap.nvim',
                     opts = {
-                        ensure_installed = { 'cppdbg' },
+                        ensure_installed = dap_list,
                         handlers = {},
                     },
                 },
