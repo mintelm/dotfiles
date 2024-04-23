@@ -54,9 +54,6 @@ end
 local function lsp_config()
     local lspconfig = require('lspconfig')
     local lsp_capabilities = require('cmp_nvim_lsp').default_capabilities()
-    local lsp_attach = function(_, bufnr)
-        require('keymappings').lsp_keymappings({ buffer = bufnr })
-    end
 
     vim.lsp.handlers['textDocument/signatureHelp'] = vim.lsp.with(vim.lsp.handlers.signature_help, float_opts)
 
@@ -64,13 +61,11 @@ local function lsp_config()
     require('mason-lspconfig').setup_handlers({
         function(server_name)
             lspconfig[server_name].setup({
-                on_attach = lsp_attach,
                 capabilities = lsp_capabilities,
             })
         end,
         ['clangd'] = function()
             lspconfig['clangd'].setup({
-                on_attach = lsp_attach,
                 capabilities = utils.merge(lsp_capabilities, { offsetEncoding = 'utf-8' }),
                 cmd = {
                     'clangd',
@@ -244,6 +239,7 @@ return {
     -- server manager
     {
         'williamboman/mason.nvim',
+        event = { 'BufReadPre', 'BufNewFile' },
         opts = {
             ui = {
                 icons = {
@@ -302,7 +298,7 @@ return {
             {
                 'jayp0521/mason-null-ls.nvim',
                 opts = {
-                    ensure_installed = { 'prettierd' },
+                    ensure_installed = { 'prettier' },
                     handlers = {},
                 },
             },
