@@ -94,9 +94,10 @@ local function config()
         },
     })
 
+    -- would love to enable `foreign_keys = 'warn', exit = true` here -- does not work tho
     hydra({
         name = 'Git',
-        config = { on_key = function() vim.wait(20) end, color = 'amaranth' },
+        config = { color = 'pink' },
         hint = hints.git,
         mode = { 'n', 'x' },
         body = '<leader>g',
