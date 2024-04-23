@@ -8,5 +8,6 @@ return {
             close_on_exit = false,
             open_on_start = true,
         },
+        dap = false,
     },
 }

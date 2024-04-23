@@ -311,7 +311,7 @@ return {
     -- debugger
     {
         'rcarriga/nvim-dap-ui',
-        event = 'VeryLazy',
+        event = { 'BufReadPre', 'BufNewFile' },
         dependencies = {
             { 'nvim-neotest/nvim-nio' },
             {

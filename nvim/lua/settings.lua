@@ -1,5 +1,9 @@
 local utils = require('utils')
 
+-- disable netrw at the very start of your init.lua (strongly advised by nvim-tree)
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+
 vim.o.title = true
 vim.o.titlestring = require('style').icons.ui.vim .. " %{fnamemodify(getcwd(), ':~')} %m"
 
