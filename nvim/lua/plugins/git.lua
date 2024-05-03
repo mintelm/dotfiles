@@ -3,7 +3,8 @@ return {
         'lewis6991/gitsigns.nvim',
         event = 'VeryLazy',
         opts = {
-            update_debounce = 50,
+            _extmark_signs = false,
+            signcolumn = true,
             current_line_blame_opts = {
                 delay = 0,
             },

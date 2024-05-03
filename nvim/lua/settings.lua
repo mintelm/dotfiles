@@ -28,7 +28,7 @@ vim.o.showmode = false
 
 vim.o.number = true
 vim.o.relativenumber = true
-vim.o.signcolumn = 'yes:2'
+vim.o.signcolumn = 'yes:1'
 vim.o.laststatus = 3
 vim.o.cursorline = true
 vim.o.splitbelow = true

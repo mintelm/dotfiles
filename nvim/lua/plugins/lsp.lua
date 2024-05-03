@@ -27,7 +27,7 @@ local function diagnostics_config()
         local sign = 'DiagnosticSign' .. type
         local hl = 'Diagnostic' .. type
 
-        vim.fn.sign_define(sign, { text = icon, texthl = hl, numhl = hl })
+        vim.fn.sign_define(sign, { text = icon, texthl = hl })
     end
 
     -- setup severity filter
@@ -241,8 +241,8 @@ local function dap_config()
         },
     })
 
-    vim.fn.sign_define('DapBreakpoint', { text = style.icons.ui.breakpoint })
-    vim.fn.sign_define('DapStopped', { text = style.icons.ui.chevron_right })
+    vim.fn.sign_define('DapBreakpoint', { text = style.icons.ui.breakpoint, texthl = 'f38b83' })
+    vim.fn.sign_define('DapStopped', { text = style.icons.ui.chevron_right, texthl = 'f38b83' })
 
     dap.listeners.after.stackTrace['auto-center'] = function()
         vim.cmd.normal('zzzv')
