@@ -46,31 +46,4 @@ utils.augroup('UserSettings', {
             vim.o.list = true
         end,
     },
-    {
-        event = { 'WinEnter' },
-        pattern = { '*' },
-        command = function()
-            if vim.wo.number then
-                vim.wo.relativenumber = true
-            end
-            vim.wo.cursorline = true
-        end,
-    },
-    {
-        event = { 'WinLeave' },
-        pattern = { '*' },
-        command = function()
-            if vim.wo.number then
-                vim.wo.relativenumber = false
-            end
-            vim.wo.cursorline = false
-        end,
-    },
-    {
-        event = { 'BufWritePost' },
-        pattern = { '*' },
-        command = function()
-            vim.cmd('Gitsigns refresh')
-        end,
-    },
 })
