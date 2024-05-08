@@ -18,6 +18,7 @@ return {
         event = 'VeryLazy',
         dependencies = 'nvim-lua/plenary.nvim',
         opts = {
+            disable_signs = true,
             integrations = {
                 diffview = true,
             },
