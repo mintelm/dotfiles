@@ -27,7 +27,7 @@ function M.column()
     local components = {
         git_sign and ('%#' .. git_sign.texthl .. '#▎%*') or grey_delimiter,
         sign and ('%#' .. sign.texthl .. '#' .. sign.text .. '%*') or '  ',
-        '%{&nu ? v:lnum : ""} %=%{&rnu ? v:relnum : ""}',
+        '%-4.4{&nu ? v:lnum : ""} %=%2.2{&rnu ? v:relnum : ""}',
         ' ' .. grey_delimiter,
     }
 
@@ -36,11 +36,10 @@ end
 
 utils.augroup('StatusColumn', {
     {
-        event = { 'BufEnter' },
+        event = { 'BufEnter', 'WinEnter' },
         pattern = { '*' },
         command = function()
-            local buf_type = vim.opt.buftype:get()
-            if buf_type == '' then
+            if vim.bo.buftype == '' and vim.bo.modifiable then
                 vim.wo.statuscolumn = '%!v:lua.Status.column()'
             else
                 vim.wo.statuscolumn = ''
