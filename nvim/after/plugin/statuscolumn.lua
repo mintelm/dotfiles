@@ -31,6 +31,7 @@ function M.column()
         git_sign and ('%#' .. git_sign.texthl .. '#▎%*') or grey_delimiter,
         is_valid_sign and ('%#' .. sign.texthl .. '#' .. sign.text .. '%*') or '  ',
         '%-4.4{&nu ? v:lnum : ""} %=%2.2{&rnu ? v:relnum : ""}',
+        '%C', -- uses 'set foldcolumn' (defaults to 0 so nothing is shown)
         ' ' .. grey_delimiter,
     }
 
