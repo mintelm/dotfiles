@@ -23,10 +23,13 @@ function M.column()
             sign = s
         end
     end
+    -- maybe set default sign color if no texthl?
+    local is_valid_sign = sign and sign.text and sign.texthl
     local grey_delimiter = '%#IblIndent#▎%*'
+
     local components = {
         git_sign and ('%#' .. git_sign.texthl .. '#▎%*') or grey_delimiter,
-        sign and ('%#' .. sign.texthl .. '#' .. sign.text .. '%*') or '  ',
+        is_valid_sign and ('%#' .. sign.texthl .. '#' .. sign.text .. '%*') or '  ',
         '%-4.4{&nu ? v:lnum : ""} %=%2.2{&rnu ? v:relnum : ""}',
         ' ' .. grey_delimiter,
     }
@@ -36,10 +39,10 @@ end
 
 utils.augroup('StatusColumn', {
     {
-        event = { 'BufEnter', 'WinEnter' },
+        event = { 'BufEnter', 'BufModifiedSet' },
         pattern = { '*' },
         command = function()
-            if vim.bo.buftype == '' and vim.bo.modifiable then
+            if vim.bo.buftype == '' and vim.bo.modifiable and not string.find(vim.bo.filetype, 'Neogit') then
                 vim.wo.statuscolumn = '%!v:lua.Status.column()'
             else
                 vim.wo.statuscolumn = ''
