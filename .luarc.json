@@ -9,5 +9,8 @@
   "diagnostics.neededFileStatus": {
     "codestyle-check": "Any"
   },
-  "diagnostics.globals": [ "vim" ]
+  "diagnostics.globals": [ "vim" ],
+    "diagnostics.disable": [
+        "missing-fields"
+    ]
 }
