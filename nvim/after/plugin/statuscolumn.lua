@@ -1,7 +1,7 @@
 local utils = require('utils')
 
 local M = {}
-_G.Status = M
+_G.statuscolumn = M
 
 ---@return {name:string, text:string, texthl:string}[]
 function M.get_signs()
@@ -14,7 +14,7 @@ function M.get_signs()
         vim.fn.sign_getplaced(buf, { group = '*', lnum = vim.v.lnum })[1].signs)
 end
 
-function M.column()
+function M.active()
     local sign, git_sign
     for _, s in ipairs(M.get_signs()) do
         if s.name:find('GitSign') then
@@ -23,28 +23,29 @@ function M.column()
             sign = s
         end
     end
-    -- maybe set default sign color if no texthl?
-    local is_valid_sign = sign and sign.text and sign.texthl
-    local grey_delimiter = '%#IblIndent#▎%*'
+    local default_hl = 'IblIndent'
+    local git_column = string.format('%%#%s#▎%%*', git_sign and git_sign.texthl or default_hl)
+    local sign_column = string.format('%%#%s#%%-2.2{"%s"}%%*', sign and sign.texthl or default_hl, sign and sign.text or ' ')
+    local line_column = '%-4.4{&nu&&v:virtnum==0 ? v:lnum : ""} %=%2.2{&rnu&&v:virtnum==0 ? v:relnum : ""} '
+    local end_column = string.format('%%#%s#▎%%*', default_hl)
 
     local components = {
-        git_sign and ('%#' .. git_sign.texthl .. '#▎%*') or grey_delimiter,
-        is_valid_sign and ('%#' .. sign.texthl .. '#' .. sign.text .. '%*') or '  ',
-        '%-4.4{&nu ? v:lnum : ""} %=%2.2{&rnu ? v:relnum : ""}',
-        '%C', -- uses 'set foldcolumn' (defaults to 0 so nothing is shown)
-        ' ' .. grey_delimiter,
+        git_column,
+        sign_column,
+        line_column,
+        end_column,
     }
 
-    return table.concat(components, '')
+    return table.concat(components)
 end
 
 utils.augroup('StatusColumn', {
     {
-        event = { 'BufEnter', 'BufModifiedSet' },
+        event = { 'BufWinEnter', 'BufModifiedSet', 'FileType' },
         pattern = { '*' },
         command = function()
             if vim.bo.buftype == '' and vim.bo.modifiable and not string.find(vim.bo.filetype, 'Neogit') then
-                vim.wo.statuscolumn = '%!v:lua.Status.column()'
+                vim.wo.statuscolumn = '%!v:lua.statuscolumn.active()'
             else
                 vim.wo.statuscolumn = ''
             end
