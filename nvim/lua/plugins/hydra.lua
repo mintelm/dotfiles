@@ -10,15 +10,6 @@ local hints = {
 ^ _h_: diff history   _S_: stage buffer      _R_: reset buffer   _d_: diff view
 ]],
 
-    window = [[
-^ ^^^^   ^ ^ Move ^ ^   ^^^^    ^ ^   Split        ^ ^ ^ ^ Size
-^ ^^^^---^-^------^-^---^^^^   -^-^-------------   ^-^-^-^---------- ^
-^  ^ ^ _k_ ^ ^  ^ ^ _K_ ^ ^    _s_: horizontally   _+_ _-_: height
-^  _h_ _w_ _l_  _H_ ^ ^ _L_    _v_: vertically     _>_ _<_: width
-^  ^ ^ _j_ ^ ^  ^ ^ _J_ ^ ^    _q_: close          ^ _=_ ^: equalize
-^ ^^^ focus ^^^^^ window
-]],
-
     telescope = [[
 ^ ^ ^                    ^ ^    _<Enter>_: list all pickers
 ^
@@ -59,39 +50,6 @@ local function config()
         },
         exit = true,
         foreign_keys = 'warn',
-    })
-
-    hydra({
-        name = 'Window',
-        hint = hints.window,
-        mode = 'n',
-        body = '<C-w>',
-        heads = {
-            -- Move focus
-            { 'w',     '<C-w>w' },
-            { '<C-w>', '<C-w>w',                            { desc = false } },
-            { 'h',     '<C-w>h' },
-            { 'j',     '<C-w>j' },
-            { 'k',     '<C-w>k' },
-            { 'l',     '<C-w>l' },
-            -- Move window
-            { 'H',     cmd('WinShift left') },
-            { 'J',     cmd('WinShift down') },
-            { 'K',     cmd('WinShift up') },
-            { 'L',     cmd('WinShift right') },
-            -- Split
-            { 's',     '<C-w>s' },
-            { 'v',     '<C-w>v' },
-            { 'q',     cmd('try | close | catch | endtry'), { desc = 'close window' } },
-            -- Size
-            { '+',     '<C-w>+' },
-            { '-',     '<C-w>-' },
-            { '>',     '2<C-w>>',                           { desc = 'increase width' } },
-            { '<',     '2<C-w><',                           { desc = 'decrease width' } },
-            { '=',     '<C-w>=',                            { desc = 'equalize' } },
-            --
-            { '<Esc>', nil,                                 { exit = true, nowait = true, desc = false } },
-        },
     })
 
     -- would love to enable `foreign_keys = 'warn', exit = true` here -- does not work tho
@@ -175,6 +133,5 @@ end
 return {
     'nvimtools/hydra.nvim',
     event = 'VeryLazy',
-    dependencies = 'sindrets/winshift.nvim',
     config = config
 }
