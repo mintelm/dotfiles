@@ -3,8 +3,6 @@ return {
         'lewis6991/gitsigns.nvim',
         event = 'VeryLazy',
         opts = {
-            _extmark_signs = false,
-            signcolumn = true,
             current_line_blame_opts = {
                 delay = 0,
             },
@@ -18,7 +16,6 @@ return {
         event = 'VeryLazy',
         dependencies = 'nvim-lua/plenary.nvim',
         opts = {
-            -- disable_signs = true,
             integrations = {
                 diffview = true,
             },
