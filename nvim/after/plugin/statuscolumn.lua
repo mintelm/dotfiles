@@ -3,7 +3,7 @@ local utils = require('utils')
 local M = {}
 _G.statuscolumn = M
 
----@return {lnum:number, sign_text:string, sign_hl_group:string}[]
+---@return {lnum:number, sign_text:string, sign_hl_group:string, priority:number}[]
 function M.get_signs_in_extmarks()
     return vim.tbl_map(
         function(extmark)
@@ -11,7 +11,8 @@ function M.get_signs_in_extmarks()
             return {
                 lnum = extmark[2] + 1, -- have to compensate with +1 because extmarks row starts from 0
                 sign_text = extmark[4].sign_text,
-                sign_hl_group = extmark[4].sign_hl_group
+                sign_hl_group = extmark[4].sign_hl_group,
+                priority = extmark[4].priority or 0,
             }
         end,
         vim.api.nvim_buf_get_extmarks(
@@ -25,11 +26,15 @@ end
 
 function M.active()
     local sign, git_sign
+    local current_max_priority = 0
     for _, s in ipairs(M.get_signs_in_extmarks()) do
         if s.sign_hl_group:find('GitSign') then
             git_sign = s
         else
-            sign = s
+            if s.priority > current_max_priority then
+                sign = s
+                current_max_priority = s.priority
+            end
         end
     end
     local default_hl = 'IblIndent'
