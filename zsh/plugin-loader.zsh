@@ -2,7 +2,6 @@ github_plugins=(
     romkatv/powerlevel10k
     zsh-users/zsh-autosuggestions
     zsh-users/zsh-syntax-highlighting
-    #jeffreytse/zsh-vi-mode
     Aloxaf/fzf-tab
 )
 
