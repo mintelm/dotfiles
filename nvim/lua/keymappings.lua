@@ -1,4 +1,5 @@
 local map = require('utils').map
+local unmap = require('utils').unmap
 local cmd = require('utils').cmd
 
 local silenced = { silent = true }
@@ -8,8 +9,8 @@ vim.g.mapleader = ','
 -- most of plugin related keymaps are defined in 'plugins/hydra.lua'
 
 -- unmap
-map('', '<C-b>', '', {})
-map('', '<C-f>', '', {})
+unmap('', '<C-w>d', {})
+unmap('', '<C-w><C-d>', {})
 
 -- navigation
 map('', ']q', cmd('cnext', 'zzzv'), silenced)

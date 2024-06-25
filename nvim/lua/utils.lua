@@ -91,6 +91,14 @@ function M.map(mode, lhs, rhs, opts)
     vim.keymap.set(mode, lhs, rhs, options)
 end
 
+---Remove global vim keymap
+---@param mode string|table
+---@param lhs string
+---@param opts table
+function M.unmap(mode, lhs, opts)
+    vim.keymap.del(mode, lhs, opts)
+end
+
 ---Set global vim keymap
 ---@param str string
 ---@param l boolean
