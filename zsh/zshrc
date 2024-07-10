@@ -14,7 +14,7 @@ function isWinDir {
 }
 # wrap the git command to either run windows git or linux
 function git {
-    if (isWinDir) then
+    if (isWinDir && [[ $(grep -i microsoft /proc/version) ]]); then
         git.exe "$@"
     else
         /usr/bin/git "$@"
