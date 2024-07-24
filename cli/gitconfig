@@ -43,9 +43,13 @@
     file-decoration-style = none
     hunk-header-style = omit
     hunk-header-decoration-style = yellow box
+    grep-output-type = ripgrep
 
 [interactive]
     diffFilter = delta --color-only
+
+[grep]
+    lineNumber = true
 
 [merge]
     conflictstyle = diff3
