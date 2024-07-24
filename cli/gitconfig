@@ -1,6 +1,7 @@
 [user]
     name = Mario Mintel
     email = mariomintel@gmail.com
+
 [alias]
     a = add
     ap = add --patch
@@ -31,13 +32,18 @@
     unstage = reset HEAD --
     lh = "!sh -c 'git log --oneline --pretty=format:'%H' -n $1' -"
     mm = "!sh -c 'git fetch --all && git log --oneline --pretty=format:'%H' -n $1 > .hashes.tmp && git reset --hard origin/main && git cherry-pick $(tail -n 1 .hashes.tmp)^..$(head -n 1 .hashes.tmp); rm .hashes.tmp' -"
-[include]
-    path = ~/.gitconfig_local
+
 [commit]
     verbose = true
+
 [rerere]
     enabled = true
+
 [push]
     autoSetupRemote = true
+
 [pull]
     rebase = true
+
+[include]
+    path = ~/.gitconfig_local
