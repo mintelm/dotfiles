@@ -30,3 +30,6 @@ else
     alias ll="ls --color=tty -lh"
     alias lla="ls --color=tty -lah"
 fi
+if [ -x "$(command -v bat)" ]; then
+    alias cat="bat"
+fi
