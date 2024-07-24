@@ -33,6 +33,20 @@
     lh = "!sh -c 'git log --oneline --pretty=format:'%H' -n $1' -"
     mm = "!sh -c 'git fetch --all && git log --oneline --pretty=format:'%H' -n $1 > .hashes.tmp && git reset --hard origin/main && git cherry-pick $(tail -n 1 .hashes.tmp)^..$(head -n 1 .hashes.tmp); rm .hashes.tmp' -"
 
+[core]
+    pager = delta
+
+[delta]
+    syntax-theme = Catppuccin Mocha
+    line-numbers = true
+    file-style = bold yellow ul
+    file-decoration-style = none
+    hunk-header-style = omit
+    hunk-header-decoration-style = yellow box
+
+[interactive]
+    diffFilter = delta --color-only
+
 [merge]
     conflictstyle = diff3
 
