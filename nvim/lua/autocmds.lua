@@ -4,7 +4,6 @@ utils.augroup('UserSettings', {
     -- highlight yank for 250ms
     {
         event = { 'TextYankPost' },
-        pattern = { '*' },
         command = function()
             vim.highlight.on_yank({ on_visual = false, timeout = 250 })
         end,
@@ -34,14 +33,12 @@ utils.augroup('UserSettings', {
     -- toggle hiding invisible chars on insert
     {
         event = { 'WinLeave', 'BufLeave', 'InsertEnter' },
-        pattern = { '*' },
         command = function()
             vim.o.list = false
         end,
     },
     {
         event = { 'WinEnter', 'BufEnter', 'InsertLeave' },
-        pattern = { '*' },
         command = function()
             vim.o.list = true
         end,
