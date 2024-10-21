@@ -24,9 +24,12 @@ function git {
 # general
 PATH=$PATH:~/.local/bin
 fpath+=(~/.zsh)
-title() { export TITLE="$*" }
-precmd() { print -Pn "\e]2;%(!.@@@ .)%~\a" }
 set -o emacs
+function title() {
+    print -Pn -- "\e]2;%(!.@@@ .)%c\a"
+}
+autoload -Uz add-zsh-hook
+add-zsh-hook -Uz precmd title
 
 # history settings
 HISTFILE=~/.cache/zsh_history
