@@ -169,6 +169,7 @@ local function cmp_config()
                     cmdline = '(Cmd)',
                     rg = '(Rg)',
                 })[entry.source.name]
+                if not menu then menu = '' end
                 vim_item.menu = '(' .. vim_item.kind .. ') ' .. menu
                 vim_item.kind = string.format(' %s ', style.icons.lsp.kinds[vim_item.kind])
 
