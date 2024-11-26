@@ -39,3 +39,7 @@ alias pacmanmirrors='export TMPFILE="$(mktemp)"; \
     rate-mirrors --save=$TMPFILE arch --max-delay=21600 \
       && sudo mv /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist-backup \
       && sudo mv $TMPFILE /etc/pacman.d/mirrorlist'
+# WSL only aliases
+if [ -f "/etc/wsl.conf" ]; then
+    alias gopen='explorer.exe $(git remote get-url origin | sed "s/git@\\(.*\\):/https:\\/\\/\\1\\//")'
+fi
