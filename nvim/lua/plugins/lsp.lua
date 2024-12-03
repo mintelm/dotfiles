@@ -60,6 +60,13 @@ local function lsp_config()
                 -- init_options = { compilationDatabasePath = './build-cc' },
             })
         end,
+        ['rust_analyzer'] = function()
+            lspconfig['rust_analyzer'].setup({
+                settings = {
+                    ['rust-analyzer'] = {}
+                },
+            })
+        end,
     })
 end
 
