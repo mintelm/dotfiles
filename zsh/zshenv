@@ -1,1 +1,10 @@
-. $HOME/.zsh/aliases.zsh
+if [[ -x "$(command -v nvim)" ]]; then
+    export EDITOR='nvim'
+else
+    export EDITOR='vim'
+fi
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
+export LANGUAGE=en_US.UTF-8
+export ZSH_AUTOSUGGEST_USE_ASYNC=1
+export FZF_DEFAULT_OPTS="--preview 'bat --color=always {}' --preview-window '~3'"

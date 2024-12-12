@@ -22,7 +22,7 @@ function git {
 }
 
 # general
-PATH=$PATH:~/.local/bin
+path+=(~/.local/bin)
 fpath+=(~/.zsh)
 set -o emacs
 function title() {
@@ -40,18 +40,8 @@ setopt sharehistory
 setopt histfcntllock
 setopt histignorealldups
 
-# exports
-if [[ -x "$(command -v nvim)" ]]; then
-    export EDITOR='nvim'
-else
-    export EDITOR='vim'
-fi
-export LC_ALL=en_US.UTF-8
-export LANG=en_US.UTF-8
-export LANGUAGE=en_US.UTF-8
-export ZSH_AUTOSUGGEST_USE_ASYNC=1
-
 # source it up
+source ~/.zsh/aliases.zsh
 source ~/.zsh/plugin-loader.zsh
 source ~/.zsh/keybinds.zsh
 #source ~/.zsh/prompt.zsh

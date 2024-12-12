@@ -1,4 +1,26 @@
 open() { xdg-open "$*" & disown }
+# Add 'Q' bind to ranger to exit ranger and change directory.
+if [ -x "$(command -v ranger)" ]; then
+    ranger() {
+        local IFS=$'\t\n'
+        local tempfile="$(mktemp -t tmp.XXXXXX)"
+        local ranger_cmd=(
+            command
+            ranger
+            --cmd="map Q chain shell echo %d > "$tempfile"; quitall"
+        )
+
+        ${ranger_cmd[@]} "$@"
+        if [[ -f "$tempfile" ]] && [[ "$(cat -- "$tempfile")" != "$(echo -n `pwd`)" ]]; then
+            cd -- "$(cat "$tempfile")" || return
+        fi
+        command rm -f -- "$tempfile" 2>/dev/null
+    }
+    alias rr="ranger"
+fi
+if [ -x "$(command -v fzf)" ]; then
+    alias ff='${EDITOR} $(fzf)'
+fi
 alias plugpull="find ${ZDOTDIR:-$HOME}/.zsh_plugins -type d -exec test -e '{}/.git' ';' -print0 | xargs -I {} -0 git -C {} pull"
 alias sudo="sudo "
 alias ssh='TERM=xterm-256color \ssh'
