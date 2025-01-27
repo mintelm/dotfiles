@@ -1,0 +1,17 @@
+#!/bin/sh
+
+if [ $# -eq 0 ]; then
+    echo "No arguments supplied"
+    exit 1
+fi
+
+CMD="git grep --cached -l '' | xargs sed -i"
+
+for EXP in "$@"; do
+  CMD+=" -e 's/${EXP}/g'"
+done
+
+echo "Executing:"
+echo "${CMD}"
+
+eval "$CMD"
