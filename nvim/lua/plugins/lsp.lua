@@ -1,7 +1,7 @@
 local style = require('style')
 local utils = require('utils')
 
-local lsp_list = { 'lua_ls', 'clangd', 'pyright' }
+local lsp_list = { 'lua_ls', 'clangd', 'pyright', 'bashls', 'cmake' }
 local lint_list = { 'prettier' }
 local dap_list = { 'cppdbg' }
 
