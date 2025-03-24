@@ -8,8 +8,8 @@ fi
 # checks to see if we are in a windows or linux dir
 function isWinDir {
     case `pwd -P` in
-        /mnt/c) return $(true);;
-        /mnt/d) return $(true);;
+        /mnt/c/*) return $(true);;
+        /mnt/d/*) return $(true);;
         *) return $(false);;
     esac
 }
