@@ -1,0 +1,7 @@
+- update nvim 0.11
+  - https://gpanders.com/blog/whats-new-in-neovim-0-11/
+  - lsp cleanup
+  - deprecated stuff
+  - remove cmp?
+- checkout snacks
+- cmp -> blink (maybe unnecessary due to 0.11)
