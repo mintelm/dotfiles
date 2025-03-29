@@ -82,7 +82,7 @@ end
 ---@param rhs string|function
 ---@param opts table
 function M.map(mode, lhs, rhs, opts)
-    local options = { noremap = true }
+    local options = { noremap = true, silent = true }
 
     if opts then
         options = M.merge(options, opts)
