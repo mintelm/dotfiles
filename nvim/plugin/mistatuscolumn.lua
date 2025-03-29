@@ -1,7 +1,7 @@
 local utils = require('utils')
 
 local M = {}
-_G.statuscolumn = M
+_G.mistatuscolumn = M
 
 ---@return {lnum:number, sign_text:string, sign_hl_group:string, priority:number}[]
 function M.get_signs_in_extmarks()
@@ -59,7 +59,7 @@ utils.augroup('StatusColumn', {
         pattern = { '*' },
         command = function()
             if vim.bo.buftype == '' and vim.bo.modifiable and not string.find(vim.bo.filetype, 'Neogit') then
-                vim.wo.statuscolumn = '%!v:lua.statuscolumn.active()'
+                vim.wo.statuscolumn = '%!v:lua.mistatuscolumn.active()'
             else
                 vim.wo.statuscolumn = ''
             end
