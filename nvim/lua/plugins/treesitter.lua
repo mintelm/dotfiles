@@ -1,6 +1,6 @@
 return {
     'nvim-treesitter/nvim-treesitter',
-    event = { 'BufReadPre', 'BufNewFile', 'VeryLazy' },
+    event = 'VeryLazy',
     dependencies = {
         'HiPhish/rainbow-delimiters.nvim',
         'nvim-treesitter/nvim-treesitter-refactor',

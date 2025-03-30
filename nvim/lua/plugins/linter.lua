@@ -1,6 +1,6 @@
 return {
     'nvimtools/none-ls.nvim',
-    event = { 'BufReadPre', 'BufNewFile' },
+    event = 'VeryLazy',
     dependencies = 'nvim-lua/plenary.nvim',
     config = true
 }
