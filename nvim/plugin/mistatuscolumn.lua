@@ -40,7 +40,7 @@ function M.active()
     local default_hl = 'IblIndent'
     local git_column = string.format('%%#%s#▎%%*', git_sign and git_sign.sign_hl_group or default_hl)
     local sign_column = string.format('%%#%s#%%-2.2{"%s"}%%*', sign and sign.sign_hl_group or default_hl, sign and sign.sign_text or ' ')
-    local line_column = '%-4.4{&nu&&v:virtnum==0 ? v:lnum : ""} %=%2.2{&rnu&&v:virtnum==0 ? v:relnum : ""} '
+    local line_column = '%-4.4{&nu&&v:virtnum==0 ? v:lnum : ""} %=%2.2{&rnu&&v:virtnum==0&&v:relnum<100 ? v:relnum : ""} '
     local end_column = string.format('%%#%s#▎%%*', default_hl)
 
     local components = {
