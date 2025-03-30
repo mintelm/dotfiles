@@ -8,7 +8,7 @@ return {
     opts = {
         flavour = 'mocha',
         integrations = {
-            cmp = true,
+            blink_cmp = true,
             dap = true,
             dap_ui = true,
             flash = true,
