@@ -29,7 +29,6 @@ return {
                         removed = pad_icon(style.icons.git.delete, false, true),
                     },
                     source = function()
-                        ---@diagnostic disable-next-line: undefined-field
                         local gitsigns = vim.b.gitsigns_status_dict
                         if gitsigns then
                             return {

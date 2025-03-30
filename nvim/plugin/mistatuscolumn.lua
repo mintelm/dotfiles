@@ -3,7 +3,7 @@ local utils = require('utils')
 local M = {}
 _G.mistatuscolumn = M
 
----@return {lnum:number, sign_text:string, sign_hl_group:string, priority:number}[]
+--- @return {lnum:number, sign_text:string, sign_hl_group:string, priority:number}[]
 function M.get_signs_in_extmarks()
     return vim.tbl_map(
         function(extmark)
