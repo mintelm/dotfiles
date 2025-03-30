@@ -13,9 +13,6 @@ return {
             dap_ui = true,
             flash = true,
             gitsigns = true,
-            indent_blankline = {
-                enabled = true,
-            },
             mason = true,
             native_lsp = {
                 enabled = true,
@@ -32,6 +29,7 @@ return {
             overseer = true,
             rainbow_delimiters = true,
             semantic_tokens = true,
+            snacks = { enabled = true },
             telescope = true,
             treesitter = true,
             treesitter_context = true,
