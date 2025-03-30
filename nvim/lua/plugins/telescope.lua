@@ -1,6 +1,5 @@
 local style = require('style')
 local actions = require('telescope.actions')
-local bc = style.current.border
 
 return {
     'nvim-telescope/telescope.nvim',
@@ -15,8 +14,6 @@ return {
         require('telescope').setup({
             defaults = {
                 prompt_prefix = style.icons.ui.telescope .. ' ',
-                -- telescope expects different order
-                borderchars = { bc[2], bc[4], bc[6], bc[8], bc[1], bc[3], bc[5], bc[7] },
                 set_env = { ['COLORTERM'] = 'truecolor' },
                 mappings = {
                     i = {

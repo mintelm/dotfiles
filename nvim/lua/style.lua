@@ -1,10 +1,6 @@
 local M = {}
 
 M = {
-    border = {
-        rectangle = { '┌', '─', '┐', '│', '┘', '─', '└', '│' },
-        rounded = { '╭', '─', '╮', '│', '╯', '─', '╰', '│' },
-    },
     icons = {
         ui = {
             vim = '', -- 
@@ -66,10 +62,6 @@ M = {
             },
         },
     },
-}
-
-M.current = {
-    border = M.border.rounded,
 }
 
 return M

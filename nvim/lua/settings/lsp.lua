@@ -17,7 +17,6 @@ vim.diagnostic.config({
     severity_sort = true,
     float = {
         header = '',
-        border = style.current.border,
         source = 'if_many',
     },
     signs = {

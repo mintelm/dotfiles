@@ -1,5 +1,4 @@
 local utils = require('utils')
-local style = require('style')
 
 local hints = {
     git = [[
@@ -53,9 +52,6 @@ local function config()
         invoke_on_body = true,
         hint = {
             position = 'bottom',
-            float_opts = {
-                border = style.current.border,
-            },
         },
         exit = true,
         foreign_keys = 'warn',

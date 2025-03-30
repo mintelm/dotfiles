@@ -1,5 +1,3 @@
-local utils = require('utils')
-
 -- disable netrw at the very start of your init.lua (strongly advised by nvim-tree)
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
@@ -40,3 +38,6 @@ vim.o.updatetime = 50
 vim.o.swapfile = false
 vim.o.backup = false
 vim.o.undofile = true
+
+-- some stuff looks weird with this new option
+-- vim.o.winborder = 'rounded'
