@@ -25,4 +25,15 @@ return {
         notifier = {},
         picker = {},
     },
+    keys = {
+        -- finders
+        { '<leader>fs', function() Snacks.picker.smart() end },
+        { '<leader>ff', function() Snacks.picker.files() end },
+        { '<leader>fr', function() Snacks.picker.grep() end },
+        { '<leader>fg', function() Snacks.picker.git_files() end },
+        -- lsp
+        { 'gd',         function() Snacks.picker.lsp_definitions() end },
+        { 'gr',         function() Snacks.picker.lsp_references() end,     nowait = true },
+        { 'gi',         function() Snacks.picker.lsp_implementations() end },
+    },
 }

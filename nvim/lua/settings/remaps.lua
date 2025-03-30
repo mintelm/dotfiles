@@ -44,10 +44,6 @@ map('c', '<enter>',
 
 -- lsp
 map('n', 'gD', cmd('lua vim.lsp.buf.declaration()'))
--- maybe these need to moved as well?
-map('n', 'gd', cmd('Telescope lsp_definitions'))
-map('n', 'gi', cmd('Telescope lsp_implementations'))
-map('n', 'gr', cmd('Telescope lsp_references'))
 map('n', ']d', cmd('lua vim.diagnostic.goto_next()', 'zzzv'))
 map('n', '[d', cmd('lua vim.diagnostic.goto_prev()', 'zzzv'))
 map('n', '<leader>rn', cmd('lua vim.lsp.buf.rename()'))
