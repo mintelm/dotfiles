@@ -13,6 +13,6 @@ return {
         },
     },
     keys = {
-        { 's', mode = { 'n', 'o', 'x' }, function() require('flash').jump() end, desc = 'Flash' },
+        { 's', mode = { 'n', 'o', 'x' }, function() require('flash').jump() end },
     },
 }

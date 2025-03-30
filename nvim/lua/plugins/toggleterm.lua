@@ -1,4 +1,3 @@
-local map = require('utils').map
 local cmd = require('utils').cmd
 local augroup = require('utils').augroup
 
@@ -9,9 +8,6 @@ return {
         require('toggleterm').setup({
             start_in_insert = false,
         })
-
-        map('n', '<leader>t', cmd('ToggleTerm direction=float'))
-        map('t', '<esc>', [[<C-\><C-n>]])
 
         -- fix exit behavior of toggle term (E948: Job still running) on :qa
         augroup('ToggleTermFix', {
@@ -31,4 +27,8 @@ return {
             },
         })
     end,
+    keys = {
+        { '<leader>t', cmd('ToggleTerm direction=float') },
+        { '<esc>',     '<C-\\><C-n>',                    mode = 't' },
+    },
 }

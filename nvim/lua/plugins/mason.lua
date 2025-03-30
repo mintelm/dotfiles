@@ -27,11 +27,11 @@ return {
         require('mason-lspconfig').setup({ ensure_installed = lsp_list })
         require('mason-nvim-dap').setup({
             ensure_installed = dap_list,
-            handlers = {}     -- automatic setup
+            handlers = {} -- automatic setup
         })
         require('mason-null-ls').setup({
             ensure_installed = lint_list,
-            handlers = {}     -- automatic setup
+            handlers = {} -- automatic setup
         })
     end,
 }
