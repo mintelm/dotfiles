@@ -134,6 +134,33 @@ function M.delete_hidden_buffers()
     end
 end
 
+--- Pick one choice synchronously
+--- @param items table
+--- @param prompt string
+--- @param label_fn function
+--- @return any
+function M.pick_one_sync(items, prompt, label_fn)
+    local choices = { prompt }
+    for i, item in ipairs(items) do
+        table.insert(choices, string.format('%d: %s', i, label_fn(item)))
+    end
+    local choice = vim.fn.inputlist(choices)
+    if choice < 1 or choice > #items then
+        return nil
+    end
+    return items[choice]
+end
+
+--- Check if a given path is a cmake project
+--- @param path string
+--- @return boolean
+function M.is_cmake_project(path)
+    for name in vim.fs.dir(path) do
+        if name == 'CMakeLists.txt' then return true end
+    end
+    return false
+end
+
 _G.dump = M.dump
 
 return M

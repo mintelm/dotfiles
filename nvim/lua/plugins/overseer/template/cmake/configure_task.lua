@@ -1,34 +1,35 @@
+local utils = require('utils')
+
 return {
-    name = 'CMake: Configure preset',
+    name = 'CMake: Configure',
     priority = 23,
     condition = {
         callback = function()
-            for name in vim.fs.dir('.') do
-                if name == 'CMakePresets.json' then return true end
-            end
-            return false
-        end,
+            return utils.is_cmake_project('.')
+        end
     },
-    params = function()
-        local stdout = vim.system({ 'cmake', '--list-presets' }):wait().stdout
-        local presets = {}
-        for k, _ in stdout:gmatch('"(.-)"') do
-            table.insert(presets, k)
+    builder = function()
+        local args = { '-S', '.', '-B', 'build-cc', '--fresh' }
+        local chosen_preset = ''
+
+        for name in vim.fs.dir('.') do
+            if name == 'CMakePresets.json' then
+                local presets = {}
+                for preset in vim.system({ 'cmake', '--list-presets' }):wait().stdout:gmatch('"(.-)"') do
+                    table.insert(presets, preset)
+                end
+
+                chosen_preset = utils.pick_one_sync(presets, 'Select a preset', function(item) return item end)
+                if chosen_preset ~= nil then
+                    table.insert(args, '--preset')
+                    table.insert(args, chosen_preset)
+                end
+
+                break
+            end
         end
 
-        return {
-            preset = {
-                type = 'enum',
-                name = 'Presets',
-                choices = presets,
-                optional = false,
-            }
-        }
-    end,
-    builder = function(params)
-        return {
-            cmd = { 'cmake' },
-            args = { '-S', '.', '-B', 'build-cc', '--preset', params.preset },
-        }
+
+        return { cmd = { 'cmake' }, args = args }
     end,
 }
