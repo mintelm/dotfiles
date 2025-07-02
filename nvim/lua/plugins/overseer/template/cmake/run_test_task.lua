@@ -11,7 +11,7 @@ return {
     builder = function()
         return {
             cmd = { 'ctest' },
-            args = { '--test-dir', 'build-cc', '-V' },
+            args = { '--test-dir', 'build-cc/BSW/*', '-V' },
             env = {
                 GTEST_COLOR = '1',
             },

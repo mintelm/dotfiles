@@ -1,7 +1,7 @@
 local utils = require('utils')
 
 return {
-    name = 'CMake: Configure',
+    name = 'CMake: Configure fresh',
     priority = 23,
     condition = {
         callback = function()
@@ -9,7 +9,7 @@ return {
         end
     },
     builder = function()
-        local args = { '-S', '.', '-B', 'build-cc', '--fresh' }
+        local args = { '--fresh' }
         local chosen_preset = ''
 
         for name in vim.fs.dir('.') do
