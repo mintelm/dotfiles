@@ -1,0 +1,105 @@
+#!/bin/bash
+
+create_clangd() {
+    file=".clangd"
+    if [ -f "$file" ]; then
+        echo "${file} already present. Skipping."
+        return 1
+    fi
+
+    cat > $file << 'EOF'
+CompileFlags:
+  CompilationDatabase: build-cc
+Diagnostics:
+  UnusedIncludes: Strict
+  MissingIncludes: Strict
+EOF
+}
+
+create_cmakeuserpresets() {
+    file="CMakeUserPresets.json"
+    if [ -f "$file" ]; then
+        echo "${file} already present. Skipping."
+        return 1
+    fi
+
+    cat > $file << 'EOF'
+{
+  "version": 6,
+  "configurePresets": [
+    {
+      "name": "development",
+      "inherits": "test",
+      "binaryDir": "build-cc",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
+        "CMAKE_C_COMPILER_LAUNCHER": "ccache",
+        "CMAKE_CXX_COMPILER_LAUNCHER": "ccache",
+        "CMAKE_PROJECT_INCLUDE_BEFORE": "${sourceDir}/tooling/cmake/config/linux_clang20.cmake"
+      }
+    }
+  ]
+}
+EOF
+}
+
+create_launch() {
+    file=".vscode/launch.json"
+    if [ -f "$file" ]; then
+        echo "${file} already present. Skipping."
+        return 1
+    fi
+
+    mkdir -p .vscode
+    cat > $file << 'EOF'
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "gdb: debug binary",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "${workspaceFolder}/path/to/binary",
+      "args": [],
+      "cwd": "${workspaceFolder}/path/to",
+      "linux": {
+        "MIMode": "gdb"
+      },
+      "windows": {},
+      "setupCommands": [
+        {
+          "description": "Enable pretty-printing for gdb",
+          "text": "-enable-pretty-printing",
+          "ignoreFailures": true
+        }
+      ]
+    }
+  ]
+}
+EOF
+}
+
+echo "Setup '.clangd' config file?"
+select yn in "Yes" "No"; do
+    case $yn in
+        Yes ) create_clangd; break;;
+        No ) break;;
+    esac
+done
+
+echo "Setup 'CMakeUserPresets.json' config file?"
+select yn in "Yes" "No"; do
+    case $yn in
+        Yes ) create_cmakeuserpresets; break;;
+        No ) break;;
+    esac
+done
+
+echo "Setup '.vscode/launch.json' config file?"
+select yn in "Yes" "No"; do
+    case $yn in
+        Yes ) create_launch; break;;
+        No ) break;;
+    esac
+done
