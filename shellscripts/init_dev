@@ -36,6 +36,7 @@ create_cmakeuserpresets() {
         "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
         "CMAKE_C_COMPILER_LAUNCHER": "ccache",
         "CMAKE_CXX_COMPILER_LAUNCHER": "ccache",
+        "CMAKE_CXX_FLAGS": "-Wno-#warnings",
         "CMAKE_PROJECT_INCLUDE_BEFORE": "${sourceDir}/tooling/cmake/config/linux_clang20.cmake"
       }
     }
