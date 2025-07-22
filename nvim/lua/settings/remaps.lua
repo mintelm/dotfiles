@@ -9,10 +9,10 @@ unmap('', '<C-w>d', {})
 unmap('', '<C-w><C-d>', {})
 
 -- navigation
-map('', ']q', cmd('cnext', 'zzzv'))
-map('', '[q', cmd('cprev', 'zzzv'))
-map('', ']Q', cmd('clast', 'zzzv'))
-map('', '[Q', cmd('cfirst', 'zzzv'))
+map('', ']q', cmd('cnext', 'zz'))
+map('', '[q', cmd('cprev', 'zz'))
+map('', ']Q', cmd('clast', 'zz'))
+map('', '[Q', cmd('cfirst', 'zz'))
 map('', ']t', cmd('tabnext'))
 map('', '[t', cmd('tabprev'))
 map('', ']T', cmd('tablast'))
@@ -27,8 +27,8 @@ map('v', 'J', [[:m '>+1<CR>gv=gv]])
 map('n', 'J', 'mzJ`z')
 map('n', '<C-d>', '<C-d>zz')
 map('n', '<C-u>', '<C-u>zz')
-map('n', 'n', 'nzzzv')
-map('n', 'N', 'Nzzzv')
+map('n', 'n', 'nzz')
+map('n', 'N', 'Nzz')
 map({ 'n', 'v' }, '<leader>y', [["+y]])
 map({ 'n', 'v' }, '<leader>Y', [["+Y]])
 map('n', 'Q', '<nop>')
@@ -36,7 +36,7 @@ map('c', '<enter>',
     function()
         local cmdtype = vim.fn.getcmdtype()
         if cmdtype == '/' or cmdtype == '?' then
-            return '<CR>zzzv'
+            return '<CR>zz'
         end
         return '<CR>'
     end,
@@ -44,10 +44,8 @@ map('c', '<enter>',
 
 -- lsp
 map('n', 'gD', cmd('lua vim.lsp.buf.declaration()'))
-map('n', ']d', cmd('lua vim.diagnostic.goto_next()', 'zzzv'))
-map('n', '[d', cmd('lua vim.diagnostic.goto_prev()', 'zzzv'))
+map('n', ']d', cmd('lua vim.diagnostic.goto_next()', 'zz'))
+map('n', '[d', cmd('lua vim.diagnostic.goto_prev()', 'zz'))
 map('n', '<leader>rn', cmd('lua vim.lsp.buf.rename()'))
 map('n', '<leader>ca', cmd('lua vim.lsp.buf.code_action()'))
 map('n', '<C-f>', cmd('lua vim.lsp.buf.format({ async = true })'))
-
--- most of plugin related keymaps are either defined in 'plugins/hydra.lua' or in the respective plugin spec
