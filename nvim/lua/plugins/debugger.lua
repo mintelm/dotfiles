@@ -7,7 +7,7 @@ return {
         { 'nvim-neotest/nvim-nio' },
         {
             'mfussenegger/nvim-dap',
-            config = function()
+            init = function()
                 local dap = require('dap')
                 local dapui = require('dapui')
 
