@@ -43,9 +43,9 @@ map('c', '<enter>',
     { expr = true, silent = true })
 
 -- lsp
-map('n', 'gD', cmd('lua vim.lsp.buf.declaration()'))
-map('n', ']d', cmd('lua vim.diagnostic.goto_next()', 'zz'))
-map('n', '[d', cmd('lua vim.diagnostic.goto_prev()', 'zz'))
-map('n', '<leader>rn', cmd('lua vim.lsp.buf.rename()'))
-map('n', '<leader>ca', cmd('lua vim.lsp.buf.code_action()'))
-map('n', '<C-f>', cmd('lua vim.lsp.buf.format({ async = true })'))
+map('n', 'gD', cmd('lua vim.lsp.buf.declaration()'), { desc = 'Go To Declarations' })
+map('n', ']d', cmd('lua vim.diagnostic.goto_next()', 'zz'), { desc = 'Next Diagnostic' })
+map('n', '[d', cmd('lua vim.diagnostic.goto_prev()', 'zz'), { desc = 'Previous Diagnostic' })
+map('n', '<leader>rn', cmd('lua vim.lsp.buf.rename()'), { desc = 'Rename Symbol' })
+map('n', '<leader>ca', cmd('lua vim.lsp.buf.code_action()'), { desc = 'Code Action' })
+map('n', '<C-f>', cmd('lua vim.lsp.buf.format({ async = true })'), { desc = 'Format Buffer' })

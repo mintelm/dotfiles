@@ -1,5 +1,3 @@
-local cmd = require('utils').cmd
-
 return {
     'nvim-tree/nvim-tree.lua',
     event = 'VeryLazy',
@@ -12,6 +10,6 @@ return {
         },
     },
     keys = {
-        { '<leader>e', cmd('NvimTreeToggle') },
+        { '<leader>e', function() require('nvim-tree.api').tree.toggle() end, desc = 'Open File Tree' },
     },
 }

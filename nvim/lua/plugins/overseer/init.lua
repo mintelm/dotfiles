@@ -1,5 +1,3 @@
-local cmd = require('utils').cmd
-
 return {
     'stevearc/overseer.nvim',
     event = 'VeryLazy',
@@ -17,6 +15,6 @@ return {
         templates = { 'builtin', 'cmake' },
     },
     keys = {
-        { '<leader>rt', cmd('OverseerRun') },
+        { '<leader>rt', function() require('overseer').run_template() end, desc = 'Task List' },
     },
 }

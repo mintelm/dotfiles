@@ -34,13 +34,13 @@ return {
     },
     keys = {
         -- finders
-        { '<leader>fs', function() Snacks.picker.smart() end },
-        { '<leader>ff', function() Snacks.picker.files() end },
-        { '<leader>fr', function() Snacks.picker.grep() end },
-        { '<leader>fg', function() Snacks.picker.git_files() end },
+        { '<leader>fs', function() Snacks.picker.smart() end,               desc = 'Smart File Picker' },
+        { '<leader>ff', function() Snacks.picker.files() end,               desc = 'File Picker' },
+        { '<leader>fr', function() Snacks.picker.grep() end,                desc = 'Grep Picker' },
+        { '<leader>fg', function() Snacks.picker.git_files() end,           desc = 'Git Files Picker' },
         -- lsp
-        { 'gd',         function() Snacks.picker.lsp_definitions() end },
-        { 'gr',         function() Snacks.picker.lsp_references() end,     nowait = true },
-        { 'gi',         function() Snacks.picker.lsp_implementations() end },
+        { 'gd',         function() Snacks.picker.lsp_definitions() end,     desc = 'Go To Definitions' },
+        { 'gr',         function() Snacks.picker.lsp_references() end,      nowait = true,                 desc = 'Go To References' },
+        { 'gi',         function() Snacks.picker.lsp_implementations() end, desc = 'Go To Implementations' },
     },
 }

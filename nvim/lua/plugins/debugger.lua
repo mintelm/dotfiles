@@ -69,4 +69,14 @@ return {
             },
         },
     },
+    keys = {
+        { '<Leader>db', function() require('dap').toggle_breakpoint() end,        desc = 'Toggle Breakpoint' },
+        { '<Leader>dc', function() require('dap').continue() end,                 desc = 'Continue' },
+        { '<Leader>ds', function() require('dap').step_over() end,                desc = 'Step Over' },
+        { '<Leader>di', function() require('dap').step_into() end,                desc = 'Step Into' },
+        { '<Leader>do', function() require('dap').step_out() end,                 desc = 'Step Out' },
+        { '<Leader>dr', function() require('dap').repl_open() end,                desc = 'Open REPL' },
+        { '<Leader>du', function() require('dapui').toggle({ reset = true }) end, desc = 'Toggle UI' },
+        { '<Leader>dw', function() require('dapui').elements.watches.add() end,   desc = 'Add To Watchlist' },
+    },
 }

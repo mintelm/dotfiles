@@ -1,9 +1,7 @@
-local cmd = require('utils').cmd
-
 return {
     'mbbill/undotree',
     event = 'VeryLazy',
     keys = {
-        { '<leader>u', cmd('UndotreeToggle') },
+        { '<leader>u', function() vim.cmd.UndotreeToggle() end, desc = 'Toggle Undotree' },
     },
 }

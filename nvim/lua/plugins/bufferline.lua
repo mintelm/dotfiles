@@ -1,5 +1,3 @@
-local cmd = require('utils').cmd
-
 return {
     'akinsho/bufferline.nvim',
     event = 'VeryLazy',
@@ -17,18 +15,18 @@ return {
         },
     },
     keys = {
-        { ']b',         cmd('BufferLineCycleNext') },
-        { '[b',         cmd('BufferLineCyclePrev') },
-        { '<leader>bf', cmd('BufferLinePick') },
-        { '<leader>bd', cmd('BufferLinePickClose') },
-        { '<leader>1',  cmd('BufferLineGoToBuffer 1') },
-        { '<leader>2',  cmd('BufferLineGoToBuffer 2') },
-        { '<leader>3',  cmd('BufferLineGoToBuffer 3') },
-        { '<leader>4',  cmd('BufferLineGoToBuffer 4') },
-        { '<leader>5',  cmd('BufferLineGoToBuffer 5') },
-        { '<leader>6',  cmd('BufferLineGoToBuffer 6') },
-        { '<leader>7',  cmd('BufferLineGoToBuffer 7') },
-        { '<leader>8',  cmd('BufferLineGoToBuffer 8') },
-        { '<leader>9',  cmd('BufferLineGoToBuffer 9') },
+        { ']b',         function() require('bufferline').cycle(1) end,          desc = 'Next Buffer' },
+        { '[b',         function() require('bufferline').cycle(-1) end,         desc = 'Previous Buffer' },
+        { '<leader>bf', function() require('bufferline').pick() end,            desc = 'Pick Buffer' },
+        { '<leader>bd', function() require('bufferline').close_with_pick() end, desc = 'Delete Buffer' },
+        { '<leader>1',  function() require('bufferline').go_to(1) end,          desc = 'Go To Buffer 1' },
+        { '<leader>2',  function() require('bufferline').go_to(2) end,          desc = 'Go To Buffer 2' },
+        { '<leader>3',  function() require('bufferline').go_to(3) end,          desc = 'Go To Buffer 3' },
+        { '<leader>4',  function() require('bufferline').go_to(4) end,          desc = 'Go To Buffer 4' },
+        { '<leader>5',  function() require('bufferline').go_to(5) end,          desc = 'Go To Buffer 5' },
+        { '<leader>6',  function() require('bufferline').go_to(6) end,          desc = 'Go To Buffer 6' },
+        { '<leader>7',  function() require('bufferline').go_to(7) end,          desc = 'Go To Buffer 7' },
+        { '<leader>8',  function() require('bufferline').go_to(8) end,          desc = 'Go To Buffer 8' },
+        { '<leader>9',  function() require('bufferline').go_to(9) end,          desc = 'Go To Buffer 9' },
     },
 }
