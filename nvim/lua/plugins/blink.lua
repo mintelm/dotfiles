@@ -13,7 +13,10 @@ return {
                     },
                 }
             },
-            list = { selection = { preselect = false, auto_insert = true } },
+            list = { selection = { preselect = false, auto_insert = false } },
+            ghost_text = {
+                enabled = true,
+            },
         },
         keymap = {
             preset = 'none',
@@ -31,6 +34,11 @@ return {
         },
         signature = {
             enabled = true,
+            trigger = {
+                enabled = false, -- does not work currently and completely disables signature .. would like to use C-k
+                show_on_trigger_character = false,
+                show_on_insert_on_trigger_character = false,
+            },
             window = {
                 show_documentation = false,
             },
