@@ -3,7 +3,6 @@ github_plugins=(
     zsh-users/zsh-autosuggestions
     zsh-users/zsh-syntax-highlighting
     Aloxaf/fzf-tab
-    jeffreytse/zsh-vi-mode
 )
 
 for plugin in $github_plugins; do
