@@ -3,6 +3,13 @@ return {
     event = 'VeryLazy',
     opts = {
         preset = 'modern',
+        win = {
+            width = .5,
+        },
+        layout = {
+            width = { min = 20, max = 30 },
+            spacing = 3,
+        },
     },
     keys = {
         {
