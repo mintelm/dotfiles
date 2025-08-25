@@ -1,5 +1,5 @@
 {
-  "family_name": "Maple Mono NL",
+  "family_name": "Maple Mono",
   "use_hinted": false,
   "pool_size": 4,
   "enable_ligature": false,
@@ -20,7 +20,7 @@
     "cv33": "ignore",
     "cv34": "ignore",
     "cv35": "enable",
-    "cv36": "ignore",
+    "cv36": "enable",
     "cv37": "ignore",
     "cv38": "ignore",
     "cv39": "ignore",
@@ -55,11 +55,13 @@
     "version": "3.4.0",
     "mono": false,
     "propo": false,
-    "use_font_patcher": false,
+    "use_font_patcher": true,
     "glyphs": [
       "--complete"
     ],
-    "extra_args": []
+    "extra_args": [
+      "--complete"
+    ]
   },
   "cn": {
     "enable": false,
