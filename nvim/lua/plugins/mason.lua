@@ -4,12 +4,18 @@ local lsp_list = require('settings.lsp')
 local lint_list = { 'prettier' }
 local dap_list = { 'cppdbg' }
 
+-- important: the order of plugins shall not be changed since they need to be loaded in a certain order
 return {
     'mason-org/mason-lspconfig.nvim',
     opts = {
         ensure_installed = lsp_list,
+        automatic_enable = true,
     },
     dependencies = {
+        {
+            -- provides basic LSP client configs
+            'neovim/nvim-lspconfig',
+        },
         {
             'mason-org/mason.nvim',
             opts = {
@@ -23,7 +29,6 @@ return {
 
             }
         },
-        'neovim/nvim-lspconfig',
         {
             'jay-babu/mason-nvim-dap.nvim',
             opts = {

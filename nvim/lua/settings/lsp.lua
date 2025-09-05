@@ -29,8 +29,9 @@ vim.diagnostic.config({
     },
 })
 
-for _, lsp in ipairs(lsp_list) do
-    vim.lsp.enable({ lsp })
-end
+-- mason.nvim already does this
+-- for _, lsp in ipairs(lsp_list) do
+--     vim.lsp.enable({ lsp })
+-- end
 
 return lsp_list
