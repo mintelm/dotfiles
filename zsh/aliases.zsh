@@ -42,12 +42,12 @@ if [ -x "$(command -v nvim)" ]; then
     alias vim="nvim"
     alias vimdiff="nvim -d"
 fi
-if [ -x "$(command -v exa)" ]; then
-    alias ls="exa "
-    alias ll="exa --icons -l"
-    alias lla="exa --icons -la"
-    alias llg="exa --git --git-ignore --no-permissions --no-filesize --no-user -l"
-    alias lt="exa --icons --tree --level=5"
+if [ -x "$(command -v eza)" ]; then
+    alias ls="eza "
+    alias ll="eza --icons -l"
+    alias lla="eza --icons -la"
+    alias llg="eza --git --git-ignore --no-permissions --no-filesize --no-user -l"
+    alias lt="eza --icons --tree --level=5"
 else
     alias ls="ls --color=tty"
     alias ll="ls --color=tty -lh"
