@@ -6,3 +6,5 @@ bindkey -M menuselect 'j' vi-down-line-or-history
 bindkey '^R' history-incremental-pattern-search-backward
 bindkey "^[[3~" delete-char
 bindkey '^[[Z' reverse-menu-complete
+bindkey "^[[1;5C" forward-word
+bindkey "^[[1;5D" backward-word
