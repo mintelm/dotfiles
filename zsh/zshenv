@@ -8,3 +8,4 @@ export LANG=en_US.UTF-8
 export LANGUAGE=en_US.UTF-8
 export ZSH_AUTOSUGGEST_USE_ASYNC=1
 export FZF_DEFAULT_OPTS="--height=70% --layout=reverse --border --tmux=70%"
+export LESSOPEN="|~/.zsh/lessfilter.sh %s"

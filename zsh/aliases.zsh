@@ -19,7 +19,7 @@ if [ -x "$(command -v ranger)" ]; then
     alias rr="ranger"
 fi
 if [ -x "$(command -v fzf)" ]; then
-    alias ff='${EDITOR} $(fzf)'
+    alias ff='${EDITOR} $(fzf --preview "bat --color=always {}" --preview-window "~3")'
 fi
 alias plugpull="find ${ZDOTDIR:-$HOME}/.zsh_plugins -type d -exec test -e '{}/.git' ';' -print0 | xargs -I {} -0 git -C {} pull"
 alias sudo="sudo "
@@ -43,11 +43,11 @@ if [ -x "$(command -v nvim)" ]; then
     alias vimdiff="nvim -d"
 fi
 if [ -x "$(command -v eza)" ]; then
-    alias ls="eza "
-    alias ll="eza --icons -l"
-    alias lla="eza --icons -la"
-    alias llg="eza --git --git-ignore --no-permissions --no-filesize --no-user -l"
-    alias lt="eza --icons --tree --level=5"
+    alias ls="eza --group-directories-first"
+    alias ll="eza --group-directories-first --icons -l"
+    alias lla="eza --group-directories-first --icons -la"
+    alias llg="eza --group-directories-first --git --git-ignore --no-permissions --no-filesize --no-user -l"
+    alias lt="eza --group-directories-first --icons --tree --level=5"
 else
     alias ls="ls --color=tty"
     alias ll="ls --color=tty -lh"
