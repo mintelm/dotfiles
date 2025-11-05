@@ -19,7 +19,7 @@ if [ -x "$(command -v ranger)" ]; then
     alias rr="ranger"
 fi
 if [ -x "$(command -v fzf)" ]; then
-    alias ff='${EDITOR} $(fzf --preview "bat --color=always {}" --preview-window "~3")'
+    alias ff="fzf --preview 'bat --color=always -p {}' --bind 'enter:become(${EDITOR} {})'"
 fi
 alias plugpull="find ${ZDOTDIR:-$HOME}/.zsh_plugins -type d -exec test -e '{}/.git' ';' -print0 | xargs -I {} -0 git -C {} pull"
 alias sudo="sudo "
