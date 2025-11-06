@@ -12,6 +12,8 @@ zstyle ':fzf-tab:*' use-fzf-default-opts yes
 zstyle ':fzf-tab:*' switch-group '<' '>'
 # compensate for fzf border=rounded
 zstyle ':fzf-tab:*' fzf-pad 4
+# set a minimum height
+zstyle ':fzf-tab:*' fzf-min-height 15
 
 # preview settings
 # default preview using lessfilter.sh and lesspipe.sh

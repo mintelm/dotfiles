@@ -7,5 +7,5 @@ export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 export LANGUAGE=en_US.UTF-8
 export ZSH_AUTOSUGGEST_USE_ASYNC=1
-export FZF_DEFAULT_OPTS="--layout=reverse --border=rounded --height=70% --tmux=70% --bind=ctrl-u:preview-half-page-up,ctrl-d:preview-half-page-down"
+export FZF_DEFAULT_OPTS="--layout=reverse --border=rounded --height=40% --tmux=70% --bind='ctrl-u:preview-half-page-up,ctrl-d:preview-half-page-down'"
 export LESSOPEN="|~/.zsh/lessfilter.sh %s"
