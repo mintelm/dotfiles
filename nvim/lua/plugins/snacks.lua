@@ -30,7 +30,15 @@ return {
         },
         input = {},
         notifier = {},
-        picker = {},
+        picker = {
+            win = {
+                preview = {
+                    wo = {
+                        number = false,
+                    },
+                },
+            },
+        },
     },
     keys = {
         -- finders
