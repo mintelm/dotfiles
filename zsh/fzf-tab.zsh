@@ -10,6 +10,8 @@ zstyle ':completion:*' menu no
 zstyle ':fzf-tab:*' use-fzf-default-opts yes
 # switch group using `<` and `>`
 zstyle ':fzf-tab:*' switch-group '<' '>'
+# compensate for fzf border=rounded
+zstyle ':fzf-tab:*' fzf-pad 4
 
 # preview settings
 # default preview using lessfilter.sh and lesspipe.sh
