@@ -16,5 +16,5 @@ elif [[ "$CATEGORY" == "image" ]]; then
 elif [ "$CATEGORY" = text ]; then
     has_cmd bat && $BAT_CMD "$1"
 else
-    has_cmd lesspipe.sh && has_cmd bat && lesspipe.sh "$1" | $BAT_CMD
+    has_cmd lesspipe.sh && has_cmd bat && lesspipe.sh "$1": | $BAT_CMD
 fi
