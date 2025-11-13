@@ -53,6 +53,12 @@
 
 [merge]
     conflictstyle = zdiff3
+    ff = true
+    tool = nvimdiff
+
+[mergetool]
+    keepBackup = false
+    prompt = false
 
 [diff]
     colorMoved = default
