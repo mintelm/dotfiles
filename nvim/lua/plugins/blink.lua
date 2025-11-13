@@ -1,6 +1,6 @@
 return {
     'saghen/blink.cmp',
-    event = 'InsertEnter',
+    event = 'VeryLazy',
     version = '*', -- download prebuilt fuzzy binaries
     opts = {
         completion = {
