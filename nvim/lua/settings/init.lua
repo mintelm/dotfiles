@@ -1,5 +1,0 @@
-require('settings.options')
-require('settings.remaps')
-require('settings.lsp')
-require('settings.autocmds')
-require('settings.usercmds')

@@ -11,7 +11,7 @@ return {
             separator_style = 'thin',
             persist_buffer_sort = false,
             show_buffer_close_icons = false,
-            modified_icon = require('style').icons.ui.modified,
+            modified_icon = mivim.style.icons.ui.modified,
         },
     },
     keys = {

@@ -1,5 +1,4 @@
-local style = require('style')
-local pad_icon = require('utils').pad_str
+local pad_icon = mivim.utils.pad_str
 
 return {
     'nvim-lualine/lualine.nvim',
@@ -15,18 +14,18 @@ return {
             lualine_a = {
                 {
                     'mode',
-                    icon = style.icons.ui.vim,
+                    icon = mivim.style.icons.ui.vim,
                     separator = { left = '', right = '' },
                 },
             },
             lualine_b = {
-                { 'branch', icon = style.icons.git.branch, separator = '|' },
+                { 'branch', icon = mivim.style.icons.git.branch, separator = '|' },
                 {
                     'diff',
                     symbols = {
-                        added = pad_icon(style.icons.git.add, false, true),
-                        modified = pad_icon(style.icons.git.change, false, true),
-                        removed = pad_icon(style.icons.git.delete, false, true),
+                        added = pad_icon(mivim.style.icons.git.add, false, true),
+                        modified = pad_icon(mivim.style.icons.git.change, false, true),
+                        removed = pad_icon(mivim.style.icons.git.delete, false, true),
                     },
                     source = function()
                         local gitsigns = vim.b.gitsigns_status_dict
@@ -46,8 +45,8 @@ return {
                     'filename',
                     newfile_status = true,
                     symbols = {
-                        modified = pad_icon(style.icons.ui.modified, false, true),
-                        readonly = style.icons.ui.readonly,
+                        modified = pad_icon(mivim.style.icons.ui.modified, false, true),
+                        readonly = mivim.style.icons.ui.readonly,
                         unnamed = '',
                     },
                 },
@@ -57,10 +56,10 @@ return {
                 {
                     'diagnostics',
                     symbols = {
-                        error = pad_icon(style.icons.lsp.signs.error, false, true),
-                        warn = pad_icon(style.icons.lsp.signs.warn, false, true),
-                        info = pad_icon(style.icons.lsp.signs.info, false, true),
-                        hint = pad_icon(style.icons.lsp.signs.hint, false, true),
+                        error = pad_icon(mivim.style.icons.lsp.signs.error, false, true),
+                        warn = pad_icon(mivim.style.icons.lsp.signs.warn, false, true),
+                        info = pad_icon(mivim.style.icons.lsp.signs.info, false, true),
+                        hint = pad_icon(mivim.style.icons.lsp.signs.hint, false, true),
                     },
                     separator = '|',
                 },
@@ -77,14 +76,14 @@ return {
                                     if msg == '' then
                                         msg = client.name
                                     elseif not msg:find(client.name) then
-                                        msg = msg .. pad_icon(style.icons.lsp.server, true, true) .. client.name
+                                        msg = msg .. pad_icon(mivim.style.icons.lsp.server, true, true) .. client.name
                                     end
                                 end
                             end
                         end
                         return msg
                     end,
-                    icon = style.icons.lsp.server,
+                    icon = mivim.style.icons.lsp.server,
                 },
             },
             lualine_z = {

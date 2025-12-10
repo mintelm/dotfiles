@@ -1,11 +1,9 @@
-local utils = require('utils')
-
 return {
     name = 'CMake: Build clean',
     priority = 21,
     condition = {
         callback = function()
-            return utils.is_cmake_project('.')
+            return mivim.utils.is_cmake_project('.')
         end
     },
     builder = function()

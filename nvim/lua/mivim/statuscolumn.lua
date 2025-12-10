@@ -1,10 +1,7 @@
-local utils = require('utils')
-
 local M = {}
-_G.mistatuscolumn = M
 
 --- @return {lnum:number, sign_text:string, sign_hl_group:string, priority:number}[]
-function M.get_signs_in_extmarks()
+local function get_signs_in_extmarks()
     return vim.tbl_map(
         function(extmark)
             -- extmarks is a list of [extmark_id, row, col, details]
@@ -24,10 +21,11 @@ function M.get_signs_in_extmarks()
         ))
 end
 
-function M.active()
+--- @return string
+function M.show()
     local sign, git_sign
     local current_max_priority = 0
-    for _, s in ipairs(M.get_signs_in_extmarks()) do
+    for _, s in ipairs(get_signs_in_extmarks()) do
         if s.sign_hl_group:find('GitSign') then
             git_sign = s
         else
@@ -53,16 +51,4 @@ function M.active()
     return table.concat(components)
 end
 
-utils.augroup('StatusColumn', {
-    {
-        event = { 'BufWinEnter', 'BufModifiedSet', 'FileType' },
-        pattern = { '*' },
-        command = function()
-            if vim.bo.buftype == '' and vim.bo.modifiable and not string.find(vim.bo.filetype, 'Neogit') then
-                vim.wo.statuscolumn = '%!v:lua.mistatuscolumn.active()'
-            else
-                vim.wo.statuscolumn = ''
-            end
-        end,
-    },
-})
+return M

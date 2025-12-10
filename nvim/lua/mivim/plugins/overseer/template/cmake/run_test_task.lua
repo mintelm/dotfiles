@@ -1,11 +1,9 @@
-local utils = require('utils')
-
 return {
     name = 'CMake: Run tests',
     priority = 22,
     condition = {
         callback = function()
-            return utils.is_cmake_project('.')
+            return mivim.utils.is_cmake_project('.')
         end
     },
     builder = function()

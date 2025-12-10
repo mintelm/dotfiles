@@ -1,6 +1,3 @@
-local style = require('style')
-
-local lsp_list = require('settings.lsp')
 local lint_list = { 'prettier' }
 local dap_list = { 'cppdbg' }
 
@@ -8,7 +5,7 @@ local dap_list = { 'cppdbg' }
 return {
     'mason-org/mason-lspconfig.nvim',
     opts = {
-        ensure_installed = lsp_list,
+        ensure_installed = mivim.lsp.list,
         automatic_enable = true,
     },
     dependencies = {
@@ -21,9 +18,9 @@ return {
             opts = {
                 ui = {
                     icons = {
-                        package_installed = style.icons.lsp.mason.installed,
-                        package_pending = style.icons.lsp.mason.pending,
-                        package_uninstalled = style.icons.lsp.mason.uninstalled,
+                        package_installed = mivim.style.icons.lsp.mason.installed,
+                        package_pending = mivim.style.icons.lsp.mason.pending,
+                        package_uninstalled = mivim.style.icons.lsp.mason.uninstalled,
                     }
                 }
 

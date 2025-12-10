@@ -1,6 +1,6 @@
-local map = require('utils').map
-local unmap = require('utils').unmap
-local cmd = require('utils').cmd
+local map = mivim.utils.map
+local unmap = mivim.utils.unmap
+local cmd = mivim.utils.cmd
 
 vim.g.mapleader = ','
 

@@ -40,41 +40,6 @@ function M.merge(t1, t2)
     return t1
 end
 
---- @class Autocommand
---- @field description string
---- @field event  string[] list of autocommand events
---- @field pattern string[] list of autocommand patterns
---- @field command string | function
---- @field nested  boolean
---- @field once    boolean
---- @field buffer  number
-
---- Create an autocommand
---- returns the group ID so that it can be cleared or manipulated.
---- @param name string
---- @param commands Autocommand[]
---- @return number
-function M.augroup(name, commands)
-    local id = vim.api.nvim_create_augroup(name, { clear = true })
-
-    for _, autocmd in ipairs(commands) do
-        local is_callback = type(autocmd.command) == 'function'
-
-        vim.api.nvim_create_autocmd(autocmd.event, {
-            group = name,
-            pattern = autocmd.pattern,
-            desc = autocmd.description,
-            callback = is_callback and autocmd.command or nil,
-            command = not is_callback and autocmd.command or nil,
-            once = autocmd.once,
-            nested = autocmd.nested,
-            buffer = autocmd.buffer,
-        })
-    end
-
-    return id
-end
-
 --- Set global vim keymap
 --- @param mode string|table
 --- @param lhs string
@@ -122,6 +87,12 @@ function M.cmd(command, suffix)
     return '<cmd>' .. command .. '<CR>' .. suffix
 end
 
+--- Returns a autocommand group
+function M.augroup(name, clear)
+    clear = clear or true
+    return vim.api.nvim_create_augroup('mivim_' .. name, { clear = clear })
+end
+
 --- Delete all hidden buffers
 function M.delete_hidden_buffers()
     local function buffer_filter(buf)
@@ -160,7 +131,5 @@ function M.is_cmake_project(path)
     end
     return false
 end
-
-_G.dump = M.dump
 
 return M

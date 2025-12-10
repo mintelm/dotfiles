@@ -1,5 +1,3 @@
-local style = require('style')
-
 return {
     'rcarriga/nvim-dap-ui',
     event = 'VeryLazy',
@@ -22,8 +20,8 @@ return {
                     },
                 })
 
-                vim.fn.sign_define('DapBreakpoint', { text = style.icons.ui.breakpoint, texthl = 'f38b83' })
-                vim.fn.sign_define('DapStopped', { text = style.icons.ui.chevron_right, texthl = 'f38b83' })
+                vim.fn.sign_define('DapBreakpoint', { text = mivim.style.icons.ui.breakpoint, texthl = 'f38b83' })
+                vim.fn.sign_define('DapStopped', { text = mivim.style.icons.ui.chevron_right, texthl = 'f38b83' })
 
                 dap.listeners.after.stackTrace['auto-center'] = function()
                     vim.cmd.normal('zzzv')

@@ -3,7 +3,7 @@ vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
 vim.o.title = true
-vim.o.titlestring = require('style').icons.ui.vim .. " %{fnamemodify(getcwd(), ':~:t')}"
+vim.o.titlestring = mivim.style.icons.ui.vim .. " %{fnamemodify(getcwd(), ':~:t')}"
 
 vim.o.expandtab = true
 vim.o.smartindent = true

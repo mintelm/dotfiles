@@ -1,9 +1,7 @@
-local utils = require('utils')
-
 vim.api.nvim_create_user_command(
     'Tabs',
     function(opts)
-        utils.set_tab_width(opts.args + 0)
+        mivim.utils.set_tab_width(opts.args + 0)
     end,
     { nargs = 1 }
 )
@@ -11,7 +9,7 @@ vim.api.nvim_create_user_command(
 vim.api.nvim_create_user_command(
     'BWipe',
     function()
-        utils.delete_hidden_buffers()
+        mivim.utils.delete_hidden_buffers()
     end,
     { nargs = 0 }
 )

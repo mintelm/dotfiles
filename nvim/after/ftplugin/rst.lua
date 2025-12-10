@@ -1,3 +1,1 @@
-local utils = require('utils')
-
-utils.set_tab_width(3)
+mivim.utils.set_tab_width(3)

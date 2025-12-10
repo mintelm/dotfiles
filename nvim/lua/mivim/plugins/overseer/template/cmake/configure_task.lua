@@ -1,11 +1,9 @@
-local utils = require('utils')
-
 return {
     name = 'CMake: Configure fresh',
     priority = 23,
     condition = {
         callback = function()
-            return utils.is_cmake_project('.')
+            return mivim.utils.is_cmake_project('.')
         end
     },
     builder = function()
@@ -19,7 +17,7 @@ return {
                     table.insert(presets, preset)
                 end
 
-                chosen_preset = utils.pick_one_sync(presets, 'Select a preset', function(item) return item end)
+                chosen_preset = mivim.utils.pick_one_sync(presets, 'Select a preset', function(item) return item end)
                 if chosen_preset ~= nil then
                     table.insert(args, '--preset')
                     table.insert(args, chosen_preset)
