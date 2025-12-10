@@ -13,15 +13,14 @@ return {
             'saghen/blink.cmp',
             optional = true,
             opts = function(_, opts)
-                opts.sources = {
-                    default = { 'lazydev', 'lsp', 'path', 'snippets', 'buffer' },
-                    providers = {
-                        lazydev = {
-                            name = 'LazyDev',
-                            module = 'lazydev.integrations.blink',
-                            score_offset = 100,
-                        },
-                    },
+                opts.sources = opts.sources or {}
+                opts.sources.providers = opts.sources.providers or {}
+
+                table.insert(opts.sources.default, 1, 'lazydev')
+                opts.sources.providers.lazydev = {
+                    name = 'LazyDev',
+                    module = 'lazydev.integrations.blink',
+                    score_offset = 100,
                 }
             end
         },

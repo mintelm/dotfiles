@@ -3,6 +3,9 @@ return {
     event = 'VeryLazy',
     version = '*', -- download prebuilt fuzzy binaries
     opts = {
+        sources = {
+            default = { 'lsp', 'path', 'snippets', 'buffer' },
+        },
         completion = {
             menu = {
                 auto_show = false,
