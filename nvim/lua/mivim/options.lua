@@ -29,6 +29,7 @@ vim.o.relativenumber = true
 vim.o.signcolumn = 'yes:1'
 vim.o.laststatus = 3
 vim.o.cursorline = true
+vim.o.splitright = true
 vim.o.splitbelow = true
 vim.o.equalalways = false
 vim.o.list = true
