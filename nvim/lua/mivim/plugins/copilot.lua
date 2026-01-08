@@ -1,3 +1,5 @@
+local model = 'claude-opus-4.5'
+
 local copilot_group = mivim.utils.augroup('copilot', false)
 vim.api.nvim_create_autocmd('User', {
     group = copilot_group,
@@ -33,6 +35,7 @@ return {
                 auto_trigger = true,
             },
             panel = { enabled = false },
+            copilot_model = model,
         },
         specs = {
             {
@@ -64,7 +67,7 @@ return {
         },
         build = 'make tiktoken',
         opts = {
-            model = 'claude-haiku-4.5',
+            model = model,
             window = {
                 title = '🤖 AI Assistant',
             },
