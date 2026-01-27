@@ -31,11 +31,11 @@ return {
         'zbirenbaum/copilot.lua',
         event = 'VeryLazy',
         opts = {
-            suggestion = {
-                auto_trigger = true,
-            },
             panel = { enabled = false },
             copilot_model = model,
+        },
+        keys = {
+            { '<leader>ct', function() require('copilot.suggestion').toggle_auto_trigger() end },
         },
         specs = {
             {
