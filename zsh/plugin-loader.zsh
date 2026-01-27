@@ -3,6 +3,7 @@ github_plugins=(
     zsh-users/zsh-autosuggestions
     zsh-users/zsh-syntax-highlighting
     Aloxaf/fzf-tab
+    wofr06/lesspipe
 )
 
 for plugin in $github_plugins; do
@@ -14,7 +15,7 @@ for plugin in $github_plugins; do
     # load the plugin
     for initscript in ${plugin#*/}.zsh ${plugin#*/}.plugin.zsh ${plugin#*/}.sh ${plugin#*/}.zsh-theme; do
         if [[ -f ${ZDOTDIR:-$HOME}/.zsh_plugins/$plugin/$initscript ]]; then
-            source ${ZDOTDIR:-$HOME}/.zsh_plugins/$plugin/$initscript
+            source ${ZDOTDIR:-$HOME}/.zsh_plugins/$plugin/$initscript 1> /dev/null
             break
         fi
     done
