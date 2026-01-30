@@ -16,15 +16,6 @@ vim.api.nvim_create_autocmd('User', {
         vim.b.copilot_suggestion_hidden = false
     end,
 })
-vim.api.nvim_create_autocmd('BufEnter', {
-    group = copilot_group,
-    pattern = 'copilot-*',
-    callback = function()
-        vim.opt_local.relativenumber = false
-        vim.opt_local.number = false
-        vim.opt_local.conceallevel = 0
-    end,
-})
 
 return {
     {
@@ -35,7 +26,7 @@ return {
             copilot_model = model,
         },
         keys = {
-            { '<leader>ct', function() require('copilot.suggestion').toggle_auto_trigger() end },
+            { '<leader>ct', function() require('copilot.suggestion').toggle_auto_trigger() end, desc = 'Toggle Copilot Suggestions' },
         },
         specs = {
             {
@@ -61,26 +52,28 @@ return {
         },
     },
     {
-        'CopilotC-Nvim/CopilotChat.nvim',
+        'olimorris/codecompanion.nvim',
         dependencies = {
-            { 'nvim-lua/plenary.nvim', branch = 'master' },
+            'nvim-lua/plenary.nvim',
+            'nvim-treesitter/nvim-treesitter',
         },
-        build = 'make tiktoken',
         opts = {
-            model = model,
-            window = {
-                title = '🤖 AI Assistant',
+            adapters = {
+                http = {
+                    copilot = function()
+                        return require('codecompanion.adapters').extend('copilot', {
+                            schema = {
+                                model = {
+                                    default = model,
+                                },
+                            },
+                        })
+                    end,
+                }
             },
-            headers = {
-                user = '👤 You',
-                assistant = '🤖 Copilot',
-                tool = '🔧 Tool',
-            },
-            separator = '━━',
         },
         keys = {
-            { '<leader>cc', function() require('CopilotChat').toggle() end,        desc = 'Toggle Copilot Chat', },
-            { '<leader>cs', function() require('CopilotChat').select_prompt() end, desc = 'Select Copilot Prompt', mode = { 'n', 'v' } },
+            { '<leader>cc', function() require('codecompanion').toggle() end, desc = 'Toggle Code Companion Chat', },
         },
     },
 }
