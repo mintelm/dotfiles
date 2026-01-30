@@ -1,15 +1,3 @@
--- setup statuscolumn
-vim.api.nvim_create_autocmd({ 'BufWinEnter', 'BufModifiedSet', 'FileType' }, {
-    group = mivim.utils.augroup('statuscolumn'),
-    callback = function()
-        if vim.bo.buftype == '' and vim.bo.modifiable and not string.find(vim.bo.filetype, 'Neogit') then
-            vim.wo.statuscolumn = '%!v:lua.mivim.statuscolumn.show()'
-        else
-            vim.wo.statuscolumn = ''
-        end
-    end,
-})
-
 -- highlight yank for 250ms
 vim.api.nvim_create_autocmd('TextYankPost', {
     group = mivim.utils.augroup('highlight_yank'),

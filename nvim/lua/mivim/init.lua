@@ -4,13 +4,15 @@ _G.mivim = {}
 _G.mivim.utils = require('mivim.utils')
 _G.mivim.style = require('mivim.style')
 _G.mivim.lsp = require('mivim.lsp')
-_G.mivim.statuscolumn = require('mivim.statuscolumn')
 
--- load core confiugartions
+-- load core configurations
 require('mivim.options')
 require('mivim.remaps')
 require('mivim.autocmds')
 require('mivim.usercmds')
+
+-- load statuscolumn
+require('mivim.statuscolumn')
 
 -- bootstrap lazy.nvim
 local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
