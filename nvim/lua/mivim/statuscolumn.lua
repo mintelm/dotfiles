@@ -1,6 +1,6 @@
 local M = {}
 
-local hidden_filetypes = { 'Neogit', 'gitcommit' }
+local hidden_filetypes = { 'NeogitStatus', 'gitcommit', 'snacks_picker_input' }
 local minimal_filetypes = { 'codecompanion' }
 local default_hl = 'IblIndent'
 
@@ -31,7 +31,7 @@ local function git_column()
 
     -- find git sign
     for _, s in ipairs(get_signs_in_extmarks()) do
-        if s.sign_hl_group:find('GitSign') then
+        if s.sign_hl_group and s.sign_hl_group:find('GitSign') then
             sign = s
         end
     end
@@ -46,7 +46,7 @@ local function sign_column()
 
     -- find highest priority sign
     for _, s in ipairs(get_signs_in_extmarks()) do
-        if not s.sign_hl_group:find('GitSign') and s.priority > current_max_priority then
+        if s.sign_hl_group and not s.sign_hl_group:find('GitSign') and s.priority > current_max_priority then
             sign = s
             current_max_priority = s.priority
         end
@@ -71,62 +71,44 @@ local function end_column()
 end
 
 --- @return string
-function M.show()
-    return table.concat(
-        {
-            git_column(),
-            sign_column(),
-            line_column(),
-            rel_column(),
-            end_column(),
-        }
-    )
+function M.get_minimal_statuscol_string()
+    return table.concat({
+        sign_column(),
+        line_column(),
+        end_column(),
+    })
 end
 
 --- @return string
-function M.show_minimal()
-    return table.concat(
-        {
-            sign_column(),
-            line_column(),
-            end_column(),
-        }
-    )
+function M.get_statuscol_string()
+    return table.concat({
+        git_column(),
+        sign_column(),
+        line_column(),
+        rel_column(),
+        end_column(),
+    })
 end
 
---- @return string
-function M.hide()
-    return ''
-end
+vim.wo.statuscolumn = '%!v:lua.require("mivim.statuscolumn").get_statuscol_string()'
 
-function M.update()
-    if not vim.bo.modifiable then
-        vim.wo.statuscolumn = '%!v:lua.require("mivim.statuscolumn").hide()'
-        return
-    end
-
-    for _, ft in ipairs(hidden_filetypes) do
-        if string.find(vim.bo.filetype, ft) then
-            vim.wo.statuscolumn = '%!v:lua.require("mivim.statuscolumn").hide()'
-            return
-        end
-    end
-
-    for _, ft in ipairs(minimal_filetypes) do
-        if string.find(vim.bo.filetype, ft) then
-            vim.wo.statuscolumn = '%!v:lua.require("mivim.statuscolumn").show_minimal()'
-            return
-        end
-    end
-
-    vim.wo.statuscolumn = '%!v:lua.require("mivim.statuscolumn").show()'
-end
-
-vim.api.nvim_create_autocmd({ 'BufWinEnter', 'BufModifiedSet', 'FileType' }, {
-    group = mivim.utils.augroup('statuscolumn'),
+vim.api.nvim_create_autocmd({ 'FileType', 'BufWinEnter' }, {
+    group = mivim.utils.augroup('statuscolumn_hidden_ft'),
+    pattern = hidden_filetypes,
     callback = function()
-        require('mivim.statuscolumn').update()
-    end,
+        vim.wo.number = false
+        vim.wo.relativenumber = false
+        vim.wo.signcolumn = 'no'
+        vim.wo.statuscolumn = ''
+    end
+})
+vim.api.nvim_create_autocmd({ 'FileType', 'BufWinEnter' }, {
+    group = mivim.utils.augroup('statuscolumn_minimal_ft'),
+    pattern = minimal_filetypes,
+    callback = function()
+        vim.wo.relativenumber = false
+        vim.wo.statuscolumn = '%!v:lua.require("mivim.statuscolumn").get_minimal_statuscol_string()'
+    end
 })
 
 return M
