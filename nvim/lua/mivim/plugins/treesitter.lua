@@ -1,4 +1,4 @@
-local languages = { 'c', 'cpp' }
+local languages = { 'c', 'cpp', 'gitcommit' }
 
 vim.api.nvim_create_autocmd('FileType', {
     pattern = languages,
