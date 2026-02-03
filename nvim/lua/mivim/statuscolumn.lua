@@ -1,7 +1,6 @@
 local M = {}
 
-local hidden_filetypes = { 'NeogitStatus', 'gitcommit', 'snacks_picker_input' }
-local minimal_filetypes = { 'codecompanion' }
+local hidden_filetypes = { 'gitcommit', 'help' }
 local default_hl = 'IblIndent'
 
 --- @return {lnum:number, sign_text:string, sign_hl_group:string, priority:number}[]
@@ -71,15 +70,6 @@ local function end_column()
 end
 
 --- @return string
-function M.get_minimal_statuscol_string()
-    return table.concat({
-        sign_column(),
-        line_column(),
-        end_column(),
-    })
-end
-
---- @return string
 function M.get_statuscol_string()
     return table.concat({
         git_column(),
@@ -92,7 +82,7 @@ end
 
 vim.wo.statuscolumn = '%!v:lua.require("mivim.statuscolumn").get_statuscol_string()'
 
-vim.api.nvim_create_autocmd({ 'FileType', 'BufWinEnter' }, {
+vim.api.nvim_create_autocmd('FileType', {
     group = mivim.utils.augroup('statuscolumn_hidden_ft'),
     pattern = hidden_filetypes,
     callback = function()
@@ -102,12 +92,15 @@ vim.api.nvim_create_autocmd({ 'FileType', 'BufWinEnter' }, {
         vim.wo.statuscolumn = ''
     end
 })
-vim.api.nvim_create_autocmd({ 'FileType', 'BufWinEnter' }, {
-    group = mivim.utils.augroup('statuscolumn_minimal_ft'),
-    pattern = minimal_filetypes,
+vim.api.nvim_create_autocmd('BufModifiedSet', {
+    group = mivim.utils.augroup('statuscolumn_hidden_bt'),
     callback = function()
-        vim.wo.relativenumber = false
-        vim.wo.statuscolumn = '%!v:lua.require("mivim.statuscolumn").get_minimal_statuscol_string()'
+        if not vim.bo.modifiable or vim.bo.buftype ~= '' then
+            vim.wo.number = false
+            vim.wo.relativenumber = false
+            vim.wo.signcolumn = 'no'
+            vim.wo.statuscolumn = ''
+        end
     end
 })
 
