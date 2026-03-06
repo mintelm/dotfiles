@@ -9,11 +9,6 @@ return {
                 local dap = require('dap')
                 local dapui = require('dapui')
 
-                if vim.fn.filereadable('.vscode/launch.json') then
-                    -- map launch.json type to filetypes (e.g. cppdbg = { 'c', 'cpp' })
-                    require('dap.ext.vscode').load_launchjs(nil, { cppdbg = { 'c', 'cpp' } })
-                end
-
                 dap.repl.commands = vim.tbl_extend('force', dap.repl.commands, {
                     custom_commands = {
                         ['.restart'] = dap.restart,
