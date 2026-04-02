@@ -6,7 +6,6 @@ return {
     dependencies = 'kyazdani42/nvim-web-devicons',
     opts = {
         options = {
-            theme = 'catppuccin',
             component_separators = '',
             section_separators = { left = '', right = '' },
         },
@@ -63,26 +62,8 @@ return {
                     },
                     separator = '|',
                 },
-                -- lsp server custom component
                 {
-                    function()
-                        local msg = ''
-                        local buf_ft = vim.filetype.match({ buf = 0 })
-                        local clients = vim.lsp.get_clients()
-                        if next(clients) then
-                            for _, client in ipairs(clients) do
-                                local filetypes = client.config.filetypes
-                                if filetypes and vim.fn.index(filetypes, buf_ft) ~= -1 then
-                                    if msg == '' then
-                                        msg = client.name
-                                    elseif not msg:find(client.name) then
-                                        msg = msg .. pad_icon(mivim.style.icons.lsp.server, true, true) .. client.name
-                                    end
-                                end
-                            end
-                        end
-                        return msg
-                    end,
+                    'lsp_status',
                     icon = mivim.style.icons.lsp.server,
                 },
             },
@@ -95,6 +76,8 @@ return {
             'nvim-tree',
             'toggleterm',
             'man',
+            'mason',
+            'nvim-dap-ui',
         },
     },
 }
