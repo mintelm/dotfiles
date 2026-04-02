@@ -1,4 +1,3 @@
-local lint_list = { 'prettier' }
 local dap_list = { 'cppdbg' }
 
 -- important: the order of plugins shall not be changed since they need to be loaded in a certain order
@@ -30,13 +29,6 @@ return {
             'jay-babu/mason-nvim-dap.nvim',
             opts = {
                 ensure_installed = dap_list,
-                handlers = {} -- automatic setup
-            },
-        },
-        {
-            'jay-babu/mason-null-ls.nvim',
-            opts = {
-                ensure_installed = lint_list,
                 handlers = {} -- automatic setup
             },
         },
