@@ -4,6 +4,7 @@ return {
     dependencies = {
         'nvim-lua/plenary.nvim',
         'nvim-treesitter/nvim-treesitter',
+        'lalitmee/codecompanion-spinners.nvim',
     },
     opts = {
         interactions = {
@@ -11,6 +12,13 @@ return {
                 adapter = {
                     name = 'copilot_acp',
                     model = 'claude-opus-4.6',
+                },
+            },
+        },
+        extensions = {
+            spinner = {
+                opts = {
+                    style = 'snacks',
                 },
             },
         },
