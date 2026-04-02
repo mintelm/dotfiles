@@ -1,3 +1,10 @@
+vim.api.nvim_create_autocmd('ColorScheme', {
+    callback = function()
+        local bg = vim.api.nvim_get_hl(0, { name = 'Normal' }).bg
+        vim.api.nvim_set_hl(0, 'Hidden', { fg = bg, bg = bg })
+    end,
+})
+
 return {
     'folke/snacks.nvim',
     event = 'VeryLazy',
@@ -7,7 +14,7 @@ return {
             indent = {
                 char = '▎',
                 hl = {
-                    'EndOfBuffer',
+                    'Hidden',
                     'IblIndent',
                     'IblIndent',
                     'IblIndent',
