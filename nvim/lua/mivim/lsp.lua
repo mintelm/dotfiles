@@ -1,6 +1,6 @@
 local M = {}
 
-M.list = { 'lua_ls', 'clangd', 'rust_analyzer', 'pyright', 'bashls', 'cmake' }
+M.list = { 'lua_ls', 'clangd', 'rust_analyzer', 'pyright', 'bashls' }
 
 vim.lsp.config('*', {
     capabilities = {
@@ -29,9 +29,8 @@ vim.diagnostic.config({
     },
 })
 
--- mason.nvim already does this
--- for _, lsp in ipairs(M.list) do
---     vim.lsp.enable({ lsp })
--- end
+for _, lsp in ipairs(M.list) do
+    vim.lsp.enable({ lsp })
+end
 
 return M

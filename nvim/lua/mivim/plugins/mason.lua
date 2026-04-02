@@ -1,36 +1,12 @@
-local dap_list = { 'cppdbg' }
-
--- important: the order of plugins shall not be changed since they need to be loaded in a certain order
 return {
-    'mason-org/mason-lspconfig.nvim',
+    'mason-org/mason.nvim',
     opts = {
-        ensure_installed = mivim.lsp.list,
-        automatic_enable = true,
-    },
-    dependencies = {
-        {
-            -- provides basic LSP client configs
-            'neovim/nvim-lspconfig',
-        },
-        {
-            'mason-org/mason.nvim',
-            opts = {
-                ui = {
-                    icons = {
-                        package_installed = mivim.style.icons.lsp.mason.installed,
-                        package_pending = mivim.style.icons.lsp.mason.pending,
-                        package_uninstalled = mivim.style.icons.lsp.mason.uninstalled,
-                    }
-                }
-
+        ui = {
+            icons = {
+                package_installed = mivim.style.icons.lsp.mason.installed,
+                package_pending = mivim.style.icons.lsp.mason.pending,
+                package_uninstalled = mivim.style.icons.lsp.mason.uninstalled,
             }
-        },
-        {
-            'jay-babu/mason-nvim-dap.nvim',
-            opts = {
-                ensure_installed = dap_list,
-                handlers = {} -- automatic setup
-            },
-        },
-    },
+        }
+    }
 }
