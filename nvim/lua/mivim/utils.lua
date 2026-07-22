@@ -89,7 +89,7 @@ end
 
 --- Returns a autocommand group
 function M.augroup(name, clear)
-    clear = clear or true
+    if clear == nil then clear = true end
     return vim.api.nvim_create_augroup('mivim_' .. name, { clear = clear })
 end
 

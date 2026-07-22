@@ -74,7 +74,6 @@ return {
         },
         extensions = {
             'nvim-tree',
-            'toggleterm',
             'man',
             'mason',
             'nvim-dap-ui',

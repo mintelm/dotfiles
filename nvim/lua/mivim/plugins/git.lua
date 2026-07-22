@@ -41,7 +41,7 @@ return {
             },
         },
         keys = {
-            { '<leader>g<Enter>', function() require('neogit').open() end, { exit = true, nowait = true }, desc = 'Neogit' },
+            { '<leader>g<Enter>', function() require('neogit').open() end, nowait = true, desc = 'Neogit' },
         },
     },
     {

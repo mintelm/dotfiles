@@ -18,8 +18,8 @@ vim.api.nvim_create_user_command(
     'LineLimit',
     function(opts)
         local line_limit = opts.args + 0
-        local hl_fg = vim.api.nvim_get_hl_by_name('Normal', true).foreground
-        local hl_bg = vim.api.nvim_get_hl_by_name('Visual', true).background
+        local hl_fg = vim.api.nvim_get_hl(0, { name = 'Normal' }).fg
+        local hl_bg = vim.api.nvim_get_hl(0, { name = 'Visual' }).bg
         vim.api.nvim_set_hl(0, 'LineLimit', { fg = hl_fg, bg = hl_bg })
 
         if (line_limit > 0) then line_limit = line_limit + 1 end

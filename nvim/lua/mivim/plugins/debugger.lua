@@ -15,8 +15,8 @@ return {
                     },
                 })
 
-                vim.fn.sign_define('DapBreakpoint', { text = mivim.style.icons.ui.breakpoint, texthl = 'f38b83' })
-                vim.fn.sign_define('DapStopped', { text = mivim.style.icons.ui.chevron_right, texthl = 'f38b83' })
+                vim.fn.sign_define('DapBreakpoint', { text = mivim.style.icons.ui.breakpoint, texthl = 'DiagnosticError' })
+                vim.fn.sign_define('DapStopped', { text = mivim.style.icons.ui.chevron_right, texthl = 'DiagnosticError' })
 
                 dap.listeners.after.stackTrace['auto-center'] = function()
                     vim.cmd.normal('zzzv')

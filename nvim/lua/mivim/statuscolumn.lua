@@ -1,7 +1,7 @@
 local M = {}
 
-local hidden_filetypes = { 'Neogit', 'codecompanion' }
-local default_hl = 'IblIndent'
+local hidden_filetypes = { 'Neogit' }
+local default_hl = 'LineNr'
 
 --- @return {lnum:number, sign_text:string, sign_hl_group:string, priority:number}[]
 local function get_signs_in_extmarks()
