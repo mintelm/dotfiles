@@ -8,7 +8,7 @@ fi
 CMD="git grep --cached -l '' | xargs sed -i"
 
 for EXP in "$@"; do
-  CMD+=" -e 's/${EXP}/g'"
+  CMD+=" -e 's|${EXP}|g'"
 done
 
 echo "Executing:"

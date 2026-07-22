@@ -1,9 +1,6 @@
 #!/bin/bash
 
-CRLF=$(printf '\r\n')
-LF=$(printf '\n')
-
 for file in "$@"
 do
-    sed -i "s/$CRLF/$LF/g" "$file"
+    sed -i 's/\r$//' "$file"
 done

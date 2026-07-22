@@ -14,7 +14,7 @@ while getopts "fbh" opt; do
         f)
             f='f'
             echo "Creating required directories"
-            mkdir -p ~/.cache ~/.zsh ~/.config/nvim ~/.config/bat ~/.config/kitty ~/.local/bin
+            mkdir -p ~/.cache ~/.zsh ~/.config/nvim ~/.config/bat ~/.config/kitty ~/.config/ranger ~/.local/bin
             ;;
         b)
             build=1
