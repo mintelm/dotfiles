@@ -2,8 +2,12 @@
     name = Mario Mintel
     email = mariomintel@gmail.com
 
+[absorb]
+    autoStageIfNothingStaged = true
+
 [alias]
     a = add
+    aa = absorb --and-rebase
     ap = add --patch
     c = commit
     cs = commit -S
