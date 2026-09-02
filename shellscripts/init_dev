@@ -1,21 +1,5 @@
 #!/bin/bash
 
-create_clangd() {
-    file=".clangd"
-    if [ -f "$file" ]; then
-        echo "${file} already present. Skipping."
-        return 1
-    fi
-
-    cat > $file << 'EOF'
-CompileFlags:
-  CompilationDatabase: build-cc
-Diagnostics:
-  UnusedIncludes: Strict
-  MissingIncludes: Strict
-EOF
-}
-
 create_cmakeuserpresets() {
     file="CMakeUserPresets.json"
     if [ -f "$file" ]; then
@@ -30,7 +14,7 @@ create_cmakeuserpresets() {
     {
       "name": "development",
       "inherits": "test",
-      "binaryDir": "build-cc",
+      "binaryDir": "build",
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Debug",
         "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
@@ -80,14 +64,6 @@ create_launch() {
 }
 EOF
 }
-
-echo "Setup '.clangd' config file?"
-select yn in "Yes" "No"; do
-    case $yn in
-        Yes ) create_clangd; break;;
-        No ) break;;
-    esac
-done
 
 echo "Setup 'CMakeUserPresets.json' config file?"
 select yn in "Yes" "No"; do

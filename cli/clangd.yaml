@@ -1,0 +1,14 @@
+CompileFlags:
+  Remove: [-Wfatal-errors]
+Index:
+  StandardLibrary: true
+Diagnostics:
+  UnusedIncludes: Strict
+  MissingIncludes: Strict
+  Includes:
+    IgnoreHeader:
+      - .*external/.*
+Hover:
+  ShowAKA: true
+Documentation:
+  CommentFormat: Doxygen

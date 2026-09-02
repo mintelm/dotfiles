@@ -14,7 +14,7 @@ while getopts "fbh" opt; do
         f)
             f='f'
             echo "Creating required directories"
-            mkdir -p ~/.cache ~/.zsh ~/.config/nvim ~/.config/bat ~/.config/kitty ~/.config/ranger ~/.local/bin
+            mkdir -p ~/.cache ~/.zsh ~/.config/nvim ~/.config/bat ~/.config/clangd ~/.config/kitty ~/.config/ranger ~/.local/bin
             ;;
         b)
             build=1
@@ -47,6 +47,7 @@ ln -sv$f $SCRIPT_DIR/cli/screenrc ~/.config/screenrc
 ln -sv$f $SCRIPT_DIR/cli/gitconfig ~/.gitconfig
 ln -sv$f $SCRIPT_DIR/cli/tigrc ~/.tigrc
 ln -sv$f $SCRIPT_DIR/cli/batconfig ~/.config/bat/config
+ln -sv$f $SCRIPT_DIR/cli/clangd.yaml ~/.config/clangd/config.yaml
 ln -sv$f $SCRIPT_DIR/cli/Xresources ~/.Xresources
 ln -sv$f $SCRIPT_DIR/cli/rc.conf ~/.config/ranger/rc.conf
 
