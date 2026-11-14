@@ -14,7 +14,7 @@ while getopts "fbh" opt; do
         f)
             f='f'
             echo "Creating required directories"
-            mkdir -p ~/.cache ~/.zsh ~/.config/nvim ~/.config/bat ~/.config/clangd ~/.config/kitty ~/.config/ranger ~/.local/bin
+            mkdir -p ~/.cache ~/.zsh ~/.config/nvim ~/.config/bat ~/.config/clangd
             ;;
         b)
             build=1
@@ -43,23 +43,12 @@ ln -sv$f $SCRIPT_DIR/nvim/* ~/.config/nvim
 # cli tools
 echo "Linking cli stuff"
 ln -sv$f $SCRIPT_DIR/cli/tmux.conf ~/.config/tmux.conf
-ln -sv$f $SCRIPT_DIR/cli/screenrc ~/.config/screenrc
 ln -sv$f $SCRIPT_DIR/cli/gitconfig ~/.gitconfig
 ln -sv$f $SCRIPT_DIR/cli/tigrc ~/.tigrc
 ln -sv$f $SCRIPT_DIR/cli/batconfig ~/.config/bat/config
 ln -sv$f $SCRIPT_DIR/cli/clangd.yaml ~/.config/clangd/config.yaml
-ln -sv$f $SCRIPT_DIR/cli/Xresources ~/.Xresources
-ln -sv$f $SCRIPT_DIR/cli/rc.conf ~/.config/ranger/rc.conf
 
-# utils
-echo "Linking utils stuff"
-ln -sv$f $SCRIPT_DIR/utils/kitty.conf ~/.config/kitty/kitty.conf
-ln -sv$f $SCRIPT_DIR/utils/alacritty.yml ~/.config/alacritty.yml
-ln -sv$f $SCRIPT_DIR/utils/dunstrc ~/.config/dunstrc
 
-# shellscripts
-echo "Linking shell scripts"
-ln -sv$f $SCRIPT_DIR/shellscripts/* ~/.local/bin
 
 # build font
 if [[ -v build ]]; then
