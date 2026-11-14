@@ -1,0 +1,13 @@
+# UseKeychain only exists in Apple's ssh; ignore it elsewhere (Linux)
+IgnoreUnknown UseKeychain
+
+# work hosts (internal GitLab, servers) with the work key; kept out of the repo
+Include ~/.ssh/config.local
+
+Host github.com
+    IdentityFile ~/.ssh/id_ed25519
+    IdentitiesOnly yes
+
+Host *
+    AddKeysToAgent yes
+    UseKeychain yes

@@ -1,6 +1,6 @@
 local M = {}
 
-M.list = { 'lua_ls', 'clangd', 'rust_analyzer', 'pyright', 'bashls', 'json-lsp' }
+M.list = { 'lua_ls', 'clangd', 'pyright', 'bashls', 'cmake' }
 
 vim.lsp.config('*', {
     capabilities = {

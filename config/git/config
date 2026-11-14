@@ -1,6 +1,10 @@
 [user]
     name = Mario Mintel
     email = mariomintel@gmail.com
+    signingkey = 169322854FC5E412
+
+[init]
+    defaultBranch = main
 
 [absorb]
     autoStageIfNothingStaged = true
@@ -10,9 +14,7 @@
     aa = absorb --and-rebase
     ap = add --patch
     c = commit
-    cs = commit -S
     ca = commit --amend
-    csa = commit --amend -S
     s = status
     p = push
     pf = push -f
@@ -29,7 +31,6 @@
     f = fetch
     fa = fetch --all
     fp = fetch --prune
-    rm = remove
     rb = rebase
     rbi = "!sh -c 'git rebase -i HEAD~$1' -"
     rbc = rebase --continue
@@ -70,6 +71,10 @@
 
 [commit]
     verbose = true
+    gpgSign = true
+
+[tag]
+    gpgSign = true
 
 [rerere]
     enabled = true

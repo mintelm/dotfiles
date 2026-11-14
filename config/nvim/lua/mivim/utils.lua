@@ -96,7 +96,7 @@ end
 --- Delete all hidden buffers
 function M.delete_hidden_buffers()
     local function buffer_filter(buf)
-        return not vim.api.nvim_buf_is_valid(buf) or not vim.api.nvim_buf_get_option(buf, 'buflisted')
+        return not vim.api.nvim_buf_is_valid(buf) or not vim.bo[buf].buflisted
     end
     local buffers = vim.tbl_filter(buffer_filter, vim.api.nvim_list_bufs())
 

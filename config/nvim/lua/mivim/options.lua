@@ -2,6 +2,10 @@
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
+-- load a project's .nvim.lua (from the directory nvim is started in), after a
+-- one-time trust prompt; used e.g. to run clangd inside a devcontainer
+vim.o.exrc = true
+
 vim.o.title = true
 vim.o.titlestring = mivim.style.icons.ui.vim .. " %{fnamemodify(getcwd(), ':~:t')}"
 

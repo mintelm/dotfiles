@@ -27,11 +27,6 @@ M = {
                 info = '', --  
                 hint = '', -- 
             },
-            mason = {
-                installed = '✓',
-                pending = '➜',
-                uninstalled = '✗',
-            },
         },
     },
 }

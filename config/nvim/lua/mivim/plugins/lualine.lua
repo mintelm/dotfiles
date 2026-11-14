@@ -3,7 +3,7 @@ local pad_icon = mivim.utils.pad_str
 return {
     'nvim-lualine/lualine.nvim',
     event = 'VeryLazy',
-    dependencies = 'kyazdani42/nvim-web-devicons',
+    dependencies = 'nvim-tree/nvim-web-devicons',
     opts = {
         options = {
             component_separators = '',
@@ -75,7 +75,6 @@ return {
         extensions = {
             'nvim-tree',
             'man',
-            'mason',
             'nvim-dap-ui',
         },
     },

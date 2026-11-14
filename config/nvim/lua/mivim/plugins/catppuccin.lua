@@ -13,7 +13,6 @@ return {
             dap_ui = true,
             flash = true,
             gitsigns = true,
-            mason = true,
             native_lsp = {
                 enabled = true,
                 underlines = {
