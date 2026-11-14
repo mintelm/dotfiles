@@ -1,0 +1,47 @@
+# colima template, used when an instance is created; colima never rewrites it.
+# Apply changes to an existing VM: `colima delete && colima start`.
+
+cpu: 12
+memory: 32
+disk: 200
+
+# amd64 containers (CI images) run via Rosetta instead of QEMU
+arch: aarch64
+vmType: vz
+rosetta: true
+binfmt: true
+runtime: docker
+
+mountType: virtiofs
+mountInotify: true
+# explicit: colima 0.10 mounts nothing by default
+mounts:
+  - location: ~/work
+    writable: true
+  - location: ~/.local/share/certs
+    writable: false
+
+forwardAgent: true
+sshConfig: false # would edit ~/.ssh/config, i.e. the repo
+autoActivate: true
+
+provision:
+  # company CA into the VM's CA store before docker starts (runs as the VM user)
+  - mode: after-boot
+    script: |
+      pem=$(ls /Users/*/.local/share/certs/company-ca.pem 2>/dev/null | head -n1)
+      [ -n "$pem" ] || exit 0
+      sudo rm -f /usr/local/share/ca-certificates/company-ca-*.crt
+      sudo awk '/BEGIN CERTIFICATE/{n++} n{print > ("/usr/local/share/ca-certificates/company-ca-" n ".crt")}' "$pem"
+      sudo update-ca-certificates
+  # forwarded ssh agent (random path) at a fixed path for containers
+  - mode: ready
+    script: |
+      for i in $(seq 1 30); do
+        sock=$(ls -tr /tmp/ssh-*/agent.* 2>/dev/null | head -n1)
+        [ -n "$sock" ] && break
+        sleep 1
+      done
+      [ -n "$sock" ] || exit 0
+      sudo mkdir -p /run/host-services
+      sudo ln -sf "$sock" /run/host-services/ssh-auth.sock
