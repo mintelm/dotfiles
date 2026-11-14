@@ -1,0 +1,19 @@
+# Ghostty config, see `ghostty +show-config --default --docs`
+# Kept minimal: tmux does the window management.
+
+# look
+theme = Catppuccin Mocha
+font-size = 14
+font-family = Maple Mono NL NF
+font-thicken = true
+window-padding-x = 4
+window-padding-y = 4
+window-padding-balance = true
+cursor-style-blink = false
+mouse-hide-while-typing = true
+
+# behaviour
+# needed for alt-based keybinds in zsh/tmux/nvim
+macos-option-as-alt = true
+confirm-close-surface = false
+copy-on-select = clipboard

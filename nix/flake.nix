@@ -44,12 +44,17 @@
     darwinConfigurations = {
       mac = mkDarwin {
         user = "Mario.Mintel";
-        home = [ ./home/terminal.nix ./home/darwin.nix ];
+        home = [ ./home/terminal.nix ./home/desktop.nix ./home/darwin.nix ];
       };
     };
 
     # named by role, not hostname (public repo); select with `./install.sh -c NAME`
     homeConfigurations = {
+      # Arch desktop:
+      # arch = mkHome {
+      #   user = "USER";
+      #   home = [ ./home/terminal.nix ./home/desktop.nix ./home/linux.nix ];
+      # };
       # terminal only (server, WSL):
       # wsl = mkHome {
       #   user = "USER";

@@ -8,6 +8,10 @@ let
 in {
   security.pki.certificateFiles = lib.optional hasCompanyCa companyCa;
 
+  # official Mozilla binary is unfree (trademark terms); allow only that
+  nixpkgs.config.allowUnfreePredicate = pkg:
+    builtins.elem (pkgs.lib.getName pkg) [ "firefox-bin" "firefox-bin-unwrapped" ];
+
   nix.package = pkgs.lixPackageSets.latest.lix;
   nix.settings.experimental-features = "nix-command flakes";
   nix.gc = {

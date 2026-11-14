@@ -13,7 +13,8 @@ Each machine is a combination of layers:
 | Layer | Contents | Used by |
 |---|---|---|
 | `home/terminal.nix` | dotfiles, CLI tools, language servers, gpg, ssh | every machine |
-| `home/darwin.nix` | macOS specifics | Macs |
+| `home/desktop.nix` | GUI app configs (Ghostty) | desktops |
+| `home/darwin.nix` | macOS specifics + GUI apps | Macs |
 | `home/linux.nix` | Linux specifics | Linux machines |
 
 ```
@@ -28,7 +29,7 @@ nix/
 Machines in `nix/flake.nix`:
 - **Mac** (`darwinConfigurations`): nix-darwin + home-manager, e.g. `mac`.
 - **Linux** (`homeConfigurations`, named by role like `arch` or `wsl`):
-  standalone home-manager, the distro owns the system.
+  standalone home-manager, the distro owns the system. Desktops add `desktop.nix`.
 
 ### Installation
 1. Install [Lix](https://lix.systems/install/) (or Nix).
@@ -38,10 +39,11 @@ Machines in `nix/flake.nix`:
    ```nix
    arch = mkHome {
      user = "USER";
-     home = [ ./home/terminal.nix ./home/linux.nix ];
+     home = [ ./home/terminal.nix ./home/linux.nix ];  # + ./home/desktop.nix on a desktop
    };
    ```
-   On Arch, also install zsh with pacman.
+   On Arch, also install zsh and the GUI apps (`ghostty`, `firefox`) with
+   pacman: nix GUI apps can't use the system's graphics drivers outside NixOS.
 4. Run:
    ```bash
    ./install.sh [-c NAME] [-b]   # see ./install.sh -h
