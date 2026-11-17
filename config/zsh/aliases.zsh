@@ -35,7 +35,10 @@ _dc_args() {
 dce() {
     _dc_args
     (( $# )) || set -- sh -c 'exec "$(getent passwd "$(id -un)" | cut -d: -f7)" -l'
-    devcontainer exec "${reply[@]}" "$@"
+    # exec doesn't pass the terminal type; containers don't know xterm-ghostty
+    local term=$TERM
+    [[ $term == xterm-ghostty ]] && term=xterm-256color
+    devcontainer exec "${reply[@]}" --remote-env TERM=$term --remote-env COLORTERM=$COLORTERM "$@"
 }
 # rebuild it (new container from the current Dockerfile), with these dotfiles
 # set up by scripts/devcontainer.sh (cloned from GitHub, so only pushed changes)
