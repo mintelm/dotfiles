@@ -22,3 +22,23 @@ if [ -x "$(command -v bat)" ]; then
     alias cat="bat"
     alias ccat="command cat"
 fi
+
+# devcontainer of the current project: prefer a personal
+# .devcontainer-local/devcontainer.json, else the CLI's default lookup
+_dc_args() {
+    local root=$(git rev-parse --show-toplevel 2>/dev/null || pwd)
+    reply=(--workspace-folder "$root")
+    [[ -f $root/.devcontainer-local/devcontainer.json ]] &&
+        reply+=(--config "$root/.devcontainer-local/devcontainer.json")
+}
+# run a command in it (default: bash)
+dce() {
+    _dc_args
+    (( $# )) || set -- bash
+    devcontainer exec "${reply[@]}" "$@"
+}
+# rebuild it (new container from the current Dockerfile)
+dcb() {
+    _dc_args
+    devcontainer up "${reply[@]}" --remove-existing-container "$@"
+}

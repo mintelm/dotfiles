@@ -37,7 +37,7 @@
     unstage = reset HEAD --
     lh = "!sh -c 'git log --oneline --pretty=format:'%H' -n $1' -"
     mm = "!sh -c 'git fetch --all && git log --oneline --pretty=format:'%H' -n $1 > .hashes.tmp && git reset --hard origin/main && git cherry-pick $(tail -n 1 .hashes.tmp)^..$(head -n 1 .hashes.tmp); rm .hashes.tmp' -"
-    mrproper = clean -fdx -e .clangd -e CLAUDE.local.md -e CMakeUserPresets.json
+    mrproper = clean -fdx -e .clangd -e CLAUDE.local.md -e CMakeUserPresets.json -e .devcontainer-local -e .nvim.lua
 
 [core]
     pager = delta
