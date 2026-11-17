@@ -9,3 +9,14 @@ export LANGUAGE=en_US.UTF-8
 export ZSH_AUTOSUGGEST_USE_ASYNC=1
 export FZF_DEFAULT_OPTS="--layout=reverse --border=rounded --height=40% --tmux=70% --bind='ctrl-u:preview-half-page-up,ctrl-d:preview-half-page-down'"
 export LESSOPEN="|~/.zsh/lessfilter.sh %s"
+
+# ssh-agent on Linux/WSL with a fixed socket, shared by all shells (and VS Code).
+if [[ -z $SSH_AUTH_SOCK ]]; then
+    export SSH_AUTH_SOCK=$HOME/.ssh/agent.sock
+    ssh-add -l &>/dev/null
+    if (( $? == 2 )); then # 2 = no agent reachable (1 = agent without keys)
+        mkdir -p -m 700 $HOME/.ssh
+        rm -f $SSH_AUTH_SOCK
+        ssh-agent -a $SSH_AUTH_SOCK >/dev/null
+    fi
+fi
