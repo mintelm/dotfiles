@@ -31,14 +31,18 @@ _dc_args() {
     [[ -f $root/.devcontainer-local/devcontainer.json ]] &&
         reply+=(--config "$root/.devcontainer-local/devcontainer.json")
 }
-# run a command in it (default: bash)
+# run a command in it (default: the user's login shell, zsh with these dotfiles)
 dce() {
     _dc_args
-    (( $# )) || set -- bash
+    (( $# )) || set -- sh -c 'exec "$(getent passwd "$(id -un)" | cut -d: -f7)" -l'
     devcontainer exec "${reply[@]}" "$@"
 }
-# rebuild it (new container from the current Dockerfile)
+# rebuild it (new container from the current Dockerfile), with these dotfiles
+# set up by scripts/devcontainer.sh (cloned from GitHub, so only pushed changes)
 dcb() {
     _dc_args
-    devcontainer up "${reply[@]}" --remove-existing-container "$@"
+    devcontainer up "${reply[@]}" --remove-existing-container \
+        --dotfiles-repository https://github.com/mintelm/dotfiles \
+        --dotfiles-target-path '~/mintelm/dotfiles' \
+        --dotfiles-install-command scripts/devcontainer.sh "$@"
 }
