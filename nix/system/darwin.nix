@@ -1,4 +1,4 @@
-# macOS system layer (nix-darwin): nix itself, shell integration, sudo.
+# macOS system layer (nix-darwin): nix itself, shell integration, sudo, Homebrew casks.
 { lib, pkgs, self, user, ... }:
 let
   # Company CA chain (TLS proxy), kept outside the repo. Optional: machines
@@ -8,9 +8,14 @@ let
 in {
   security.pki.certificateFiles = lib.optional hasCompanyCa companyCa;
 
-  # official Mozilla binary is unfree (trademark terms); allow only that
-  nixpkgs.config.allowUnfreePredicate = pkg:
-    builtins.elem (pkgs.lib.getName pkg) [ "firefox-bin" "firefox-bin-unwrapped" ];
+  # Apps that update themselves: a nix copy gets rolled back by the next
+  # activation. Homebrew itself is not installed by nix.
+  homebrew = {
+    enable = true;
+    casks = [ "firefox" "ghostty" ];
+    # this list is authoritative: anything else installed with brew is removed
+    onActivation.cleanup = "uninstall";
+  };
 
   nix.package = pkgs.lixPackageSets.latest.lix;
   nix.settings.experimental-features = "nix-command flakes";

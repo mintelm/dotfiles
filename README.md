@@ -14,7 +14,7 @@ Each machine is a combination of layers:
 |---|---|---|
 | `home/terminal.nix` | dotfiles, CLI tools, language servers, gpg, ssh | every machine |
 | `home/desktop.nix` | GUI app configs (Ghostty) | desktops |
-| `home/darwin.nix` | macOS specifics + GUI apps | Macs |
+| `home/darwin.nix` | macOS specifics | Macs |
 | `home/linux.nix` | Linux specifics | Linux machines |
 
 ```
@@ -23,7 +23,7 @@ scripts/              # font build (scripts/maple-font.sh)
 nix/
   flake.nix           # inputs, machine definitions, mkDarwin / mkHome helpers
   home/*.nix          # home-manager layers (see table)
-  system/darwin.nix   # nix-darwin system config (nix, zsh, sudo Touch ID)
+  system/darwin.nix   # nix-darwin system config (nix, zsh, sudo Touch ID, Homebrew casks)
 ```
 
 Machines in `nix/flake.nix`:
@@ -32,7 +32,8 @@ Machines in `nix/flake.nix`:
   standalone home-manager, the distro owns the system. Desktops add `desktop.nix`.
 
 ### Installation
-1. Install [Lix](https://lix.systems/install/) (or Nix).
+1. Install [Lix](https://lix.systems/install/) (or Nix). On macOS, also install
+   [Homebrew](https://brew.sh): nix-darwin uses it for the GUI apps (Firefox, Ghostty).
 2. Clone this repo to `~/mintelm/dotfiles`. The symlinks expect this path.
 3. On Linux, add the machine to `homeConfigurations` in `nix/flake.nix`
    (examples are in the file):

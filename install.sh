@@ -65,6 +65,11 @@ case "$(uname -s)" in
     Darwin)
         config="${config:-mac}"
         require_config darwinConfigurations "$config"
+        if [[ ! -x /opt/homebrew/bin/brew && ! -x /usr/local/bin/brew ]]; then
+            echo "Error: Homebrew is not installed (nix-darwin installs the casks with it):"
+            echo "    https://brew.sh"
+            exit 1
+        fi
         echo "Applying nix-darwin configuration '$config'"
         if command -v darwin-rebuild &> /dev/null; then
             sudo darwin-rebuild switch --flake "$FLAKE#$config" --impure

@@ -1,9 +1,6 @@
-# macOS layer: OS specifics plus the GUI apps (a Mac is always a desktop).
+# macOS layer: OS specifics (the GUI apps are Homebrew casks in system/darwin.nix).
 { pkgs, link, ... }: {
   home.packages = with pkgs; [
-    ghostty-bin # the source build is Linux-only
-    firefox-bin-unwrapped # the wrapper strips Mozilla's signature
-
     # docker engine in a Linux VM
     colima
     docker
