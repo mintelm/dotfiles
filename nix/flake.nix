@@ -15,7 +15,12 @@
 
   let
     # macOS: nix-darwin system + home-manager
-    mkDarwin = { user, home, system ? "aarch64-darwin" }: nix-darwin.lib.darwinSystem {
+    mkDarwin = { user, home, system ? "aarch64-darwin" }:
+    let
+      # Machine-local home module, kept outside the repo. Optional: machines
+      # without it just skip it. Reading it needs --impure.
+      local = /Users/${user}/.config/home-manager/local.nix;
+    in nix-darwin.lib.darwinSystem {
       specialArgs = { inherit self user; };
       modules = [
         ./system/darwin.nix
@@ -27,7 +32,7 @@
             useUserPackages = true;
             backupFileExtension = "backup";
             extraSpecialArgs = { inherit inputs; };
-            users.${user}.imports = home;
+            users.${user}.imports = home ++ inputs.nixpkgs.lib.optional (builtins.pathExists local) local;
           };
         }
       ];
