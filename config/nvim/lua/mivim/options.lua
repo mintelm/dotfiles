@@ -17,7 +17,6 @@ vim.o.softtabstop = 4
 
 vim.o.termguicolors = true
 vim.o.shiftround = true
-vim.o.hidden = true
 
 vim.o.ignorecase = true
 vim.o.smartcase = true
@@ -39,7 +38,6 @@ vim.o.listchars = 'tab:→ ,trail:•,nbsp:␣,extends:»,precedes:«'
 vim.o.updatetime = 50
 
 vim.o.swapfile = false
-vim.o.backup = false
 vim.o.undofile = true
 
 -- some stuff looks weird with this new option

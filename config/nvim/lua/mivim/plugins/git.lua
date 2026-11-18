@@ -1,3 +1,8 @@
+local diffview_disabled_keymaps = {
+    { 'n', '<C-w><C-f>', false },
+    { 'n', '<C-w>gf',    false },
+}
+
 return {
     {
         'lewis6991/gitsigns.nvim',
@@ -33,7 +38,7 @@ return {
     },
     {
         'NeogitOrg/neogit',
-        event = 'VeryLazy',
+        cmd = 'Neogit',
         dependencies = 'nvim-lua/plenary.nvim',
         opts = {
             integrations = {
@@ -46,22 +51,13 @@ return {
     },
     {
         'sindrets/diffview.nvim',
-        event = 'VeryLazy',
+        cmd = { 'DiffviewOpen', 'DiffviewFileHistory' },
         dependencies = 'nvim-lua/plenary.nvim',
         opts = {
             keymaps = {
-                view = {
-                    { 'n', '<C-w><C-f>', false },
-                    { 'n', '<C-w>gf',    false },
-                },
-                file_panel = {
-                    { 'n', '<C-w><C-f>', false },
-                    { 'n', '<C-w>gf',    false },
-                },
-                file_history_panel = {
-                    { 'n', '<C-w><C-f>', false },
-                    { 'n', '<C-w>gf',    false },
-                },
+                view = diffview_disabled_keymaps,
+                file_panel = diffview_disabled_keymaps,
+                file_history_panel = diffview_disabled_keymaps,
             },
         },
         keys = {

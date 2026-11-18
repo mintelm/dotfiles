@@ -1,6 +1,7 @@
 return {
     'obsidian-nvim/obsidian.nvim',
-    event = 'VeryLazy',
+    ft = 'markdown',
+    cmd = 'Obsidian',
     opts = {
         legacy_commands = false, -- this will be removed in the next major release
         workspaces = {

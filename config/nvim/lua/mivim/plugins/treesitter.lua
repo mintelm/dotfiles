@@ -2,7 +2,10 @@ local languages = { 'c', 'cpp', 'gitcommit' }
 
 vim.api.nvim_create_autocmd('FileType', {
     pattern = languages,
-    callback = function() vim.treesitter.start() end,
+    callback = function()
+        -- the parser may not be installed yet (e.g. on the first start on a new machine)
+        pcall(vim.treesitter.start)
+    end,
 })
 
 return {

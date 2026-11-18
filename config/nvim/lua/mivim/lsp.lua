@@ -1,6 +1,4 @@
-local M = {}
-
-M.list = { 'lua_ls', 'clangd', 'pyright', 'bashls', 'cmake' }
+local servers = { 'lua_ls', 'clangd', 'pyright', 'bashls', 'cmake' }
 
 vim.lsp.config('*', {
     capabilities = {
@@ -19,6 +17,14 @@ vim.diagnostic.config({
         header = '',
         source = 'if_many',
     },
+    jump = {
+        -- show the diagnostic that was jumped to
+        on_jump = function(diagnostic, bufnr)
+            if diagnostic then
+                vim.diagnostic.open_float({ bufnr = bufnr, scope = 'cursor', focus = false })
+            end
+        end,
+    },
     signs = {
         text = {
             [vim.diagnostic.severity.ERROR] = mivim.style.icons.lsp.signs.error,
@@ -29,8 +35,4 @@ vim.diagnostic.config({
     },
 })
 
-for _, lsp in ipairs(M.list) do
-    vim.lsp.enable({ lsp })
-end
-
-return M
+vim.lsp.enable(servers)

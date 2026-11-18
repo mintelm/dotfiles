@@ -1,39 +1,8 @@
 return {
     'rcarriga/nvim-dap-ui',
-    event = 'VeryLazy',
     dependencies = {
-        { 'nvim-neotest/nvim-nio' },
-        {
-            'mfussenegger/nvim-dap',
-            init = function()
-                local dap = require('dap')
-                local dapui = require('dapui')
-
-                dap.repl.commands = vim.tbl_extend('force', dap.repl.commands, {
-                    custom_commands = {
-                        ['.restart'] = dap.restart,
-                    },
-                })
-
-                vim.fn.sign_define('DapBreakpoint', { text = mivim.style.icons.ui.breakpoint, texthl = 'DiagnosticError' })
-                vim.fn.sign_define('DapStopped', { text = mivim.style.icons.ui.chevron_right, texthl = 'DiagnosticError' })
-
-                dap.listeners.after.stackTrace['auto-center'] = function()
-                    vim.cmd.normal('zzzv')
-                end
-                dap.listeners.after.event_initialized['dapui'] = function()
-                    dapui.open({ reset = true })
-                end
-                dap.listeners.after.event_terminated['dapui'] = function()
-                    dapui.close()
-                    dap.repl.close()
-                end
-                dap.listeners.after.event_exited['dapui'] = function()
-                    dapui.close()
-                    dap.repl.close()
-                end
-            end,
-        },
+        'nvim-neotest/nvim-nio',
+        'mfussenegger/nvim-dap',
     },
     opts = {
         controls = {
@@ -62,13 +31,43 @@ return {
             },
         },
     },
+    config = function(_, opts)
+        local dap = require('dap')
+        local dapui = require('dapui')
+
+        dapui.setup(opts)
+
+        dap.repl.commands = vim.tbl_extend('force', dap.repl.commands, {
+            custom_commands = {
+                ['.restart'] = dap.restart,
+            },
+        })
+
+        vim.fn.sign_define('DapBreakpoint', { text = mivim.style.icons.ui.breakpoint, texthl = 'DiagnosticError' })
+        vim.fn.sign_define('DapStopped', { text = mivim.style.icons.ui.chevron_right, texthl = 'DiagnosticError' })
+
+        dap.listeners.after.stackTrace['auto-center'] = function()
+            vim.cmd.normal('zzzv')
+        end
+        dap.listeners.after.event_initialized['dapui'] = function()
+            dapui.open({ reset = true })
+        end
+        dap.listeners.after.event_terminated['dapui'] = function()
+            dapui.close()
+            dap.repl.close()
+        end
+        dap.listeners.after.event_exited['dapui'] = function()
+            dapui.close()
+            dap.repl.close()
+        end
+    end,
     keys = {
         { '<Leader>db', function() require('dap').toggle_breakpoint() end,        desc = 'Toggle Breakpoint' },
         { '<Leader>dc', function() require('dap').continue() end,                 desc = 'Continue' },
         { '<Leader>ds', function() require('dap').step_over() end,                desc = 'Step Over' },
         { '<Leader>di', function() require('dap').step_into() end,                desc = 'Step Into' },
         { '<Leader>do', function() require('dap').step_out() end,                 desc = 'Step Out' },
-        { '<Leader>dr', function() require('dap').repl_open() end,                desc = 'Open REPL' },
+        { '<Leader>dr', function() require('dap').repl.open() end,                desc = 'Open REPL' },
         { '<Leader>du', function() require('dapui').toggle({ reset = true }) end, desc = 'Toggle UI' },
         { '<Leader>dw', function() require('dapui').elements.watches.add() end,   desc = 'Add To Watchlist' },
     },

@@ -7,27 +7,14 @@ return {
     end,
     opts = {
         flavour = 'mocha',
-        integrations = {
-            blink_cmp = true,
-            dap = true,
-            dap_ui = true,
-            flash = true,
-            gitsigns = true,
-            native_lsp = {
-                enabled = true,
-                underlines = {
-                    errors = { 'undercurl' },
-                    warnings = { 'undercurl' },
-                    hints = { 'underline' },
-                    information = { 'underline' },
-                },
+        -- integrations are detected automatically (auto_integrations is enabled by default)
+        lsp_styles = {
+            underlines = {
+                errors = { 'undercurl' },
+                warnings = { 'undercurl' },
+                hints = { 'underline' },
+                information = { 'underline' },
             },
-            nvimtree = true,
-            neogit = true,
-            notify = true,
-            semantic_tokens = true,
-            snacks = { enabled = true },
-            treesitter = true,
         },
     },
     specs = {

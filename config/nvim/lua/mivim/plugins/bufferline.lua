@@ -14,19 +14,22 @@ return {
             modified_icon = mivim.style.icons.ui.modified,
         },
     },
-    keys = {
-        { ']b',         function() require('bufferline').cycle(1) end,          desc = 'Next Buffer' },
-        { '[b',         function() require('bufferline').cycle(-1) end,         desc = 'Previous Buffer' },
-        { '<leader>bf', function() require('bufferline').pick() end,            desc = 'Pick Buffer' },
-        { '<leader>bd', function() require('bufferline').close_with_pick() end, desc = 'Delete Buffer' },
-        { '<leader>1',  function() require('bufferline').go_to(1) end,          desc = 'Go To Buffer 1' },
-        { '<leader>2',  function() require('bufferline').go_to(2) end,          desc = 'Go To Buffer 2' },
-        { '<leader>3',  function() require('bufferline').go_to(3) end,          desc = 'Go To Buffer 3' },
-        { '<leader>4',  function() require('bufferline').go_to(4) end,          desc = 'Go To Buffer 4' },
-        { '<leader>5',  function() require('bufferline').go_to(5) end,          desc = 'Go To Buffer 5' },
-        { '<leader>6',  function() require('bufferline').go_to(6) end,          desc = 'Go To Buffer 6' },
-        { '<leader>7',  function() require('bufferline').go_to(7) end,          desc = 'Go To Buffer 7' },
-        { '<leader>8',  function() require('bufferline').go_to(8) end,          desc = 'Go To Buffer 8' },
-        { '<leader>9',  function() require('bufferline').go_to(9) end,          desc = 'Go To Buffer 9' },
-    },
+    keys = function()
+        local keys = {
+            { ']b',         function() require('bufferline').cycle(1) end,          desc = 'Next Buffer' },
+            { '[b',         function() require('bufferline').cycle(-1) end,         desc = 'Previous Buffer' },
+            { '<leader>bf', function() require('bufferline').pick() end,            desc = 'Pick Buffer' },
+            { '<leader>bd', function() require('bufferline').close_with_pick() end, desc = 'Delete Buffer' },
+        }
+
+        for i = 1, 9 do
+            table.insert(keys, {
+                '<leader>' .. i,
+                function() require('bufferline').go_to(i) end,
+                desc = 'Go To Buffer ' .. i,
+            })
+        end
+
+        return keys
+    end,
 }

@@ -6,12 +6,8 @@ M = {
             vim = '', -- 
             modified = '',
             readonly = '',
-            lines = '',
-            columns = '',
-            telescope = '',
             breakpoint = '',
             chevron_right = '',
-            virtual_prefix = '', -- ''
         },
         git = {
             add = '',

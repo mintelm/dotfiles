@@ -1,36 +1,37 @@
 local map = mivim.utils.map
-local unmap = mivim.utils.unmap
 local cmd = mivim.utils.cmd
 
 vim.g.mapleader = ','
 
 -- unmap
-unmap('', '<C-w>d', {})
-unmap('', '<C-w><C-d>', {})
+vim.keymap.del('', '<C-w>d')
+vim.keymap.del('', '<C-w><C-d>')
 
 -- navigation
-map('', ']q', cmd('cnext', 'zz'))
-map('', '[q', cmd('cprev', 'zz'))
-map('', ']Q', cmd('clast', 'zz'))
-map('', '[Q', cmd('cfirst', 'zz'))
-map('', ']t', cmd('tabnext'))
-map('', '[t', cmd('tabprev'))
-map('', ']T', cmd('tablast'))
-map('', '[T', cmd('tabfirst'))
+-- ('' and 'v' would include select mode, where mappings hijack typing over snippet placeholders)
+local nxo = { 'n', 'x', 'o' }
+map(nxo, ']q', cmd('cnext', 'zz'))
+map(nxo, '[q', cmd('cprev', 'zz'))
+map(nxo, ']Q', cmd('clast', 'zz'))
+map(nxo, '[Q', cmd('cfirst', 'zz'))
+map(nxo, ']t', cmd('tabnext'))
+map(nxo, '[t', cmd('tabprev'))
+map(nxo, ']T', cmd('tablast'))
+map(nxo, '[T', cmd('tabfirst'))
 
 -- clear highlight on space
 map('n', '<Space>', cmd('noh'))
 
 -- fancy remaps
-map('v', 'K', [[:m '<-2<CR>gv=gv]])
-map('v', 'J', [[:m '>+1<CR>gv=gv]])
+map('x', 'K', [[:m '<-2<CR>gv=gv]])
+map('x', 'J', [[:m '>+1<CR>gv=gv]])
 map('n', 'J', 'mzJ`z')
 map('n', '<C-d>', '<C-d>zz')
 map('n', '<C-u>', '<C-u>zz')
 map('n', 'n', 'nzz')
 map('n', 'N', 'Nzz')
-map({ 'n', 'v' }, '<leader>y', [["+y]])
-map({ 'n', 'v' }, '<leader>Y', [["+Y]])
+map({ 'n', 'x' }, '<leader>y', [["+y]])
+map({ 'n', 'x' }, '<leader>Y', [["+Y]])
 map('n', 'Q', '<nop>')
 map('c', '<enter>',
     function()

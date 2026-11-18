@@ -3,8 +3,11 @@ local M = {}
 --- Inspect contents of any object
 --- @vararg any
 function M.dump(...)
-    local objects = vim.tbl_map(vim.inspect, { ... })
-    vim.notify(unpack(objects))
+    local objects = {}
+    for i = 1, select('#', ...) do
+        objects[i] = vim.inspect((select(i, ...)))
+    end
+    vim.notify(table.concat(objects, '\n'))
 end
 
 --- Set tabstop, shiftwdith and expandtab/smartindent accordingly
@@ -23,59 +26,13 @@ function M.set_tab_width(tab_width)
     vim.bo.softtabstop = tab_width
 end
 
---- Merge table t1, t2
---- Source: https://stackoverflow.com/questions/1283388/lua-merge-tables
---- @param t1 table
---- @param t2 table
---- @return table
-function M.merge(t1, t2)
-    for k, v in pairs(t2) do
-        if (type(v) == 'table') and (type(t1[k] or false) == 'table') then
-            M.merge(t1[k], t2[k])
-        else
-            t1[k] = v
-        end
-    end
-
-    return t1
-end
-
---- Set global vim keymap
+--- Set global silent vim keymap
 --- @param mode string|table
 --- @param lhs string
 --- @param rhs string|function
 --- @param opts? table
 function M.map(mode, lhs, rhs, opts)
-    local options = { noremap = true, silent = true }
-
-    if opts then
-        options = M.merge(options, opts)
-    end
-
-    vim.keymap.set(mode, lhs, rhs, options)
-end
-
---- Remove global vim keymap
---- @param mode string|table
---- @param lhs string
---- @param opts table
-function M.unmap(mode, lhs, opts)
-    vim.keymap.del(mode, lhs, opts)
-end
-
---- Set global vim keymap
---- @param str string
---- @param l boolean
---- @param r boolean
---- @return string
-function M.pad_str(str, l, r)
-    if l then
-        str = ' ' .. str
-    end
-    if r then
-        str = str .. ' '
-    end
-    return str
+    vim.keymap.set(mode, lhs, rhs, vim.tbl_extend('force', { silent = true }, opts or {}))
 end
 
 --- Build command table

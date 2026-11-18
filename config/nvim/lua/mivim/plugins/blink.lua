@@ -1,10 +1,21 @@
 return {
     'saghen/blink.cmp',
-    event = 'VeryLazy',
+    -- has to load before the first LSP client starts, otherwise that client misses the completion capabilities
+    event = { 'BufReadPre', 'BufNewFile', 'VeryLazy' },
     version = '*', -- download prebuilt fuzzy binaries
     opts = {
         sources = {
             default = { 'lsp', 'path', 'snippets', 'buffer' },
+            per_filetype = {
+                lua = { inherit_defaults = true, 'lazydev' },
+            },
+            providers = {
+                lazydev = {
+                    name = 'LazyDev',
+                    module = 'lazydev.integrations.blink',
+                    score_offset = 100,
+                },
+            },
         },
         completion = {
             menu = {

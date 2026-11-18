@@ -1,4 +1,8 @@
-local pad_icon = mivim.utils.pad_str
+--- @param icon string
+--- @return string
+local function pad_icon(icon)
+    return icon .. ' '
+end
 
 return {
     'nvim-lualine/lualine.nvim',
@@ -22,9 +26,9 @@ return {
                 {
                     'diff',
                     symbols = {
-                        added = pad_icon(mivim.style.icons.git.add, false, true),
-                        modified = pad_icon(mivim.style.icons.git.change, false, true),
-                        removed = pad_icon(mivim.style.icons.git.delete, false, true),
+                        added = pad_icon(mivim.style.icons.git.add),
+                        modified = pad_icon(mivim.style.icons.git.change),
+                        removed = pad_icon(mivim.style.icons.git.delete),
                     },
                     source = function()
                         local gitsigns = vim.b.gitsigns_status_dict
@@ -44,7 +48,7 @@ return {
                     'filename',
                     newfile_status = true,
                     symbols = {
-                        modified = pad_icon(mivim.style.icons.ui.modified, false, true),
+                        modified = pad_icon(mivim.style.icons.ui.modified),
                         readonly = mivim.style.icons.ui.readonly,
                         unnamed = '',
                     },
@@ -55,10 +59,10 @@ return {
                 {
                     'diagnostics',
                     symbols = {
-                        error = pad_icon(mivim.style.icons.lsp.signs.error, false, true),
-                        warn = pad_icon(mivim.style.icons.lsp.signs.warn, false, true),
-                        info = pad_icon(mivim.style.icons.lsp.signs.info, false, true),
-                        hint = pad_icon(mivim.style.icons.lsp.signs.hint, false, true),
+                        error = pad_icon(mivim.style.icons.lsp.signs.error),
+                        warn = pad_icon(mivim.style.icons.lsp.signs.warn),
+                        info = pad_icon(mivim.style.icons.lsp.signs.info),
+                        hint = pad_icon(mivim.style.icons.lsp.signs.hint),
                     },
                     separator = '|',
                 },

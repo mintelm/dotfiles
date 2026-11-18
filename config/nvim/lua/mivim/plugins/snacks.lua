@@ -7,30 +7,16 @@ vim.api.nvim_create_autocmd('ColorScheme', {
 
 return {
     'folke/snacks.nvim',
-    event = 'VeryLazy',
+    -- bigfile has to be set up before the first file is read
+    lazy = false,
+    priority = 1000,
     opts = {
         bigfile = {},
         indent = {
             indent = {
                 char = '▎',
-                hl = {
-                    'Hidden',
-                    'LineNr',
-                    'LineNr',
-                    'LineNr',
-                    'LineNr',
-                    'LineNr',
-                    'LineNr',
-                    'LineNr',
-                    'LineNr',
-                    'LineNr',
-                    'LineNr',
-                    'LineNr',
-                    'LineNr',
-                    'LineNr',
-                    'LineNr',
-                    'LineNr',
-                },
+                -- hide the first indent level, the 15 levels after it use LineNr
+                hl = vim.list_extend({ 'Hidden' }, vim.fn['repeat']({ 'LineNr' }, 15)),
             },
             animate = { enabled = false },
             scope = { enabled = false },
