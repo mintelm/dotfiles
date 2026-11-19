@@ -9,7 +9,7 @@ SUDO=$([ "$(id -u)" = 0 ] || echo sudo)
 
 $SUDO apt-get update -qq
 $SUDO env DEBIAN_FRONTEND=noninteractive apt-get install -y -qq --no-install-recommends \
-    git zsh fzf bat eza ripgrep fd-find git-delta zsh-autosuggestions zsh-syntax-highlighting
+    git zsh fzf bat less eza ripgrep fd-find git-delta zsh-autosuggestions zsh-syntax-highlighting
 
 # Ubuntu renames these binaries
 mkdir -p ~/.local/bin
