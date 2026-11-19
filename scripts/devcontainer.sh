@@ -29,6 +29,11 @@ ln -sf "$DOTFILES/config/zsh/zshrc" ~/.zshrc
 ln -sf "$DOTFILES/config/zsh/zshenv" ~/.zshenv
 ln -sf "$DOTFILES/config/bat/config" ~/.config/bat/config
 
+# apt's bat doesn't bundle the Catppuccin themes
+themes=~/.config/bat/themes
+[ -d "$themes/catppuccin" ] || git clone -q --depth 1 https://github.com/catppuccin/bat "$themes/catppuccin"
+~/.local/bin/bat cache --build > /dev/null
+
 # same order as plugins.zsh in nix/home/terminal.nix
 cat > ~/.zsh/plugins.zsh << EOF
 source $plugins/powerlevel10k/powerlevel10k.zsh-theme
